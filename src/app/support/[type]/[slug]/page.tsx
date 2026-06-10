@@ -11,7 +11,7 @@ const MOCK_DETAIL = {
   rating: 5.0,
   reviews: 95,
   category: "Legal & Support",
-  image: "https://images.unsplash.com/photo-1623838275510-18dc0c3cbdfa?q=80&w=2000&auto=format&fit=crop",
+  image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop",
   description: "The PFOA was created to support all those involved in firearms operations, and their families. They provide comprehensive welfare packages, counseling services, and immediate support following a critical incident. Their team understands the unique pressures placed on Authorised Firearms Officers (AFOs) during lengthy IOPC investigations.",
   keyFeatures: [
     "24/7 welfare support helpline",

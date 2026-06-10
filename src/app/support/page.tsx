@@ -53,7 +53,7 @@ const MOCK_RESOURCES = [
     reviews: 95,
     category: "Legal & Support",
     summary: "Providing crucial welfare support, legal guidance, and counseling for firearms officers and their families during post-incident procedures.",
-    image: "https://images.unsplash.com/photo-1623838275510-18dc0c3cbdfa?q=80&w=800&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop"
   }
 ];
 
@@ -78,51 +78,40 @@ export default function SupportListing() {
   return (
     <div className="min-h-screen bg-[#020611] text-white pb-32 font-sans">
       
-      {/* EMERGENCY BANNER */}
-      <div className="bg-red-600/90 backdrop-blur-md text-white py-4 px-4 text-center text-sm font-bold tracking-widest uppercase border-b border-red-500">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-center gap-3">
-          <span className="flex items-center bg-black/20 px-3 py-1 rounded-full text-[10px]"><Phone className="w-3 h-3 mr-2" /> URGENT</span>
-          <span>In immediate crisis? Call the Samaritans free on <strong className="text-black bg-white px-2 py-0.5 rounded">116 123</strong> or text SHOUT to <strong className="text-black bg-white px-2 py-0.5 rounded">85258</strong>.</span>
-        </div>
-      </div>
 
       {/* HERO */}
-      <section className="relative w-full min-h-[50vh] pt-32 pb-20 bg-[#050B14] flex flex-col justify-center overflow-hidden text-white border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-[#1877F2]/10 blur-[150px] pointer-events-none rounded-full" />
           <img 
-            src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=2000&auto=format&fit=crop" 
-            alt="Support resources" 
-            className="w-full h-full object-cover mix-blend-luminosity opacity-10 mask-image-to-b"
+            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920" 
+            alt="Supportive community hands" 
+            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40 grayscale"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
 
-        <div className="container relative z-10 max-w-[1200px] mx-auto px-4 md:px-8 text-left">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="flex items-center gap-3 mb-6"
-            >
-              <div className="h-px w-8 bg-[#1877F2]" />
-              <span className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-xs">Assistance & Care</span>
-            </motion.div>
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          <div className="w-full lg:w-full max-w-[1200px] pt-10">
+            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
+              <Heart className="w-5 h-5" /> ASSISTANCE & CARE
+            </h3>
             
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.05] mb-8 uppercase tracking-tight font-sans"
+              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
-              RECOVERY & <br/><span className="text-[#1877F2]">SUPPORT.</span>
+              <span className="text-white">RECOVERY & </span><br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">SUPPORT.</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-2xl font-medium mb-10"
+              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
             >
               You are not alone. Explore our curated directory of mental health resources, legal support organizations, and wellbeing tools.
             </motion.p>
@@ -132,7 +121,7 @@ export default function SupportListing() {
 
       {/* TABS & SEARCH */}
       <section className="sticky top-[72px] z-40 bg-[#050B14]/90 backdrop-blur-xl border-b border-white/5 py-5 shadow-xl">
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px]">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
             <div className="flex gap-3 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
               {TABS.map(tab => {
@@ -141,7 +130,7 @@ export default function SupportListing() {
                   <button 
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`whitespace-nowrap px-6 py-4 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all flex items-center gap-2 ${activeTab === tab.id ? 'bg-[#1877F2] text-white shadow-[0_0_15px_rgba(24,119,242,0.3)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'}`}
+                    className={`whitespace-nowrap px-6 py-4 rounded-none text-[10px] font-bold tracking-widest uppercase transition-all flex items-center gap-2 ${activeTab === tab.id ? 'bg-[#1877F2] text-white' : 'bg-transparent border border-white/10 text-white hover:bg-white/5'}`}
                   >
                     <Icon className="w-4 h-4" /> {tab.label}
                   </button>
@@ -155,7 +144,7 @@ export default function SupportListing() {
                 placeholder="SEARCH RESOURCES..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#020611] border border-white/10 rounded-full pl-14 pr-6 py-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors placeholder-slate-500"
+                className="w-full bg-[#050A14] border border-white/10 rounded-none pl-14 pr-6 py-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-500"
               />
             </div>
           </div>
@@ -163,13 +152,13 @@ export default function SupportListing() {
       </section>
 
       {/* GRID */}
-      <section className="container mx-auto px-4 md:px-8 mt-24 max-w-[1200px]">
+      <section className="w-full px-6 lg:px-16 mx-auto mt-24 max-w-[1600px]">
         {filteredResources.length === 0 ? (
-           <div className="text-center py-32 bg-white/5 rounded-3xl border border-white/10">
+             <div className="text-center py-32 bg-[#050A14] rounded-none border border-white/10">
             <Heart className="w-16 h-16 text-slate-600 mx-auto mb-6" />
             <h3 className="text-2xl font-sans font-bold text-white mb-2 uppercase tracking-tight">No resources found</h3>
             <p className="text-slate-400">Try adjusting your search or category filters.</p>
-            <Button onClick={() => { setSearchQuery(""); setActiveTab("all"); }} variant="outline" className="mt-8 border-white/20 text-white hover:bg-white/10 rounded-full px-8 py-6 text-[10px] font-bold uppercase tracking-widest">Clear Filters</Button>
+            <Button onClick={() => { setSearchQuery(""); setActiveTab("all"); }} variant="outline" className="mt-8 border-white/20 text-white hover:bg-white/10 rounded-none px-8 py-6 text-[10px] font-bold uppercase tracking-widest bg-transparent">Clear Filters</Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -184,25 +173,24 @@ export default function SupportListing() {
                   key={item.id}
                   className="h-full"
                 >
-                  <Link href={`/support/${item.type}/${item.slug}`} className="group flex flex-col h-full bg-white/5 backdrop-blur-sm rounded-[2rem] border border-white/10 overflow-hidden hover:shadow-2xl hover:border-[#1877F2]/50 transition-all duration-300 hover:-translate-y-2">
-                    <div className="aspect-[4/3] overflow-hidden relative bg-[#050B14]">
+                  <Link href={`/support/${item.type}/${item.slug}`} className="group flex flex-col h-full bg-transparent border border-white/10 hover:border-white/30 transition-colors duration-300 rounded-none">
+                    <div className="aspect-[4/3] overflow-hidden relative border-b border-white/10">
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover grayscale opacity-60 group-hover:scale-105 group-hover:grayscale-0 transition-transform duration-700" />
-                      <div className="absolute top-4 left-4 bg-[#050B14] border border-white/10 px-4 py-2 rounded-full text-[9px] font-bold uppercase tracking-[0.2em] text-[#1877F2] flex items-center shadow-lg">
-                        {item.type === 'app' && <Smartphone className="w-3 h-3 mr-2 text-white" />}
-                        {item.type === 'book' && <Book className="w-3 h-3 mr-2 text-white" />}
-                        {item.type === 'podcast' && <Headphones className="w-3 h-3 mr-2 text-white" />}
-                        {item.type === 'org' && <ShieldAlert className="w-3 h-3 mr-2 text-white" />}
+                      <div className="absolute top-0 left-0 bg-white text-black px-4 py-2 text-[9px] font-bold uppercase tracking-[0.2em] flex items-center shadow-none rounded-none">
+                        {item.type === 'app' && <Smartphone className="w-3 h-3 mr-2 text-black" />}
+                        {item.type === 'book' && <Book className="w-3 h-3 mr-2 text-black" />}
+                        {item.type === 'podcast' && <Headphones className="w-3 h-3 mr-2 text-black" />}
+                        {item.type === 'org' && <ShieldAlert className="w-3 h-3 mr-2 text-black" />}
                         {item.type}
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#020611] to-transparent opacity-80" />
                     </div>
                     
-                    <div className="p-8 flex flex-col flex-grow relative z-10 -mt-8">
-                      <h3 className="font-sans text-xl font-bold uppercase text-white mb-4 group-hover:text-[#1877F2] transition-colors leading-tight tracking-tight">
+                    <div className="p-8 flex flex-col flex-grow relative z-10">
+                      <h3 className="font-sans text-xl font-bold uppercase text-white mb-4 group-hover:text-white transition-colors leading-tight tracking-tight">
                         {item.title}
                       </h3>
                       
-                      <div className="flex items-center gap-2 text-[#1877F2] mb-6">
+                      <div className="flex items-center gap-2 text-white mb-6">
                         <Star className="w-4 h-4 fill-current" />
                         <span className="text-sm font-bold text-white">{item.rating}</span>
                         <span className="text-[9px] text-slate-500 uppercase tracking-widest ml-1">({item.reviews} Reviews)</span>
@@ -213,7 +201,7 @@ export default function SupportListing() {
                       </p>
                       
                       <div className="border-t border-white/10 pt-6 mt-auto flex items-center justify-between">
-                        <p className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">{item.author}</p>
+                        <p className="text-[10px] font-bold text-white uppercase tracking-[0.2em]">{item.author}</p>
                         {item.type === 'podcast' && <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">LISTEN NOW <ExternalLink className="w-3 h-3" /></span>}
                         {item.type === 'book' && <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">VIEW BOOK <ExternalLink className="w-3 h-3" /></span>}
                         {item.type === 'app' && <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">GET APP <ExternalLink className="w-3 h-3" /></span>}

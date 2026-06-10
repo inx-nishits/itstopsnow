@@ -13,43 +13,38 @@ export default function TheIssuePage() {
     <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
 
       {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[60vh] pt-40 pb-32 bg-[#050B14] flex flex-col justify-center overflow-hidden border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#1877F2]/20 rounded-full blur-[150px] pointer-events-none" />
           <img
-            src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1920"
-            alt="Courthouse justice system"
-            className="w-full h-full object-cover mix-blend-luminosity opacity-10 mask-image-to-b"
+            src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80&w=1920"
+            alt="Police lights"
+            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
 
-        <div className="container relative z-10 max-w-[1200px] mx-auto px-4 md:px-8 text-left">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="flex items-center gap-3 mb-6"
-            >
-              <div className="h-px w-8 bg-[#1877F2]" />
-              <span className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-xs">The Issue</span>
-            </motion.div>
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          <div className="w-full lg:w-full max-w-[1200px] pt-10">
+            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
+              <ShieldAlert className="w-5 h-5" /> THE ISSUE
+            </h3>
             
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.05] mb-8 uppercase tracking-tight font-sans"
+              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
-              A SYSTEM <br/><span className="text-[#1877F2]">IN CRISIS.</span>
+              <span className="text-white">A SYSTEM </span><br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">IN CRISIS.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-2xl font-medium"
+              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
             >
               When those who protect the public are denied natural justice, transparency, and trauma support, the entire system breaks down.
             </motion.p>
@@ -59,7 +54,7 @@ export default function TheIssuePage() {
 
       {/* 2. REALITY WE CAN'T IGNORE STRIP */}
       <section className="bg-[#050B14] border-y border-white/5 relative z-20">
-        <div className="container mx-auto px-4 max-w-[1440px]">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-white/10">
             <div className="py-10 md:px-8 flex-1 text-center group hover:bg-white/5 transition-colors">
               <div className="text-5xl font-bold text-white font-sans mb-2 group-hover:scale-110 transition-transform">100+</div>
@@ -84,7 +79,7 @@ export default function TheIssuePage() {
       {/* 3. FACTS & STATISTICS (Detailed) */}
       <section className="py-32 bg-[#020611] relative">
         <div className="absolute left-0 top-0 w-[500px] h-[500px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-24 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Evidence</h2>
             <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">THE HARD FACTS</h2>
@@ -138,7 +133,7 @@ export default function TheIssuePage() {
       {/* 4. WHAT'S GOING WRONG (3 Pillars) */}
       <section className="py-32 bg-[#050B14] text-white border-t border-white/5 relative">
         <div className="absolute right-0 bottom-0 w-[600px] h-[600px] bg-[#1877F2]/5 blur-[150px] pointer-events-none rounded-full"></div>
-        <div className="container mx-auto px-4 md:px-8 max-w-[1440px] relative z-10">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-24 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Flaws</h2>
             <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight mb-6">WHAT IS GOING WRONG?</h2>
@@ -189,7 +184,7 @@ export default function TheIssuePage() {
 
       {/* 5. THE HUMAN IMPACT (Officers, Families, Communities) */}
       <section className="py-32 bg-[#020611] border-t border-white/5 relative">
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-20 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Collateral Damage</h2>
             <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">THE RIPPLE EFFECT</h2>
@@ -244,7 +239,7 @@ export default function TheIssuePage() {
 
       {/* 6. EDUCATIONAL CONTENT / FAQ */}
       <section className="py-32 bg-[#050B14] border-t border-white/5">
-        <div className="container mx-auto px-4 md:px-8 max-w-[800px]">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-4xl">
           <div className="text-center mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Knowledge is Power</h2>
             <h2 className="font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-6">UNDERSTANDING THE PROCESS</h2>
@@ -281,7 +276,7 @@ export default function TheIssuePage() {
       {/* 7. RESEARCH PREVIEW & CTA */}
       <section className="bg-[#020611] py-32 border-t border-white/5 relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="flex flex-col md:flex-row items-center justify-between gap-16">
             <div className="md:w-1/2">
               <FileWarning className="w-16 h-16 text-[#1877F2] mb-8" />

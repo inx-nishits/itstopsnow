@@ -9,6 +9,7 @@ import { generateMemorialPDF } from "@/lib/documentGenerator";
 export default function MemorialDetailPage({ params }: { params: { id: string } }) {
   const [isLit, setIsLit] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [globalCandles, setGlobalCandles] = useState(85); // Starting with a low number to demo the effect
 
   // Mock data based on the design
   const officer = {
@@ -18,7 +19,6 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
     quote: "\"A hero remembered.\nA life that mattered.\"",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
     stats: {
-      candles: isLit ? "2,846" : "2,845",
       tributes: "1,927",
       remembered: "8,432",
       dateOfLoss: "24 MAY 2019"
@@ -49,6 +49,27 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
     }
   };
 
+  // Calculate grayscale based on global candle count
+  // 0-100: 95% grayscale
+  // 500: ~80% grayscale
+  // 2000: 50% grayscale
+  // 5000+: 0% grayscale
+  const calculateGrayscale = (count: number) => {
+    if (count <= 100) return 95;
+    if (count >= 5000) return 0;
+    // Logarithmic-like decay for smooth transition
+    if (count <= 500) return 95 - ((count - 100) / 400) * 15; // 95 to 80
+    if (count <= 2000) return 80 - ((count - 500) / 1500) * 30; // 80 to 50
+    return 50 - ((count - 2000) / 3000) * 50; // 50 to 0
+  };
+
+  const grayscaleValue = calculateGrayscale(globalCandles);
+
+  const handleLightCandle = () => {
+    setIsLit(true);
+    setGlobalCandles(prev => prev + 1);
+  };
+
   return (
     <div className="min-h-screen bg-[#030712] text-white font-sans pt-32 pb-24">
       <div className="container mx-auto px-4 md:px-8 max-w-[1440px]">
@@ -69,7 +90,8 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               <img 
                 src={officer.image} 
                 alt={officer.name} 
-                className={`w-full h-full object-cover transition-all duration-3000 ease-in-out ${isLit ? 'grayscale-0 scale-105' : 'grayscale'}`}
+                style={{ filter: `grayscale(${grayscaleValue}%)` }}
+                className={`w-full h-full object-cover transition-all duration-3000 ease-in-out ${isLit ? 'scale-105' : ''}`}
               />
               <div className={`absolute inset-0 transition-opacity duration-3000 ${isLit ? 'opacity-0' : 'bg-gradient-to-t from-[#030712] to-transparent opacity-60'}`}></div>
               {isLit && <div className="absolute inset-0 bg-amber-500/10 mix-blend-overlay"></div>}
@@ -87,7 +109,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
 
             <div className="flex flex-wrap gap-4">
               <Button 
-                onClick={() => setIsLit(true)}
+                onClick={handleLightCandle}
                 disabled={isLit}
                 className={`font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-all duration-500 ${isLit ? 'bg-amber-500/20 text-amber-500 border border-amber-500/50' : 'bg-[#1877F2] hover:bg-blue-600 text-white'}`}
               >
@@ -110,8 +132,8 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               <Flame className={`w-5 h-5 text-amber-500 ${isLit ? 'animate-pulse' : ''}`} />
             </div>
             <div>
-              <div className="text-xl font-bold text-white mb-1">{officer.stats.candles}</div>
-              <div className="text-[9px] uppercase tracking-widest text-slate-500">CANDLES LIT</div>
+              <div className="text-xl font-bold text-white mb-1">{globalCandles.toLocaleString()}</div>
+              <div className="text-[9px] uppercase tracking-widest text-slate-500">GLOBAL CANDLES LIT</div>
             </div>
           </div>
           <div className="flex items-center gap-4 border-r border-white/5 last:border-0 px-4">
@@ -196,7 +218,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
             <section>
               <div className="flex justify-between items-end mb-6 border-b border-white/5 pb-4">
                 <h3 className="text-sm font-bold uppercase tracking-widest text-white">TRIBUTES</h3>
-                <Link href="#" className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors">
+                <Link href="/remembrance" className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors">
                   View all ({officer.stats.tributes})
                 </Link>
               </div>
@@ -291,6 +313,37 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
         </div>
 
       </div>
+
+      {/* PROTOTYPE CONTROL PANEL (Only visible during UI/UX validation) */}
+      <div className="fixed bottom-6 right-6 z-50 bg-[#051024] border border-white/20 p-6 rounded-xl shadow-2xl w-80">
+        <h4 className="text-xs font-bold text-[#1877F2] uppercase tracking-widest mb-4">Prototyping Controls</h4>
+        <p className="text-[10px] text-slate-400 mb-4 leading-relaxed">
+          Simulate global database candle counts to test dynamic grayscale logic (100% monochrome to full color).
+        </p>
+        <div className="space-y-4">
+          <div>
+            <div className="flex justify-between text-[10px] font-bold mb-2 uppercase tracking-widest">
+              <span>Total Candles: {globalCandles.toLocaleString()}</span>
+              <span className="text-amber-500">{Math.round(100 - grayscaleValue)}% Color</span>
+            </div>
+            <input 
+              type="range" 
+              min="0" 
+              max="5000" 
+              value={globalCandles} 
+              onChange={(e) => setGlobalCandles(Number(e.target.value))}
+              className="w-full accent-[#1877F2]"
+            />
+          </div>
+          <div className="flex justify-between text-[9px] text-slate-500 font-bold uppercase tracking-widest">
+            <span>0</span>
+            <span>500</span>
+            <span>2K</span>
+            <span>5K+</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }

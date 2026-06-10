@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { UploadCloud, CheckCircle2, ShieldAlert, Lock, AlertCircle, ArrowRight, User, EyeOff } from "lucide-react";
+import { UploadCloud, CheckCircle2, ShieldAlert, Lock, AlertCircle, ArrowRight, ArrowLeft, PenTool, User, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -14,19 +14,33 @@ export default function StorySubmission() {
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
       
       {/* HEADER */}
-      <section className="bg-[#010B19] pt-32 pb-12 border-b-4 border-blue-600">
-        <div className="container mx-auto px-4 md:px-8 max-w-[800px] text-center">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight font-heading">
-            SHARE YOUR <span className="text-blue-500">EXPERIENCE.</span>
-          </h1>
-          <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
-            Your story is powerful. It breaks the silence, proves the systemic failure, and provides comfort to others suffering in isolation. 
-          </p>
+      <section className="relative w-full min-h-[50vh] pt-32 pb-32 bg-[#050A14] flex flex-col justify-center overflow-hidden border-b border-white/5">
+        <div className="absolute inset-0 z-0">
+          <img src="https://images.unsplash.com/photo-1584859737119-9eb15b9c0378?auto=format&fit=crop&q=80&w=1920" className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40" alt="Person in shadow" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
+        </div>
+        
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          <div className="w-full lg:w-full max-w-[1200px]">
+            <Link href="/stories" className="inline-flex items-center text-[#1877F2] hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-colors">
+              <ArrowLeft className="w-3 h-3 mr-1" /> Back to Stories
+            </Link>
+            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
+              <PenTool className="w-5 h-5" /> SUBMIT YOUR STORY
+            </h3>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6 uppercase tracking-tighter drop-shadow-2xl py-2 leading-none">
+              SHARE YOUR <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">EXPERIENCE.</span>
+            </h1>
+            <p className="text-slate-300 text-lg leading-relaxed max-w-2xl drop-shadow">
+              Your story is powerful. It breaks the silence, proves the systemic failure, and provides comfort to others suffering in isolation. 
+            </p>
+          </div>
         </div>
       </section>
 
       {/* FORM CONTAINER */}
-      <section className="container mx-auto px-4 md:px-8 max-w-[800px] -mt-6 relative z-10">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-4xl -mt-6 relative z-10">
         <div className="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
           
           {/* Progress Strip */}

@@ -62,42 +62,38 @@ export default function ResearchListing() {
     <div className="min-h-screen bg-[#020611] text-white font-sans pb-32">
       
       {/* HERO */}
-      <section className="relative w-full min-h-[50vh] pt-40 pb-20 bg-[#050B14] flex flex-col justify-center overflow-hidden border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#1877F2]/10 rounded-full blur-[150px] pointer-events-none" />
           <img 
-            src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=2000&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1920" 
             alt="Research documents" 
-            className="w-full h-full object-cover mix-blend-luminosity opacity-10 mask-image-to-b"
+            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
 
-        <div className="container relative z-10 max-w-[1200px] mx-auto px-4 md:px-8 text-left">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="flex items-center gap-3 mb-6"
-            >
-              <div className="h-px w-8 bg-[#1877F2]" />
-              <span className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-xs">The Evidence Base</span>
-            </motion.div>
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          <div className="w-full lg:w-full max-w-[1200px] pt-10">
+            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
+              <BookOpen className="w-5 h-5" /> THE EVIDENCE BASE
+            </h3>
             
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-6xl lg:text-8xl font-bold text-white leading-[1.05] mb-6 uppercase tracking-tight font-sans"
+              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
-              RESEARCH & <br/><span className="text-[#1877F2]">REPORTS.</span>
+              <span className="text-white">RESEARCH & </span><br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">REPORTS.</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-2xl font-medium mb-10"
+              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
             >
               Academic studies, data analysis, and systemic reviews proving the urgent need for reform in police misconduct investigations.
             </motion.p>
@@ -107,7 +103,7 @@ export default function ResearchListing() {
 
       {/* SEARCH & FILTERS */}
       <section className="sticky top-[72px] z-40 bg-[#050B14]/90 backdrop-blur-xl border-b border-white/5 py-5 shadow-xl">
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px]">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
             <div className="relative w-full md:max-w-md">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
@@ -135,7 +131,7 @@ export default function ResearchListing() {
       </section>
 
       {/* GRID */}
-      <section className="container mx-auto px-4 md:px-8 max-w-[1200px] mt-24">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] mt-24">
         {filteredResearch.length === 0 ? (
           <div className="text-center py-32 bg-white/5 rounded-3xl border border-white/10">
             <FileText className="w-16 h-16 text-slate-600 mx-auto mb-6" />

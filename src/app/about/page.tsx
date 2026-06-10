@@ -1,45 +1,63 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Shield, ShieldAlert, Heart, Activity, ArrowRight, ExternalLink, Headphones, Download, Smartphone, CheckCircle, BarChart, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function AboutPage() {
+  const [currentAppIndex, setCurrentAppIndex] = useState(0);
+  const appImages = ["/app-1.png", "/app-2.png", "/app-3.png"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentAppIndex((prev) => (prev + 1) % appImages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [appImages.length]);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
       
       {/* 1. HERO SECTION */}
-      <section className="relative w-full pt-40 pb-32 bg-[#050B14] flex flex-col justify-center overflow-hidden border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+        
+        {/* Full-Screen Background Image */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#1877F2]/10 rounded-full blur-[120px] pointer-events-none" />
           <img 
-            src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=1920" 
-            alt="Police officer background" 
-            className="w-full h-full object-cover mix-blend-luminosity opacity-10 mask-image-to-b"
+            src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=1920" 
+            alt="Protest movement" 
+            className="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity grayscale"
           />
+          {/* Dark gradient overlay to blend image into the background and ensure text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
 
-        <div className="container relative z-10 max-w-[1200px] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl">
+        {/* Content Container (Matching Homepage full width) */}
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          
+          <div className="w-full lg:w-full max-w-[1200px] pt-10">
             <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
               <Shield className="w-5 h-5" /> OUR SUPPORTER
             </h3>
+            
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-8 uppercase tracking-tight font-sans"
+              className="text-5xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
-              DRIVEN BY THOSE<br/>
-              WHO <span className="text-[#1877F2]">KNOW THE JOB.</span>
+              <span className="text-white">DRIVEN BY THOSE<br/></span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">WHO KNOW THE JOB.</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg text-slate-400 leading-relaxed mb-10 max-w-xl"
+              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-3xl drop-shadow"
             >
               It Stops Now is proudly funded and supported by Pocket Sergeant – the essential app created by police, for police. We believe that officer wellbeing and reform are not optional; they are critical.
             </motion.p>
@@ -48,65 +66,63 @@ export default function AboutPage() {
       </section>
 
       {/* 2. WHO IS POCKET SERGEANT */}
-      <section className="py-32 relative">
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="py-10 md:py-16 relative">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
-              <h2 className="font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8">WHO IS POCKET SERGEANT?</h2>
-              <p className="text-slate-400 leading-relaxed mb-6 text-lg">
+              <h2 className="font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-4">WHO IS POCKET SERGEANT?</h2>
+              <p className="text-slate-400 leading-relaxed mb-4 text-lg">
                 Pocket Sergeant is the UK's leading app for police officers and staff. Created by former police officer Paul Cooper, it was built to solve a simple problem: officers needed quick, reliable access to the law, operational guidance, and wellbeing resources while out on the street.
               </p>
-              <p className="text-slate-400 leading-relaxed mb-10 text-lg">
+              <p className="text-slate-400 leading-relaxed mb-6 text-lg">
                 Today, it is used by thousands of officers every single day. But our mission goes beyond making the job easier. We want to make the job safer—mentally and emotionally. That's why we are funding the 'It Stops Now' campaign.
               </p>
               
               {/* Trust Indicators */}
-              <div className="grid grid-cols-2 gap-8 mt-10 border-t border-white/10 pt-10">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 shadow-lg">
-                    <Users className="w-6 h-6 text-[#1877F2]" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white uppercase text-xs tracking-widest mb-1">TRUSTED BY</h4>
-                    <p className="text-2xl font-bold text-[#1877F2] font-sans">50,000+</p>
-                    <p className="text-xs text-slate-500 uppercase tracking-wider mt-1">Active Officers</p>
-                  </div>
+              <div className="flex gap-8 mt-6 border-t border-white/10 pt-6">
+                <div>
+                  <h4 className="font-bold text-white uppercase text-[10px] tracking-widest mb-1">TRUSTED BY</h4>
+                  <p className="text-xl font-bold text-[#1877F2] font-sans leading-none">50,000+</p>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">Active Officers</p>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 shadow-lg">
-                    <ShieldAlert className="w-6 h-6 text-[#1877F2]" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white uppercase text-xs tracking-widest mb-1">CREATED BY</h4>
-                    <p className="text-xl font-bold text-slate-200 mt-1 uppercase tracking-wide">Former Police</p>
-                    <p className="text-xs text-slate-500 uppercase tracking-wider mt-1">We lived the job.</p>
-                  </div>
+                <div>
+                  <h4 className="font-bold text-white uppercase text-[10px] tracking-widest mb-1">CREATED BY</h4>
+                  <p className="text-xl font-bold text-slate-200 uppercase tracking-wide leading-none">Former Police</p>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">We lived the job.</p>
                 </div>
               </div>
             </div>
             
             {/* 3. APP SHOWCASE / SCREENSHOTS */}
             <div className="relative">
-              <div className="absolute inset-0 bg-[#1877F2]/10 rounded-[3rem] transform rotate-3 blur-2xl"></div>
-              <div className="bg-[#050B14] rounded-[3rem] p-8 md:p-12 border border-white/10 shadow-2xl relative z-10 overflow-hidden flex flex-col items-center">
-                <Smartphone className="w-12 h-12 text-[#1877F2] mb-6" />
-                <h3 className="text-white font-sans font-bold text-2xl uppercase tracking-widest mb-3">THE ESSENTIAL APP</h3>
-                <p className="text-slate-400 text-sm text-center mb-12 max-w-sm leading-relaxed">Law, procedures, and wellbeing support right in your pocket.</p>
+              <div className="absolute inset-0 bg-[#1877F2]/10 rounded-[2rem] transform rotate-2 blur-xl"></div>
+              <div className="bg-[#050B14] rounded-[2rem] p-6 border border-white/10 shadow-2xl relative z-10 overflow-hidden flex flex-col items-center">
                 
-                <div className="flex gap-4 w-full overflow-hidden justify-center items-end relative h-[300px]">
-                  <div className="absolute w-32 h-64 bg-slate-900 rounded-2xl border-4 border-[#050B14] overflow-hidden shadow-2xl transform -rotate-12 -translate-x-20 translate-y-8 z-0">
-                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=300" className="w-full h-full object-cover grayscale opacity-50" alt="App screenshot" />
-                  </div>
-                  <div className="absolute w-44 h-[340px] bg-slate-900 rounded-2xl border-4 border-[#1877F2]/50 overflow-hidden shadow-[0_0_50px_rgba(24,119,242,0.2)] z-10 -translate-y-4">
-                    <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=80&w=300" className="w-full h-full object-cover opacity-90" alt="App screenshot main" />
-                  </div>
-                  <div className="absolute w-32 h-64 bg-slate-900 rounded-2xl border-4 border-[#050B14] overflow-hidden shadow-2xl transform rotate-12 translate-x-20 translate-y-8 z-0">
-                    <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&q=80&w=300" className="w-full h-full object-cover grayscale opacity-50" alt="App screenshot" />
-                  </div>
+                <div className="flex w-full justify-center items-center gap-4 h-[240px] sm:h-[300px] mt-2 mb-4">
+                  {appImages.map((img, idx) => {
+                    const isActive = idx === currentAppIndex;
+                    return (
+                      <div 
+                        key={img}
+                        className={`relative transition-all duration-500 ease-out cursor-pointer ${
+                          isActive 
+                            ? "w-[140px] sm:w-[160px] scale-100 opacity-100 z-20 drop-shadow-[0_10px_20px_rgba(24,119,242,0.3)]" 
+                            : "w-[100px] sm:w-[120px] scale-90 opacity-40 z-10 hover:opacity-80"
+                        }`}
+                        onClick={() => setCurrentAppIndex(idx)}
+                      >
+                        <img 
+                          src={img} 
+                          className="w-full h-full object-contain" 
+                          alt={`App screenshot ${idx + 1}`} 
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
                 
                 {/* Store Downloads */}
-                <div className="flex flex-wrap justify-center gap-4 mt-16 w-full border-t border-white/10 pt-8">
+                <div className="flex flex-wrap justify-center gap-4 mt-8 w-full border-t border-white/10 pt-6">
                   <button className="bg-white/5 backdrop-blur-md border border-white/10 text-white flex items-center gap-3 px-6 py-4 rounded-xl hover:bg-white/10 transition-colors">
                     <Download className="w-5 h-5 text-[#1877F2]" />
                     <div className="text-left">
@@ -130,7 +146,7 @@ export default function AboutPage() {
 
       {/* 4. WHY SUPPORTING THIS MOVEMENT */}
       <section className="py-32 bg-[#050B14] border-t border-white/5 relative">
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Commitment</h2>
             <h2 className="font-sans text-3xl md:text-5xl font-bold uppercase tracking-tight mb-8">WHY WE SUPPORT THIS MOVEMENT</h2>
@@ -162,7 +178,7 @@ export default function AboutPage() {
 
       {/* 5. FUNDING TRANSPARENCY */}
       <section className="py-32 bg-[#020611] border-t border-white/5 relative">
-        <div className="container mx-auto px-4 md:px-8 max-w-[1000px]">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-white/10 rounded-3xl shadow-2xl p-10 md:p-16 flex flex-col md:flex-row gap-16 items-center relative overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-2 bg-[#1877F2]" />
             <div className="md:w-2/3 relative z-10">
@@ -197,7 +213,7 @@ export default function AboutPage() {
 
       {/* 6. PODCAST SECTION */}
       <section className="py-32 bg-[#050B14] border-t border-white/5">
-        <div className="container mx-auto px-4 md:px-8 max-w-[1200px]">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="lg:w-1/2 relative">
               <div className="absolute inset-0 bg-[#1877F2]/20 rounded-full blur-[100px] pointer-events-none"></div>
@@ -255,7 +271,7 @@ export default function AboutPage() {
       {/* 7. LEARN MORE / CTA */}
       <section className="py-32 bg-gradient-to-b from-[#020611] to-[#050B14] border-t border-white/5 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="container mx-auto px-4 max-w-[800px] relative z-10">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-4xl relative z-10">
           <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Join The Fight</h2>
           <h2 className="font-sans text-4xl md:text-6xl font-bold uppercase tracking-tight mb-8 text-white">STAND WITH US</h2>
           <p className="text-slate-400 mb-12 text-xl leading-relaxed">Whether you are an officer, a family member, or a concerned citizen, your voice is needed to drive reform.</p>

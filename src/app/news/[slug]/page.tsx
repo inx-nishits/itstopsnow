@@ -120,13 +120,13 @@ export default function NewsDetail({ params }: { params: { slug: string } }) {
 
             {/* Related News Navigation */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-16 border-t border-white/10 pt-10">
-              <Link href="#" className="flex flex-col group p-6 border border-white/5 bg-[#050B14] hover:border-[#1877F2]/30 rounded-2xl transition-all">
-                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center"><ArrowRight className="w-3 h-3 mr-2 rotate-180 text-[#1877F2]" /> PREVIOUS ARTICLE</span>
-                <span className="font-sans font-bold text-lg text-white group-hover:text-[#1877F2] transition-colors line-clamp-2 uppercase tracking-tight">Meeting with the Home Secretary to discuss reform</span>
+              <Link href="/news" className="flex flex-col group p-6 border border-white/5 bg-[#050B14] hover:border-[#1877F2]/30 rounded-2xl transition-all">
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 flex items-center"><ChevronRight className="w-4 h-4 mr-1 rotate-180 text-[#1877F2]" /> PREVIOUS ARTICLE</span>
+                <span className="font-bold text-sm text-white group-hover:text-[#1877F2] leading-snug uppercase tracking-wide">The Psychological Toll of Ongoing Investigations</span>
               </Link>
-              <Link href="#" className="flex flex-col sm:items-end sm:text-right group p-6 border border-white/5 bg-[#050B14] hover:border-[#1877F2]/30 rounded-2xl transition-all">
-                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center sm:justify-end">NEXT ARTICLE <ArrowRight className="w-3 h-3 ml-2 text-[#1877F2]" /></span>
-                <span className="font-sans font-bold text-lg text-white group-hover:text-[#1877F2] transition-colors line-clamp-2 uppercase tracking-tight">New Mental Health Support App Launched for Officers</span>
+              <Link href="/news" className="flex flex-col sm:items-end sm:text-right group p-6 border border-white/5 bg-[#050B14] hover:border-[#1877F2]/30 rounded-2xl transition-all">
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 flex items-center">NEXT ARTICLE <ChevronRight className="w-4 h-4 ml-1 text-[#1877F2]" /></span>
+                <span className="font-bold text-sm text-white group-hover:text-[#1877F2] leading-snug uppercase tracking-wide">New Bill Proposed to parliament for 12-Month Limit</span>
               </Link>
             </div>
           </div>

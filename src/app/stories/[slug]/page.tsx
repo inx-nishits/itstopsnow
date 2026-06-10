@@ -128,11 +128,11 @@ export default function StoryDetail({ params }: { params: { slug: string } }) {
 
             {/* Next/Prev Navigation */}
             <div className="grid grid-cols-2 gap-4 mt-16 border-t border-slate-200 pt-8">
-              <Link href="#" className="flex flex-col group p-4 border border-transparent hover:border-slate-200 rounded-lg hover:bg-slate-50 transition-all">
+              <Link href="/stories" className="flex flex-col group p-4 border border-transparent hover:border-slate-200 rounded-lg hover:bg-slate-50 transition-all">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center"><ChevronRight className="w-3 h-3 mr-1 rotate-180" /> Previous Story</span>
                 <span className="font-bold text-sm text-slate-900 group-hover:text-blue-600 line-clamp-2">"My husband came home a different person after the incident."</span>
               </Link>
-              <Link href="#" className="flex flex-col items-end text-right group p-4 border border-transparent hover:border-slate-200 rounded-lg hover:bg-slate-50 transition-all">
+              <Link href="/stories" className="flex flex-col items-end text-right group p-4 border border-transparent hover:border-slate-200 rounded-lg hover:bg-slate-50 transition-all">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center">Next Story <ChevronRight className="w-3 h-3 ml-1" /></span>
                 <span className="font-bold text-sm text-slate-900 group-hover:text-blue-600 line-clamp-2">"We wait years for answers while our lives are on hold."</span>
               </Link>
@@ -173,12 +173,12 @@ export default function StoryDetail({ params }: { params: { slug: string } }) {
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                 <h4 className="font-bold text-xs uppercase tracking-widest text-slate-900 mb-6 flex items-center"><Eye className="w-4 h-4 mr-2" /> SIMILAR STORIES</h4>
                 <div className="space-y-4">
-                  <Link href="#" className="group flex flex-col gap-1">
+                  <Link href="/stories" className="group flex flex-col gap-1">
                     <span className="text-[9px] font-bold text-blue-600 uppercase tracking-widest">FAMILY MEMBER</span>
                     <h5 className="font-bold text-sm text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">"The investigation took longer than his entire career."</h5>
                   </Link>
                   <div className="w-full h-px bg-slate-200"></div>
-                  <Link href="#" className="group flex flex-col gap-1">
+                  <Link href="/stories" className="group flex flex-col gap-1">
                     <span className="text-[9px] font-bold text-blue-600 uppercase tracking-widest">SERVING OFFICER</span>
                     <h5 className="font-bold text-sm text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">"I was told to stay quiet and trust the process."</h5>
                   </Link>

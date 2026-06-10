@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, CheckCircle2, ChevronRight, ChevronLeft, Send, AlertCircle, Edit3, Eye, User, Download } from "lucide-react";
+import { Search, MapPin, CheckCircle2, ChevronRight, ChevronLeft, Send, AlertCircle, Edit3, Eye, User, Download, Megaphone } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import posthog from 'posthog-js';
@@ -182,27 +182,33 @@ I urge you to support the "It Stops Now" campaign and raise this with the Home S
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
       {/* HEADER */}
-      <section className="relative w-full pt-32 pb-24 bg-[#010B19] flex flex-col justify-center overflow-hidden border-b border-slate-800">
+      <section className="relative w-full min-h-[50vh] pt-32 pb-32 bg-[#050A14] flex flex-col justify-center overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920" className="w-full h-full object-cover mix-blend-luminosity opacity-20" alt="Parliament" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#010B19] via-[#010B19]/80 to-transparent" />
+          <img src="https://images.unsplash.com/photo-1533036412154-8c8fbab123d2?auto=format&fit=crop&q=80&w=1920" className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40" alt="UK Parliament" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
         
-        <div className="container relative z-10 mx-auto px-4 md:px-8 max-w-[800px] text-center">
-          <Link href="/take-action" className="inline-flex items-center text-blue-400 hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-colors">
-            <ChevronLeft className="w-3 h-3 mr-1" /> Back to Action Center
-          </Link>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 uppercase tracking-tight font-heading leading-[1.05]">
-            CONTACT YOUR <span className="text-blue-500">MP.</span>
-          </h1>
-          <p className="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto">
-            It takes 2 minutes to make your voice heard in Parliament. Follow the steps below to find your representative and send a targeted message.
-          </p>
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          <div className="w-full lg:w-full max-w-[1200px]">
+            <Link href="/take-action" className="inline-flex items-center text-[#1877F2] hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-colors">
+              <ChevronLeft className="w-3 h-3 mr-1" /> Back to Action Center
+            </Link>
+            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
+              <Megaphone className="w-5 h-5" /> MAKE YOUR VOICE HEARD
+            </h3>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6 uppercase tracking-tighter drop-shadow-2xl py-2 leading-none">
+              CONTACT YOUR <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">MP.</span>
+            </h1>
+            <p className="text-slate-300 text-lg leading-relaxed max-w-2xl drop-shadow">
+              It takes 2 minutes to make your voice heard in Parliament. Follow the steps below to find your representative and send a targeted message.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* FORM WIZARD CONTAINER */}
-      <section className="container mx-auto px-4 md:px-8 max-w-[800px] -mt-16 relative z-10">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-4xl -mt-16 relative z-10">
         <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
           
           <div className="flex h-2 bg-slate-100">

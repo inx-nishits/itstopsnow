@@ -18,74 +18,71 @@ export default function NewsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
       
-      {/* 1. HERO SECTION & FEATURED NEWS */}
-      <section className="relative w-full pt-40 pb-24 bg-[#050B14] flex flex-col justify-center overflow-hidden border-b border-white/5">
+      {/* 1. HERO SECTION */}
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#1877F2]/10 rounded-full blur-[120px] pointer-events-none" />
           <img 
             src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920" 
             alt="Parliament background" 
-            className="w-full h-full object-cover mix-blend-luminosity opacity-10 mask-image-to-b"
+            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40 grayscale"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
 
-        <div className="container relative z-10 max-w-[1440px] mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                className="flex items-center gap-3 mb-6"
-              >
-                <div className="h-px w-8 bg-[#1877F2]" />
-                <span className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-xs">NEWS & UPDATES</span>
-              </motion.div>
-              <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-5xl md:text-7xl font-bold text-white leading-[1.05] mb-8 uppercase tracking-tight font-sans"
-              >
-                STAY <br/><span className="text-[#1877F2]">INFORMED.</span>
-              </motion.h1>
-              
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-lg md:text-xl text-slate-400 leading-relaxed font-medium mb-8 max-w-xl"
-              >
-                The latest campaign updates, press releases, media appearances, and parliamentary progress.
-              </motion.p>
-            </div>
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          <div className="w-full lg:w-full max-w-[1200px] pt-10">
+            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
+              <Newspaper className="w-5 h-5" /> NEWS & UPDATES
+            </h3>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
+            >
+              <span className="text-white">STAY </span><br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">INFORMED.</span>
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
+            >
+              The latest campaign updates, press releases, media appearances, and parliamentary progress.
+            </motion.p>
+          </div>
+        </div>
+      </section>
 
-            {/* Featured Hero News Card */}
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.4 }}>
-              <div className="bg-[#020611] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl relative group hover:border-[#1877F2]/50 transition-colors cursor-pointer">
-                <div className="h-64 relative overflow-hidden">
-                  <div className="absolute top-6 left-6 z-10 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white animate-pulse"></div> BREAKING</div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-transparent to-transparent z-10" />
-                  <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover grayscale opacity-60 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700" alt="Featured News" />
-                </div>
-                <div className="p-10 relative z-20 -mt-10">
-                  <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-4">
-                    <span className="text-[#1877F2] bg-[#1877F2]/10 px-3 py-1 rounded-full border border-[#1877F2]/20">PARLIAMENT</span> <Calendar className="w-3 h-3 ml-2" /> TODAY
-                  </div>
-                  <h2 className="font-sans text-2xl md:text-3xl font-bold text-white mb-4 uppercase tracking-tight group-hover:text-[#1877F2] transition-colors leading-tight">
-                    12 of 13 officer suicides linked directly to prolonged misconduct investigations.
-                  </h2>
-                  <p className="text-slate-400 text-sm mb-8 leading-relaxed line-clamp-2">
-                    A devastating new independent report has confirmed what the police family has known for years: the system designed to investigate police misconduct is fundamentally broken.
-                  </p>
-                  <Link href="/news/featured-report">
-                    <Button variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/10 uppercase tracking-widest text-[10px] py-6 px-8 rounded-full transition-colors">
-                      Read Full Article <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </Link>
-                </div>
+      {/* FEATURED NEWS */}
+      <section className="bg-[#050B14] py-16 border-b border-white/5 relative z-20">
+        <div className="container max-w-[1440px] mx-auto px-4 md:px-8">
+          <div className="bg-[#020611] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl relative group hover:border-[#1877F2]/50 transition-colors cursor-pointer">
+            <div className="h-64 md:h-96 relative overflow-hidden">
+              <div className="absolute top-6 left-6 z-10 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white animate-pulse"></div> BREAKING</div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-transparent to-transparent z-10" />
+              <img src="https://images.unsplash.com/photo-1584859737119-9eb15b9c0378?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover grayscale opacity-60 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700" alt="Featured News" />
+            </div>
+            <div className="p-10 relative z-20 -mt-20">
+              <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-4">
+                <span className="text-[#1877F2] bg-[#1877F2]/10 px-3 py-1 rounded-full border border-[#1877F2]/20">PARLIAMENT</span> <Calendar className="w-3 h-3 ml-2" /> TODAY
               </div>
-            </motion.div>
+              <h2 className="font-sans text-2xl md:text-4xl font-bold text-white mb-4 uppercase tracking-tight group-hover:text-[#1877F2] transition-colors leading-tight max-w-4xl">
+                12 of 13 officer suicides linked directly to prolonged misconduct investigations.
+              </h2>
+              <p className="text-slate-400 text-sm md:text-base mb-8 leading-relaxed line-clamp-2 max-w-4xl">
+                A devastating new independent report has confirmed what the police family has known for years: the system designed to investigate police misconduct is fundamentally broken.
+              </p>
+              <Link href="/news/featured-report">
+                <Button variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/10 uppercase tracking-widest text-[10px] py-6 px-8 rounded-full transition-colors">
+                  Read Full Article <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -189,12 +186,12 @@ export default function NewsPage() {
                 <div className="bg-[#050B14] border border-white/10 rounded-3xl p-8 shadow-xl">
                   <h3 className="font-bold text-[10px] uppercase tracking-[0.2em] text-[#1877F2] mb-8 flex items-center border-b border-white/10 pb-4">POPULAR THIS WEEK</h3>
                   <div className="space-y-6">
-                    <Link href="#" className="group flex flex-col gap-2">
+                    <Link href="/news" className="group flex flex-col gap-2">
                       <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">MEDIA</span>
                       <h5 className="font-bold text-sm text-white group-hover:text-[#1877F2] transition-colors leading-snug uppercase tracking-wide">Channel 4 Documentary exposes the hidden toll of IOPC investigations.</h5>
                     </Link>
                     <div className="w-full h-px bg-white/5"></div>
-                    <Link href="#" className="group flex flex-col gap-2">
+                    <Link href="/news" className="group flex flex-col gap-2">
                       <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">COMMUNITY</span>
                       <h5 className="font-bold text-sm text-white group-hover:text-[#1877F2] transition-colors leading-snug uppercase tracking-wide">The Wall of Remembrance surpasses 5,000 lit candles.</h5>
                     </Link>

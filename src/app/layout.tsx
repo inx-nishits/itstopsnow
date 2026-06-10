@@ -28,8 +28,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${outfit.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-[#010b19] text-white">
+      <body className="min-h-full flex flex-col font-sans bg-[#010b19] text-white" suppressHydrationWarning>
         <Header />
         <main className="flex-1 w-full">{children}</main>
         <Footer />

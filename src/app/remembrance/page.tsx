@@ -22,14 +22,38 @@ const OFFICERS = [
 
 export default function RemembrancePage() {
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pt-32 pb-24">
-      <div className="container mx-auto px-4 md:px-8 max-w-[1440px]">
-        
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-3xl font-bold uppercase tracking-widest text-white mb-2">WALL OF REMEMBRANCE</h1>
-          <p className="text-slate-400 text-sm">Remembering our fallen heroes.</p>
+    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-24">
+      
+      {/* HERO */}
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1616859752817-09434863076a?auto=format&fit=crop&q=80&w=1920" 
+            alt="Remembrance memorial" 
+            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40 grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
+
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
+          <div className="w-full lg:w-full max-w-[1200px] pt-10">
+            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
+              <Flame className="w-5 h-5" /> HONOR & RESPECT
+            </h3>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
+              WALL OF <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">REMEMBRANCE.</span>
+            </h1>
+            
+            <p className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow">
+              Remembering our fallen heroes. Every name here mattered. Every life here is remembered.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] pt-16">
 
         {/* Filters */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
