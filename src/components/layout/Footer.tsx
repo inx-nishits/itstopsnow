@@ -14,8 +14,34 @@ export default function Footer() {
         </h1>
       </div>
 
-      <div className="w-full px-6 lg:px-12 mx-auto relative z-10">
+      <div className="w-full px-6 lg:px-12 mx-auto relative z-10 max-w-[1600px]">
         
+        {/* PRE-FOOTER NEWSLETTER */}
+        <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#050A14] border border-[#1877F2]/30 rounded-[2rem] p-10 md:p-14 mb-24 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.1)] flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#1877F2]/30 rounded-full blur-[80px] pointer-events-none group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
+          
+          <div className="relative z-10 w-full md:w-1/2">
+            <h3 className="text-3xl font-black uppercase tracking-tighter text-white mb-3 flex items-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7 text-[#1877F2] mr-4"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Stay Informed
+            </h3>
+            <p className="text-slate-300 font-medium text-base">
+              Join our newsletter to receive crucial campaign updates and urgent calls to action. We never spam.
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 relative z-10 w-full md:w-1/2 md:justify-end">
+            <input 
+              type="email" 
+              placeholder="Enter your email address" 
+              className="w-full max-w-sm bg-[#02050A] border border-white/10 rounded-xl px-5 py-4 text-white text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] transition-all" 
+            />
+            <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-[0.2em] text-xs rounded-xl px-8 h-[52px] shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all shrink-0">
+              Join Now
+            </Button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-16 lg:gap-8 mb-32">
           
           {/* Brand Col */}

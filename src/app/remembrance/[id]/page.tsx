@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ChevronRight, Share2, Flame, MessageCircle, Heart, Calendar, ArrowRight, Download, Camera, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,14 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
   const [isLit, setIsLit] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [globalCandles, setGlobalCandles] = useState(85); // Starting with a low number to demo the effect
+  const [localGrayscaleOverride, setLocalGrayscaleOverride] = useState<number | null>(null);
+
+  useEffect(() => {
+    const litState = localStorage.getItem(`isn_lit_candle_${params.id}`);
+    if (litState) {
+      setIsLit(true);
+    }
+  }, [params.id]);
 
   // Mock data based on the design
   const officer = {
@@ -64,10 +72,22 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
   };
 
   const grayscaleValue = calculateGrayscale(globalCandles);
+  const currentGrayscale = localGrayscaleOverride !== null ? localGrayscaleOverride : grayscaleValue;
 
   const handleLightCandle = () => {
+    if (isLit) return;
+    
     setIsLit(true);
+    localStorage.setItem(`isn_lit_candle_${params.id}`, 'true');
     setGlobalCandles(prev => prev + 1);
+
+    // Personal Animation Moment: Force full color
+    setLocalGrayscaleOverride(0);
+
+    // Fade back to global baseline after 5 seconds
+    setTimeout(() => {
+      setLocalGrayscaleOverride(null);
+    }, 5000);
   };
 
   return (
@@ -90,7 +110,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               <img 
                 src={officer.image} 
                 alt={officer.name} 
-                style={{ filter: `grayscale(${grayscaleValue}%)` }}
+                style={{ filter: `grayscale(${currentGrayscale}%)` }}
                 className={`w-full h-full object-cover transition-all duration-3000 ease-in-out ${isLit ? 'scale-105' : ''}`}
               />
               <div className={`absolute inset-0 transition-opacity duration-3000 ${isLit ? 'opacity-0' : 'bg-gradient-to-t from-[#030712] to-transparent opacity-60'}`}></div>
@@ -324,7 +344,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
           <div>
             <div className="flex justify-between text-[10px] font-bold mb-2 uppercase tracking-widest">
               <span>Total Candles: {globalCandles.toLocaleString()}</span>
-              <span className="text-amber-500">{Math.round(100 - grayscaleValue)}% Color</span>
+              <span className="text-amber-500">{Math.round(100 - grayscaleValue)}% Baseline Color</span>
             </div>
             <input 
               type="range" 
