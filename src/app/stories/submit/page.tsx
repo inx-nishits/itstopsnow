@@ -87,7 +87,7 @@ export default function StorySubmission() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-xs font-bold uppercase tracking-widest text-slate-700">Full Name</label>
-                      <input type="text" placeholder="John Doe" className="w-full bg-white border border-slate-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+                      <input type="text" placeholder="John Smith" className="w-full bg-white border border-slate-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs font-bold uppercase tracking-widest text-slate-700">Email Address</label>

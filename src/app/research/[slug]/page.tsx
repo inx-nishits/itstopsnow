@@ -146,7 +146,7 @@ export default function ResearchDetail({ params }: { params: { slug: string } })
           </div>
 
           <div className="bg-[#010B19] text-white rounded-3xl p-8 shadow-xl text-center border border-slate-800">
-            <h3 className="text-xl font-bold uppercase font-heading mb-4 text-white">Take Action</h3>
+            <h3 className="text-xl font-bold uppercase font-heading mb-4 text-white">Get Involved</h3>
             <p className="text-slate-400 text-sm mb-8 leading-relaxed">Use this evidence to demand a 12-month limit from your Member of Parliament.</p>
             <Link href="/take-action">
               <Button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold uppercase tracking-widest py-7 shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-1">

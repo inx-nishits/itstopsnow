@@ -333,7 +333,7 @@ export default function TakeActionPage() {
                       <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 block">Your Name</label>
                       <input 
                         type="text" 
-                        placeholder="e.g. John Doe" 
+                        placeholder="e.g. John Smith" 
                         value={personalization.name}
                         onChange={(e) => setPersonalization({...personalization, name: e.target.value})}
                         className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600 shadow-inner" 

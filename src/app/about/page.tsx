@@ -179,34 +179,67 @@ export default function AboutPage() {
       {/* 5. FUNDING TRANSPARENCY */}
       <section className="py-32 bg-[#020611] border-t border-white/5 relative">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-white/10 rounded-3xl shadow-2xl p-10 md:p-16 flex flex-col md:flex-row gap-16 items-center relative overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-2 bg-[#1877F2]" />
-            <div className="md:w-2/3 relative z-10">
-              <h2 className="font-sans text-3xl font-bold uppercase tracking-tight text-white mb-6">FUNDING & TRANSPARENCY</h2>
-              <p className="text-slate-400 mb-8 text-lg leading-relaxed">
-                'It Stops Now' is fully funded by Pocket Sergeant Ltd. We do not accept government funding, police federation grants, or corporate sponsorships that could compromise our independence. 
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-center gap-4 text-sm text-slate-300 font-medium tracking-wide">
-                  <CheckCircle className="w-6 h-6 text-[#1877F2] shrink-0" /> 100% Independent & Unbiased
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Accountability</h2>
+            <h2 className="font-sans text-3xl md:text-5xl font-bold uppercase tracking-tight mb-8">FUNDING & TRANSPARENCY</h2>
+            <p className="text-slate-400 text-lg leading-relaxed">
+              'It Stops Now' is fully funded by Pocket Sergeant Ltd. We do not accept government funding, police federation grants, or corporate sponsorships. 100% of our resources go directly to the cause.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            {/* Card 1 */}
+            <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                <Shield className="w-7 h-7 text-[#1877F2]" />
+              </div>
+              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 text-white">Legal Counsel</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-6">Providing robust legal defense and advice for officers facing protracted investigations.</p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                  <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Initial Consultation Fees
                 </li>
-                <li className="flex items-center gap-4 text-sm text-slate-300 font-medium tracking-wide">
-                  <CheckCircle className="w-6 h-6 text-[#1877F2] shrink-0" /> No political or union affiliations
-                </li>
-                <li className="flex items-center gap-4 text-sm text-slate-300 font-medium tracking-wide">
-                  <CheckCircle className="w-6 h-6 text-[#1877F2] shrink-0" /> All campaign costs covered by Pocket Sergeant profits
+                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                  <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Specialist Defense Lawyers
                 </li>
               </ul>
             </div>
-            <div className="md:w-1/3 flex justify-center relative z-10">
-              <div className="w-48 h-48 bg-[#050B14] rounded-full border border-white/10 flex items-center justify-center shadow-[0_0_50px_rgba(24,119,242,0.1)] relative">
-                <div className="absolute inset-2 border-2 border-dashed border-[#1877F2]/30 rounded-full" />
-                <div className="text-center">
-                  <div className="text-5xl font-bold text-[#1877F2] font-sans mb-2">100%</div>
-                  <div className="text-[10px] font-bold uppercase text-white tracking-[0.3em]">Independent</div>
-                </div>
+
+            {/* Card 2 */}
+            <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                <Heart className="w-7 h-7 text-[#1877F2]" />
               </div>
+              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 text-white">Welfare Support</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-6">Direct mental health support for officers and families suffering through systemic delays.</p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                  <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Psychological Evaluations
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                  <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Crisis Counseling Sessions
+                </li>
+              </ul>
             </div>
+
+            {/* Card 3 */}
+            <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                <Activity className="w-7 h-7 text-[#1877F2]" />
+              </div>
+              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 text-white">Campaign Logistics</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-6">Funding the push for systemic, legislative change and public awareness events.</p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                  <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Parliamentary Lobbying
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                  <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Memorial Events & Advocacy
+                </li>
+              </ul>
+            </div>
+
           </div>
         </div>
       </section>
@@ -278,7 +311,7 @@ export default function AboutPage() {
           <div className="flex flex-wrap justify-center gap-6">
             <Link href="/take-action">
               <Button className="bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-12 py-7 rounded-full shadow-[0_0_30px_rgba(24,119,242,0.3)] transition-all hover:scale-105">
-                Take Action Today
+                Get Involved Today
               </Button>
             </Link>
             <Link href="https://pocketsergeant.co.uk" target="_blank">

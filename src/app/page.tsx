@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Quote, Calendar, ArrowRight, Mail, Heart, Clock } from "lucide-react";
+import { Quote, Calendar, ArrowRight, Mail, Heart, Clock, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, animate, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
@@ -36,7 +36,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-[#030712] text-white font-sans">
       
       {/* HERO SECTION */}
-      <section className="relative w-full min-h-[90vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-48 lg:pt-40 lg:pb-56 border-b border-white/5">
+      <section className="relative w-full min-h-[100dvh] flex flex-col justify-center bg-[#050A14] pt-24 pb-16 lg:pt-32 lg:pb-16 border-b border-white/5 overflow-hidden">
         
         {/* Full-Screen Background Image */}
         <div className="absolute inset-0 z-0">
@@ -51,16 +51,16 @@ export default function Home() {
         </div>
 
         {/* Content Container */}
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col lg:flex-row items-center lg:justify-between gap-12 max-w-[1600px]">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col lg:flex-row items-center lg:justify-between gap-12 max-w-[1600px] pb-12">
           
           {/* Left Content */}
           <div className="w-full lg:w-full max-w-[1200px] pt-20 lg:pt-0">
-            <h1 className="text-5xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
-              <span className="text-white">A SYSTEM </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 pr-2 lg:pr-4">IN CRISIS</span>
+            <h1 className="text-7xl md:text-[6rem] xl:text-[9rem] font-black leading-[0.9] mb-8 tracking-tighter uppercase drop-shadow-2xl py-2">
+              <span className="text-white block">A SYSTEM</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 block pr-4">IN CRISIS</span>
             </h1>
-            <h2 className="text-2xl md:text-3xl xl:text-4xl font-medium text-white mb-8 leading-tight tracking-tight drop-shadow-md">
-              Supporting the Men and<br />Women who Protect Us.
+            <h2 className="text-2xl md:text-3xl xl:text-4xl font-medium text-white mb-8 leading-tight tracking-tight drop-shadow-md max-w-4xl">
+              Supporting the Men and Women who Protect Us.
             </h2>
 
             <p className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-3xl drop-shadow">
@@ -90,6 +90,25 @@ export default function Home() {
              {/* We can add a conceptual graphic or abstract shapes here later */}
           </div>
 
+        </div>
+        {/* INFORMATION ALERT BOX (Pinned to bottom of Hero) */}
+        <div className="absolute bottom-0 left-0 w-full bg-[#1877F2] py-4 border-b border-white/10 z-20 shadow-[0_10px_30px_rgba(24,119,242,0.15)]">
+          <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="bg-white/20 p-2 rounded-full">
+                <AlertTriangle className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-white font-bold text-sm tracking-wide">URGENT ACTION REQUIRED</p>
+                <p className="text-white/80 text-xs font-medium">The Parliamentary Debate is scheduled for Nov 25th. Have you contacted your MP?</p>
+              </div>
+            </div>
+            <Link href="/take-action">
+              <Button className="bg-white text-[#1877F2] hover:bg-slate-100 font-bold px-6 py-2 rounded-full text-xs tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                Contact MP Now
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -367,6 +386,60 @@ export default function Home() {
         </div>
       </section>
 
+      {/* QUOTE CARDS SECTION (Supporting the Cinematic Quote) */}
+      <section className="bg-[#0a1224] py-16 border-b border-white/5 relative z-10">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Quote Card 1 */}
+            <div className="bg-[#050A14] border border-[#1877F2]/20 rounded-2xl p-8 relative hover:-translate-y-2 transition-transform duration-500 shadow-lg group">
+              <Quote className="w-10 h-10 text-[#1877F2]/20 absolute top-6 right-6 group-hover:scale-110 transition-transform" />
+              <p className="text-slate-300 font-medium italic text-sm mb-6 relative z-10 leading-relaxed">
+                "We are not asking for immunity. We are simply asking for fairness and for investigations to not drag out for years, destroying our mental health."
+              </p>
+              <div className="flex items-center gap-3 border-t border-white/10 pt-4 mt-auto">
+                <div className="w-8 h-8 rounded-full bg-[#1877F2]/20 flex items-center justify-center font-bold text-[#1877F2] text-xs">A</div>
+                <div>
+                  <p className="text-white text-xs font-bold tracking-wide">Anonymous Officer</p>
+                  <p className="text-slate-500 text-[10px] uppercase tracking-widest">Metropolitan Police</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quote Card 2 */}
+            <div className="bg-[#050A14] border border-[#1877F2]/20 rounded-2xl p-8 relative hover:-translate-y-2 transition-transform duration-500 shadow-lg group">
+              <Quote className="w-10 h-10 text-[#1877F2]/20 absolute top-6 right-6 group-hover:scale-110 transition-transform" />
+              <p className="text-slate-300 font-medium italic text-sm mb-6 relative z-10 leading-relaxed">
+                "The lack of welfare support during these 4-year IOPC proceedings is a national scandal. It Stops Now is our only voice."
+              </p>
+              <div className="flex items-center gap-3 border-t border-white/10 pt-4 mt-auto">
+                <div className="w-8 h-8 rounded-full bg-[#1877F2]/20 flex items-center justify-center font-bold text-[#1877F2] text-xs">P</div>
+                <div>
+                  <p className="text-white text-xs font-bold tracking-wide">Police Federation Rep</p>
+                  <p className="text-slate-500 text-[10px] uppercase tracking-widest">National Body</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quote Card 3 */}
+            <div className="bg-[#050A14] border border-[#1877F2]/20 rounded-2xl p-8 relative hover:-translate-y-2 transition-transform duration-500 shadow-lg group">
+              <Quote className="w-10 h-10 text-[#1877F2]/20 absolute top-6 right-6 group-hover:scale-110 transition-transform" />
+              <p className="text-slate-300 font-medium italic text-sm mb-6 relative z-10 leading-relaxed">
+                "My partner was completely cleared of all charges, but the 3-year wait took a toll we can never repair. This system must change."
+              </p>
+              <div className="flex items-center gap-3 border-t border-white/10 pt-4 mt-auto">
+                <div className="w-8 h-8 rounded-full bg-[#1877F2]/20 flex items-center justify-center font-bold text-[#1877F2] text-xs">S</div>
+                <div>
+                  <p className="text-white text-xs font-bold tracking-wide">Spouse of Officer</p>
+                  <p className="text-slate-500 text-[10px] uppercase tracking-widest">Family Member</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* MISSION PILLARS (Formerly Quote Cards) */}
       <section className="bg-[#010b19] pb-24 border-b border-white/5 relative z-10">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
@@ -583,9 +656,9 @@ export default function Home() {
 
 
       {/* MAKE A DIFFERENCE TODAY */}
-      <section className="relative bg-[#02050A] py-24 lg:py-40 border-t border-white/10 overflow-hidden">
+      <section className="relative bg-[#02050A] py-16 lg:py-24 border-t border-white/10 overflow-hidden">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="bg-[#1877F2] rounded-[3rem] p-12 md:p-20 lg:p-32 relative overflow-hidden flex flex-col justify-center text-center items-center shadow-[0_30px_60px_rgba(24,119,242,0.3)] border border-white/10">
+          <div className="bg-[#1877F2] rounded-[3rem] py-16 px-8 md:py-20 md:px-16 lg:py-24 lg:px-20 relative overflow-hidden flex flex-col justify-center text-center items-center shadow-[0_30px_60px_rgba(24,119,242,0.3)] border border-white/10">
             
             {/* Dynamic Background Image */}
             <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('https://images.unsplash.com/photo-1521634586221-a36c84c1f1ec?auto=format&fit=crop&q=80&w=1600')] bg-cover bg-center"></div>

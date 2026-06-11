@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, Filter, Calendar, Share2, ArrowRight, BookOpen, Clock, Tag, ExternalLink } from "lucide-react";
+import { Search, Filter, Calendar, Share2, ArrowRight, BookOpen, Clock, Tag, ExternalLink, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
@@ -139,7 +139,7 @@ export default function NewsDetail({ params }: { params: { slug: string } }) {
               <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#050B14] border border-[#1877F2]/30 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 h-full w-full bg-[url('https://images.unsplash.com/photo-1541872511475-cb56767676f6?auto=format&fit=crop&q=80&w=600')] bg-cover opacity-10 mask-image-to-r pointer-events-none" />
                 <div className="relative z-10">
-                  <h4 className="font-sans text-2xl font-bold uppercase tracking-tight mb-4 text-white">TAKE ACTION TODAY</h4>
+                  <h4 className="font-sans text-2xl font-bold uppercase tracking-tight mb-4 text-white">GET INVOLVED TODAY</h4>
                   <p className="text-slate-300 text-sm mb-8 leading-relaxed">
                     Help us enforce a 12-month time limit on investigations. Contact your local MP in less than 2 minutes using our template letter.
                   </p>
