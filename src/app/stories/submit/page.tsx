@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { UploadCloud, CheckCircle2, ShieldAlert, Lock, AlertCircle, ArrowRight, ArrowLeft, PenTool, User, EyeOff } from "lucide-react";
+import { UploadCloud, CheckCircle2, ShieldAlert, Lock, AlertCircle, ArrowRight, ArrowLeft, PenTool, User, EyeOff, Quote } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -40,8 +40,10 @@ export default function StorySubmission() {
       </section>
 
       {/* FORM CONTAINER */}
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-4xl -mt-6 relative z-10">
-        <div className="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-6xl -mt-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          
+          <div className="lg:col-span-2 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
           
           {/* Progress Strip */}
           <div className="flex">
@@ -236,6 +238,21 @@ export default function StorySubmission() {
             )}
 
           </div>
+          </div>
+
+          {/* Supportive Quote Banner */}
+          <div className="lg:col-span-1 bg-[#050A14] border border-white/10 rounded-3xl p-8 md:p-10 text-white shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-bl-full pointer-events-none group-hover:bg-[#1877F2]/20 transition-colors" />
+            <Quote className="w-12 h-12 text-[#1877F2] opacity-30 mb-6" />
+            <p className="font-serif italic text-slate-300 leading-relaxed text-sm mb-6">
+              "My partner was completely cleared of all charges, but the 3-year wait took a toll we can never repair. Sharing our experience was the first step toward healing."
+            </p>
+            <div className="border-t border-white/10 pt-4">
+              <p className="text-white text-xs font-bold uppercase tracking-wider">Spouse of Officer</p>
+              <p className="text-[#1877F2] text-[10px] uppercase tracking-widest">Family Member</p>
+            </div>
+          </div>
+
         </div>
       </section>
 

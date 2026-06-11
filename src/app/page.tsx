@@ -1,15 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Quote, Calendar, ArrowRight, Mail, Heart, Clock, AlertTriangle } from "lucide-react";
+import { Quote, Calendar, ArrowRight, Mail, Heart, Clock, AlertTriangle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, animate, useInView } from "framer-motion";
+import { motion, animate, useInView, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
-function StatCounter({ end, suffix = "", prefix = "", isPulsing = false }: { end: number, suffix?: string, prefix?: string, isPulsing?: boolean }) {
+function StatCounter({ end, suffix = "", prefix = "", isPulsing = false, decimals }: { end: number, suffix?: string, prefix?: string, isPulsing?: boolean, decimals?: number }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
+
+  const resolvedDecimals = decimals ?? (end % 1 !== 0 ? 1 : 0);
 
   useEffect(() => {
     if (isInView) {
@@ -17,7 +19,7 @@ function StatCounter({ end, suffix = "", prefix = "", isPulsing = false }: { end
         duration: 2.5,
         ease: "easeOut",
         onUpdate(value) {
-          setCount(Math.floor(value));
+          setCount(value);
         }
       });
       return () => controls.stop();
@@ -25,13 +27,30 @@ function StatCounter({ end, suffix = "", prefix = "", isPulsing = false }: { end
   }, [end, isInView]);
 
   return (
-    <div ref={ref} className={`text-5xl lg:text-7xl font-black text-white tracking-tighter drop-shadow-md group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2] transition-all duration-500 flex items-center gap-2 ${isPulsing ? 'animate-pulse text-[#1877F2]' : ''}`}>
-      {prefix}{count.toLocaleString()}{suffix}
+    <div ref={ref} className={`text-5xl lg:text-7xl font-black text-white tracking-tighter drop-shadow-md group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2] transition-all duration-500 flex items-center gap-2`}>
+      {prefix}
+      <span className={isPulsing ? 'animate-[pulse_3s_infinite] text-[#1877F2]' : ''}>
+        {count.toLocaleString(undefined, {
+          minimumFractionDigits: resolvedDecimals,
+          maximumFractionDigits: resolvedDecimals
+        })}
+      </span>
+      {suffix}
     </div>
   );
 }
 
 export default function Home() {
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+  const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
+
+  const toggleFlip = (index: number) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#030712] text-white font-sans">
       
@@ -128,7 +147,7 @@ export default function Home() {
           {/* Stat 2 */}
           <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
             <div className="text-[10px] md:text-xs font-bold text-[#1877F2] uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <Heart className="w-4 h-4 text-[#1877F2] animate-pulse" fill="currentColor" />
+              <Heart className="w-4 h-4 text-[#1877F2] animate-[pulse_3s_infinite]" fill="currentColor" />
               LIVES SAVED
             </div>
             <div className="flex items-end">
@@ -195,9 +214,17 @@ export default function Home() {
                 <p className="text-3xl md:text-5xl text-white font-medium leading-[1.2] tracking-tight mb-10">
                   "To protect and serve others, they gave everything. Now, <span className="text-[#1877F2]">it's our turn to protect them.</span>"
                 </p>
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-[2px] bg-white/20 group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
-                  <span className="text-slate-500 text-xs font-bold tracking-[0.2em] uppercase">The Mission</span>
+                <div className="flex items-center justify-between flex-wrap gap-6 mt-10">
+                  <div className="flex items-center gap-6">
+                    <div className="w-16 h-[2px] bg-white/20 group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
+                    <span className="text-slate-500 text-xs font-bold tracking-[0.2em] uppercase">The Mission</span>
+                  </div>
+                  <button 
+                    onClick={() => setIsGetInvolvedOpen(true)}
+                    className="bg-[#1877F2] text-white hover:bg-white hover:text-black text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)] hover:-translate-y-0.5 cursor-pointer"
+                  >
+                    Get Involved
+                  </button>
                 </div>
               </div>
             </div>
@@ -229,10 +256,13 @@ export default function Home() {
             
             {/* Pillar 1 */}
             <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
-              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.03] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">1</div>
+              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">1</div>
               <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
-                <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                <div className="flex justify-between items-center">
+                  <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                  </div>
+                  <span className="text-slate-500 group-hover:text-white/80 transition-colors font-black tracking-widest text-xs uppercase">Pillar 01</span>
                 </div>
                 <div className="pt-16">
                   <h3 className="font-black text-2xl text-white mb-4 group-hover:text-white transition-colors duration-500 uppercase tracking-tighter leading-none">Raise <br/> Awareness</h3>
@@ -243,10 +273,13 @@ export default function Home() {
 
             {/* Pillar 2 */}
             <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
-              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.03] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">2</div>
+              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">2</div>
               <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
-                <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                <div className="flex justify-between items-center">
+                  <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                  </div>
+                  <span className="text-slate-500 group-hover:text-white/80 transition-colors font-black tracking-widest text-xs uppercase">Pillar 02</span>
                 </div>
                 <div className="pt-16">
                   <h3 className="font-black text-2xl text-white mb-4 group-hover:text-white transition-colors duration-500 uppercase tracking-tighter leading-none">Support <br/> Families</h3>
@@ -257,10 +290,13 @@ export default function Home() {
 
             {/* Pillar 3 */}
             <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
-              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.03] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">3</div>
+              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">3</div>
               <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
-                <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                <div className="flex justify-between items-center">
+                  <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                  </div>
+                  <span className="text-slate-500 group-hover:text-white/80 transition-colors font-black tracking-widest text-xs uppercase">Pillar 03</span>
                 </div>
                 <div className="pt-16">
                   <h3 className="font-black text-2xl text-white mb-4 group-hover:text-white transition-colors duration-500 uppercase tracking-tighter leading-none">Drive <br/> Change</h3>
@@ -271,10 +307,13 @@ export default function Home() {
 
             {/* Pillar 4 */}
             <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
-              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.03] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">4</div>
+              <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">4</div>
               <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
-                <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+                <div className="flex justify-between items-center">
+                  <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+                  </div>
+                  <span className="text-slate-500 group-hover:text-white/80 transition-colors font-black tracking-widest text-xs uppercase">Pillar 04</span>
                 </div>
                 <div className="pt-16">
                   <h3 className="font-black text-2xl text-white mb-4 group-hover:text-white transition-colors duration-500 uppercase tracking-tighter leading-none">Build <br/> Community</h3>
@@ -518,37 +557,119 @@ export default function Home() {
               }
             ].map((member, i) => (
               <div key={i} className="group flex flex-col h-full">
-                {/* Image Container */}
-                <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-8 border border-white/10 shadow-xl bg-[#050A14]">
-                  <img 
-                    src={member.img} 
-                    alt={member.name} 
-                    className="absolute inset-0 w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
-                  />
-                </div>
-
-                {/* Text Content */}
-                <div className="flex flex-col flex-grow relative pl-6 border-l-2 border-white/10 group-hover:border-[#1877F2] transition-colors duration-500">
-                  <h4 className="text-3xl font-black text-white uppercase tracking-tight mb-2 group-hover:text-[#1877F2] transition-colors duration-300">
-                    {member.name}
-                  </h4>
-                  <p className="text-[#1877F2] font-bold text-xs uppercase tracking-widest mb-6">
-                    {member.role}
-                  </p>
-                  <p className="text-slate-400 text-base leading-relaxed mb-8 flex-grow">
-                    {member.bio}
-                  </p>
-                  
-                  {/* Action/Link */}
-                  <div className="mt-auto">
-                    <Link href="#" className="inline-flex items-center text-white text-xs font-bold uppercase tracking-widest group-hover:text-[#1877F2] transition-colors">
-                      <span className="w-8 h-[1px] bg-white group-hover:bg-[#1877F2] mr-4 transition-colors"></span>
-                      Read Full Bio
-                    </Link>
+                
+                {/* Mobile Layout (Static - Always Visible) */}
+                <div className="md:hidden flex flex-col bg-[#050A14] border border-white/10 rounded-3xl p-6 shadow-xl h-full">
+                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 border border-white/10 bg-[#02050A]">
+                    <img 
+                      src={member.img} 
+                      alt={member.name} 
+                      className="absolute inset-0 w-full h-full object-cover object-top" 
+                    />
+                  </div>
+                  <div className="flex flex-col flex-grow pl-4 border-l-2 border-[#1877F2]">
+                    <h4 className="text-2xl font-black text-white uppercase tracking-tight mb-1">
+                      {member.name}
+                    </h4>
+                    <p className="text-[#1877F2] font-bold text-xs uppercase tracking-widest mb-4">
+                      {member.role}
+                    </p>
+                    <p className="text-slate-400 text-sm leading-relaxed">
+                      {member.bio}
+                    </p>
                   </div>
                 </div>
+
+                {/* Desktop Layout (3D Flipping Card) */}
+                <div className="hidden md:block perspective-1000 w-full h-[520px] relative">
+                  <div className={`w-full h-full duration-700 preserve-3d transition-transform ${flippedCards[i] ? 'rotate-y-180' : ''}`}>
+                    
+                    {/* Front Face */}
+                    <div className="absolute inset-0 w-full h-full backface-hidden bg-[#050A14] border border-white/10 rounded-3xl p-6 flex flex-col">
+                      <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 border border-white/10 shadow-xl bg-[#02050A]">
+                        <img 
+                          src={member.img} 
+                          alt={member.name} 
+                          className="absolute inset-0 w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700" 
+                        />
+                      </div>
+                      <div className="flex flex-col flex-grow pl-4 border-l-2 border-white/10 group-hover:border-[#1877F2] transition-colors duration-500">
+                        <h4 className="text-2xl font-black text-white uppercase tracking-tight mb-1 group-hover:text-[#1877F2] transition-colors duration-300">
+                          {member.name}
+                        </h4>
+                        <p className="text-[#1877F2] font-bold text-xs uppercase tracking-widest mb-4">
+                          {member.role}
+                        </p>
+                        <button 
+                          onClick={() => toggleFlip(i)} 
+                          className="mt-auto inline-flex items-center text-white text-xs font-bold uppercase tracking-widest hover:text-[#1877F2] transition-colors cursor-pointer text-left self-start"
+                        >
+                          <span className="w-8 h-[1px] bg-white group-hover:bg-[#1877F2] mr-4 transition-colors"></span>
+                          View Bio
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Back Face */}
+                    <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-[#0a1120] border border-white/10 rounded-3xl p-8 flex flex-col">
+                      <div className="flex flex-col flex-grow pl-4 border-l-2 border-[#1877F2]">
+                        <h4 className="text-2xl font-black text-[#1877F2] uppercase tracking-tight mb-1">
+                          {member.name}
+                        </h4>
+                        <p className="text-white font-bold text-xs uppercase tracking-widest mb-6">
+                          {member.role}
+                        </p>
+                        <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+                          {member.bio}
+                        </p>
+                        <button 
+                          onClick={() => toggleFlip(i)} 
+                          className="mt-auto inline-flex items-center text-white text-xs font-bold uppercase tracking-widest hover:text-[#1877F2] transition-colors cursor-pointer text-left self-start"
+                        >
+                          <span className="w-8 h-[1px] bg-[#1877F2] mr-4 transition-colors"></span>
+                          View Photo
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT CAMPAIGN PROMOTION BANNER */}
+      <section className="relative bg-[#050A14] py-24 border-y border-white/5 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-transparent mix-blend-screen pointer-events-none" />
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+          <div className="bg-[#0c1322] border border-white/10 rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#1877F2]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="w-full lg:w-2/3">
+              <div className="flex items-center gap-4 mb-6">
+                <span className="bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full">
+                  About The Campaign
+                </span>
+              </div>
+              <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-6 leading-tight">
+                Our Inception & <span className="text-[#1877F2]">The Mission</span>
+              </h3>
+              <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-4">
+                Founded by ex-officers, legal professionals, and psychologists, *It Stops Now* arose directly from the front line. We saw first-hand the devastating toll that prolonged, unaccountable investigations take on officers and their loved ones.
+              </p>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                We advocate for reform, provide immediate crisis welfare support, and coordinate national legal defense efforts to restore fairness and support to those who stand in harm's way for our safety.
+              </p>
+            </div>
+            <div className="w-full lg:w-auto shrink-0">
+              <Link href="/about">
+                <Button className="w-full lg:w-auto bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold px-10 py-8 rounded-full text-xs tracking-[0.2em] uppercase transition-all duration-500 shadow-xl hover:-translate-y-1">
+                  Read Our Story <ArrowRight className="w-4 h-4 ml-3" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -687,6 +808,100 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* POCKET SERGEANT SPONSORSHIP BANNER */}
+      <section className="relative bg-[#02050A] py-12 border-t border-white/5">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] flex flex-col md:flex-row items-center justify-between gap-6 opacity-80 hover:opacity-100 transition-opacity duration-300">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+              <Heart className="w-5 h-5 text-red-500 animate-pulse" />
+            </div>
+            <div>
+              <p className="text-white text-xs font-bold uppercase tracking-widest">PROUDLY SUSTAINED BY</p>
+              <p className="text-slate-400 text-sm">Pocket Sergeant Ltd — Supporting UK Policing</p>
+            </div>
+          </div>
+          <div className="flex gap-6 items-center flex-wrap">
+            <span className="text-slate-500 text-xs font-medium">Fully funded, zero public donation dependencies.</span>
+            <a 
+              href="https://pocketsergeant.co.uk" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#1877F2] hover:text-white text-xs font-bold uppercase tracking-widest flex items-center transition-colors"
+            >
+              Learn More <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* GET INVOLVED MODAL */}
+      <AnimatePresence>
+        {isGetInvolvedOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsGetInvolvedOpen(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-[#050b18] border border-white/10 rounded-3xl w-full max-w-lg p-8 md:p-10 relative overflow-hidden shadow-2xl z-10"
+            >
+              <button
+                onClick={() => setIsGetInvolvedOpen(false)}
+                className="absolute top-6 right-6 text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              <h3 className="font-heading text-2xl font-bold uppercase tracking-tight text-white mb-2">
+                GET INVOLVED
+              </h3>
+              <p className="text-[#1877F2] font-bold text-xs uppercase tracking-widest mb-6">
+                Stand with those who protect us
+              </p>
+
+              {/* Form */}
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                alert("Thank you! Your information has been registered. Together, we can make a difference.");
+                setIsGetInvolvedOpen(false);
+              }} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Name</label>
+                  <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2] text-sm" placeholder="Your Name" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Role / Force</label>
+                    <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2] text-sm" placeholder="e.g. PC / Supporter" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Telephone</label>
+                    <input type="tel" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2] text-sm" placeholder="Phone Number" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Email</label>
+                  <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2] text-sm" placeholder="email@example.com" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Your Message</label>
+                  <textarea rows={3} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2] text-sm resize-none" placeholder="How would you like to support the movement?"></textarea>
+                </div>
+                <button type="submit" className="w-full bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(24,119,242,0.3)] cursor-pointer">
+                  Submit Details
+                </button>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

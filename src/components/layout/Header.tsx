@@ -8,7 +8,6 @@ import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "The Issue", href: "/the-issue" },
   { label: "News", href: "/news" },
   { label: "Stories", href: "/stories" },
@@ -82,7 +81,7 @@ export default function Header() {
           </nav>
 
           {/* DESKTOP ACTIONS */}
-          <div className="hidden lg:flex items-center shrink-0">
+          <div className="hidden lg:flex items-center gap-4 shrink-0">
             <Link 
               href="/take-action" 
               className="bg-[#1877F2] text-white hover:bg-white hover:text-black text-xs xl:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:-translate-y-0.5"
@@ -138,7 +137,7 @@ export default function Header() {
                 </Link>
               ))}
               
-              <div className="mt-8 pt-8 border-t border-white/10">
+              <div className="mt-8 pt-8 border-t border-white/10 flex flex-col gap-4">
                 <Link 
                   href="/take-action" 
                   className="flex justify-center bg-[#1877F2] text-white hover:bg-white hover:text-black text-sm font-bold uppercase tracking-wider px-6 py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)]"
@@ -153,4 +152,3 @@ export default function Header() {
     </>
   );
 }
-
