@@ -13,7 +13,6 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
   const [globalCandles, setGlobalCandles] = useState(85); // Starting with a low number to demo the effect
   const [localGrayscaleOverride, setLocalGrayscaleOverride] = useState<number | null>(null);
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
-  const [isShareOpen, setIsShareOpen] = useState(false);
   const [isAllPhotosModalOpen, setIsAllPhotosModalOpen] = useState(false);
   const [isTimelineExpanded, setIsTimelineExpanded] = useState(false);
   const [currentTributeIndex, setCurrentTributeIndex] = useState(0);
@@ -30,11 +29,12 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
   // Mock data based on the design
   const officer = {
     name: "PC ANDREW HARPER",
+    role: "Police Constable (PC)",
     force: "Thames Valley Police",
     years: "1990 – 2019",
     age: 28,
     quote: "\"A hero remembered.\nA life that mattered.\"",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=1200",
     stats: {
       tributes: "1,927",
       remembered: "8,432",
@@ -47,7 +47,8 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
   const tributes = [
     { name: "Sarah L.", type: "Family Member", time: "2 days ago", text: "Thinking of Andrew today and always. Thank you for your service and for being you." },
     { name: "James R.", type: "Serving Officer", time: "3 days ago", text: "We will never forget you, brother. Rest easy." },
-    { name: "Emma T.", type: "Friend", time: "4 days ago", text: "Your smile and kindness will never be forgotten." }
+    { name: "Emma T.", type: "Friend", time: "4 days ago", text: "Your smile and kindness will never be forgotten." },
+    { name: "Michael K.", type: "Colleague", time: "1 week ago", text: "An absolute honour to have served alongside you." }
   ];
 
   const handleDownloadPDF = async () => {
@@ -67,10 +68,6 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
   };
 
   // Calculate grayscale based on global candle count
-  // 0-100: 95% grayscale
-  // 500: ~80% grayscale
-  // 2000: 50% grayscale
-  // 5000+: 0% grayscale
   const calculateGrayscale = (count: number) => {
     if (count <= 100) return 95;
     if (count >= 5000) return 0;
@@ -100,11 +97,11 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pt-32 pb-24">
+    <div className="min-h-screen bg-[#030712] text-white font-sans pt-24 pb-24">
       <div className="container mx-auto px-4 md:px-8 max-w-[1440px]">
         
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500 mb-12">
+        <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500 mb-8 pt-4">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3" />
           <Link href="/remembrance" className="hover:text-white transition-colors">Wall of Remembrance</Link>
@@ -112,90 +109,55 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
           <span className="text-white">{officer.name}</span>
         </div>
 
-        {/* Top Hero Block */}
-        <div className="flex flex-col md:flex-row gap-12 mb-16">
-          <div className="w-full md:w-1/3 xl:w-1/4">
-            <div className="aspect-[3/4] rounded-lg overflow-hidden border border-white/10 relative transition-all duration-1000 shadow-2xl">
-              <img 
-                src={officer.image} 
-                alt={officer.name} 
-                style={{ filter: `grayscale(${currentGrayscale}%)` }}
-                className={`w-full h-full object-cover transition-all duration-3000 ease-in-out ${isLit ? 'scale-105' : ''}`}
-              />
-              <div className={`absolute inset-0 transition-opacity duration-3000 ${isLit ? 'opacity-0' : 'bg-gradient-to-t from-[#030712] to-transparent opacity-60'}`}></div>
-              {isLit && <div className="absolute inset-0 bg-amber-500/10 mix-blend-overlay"></div>}
-            </div>
+        {/* Large Memorial Hero Banner */}
+        <section className="relative w-full min-h-[60vh] flex flex-col justify-end bg-[#050A14] mb-12 rounded-2xl overflow-hidden border border-white/5">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={officer.image} 
+              alt={officer.name} 
+              style={{ filter: `grayscale(${currentGrayscale}%)` }}
+              className={`w-full h-full object-cover object-top transition-all duration-[5000ms] ease-in-out ${isLit ? 'scale-105' : 'scale-100'}`}
+            />
+            <div className={`absolute inset-0 transition-opacity duration-[5000ms] ${isLit ? 'bg-gradient-to-t from-[#030712] via-[#030712]/60 to-transparent opacity-80' : 'bg-gradient-to-t from-[#030712] via-[#030712]/90 to-black/40 opacity-100'}`} />
+            {isLit && <div className="absolute inset-0 bg-amber-500/10 mix-blend-overlay transition-opacity duration-1000" />}
           </div>
-          
-          <div className="w-full md:w-2/3 xl:w-3/4 flex flex-col justify-center">
-            <h1 className="text-3xl md:text-5xl font-bold uppercase tracking-widest text-white mb-2">{officer.name}</h1>
-            <p className="text-slate-400 text-sm tracking-widest mb-1">{officer.force}</p>
-            <p className="text-slate-500 text-xs tracking-widest mb-10">{officer.years} &bull; Age {officer.age}</p>
-            
-            <p className="text-2xl italic font-serif text-white mb-10 whitespace-pre-line leading-relaxed">
-              {officer.quote}
-            </p>
 
-            <div className="flex flex-wrap gap-4">
+          <div className="relative z-10 p-8 md:p-12 xl:p-16 w-full flex flex-col md:flex-row items-end justify-between gap-8">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-[#1877F2] text-xs font-bold uppercase tracking-[0.2em] bg-[#1877F2]/10 px-4 py-1.5 rounded-full border border-[#1877F2]/20 shadow-[0_0_15px_rgba(24,119,242,0.2)]">
+                  {officer.role}
+                </span>
+                <span className="text-white/80 text-xs font-bold uppercase tracking-[0.2em]">
+                  {officer.force}
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter uppercase drop-shadow-2xl mb-4">
+                {officer.name}
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 text-slate-300 text-sm font-medium tracking-widest uppercase">
+                <span>{officer.years}</span>
+                <span className="w-1.5 h-1.5 bg-white/30 rounded-full" />
+                <span>Age {officer.age}</span>
+              </div>
+              
+              <div className="mt-8 border-l-2 border-[#1877F2] pl-6 max-w-2xl">
+                <p className="text-xl md:text-2xl italic font-serif text-white/90 leading-relaxed drop-shadow-md whitespace-pre-line">
+                  {officer.quote}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
               <Button 
                 onClick={() => setIsTributeFormOpen(true)}
-                variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10 font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-colors"
+                className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-10 py-7 rounded-md text-[11px] tracking-[0.2em] uppercase transition-colors shadow-lg"
               >
                 LEAVE A TRIBUTE
               </Button>
-              <div className="relative">
-                <Button 
-                  onClick={() => setIsShareOpen(!isShareOpen)}
-                  variant="outline" 
-                  className="border-white/20 text-white bg-transparent hover:bg-white/10 p-6 rounded-md transition-colors aspect-square cursor-pointer"
-                >
-                  <Share2 className="w-4 h-4" />
-                </Button>
-                {isShareOpen && (
-                  <div className="absolute left-0 mt-2 bg-[#0a1120] border border-white/10 rounded-xl p-3 shadow-2xl z-30 flex flex-col gap-2 w-48">
-                    <button 
-                      onClick={() => {
-                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
-                        setIsShareOpen(false);
-                      }}
-                      className="text-slate-300 hover:text-white text-xs font-bold uppercase tracking-widest text-left py-2 px-3 rounded-lg hover:bg-white/5 flex items-center gap-2 cursor-pointer"
-                    >
-                      Facebook
-                    </button>
-                    <button 
-                      onClick={() => {
-                        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Honouring ${officer.name}`)}`, '_blank');
-                        setIsShareOpen(false);
-                      }}
-                      className="text-slate-300 hover:text-white text-xs font-bold uppercase tracking-widest text-left py-2 px-3 rounded-lg hover:bg-white/5 flex items-center gap-2 cursor-pointer"
-                    >
-                      Twitter / X
-                    </button>
-                    <button 
-                      onClick={() => {
-                        window.location.href = `mailto:?subject=${encodeURIComponent(`Honouring ${officer.name}`)}&body=${encodeURIComponent(`View the memorial wall: ${window.location.href}`)}`;
-                        setIsShareOpen(false);
-                      }}
-                      className="text-slate-300 hover:text-white text-xs font-bold uppercase tracking-widest text-left py-2 px-3 rounded-lg hover:bg-white/5 flex items-center gap-2 cursor-pointer"
-                    >
-                      Email Share
-                    </button>
-                    <button 
-                      onClick={() => {
-                        navigator.clipboard.writeText(window.location.href);
-                        alert("Link copied to clipboard!");
-                        setIsShareOpen(false);
-                      }}
-                      className="text-slate-300 hover:text-white text-xs font-bold uppercase tracking-widest text-left py-2 px-3 rounded-lg hover:bg-white/5 flex items-center gap-2 border-t border-white/5 pt-2 cursor-pointer"
-                    >
-                      Copy Link
-                    </button>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Stats Strip */}
         <div className="grid grid-cols-2 md:grid-cols-4 border-y border-white/10 py-8 mb-16 gap-6">
@@ -243,9 +205,9 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
           {/* LEFT COLUMN */}
           <div className="lg:col-span-2 space-y-16">
             
-            {/* ABOUT ANDREW */}
+            {/* THEIR STORY */}
             <section>
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white mb-6">ABOUT ANDREW</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-white mb-6">THEIR STORY</h3>
               <div className="text-slate-400 text-sm leading-relaxed whitespace-pre-line max-w-3xl">
                 {officer.about}
               </div>
@@ -256,14 +218,14 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               <h3 className="text-sm font-bold uppercase tracking-widest text-white mb-8 flex items-center gap-2"><Clock className="w-4 h-4 text-[#1877F2]"/> SERVICE & CAREER TIMELINE</h3>
               <div className="relative border-l border-white/10 ml-3 space-y-8 pb-4">
                 <div className="relative pl-8">
-                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
-                  <h4 className="text-white font-bold text-sm">Joined Thames Valley Police</h4>
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
+                  <h4 className="text-white font-bold text-sm">Response Officer</h4>
                   <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2010</p>
                   <p className="text-slate-400 text-xs leading-relaxed">Completed initial training and was posted to response team, distinguishing himself early on for his commitment.</p>
                 </div>
                 <div className="relative pl-8">
-                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
-                  <h4 className="text-white font-bold text-sm">Commendation for Bravery</h4>
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
+                  <h4 className="text-white font-bold text-sm">Bravery Commendation Awardee</h4>
                   <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2014</p>
                   <p className="text-slate-400 text-xs leading-relaxed">Awarded Chief Constable's Commendation for off-duty intervention in an armed robbery.</p>
                 </div>
@@ -271,8 +233,8 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                 {isTimelineExpanded && (
                   <>
                     <div className="relative pl-8">
-                      <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
-                      <h4 className="text-white font-bold text-sm">Advanced Driving Course</h4>
+                      <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
+                      <h4 className="text-white font-bold text-sm">Advanced Driver</h4>
                       <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2016</p>
                       <p className="text-slate-400 text-xs leading-relaxed">Completed advanced driver training, demonstrating exceptional vehicle control and situational awareness.</p>
                     </div>
@@ -280,8 +242,8 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                 )}
                 
                 <div className="relative pl-8">
-                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
-                  <h4 className="text-white font-bold text-sm">Traffic Division</h4>
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
+                  <h4 className="text-white font-bold text-sm">Traffic Officer</h4>
                   <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2018</p>
                   <p className="text-slate-400 text-xs leading-relaxed">Moved to specialized roads policing unit, fulfilling a long-held career ambition.</p>
                 </div>
@@ -302,19 +264,19 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                 <img 
                   onClick={() => setActivePhoto("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800")}
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" 
-                  className="w-full h-40 object-cover rounded-md opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
+                  className="w-full h-40 object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
                   alt="Gallery 1" 
                 />
                 <img 
                   onClick={() => setActivePhoto("https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=800")}
                   src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=400" 
-                  className="w-full h-40 object-cover rounded-md opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
+                  className="w-full h-40 object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
                   alt="Gallery 2" 
                 />
                 <img 
                   onClick={() => setActivePhoto("https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800")}
                   src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" 
-                  className="w-full h-40 object-cover rounded-md opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
+                  className="w-full h-40 object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
                   alt="Gallery 3" 
                 />
               </div>
@@ -327,10 +289,10 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               </Button>
             </section>
 
-            {/* TRIBUTES */}
+            {/* REMEMBERED BY TRIBUTES */}
             <section>
               <div className="flex justify-between items-end mb-6 border-b border-white/5 pb-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-white">TRIBUTES</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest text-white">REMEMBERED BY</h3>
                 <Link href="/remembrance" className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors">
                   View all ({officer.stats.tributes})
                 </Link>
@@ -340,27 +302,25 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                 <div className="overflow-hidden">
                   <div 
                     className="flex transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(-${currentTributeIndex * 100}%)` }}
+                    style={{ transform: `translateX(-${currentTributeIndex * 50}%)` }}
                   >
                     {tributes.map((tribute, i) => (
-                      <div key={i} className="min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-2">
-                        <div className="bg-[#051024] border border-white/5 p-6 rounded-md flex flex-col h-full">
-                          <div className="flex justify-between items-start mb-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-white">
-                                {tribute.name.charAt(0)}
-                              </div>
-                              <div>
-                                <div className="text-xs font-bold text-white">{tribute.name}</div>
-                                <div className="text-[9px] text-slate-500 uppercase tracking-wider">{tribute.type}</div>
-                              </div>
-                            </div>
-                            <span className="text-[9px] text-slate-500">{tribute.time}</span>
+                      <div key={i} className="min-w-full md:min-w-[50%] lg:min-w-[50%] px-2">
+                        <div className="bg-[#051024] border border-white/5 p-8 rounded-xl flex flex-col h-full shadow-lg relative overflow-hidden group hover:border-white/10 transition-colors">
+                          <div className="absolute top-0 right-0 p-4 opacity-5 text-white">
+                            <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
                           </div>
-                          <p className="text-slate-400 text-xs leading-relaxed mb-6 flex-grow">{tribute.text}</p>
-                          <div className="flex gap-4 text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-auto">
-                            <button className="flex items-center gap-1 hover:text-white transition-colors"><Heart className="w-3 h-3" /> 12</button>
-                            <button className="flex items-center gap-1 hover:text-white transition-colors"><MessageCircle className="w-3 h-3" /> Reply</button>
+                          <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow relative z-10 italic">
+                            "{tribute.text}"
+                          </p>
+                          <div className="flex items-center gap-4 mt-auto border-t border-white/5 pt-4">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1877F2]/20 to-transparent flex items-center justify-center text-sm font-bold text-white border border-[#1877F2]/30">
+                              {tribute.name.charAt(0)}
+                            </div>
+                            <div>
+                              <div className="text-sm font-bold text-white">{tribute.name}</div>
+                              <div className="text-[9px] text-[#1877F2] uppercase tracking-wider font-bold">{tribute.type}</div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -369,11 +329,12 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                 </div>
                 
                 <div className="flex justify-center gap-2 mt-6">
-                  {tributes.map((_, i) => (
+                  {/* Slider dots logic adjusted for 50% width items */}
+                  {Array.from({ length: Math.ceil(tributes.length / 2) }).map((_, i) => (
                     <button 
                       key={i} 
-                      onClick={() => setCurrentTributeIndex(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${i === currentTributeIndex ? 'bg-[#1877F2] w-6' : 'bg-white/20'}`}
+                      onClick={() => setCurrentTributeIndex(i * 2)}
+                      className={`w-2 h-2 rounded-full transition-all ${i * 2 === currentTributeIndex || i * 2 === currentTributeIndex - 1 ? 'bg-[#1877F2] w-6' : 'bg-white/20'}`}
                     />
                   ))}
                 </div>
@@ -394,8 +355,8 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                   { name: "Tom H.", msg: "Lit a candle" },
                   { name: "Rachel F.", msg: "Lit a candle" }
                 ].map((candle, i) => (
-                  <div key={i} className="bg-[#051024] border border-white/5 p-4 rounded-md flex flex-col items-center text-center">
-                    <Flame className={`w-8 h-8 mb-3 ${isLit && i === 0 ? 'text-amber-500 animate-pulse' : 'text-amber-500/50'}`} />
+                  <div key={i} className="bg-[#051024] border border-white/5 p-4 rounded-xl flex flex-col items-center text-center">
+                    <Flame className={`w-8 h-8 mb-3 ${isLit && i === 0 ? 'text-amber-500 animate-pulse drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]' : 'text-amber-500/50'}`} />
                     <div className="text-[10px] font-bold text-white uppercase tracking-wider mb-1">{candle.name}</div>
                     <div className="text-[9px] text-slate-500">{candle.msg}</div>
                   </div>
@@ -404,20 +365,20 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
             </section>
 
             {/* BOOK OF CONDOLENCE */}
-            <section className="bg-[#051024] border border-white/5 rounded-md overflow-hidden relative">
+            <section className="bg-[#051024] border border-white/5 rounded-2xl overflow-hidden relative shadow-2xl">
               <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="p-10 flex flex-col justify-center">
                   <h3 className="text-xl font-bold uppercase tracking-widest text-white mb-4">BOOK OF CONDOLENCE</h3>
                   <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                    Download all tributes and messages to create a printed book for Andrew's family.
+                    Download all tributes and messages to create a printed book for {officer.name}'s family.
                   </p>
                   <div>
                     <Button 
                       onClick={handleDownloadPDF} 
                       disabled={isGenerating}
-                      className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-5 rounded-md text-[10px] tracking-widest uppercase transition-colors"
+                      className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-colors"
                     >
-                      {isGenerating ? "GENERATING..." : <span className="flex items-center gap-2"><Download className="w-4 h-4"/> DOWNLOAD PDF</span>}
+                      {isGenerating ? "GENERATING..." : <span className="flex items-center gap-2"><Download className="w-4 h-4"/> GENERATE MEMORIAL PDF</span>}
                     </Button>
                   </div>
                 </div>
@@ -432,30 +393,66 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
             <div className="sticky top-32 space-y-8">
               
               {/* LIGHT A CANDLE SIDEBAR SECTION */}
-              <div className="bg-[#051024] border border-white/5 rounded-xl p-8 text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-[#1877F2]/5 to-transparent pointer-events-none"></div>
-                <Flame className={`w-12 h-12 mx-auto mb-6 ${isLit ? 'text-amber-500 animate-pulse' : 'text-slate-500'}`} />
-                <h3 className="text-lg font-bold uppercase tracking-widest text-white mb-2">LIGHT A CANDLE</h3>
-                <p className="text-slate-400 text-sm mb-8 leading-relaxed">
-                  Join {globalCandles.toLocaleString()} others in honoring {officer.name}.
-                </p>
-                <Button 
-                  onClick={handleLightCandle}
-                  disabled={isLit}
-                  className={`w-full font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-all duration-500 ${isLit ? 'bg-amber-500/20 text-amber-500 border border-amber-500/50' : 'bg-[#1877F2] hover:bg-blue-600 text-white'}`}
-                >
-                  {isLit ? <span className="flex items-center justify-center gap-2"><Flame className="w-4 h-4 animate-pulse" /> CANDLE LIT</span> : 'LIGHT A CANDLE'}
-                </Button>
+              <div className="bg-[#051024] border border-white/5 rounded-2xl p-8 text-center relative overflow-hidden shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent pointer-events-none"></div>
+                <div className="relative z-10 flex flex-col items-center">
+                  <div className="relative mb-6">
+                    <div className={`absolute inset-0 bg-amber-500/20 rounded-full blur-xl transition-all duration-1000 ${isLit ? 'opacity-100 scale-150' : 'opacity-0 scale-50'}`} />
+                    <Flame className={`w-16 h-16 relative z-10 transition-colors duration-1000 ${isLit ? 'text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]' : 'text-slate-600'}`} />
+                  </div>
+                  
+                  <div className="text-5xl font-black text-white tracking-tighter mb-1">
+                    {globalCandles.toLocaleString()}
+                  </div>
+                  <div className="text-[10px] font-bold text-amber-500 uppercase tracking-[0.2em] mb-8">
+                    Total Candles Lit
+                  </div>
+                  
+                  <Button 
+                    onClick={handleLightCandle}
+                    disabled={isLit}
+                    className={`w-full font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-all duration-500 ${isLit ? 'bg-[#050A14] text-white border border-white/10' : 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white shadow-[0_0_20px_rgba(245,158,11,0.3)]'}`}
+                  >
+                    {isLit ? <span className="flex items-center justify-center gap-2">CANDLE LIT</span> : 'LIGHT A CANDLE'}
+                  </Button>
+                </div>
+              </div>
+
+              {/* SOCIAL SHARING SECTION */}
+              <div className="bg-[#051024] border border-white/5 rounded-2xl p-8 relative overflow-hidden shadow-xl">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
+                  <Share2 className="w-3 h-3"/> SHARE MEMORIAL
+                </h3>
+                <div className="flex flex-col gap-3">
+                  <button 
+                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                    className="w-full bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/20 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer"
+                  >
+                    Share on Facebook
+                  </button>
+                  <button 
+                    onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Honouring ${officer.name}`)}`, '_blank')}
+                    className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer"
+                  >
+                    Share on X / Twitter
+                  </button>
+                  <button 
+                    onClick={() => window.location.href = `mailto:?subject=${encodeURIComponent(`Honouring ${officer.name}`)}&body=${encodeURIComponent(`View the memorial wall: ${window.location.href}`)}`}
+                    className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer"
+                  >
+                    Share via Email
+                  </button>
+                </div>
               </div>
 
               {/* IN THEIR OWN WORDS */}
               <div>
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-6">IN THEIR OWN WORDS</h3>
-                <div className="bg-[#051024] border border-white/5 p-10 rounded-md">
+                <div className="bg-[#051024] border border-white/5 p-10 rounded-2xl">
                   <p className="text-xl font-serif text-white leading-relaxed italic mb-8 whitespace-pre-line">
                     {officer.familyQuote}
                   </p>
-                  <p className="text-[#1877F2] text-sm font-bold uppercase tracking-widest">
+                  <p className="text-[#1877F2] text-xs font-bold uppercase tracking-widest">
                     – Family Tribute
                   </p>
                 </div>
@@ -489,7 +486,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                 <h2 className="text-2xl font-bold uppercase tracking-widest text-white">ALL PHOTOS ({officer.name})</h2>
                 <button
                   onClick={() => setIsAllPhotosModalOpen(false)}
-                  className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all"
+                  className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all cursor-pointer"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -507,7 +504,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                     key={i}
                     onClick={() => setActivePhoto(imgUrl)}
                     src={imgUrl} 
-                    className="w-full aspect-square object-cover rounded-md opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
+                    className="w-full aspect-square object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
                     alt={`Gallery item ${i}`} 
                   />
                 ))}
@@ -532,13 +529,13 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="relative bg-[#051024] border border-white/10 max-w-2xl w-full rounded-2xl p-8 z-10"
+              className="relative bg-[#051024] border border-white/10 max-w-2xl w-full rounded-2xl p-8 z-10 shadow-2xl"
             >
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-2xl font-bold uppercase tracking-widest text-white">LEAVE A TRIBUTE</h2>
                 <button
                   onClick={() => setIsTributeFormOpen(false)}
-                  className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all"
+                  className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all cursor-pointer"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -547,7 +544,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Your Name (Or Anonymous)</label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute By (Your Name)</label>
                     <input 
                       type="text" 
                       value={tributeForm.name}
@@ -556,6 +553,18 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                       className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2]"
                     />
                   </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute To</label>
+                    <input 
+                      type="text" 
+                      value={officer.name}
+                      readOnly
+                      className="bg-[#030712]/50 border border-white/5 text-slate-400 text-sm px-4 py-3 rounded-lg cursor-not-allowed"
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Your Email Address</label>
                     <input 
@@ -566,21 +575,20 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                       className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2]"
                     />
                   </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute Title</label>
+                    <input 
+                      type="text" 
+                      value={tributeForm.title}
+                      onChange={(e) => setTributeForm({...tributeForm, title: e.target.value})}
+                      placeholder="e.g. A True Friend" 
+                      className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2]"
+                    />
+                  </div>
                 </div>
                 
                 <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute Title / Relationship</label>
-                  <input 
-                    type="text" 
-                    value={tributeForm.title}
-                    onChange={(e) => setTributeForm({...tributeForm, title: e.target.value})}
-                    placeholder="e.g. Former Colleague" 
-                    className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2]"
-                  />
-                </div>
-                
-                <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute Message</label>
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute Content</label>
                   <textarea 
                     rows={5}
                     value={tributeForm.content}

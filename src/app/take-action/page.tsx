@@ -1,165 +1,193 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, Filter, FileText, Download, Copy, Share2, Target, Users, Megaphone, ArrowRight, Mail, ChevronRight, AlertCircle, ExternalLink } from "lucide-react";
-import Link from "next/link";
+import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
+import { useRouter } from "next/navigation";
+
+const BENEFITS = [
+  {
+    id: 1,
+    title: "Direct Systemic Impact",
+    description: "Your letters force MPs and Police Commissioners to acknowledge the realities of officer welfare and accountability.",
+    value: 32450,
+    icon: Target
+  },
+  {
+    id: 2,
+    title: "Growing Momentum",
+    description: "Every action joins thousands of others, creating undeniable pressure on the IOPC for reform.",
+    value: 412,
+    icon: Users
+  },
+  {
+    id: 3,
+    title: "Active Legislative Change",
+    description: "Focused campaigns are currently pushing for mandatory 12-month investigation limits in Parliament.",
+    value: 3,
+    icon: Shield
+  }
+];
 
 const CAMPAIGNS = [
-  { id: 1, title: "12-Month Time Limit", impact: "15,420 Letters Sent", goal: "Enforce a strict 12-month limit on IOPC investigations. After 12 months, if no tribunal or criminal charge is brought, the case must be closed." },
-  { id: 2, title: "Mandatory Trauma Support", impact: "8,100 Letters Sent", goal: "Guarantee independent psychological care post-incident for all officers involved in fatal or serious incidents." },
-  { id: 3, title: "Anonymity Until Conviction", impact: "5,840 Letters Sent", goal: "Prevent trial by media for unproven allegations and protect the identities of officers during preliminary investigations." },
+  { 
+    id: 1, 
+    title: "12-Month Time Limit", 
+    description: "Enforce a strict 12-month limit on IOPC investigations. After 12 months, if no tribunal or criminal charge is brought, the case must be closed.",
+    icon: AlertTriangle,
+    templatesAvailable: 4,
+    bgImage: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop"
+  },
+  { 
+    id: 2, 
+    title: "Mandatory Trauma Support", 
+    description: "Guarantee independent psychological care post-incident for all officers involved in fatal or serious incidents.",
+    icon: Heart,
+    templatesAvailable: 2,
+    bgImage: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=800&auto=format&fit=crop"
+  },
+  { 
+    id: 3, 
+    title: "Anonymity Until Conviction", 
+    description: "Prevent trial by media for unproven allegations and protect the identities of officers during preliminary investigations.",
+    icon: Shield,
+    templatesAvailable: 3,
+    bgImage: "https://images.unsplash.com/photo-1453945619913-79ec89a82c51?q=80&w=800&auto=format&fit=crop"
+  },
 ];
 
 const TEMPLATES = [
-  { id: 1, title: "Standard MP Letter - Time Limits", category: "Parliament", format: "PDF & DOCX", reads: "12.4k" },
-  { id: 2, title: "Family Member Perspective", category: "Personal", format: "PDF & DOCX", reads: "8.1k" },
-  { id: 3, title: "Chief Constable Appeal", category: "Leadership", format: "PDF & DOCX", reads: "4.2k" },
-  { id: 4, title: "PCC Accountability Request", category: "Parliament", format: "PDF & DOCX", reads: "3.5k" },
+  { 
+    id: 1, 
+    title: "Demand 12-Month Limit on Investigations", 
+    recipient: "Member of Parliament (MP)", 
+    tone: "Formal", 
+    readTime: "3 Min Read" 
+  },
+  { 
+    id: 2, 
+    title: "Request for Immediate Trauma Support", 
+    recipient: "Chief Constable", 
+    tone: "Evidence-led", 
+    readTime: "4 Min Read" 
+  },
+  { 
+    id: 3, 
+    title: "Family Impact Statement", 
+    recipient: "Police and Crime Commissioner (PCC)", 
+    tone: "Personal", 
+    readTime: "2 Min Read" 
+  },
+  { 
+    id: 4, 
+    title: "Protect Officer Anonymity", 
+    recipient: "Member of Parliament (MP)", 
+    tone: "Formal", 
+    readTime: "3 Min Read" 
+  },
 ];
 
 export default function TakeActionPage() {
-  const [activeTemplate, setActiveTemplate] = useState(TEMPLATES[0]);
-  const [personalization, setPersonalization] = useState({ name: "", role: "" });
+  const router = useRouter();
+  
+  // Templates state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [recipientFilter, setRecipientFilter] = useState("All");
+  const [toneFilter, setToneFilter] = useState("All");
+
+  // Personalization state
+  const [personalization, setPersonalization] = useState({
+    name: "",
+    policeForce: "",
+    postcode: "",
+    details: ""
+  });
+
+  // Filter logic
+  const filteredTemplates = TEMPLATES.filter(template => {
+    const matchesSearch = template.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesRecipient = recipientFilter === "All" || template.recipient.includes(recipientFilter);
+    const matchesTone = toneFilter === "All" || template.tone === toneFilter;
+    return matchesSearch && matchesRecipient && matchesTone;
+  });
+
+  const handlePersonalize = () => {
+    if (!personalization.postcode) {
+      alert("Please enter a postcode to find your MP.");
+      return;
+    }
+    
+    // Pass personalization data via query params or state manager. For simplicity, using query params here.
+    const queryParams = new URLSearchParams({
+      name: personalization.name,
+      force: personalization.policeForce,
+      postcode: personalization.postcode,
+      details: personalization.details
+    });
+    
+    router.push(`/take-action/personalize?${queryParams.toString()}`);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-[#030712] text-white font-sans">
       
-      {/* 1. HERO SECTION - Matching Home Page */}
-      <section className="relative w-full min-h-[90vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-48 lg:pt-40 lg:pb-56 border-b border-white/5">
-        
-        {/* Full-Screen Background Image */}
+      {/* 1. HERO SECTION */}
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="/bannerBg.png" 
-            alt="UK Police" 
+            alt="UK Police Background" 
             className="w-full h-full object-cover object-[70%_center] opacity-90 mix-blend-luminosity"
           />
-          {/* Dark gradient overlay to blend image into the background and ensure text legibility */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[30%] via-[#050A14]/40 via-[60%] to-transparent to-[90%]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
         </div>
 
-        {/* Content Container */}
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col lg:flex-row items-center lg:justify-between gap-12 max-w-[1600px]">
-          
-          {/* Left Content */}
-          <div className="w-full lg:w-full max-w-[1200px] pt-20 lg:pt-0">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12 max-w-[1600px]">
+          <div className="w-full lg:w-full max-w-[1200px] pt-10">
             <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
               <Megaphone className="w-5 h-5" /> DRIVE THE CHANGE
             </h3>
-
             <h1 className="text-5xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
               <span className="text-white">TAKE </span><br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 pr-2 lg:pr-4">ACTION.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 pr-2">ACTION.</span>
             </h1>
-            
-            <p className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-3xl drop-shadow">
-              Our voice is our strongest weapon. Download templates, contact your representatives, and help us force the system to change.
+            <p className="text-base md:text-lg xl:text-xl text-slate-300 font-normal leading-relaxed max-w-3xl drop-shadow">
+              Our voice is our strongest weapon. Use the tools below to contact your representatives and force the system to change.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/take-action/contact-mp">
-                <Button className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold px-8 py-7 rounded-full text-sm tracking-wide transition-colors">
-                  CONTACT YOUR MP
-                </Button>
-              </Link>
-              <Button className="border border-white w-full sm:w-auto bg-transparent text-white hover:bg-white hover:text-black font-bold px-8 py-7 rounded-full text-sm tracking-wide transition-colors backdrop-blur-sm" onClick={() => document.getElementById('templates')?.scrollIntoView({ behavior: 'smooth' })}>
-                DOWNLOAD TEMPLATES
-              </Button>
-            </div>
           </div>
-
         </div>
       </section>
 
-      {/* 2. STATS SECTION - Matching Home Page Brutalist Grid */}
+      {/* 2. ACTION BENEFITS STATISTICS STRIP */}
       <section className="relative z-20 bg-[#02050A] border-b border-white/10">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-white/10">
-          
-          <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
-            <div className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_#1877F2] group-hover:scale-150 transition-transform duration-500" />
-              LETTERS SENT
-            </div>
-            <div className="text-5xl lg:text-7xl font-black text-white tracking-tighter drop-shadow-md group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2] transition-all duration-500">
-              32,450+
-            </div>
-          </div>
-
-          <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
-            <div className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_#1877F2] group-hover:scale-150 transition-transform duration-500" />
-              MPS CONTACTED
-            </div>
-            <div className="text-5xl lg:text-7xl font-black text-white tracking-tighter drop-shadow-md group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2] transition-all duration-500">
-              412
-            </div>
-          </div>
-
-          <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
-            <div className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_#1877F2] group-hover:scale-150 transition-transform duration-500" />
-              ACTIVE CAMPAIGNS
-            </div>
-            <div className="text-5xl lg:text-7xl font-black text-white tracking-tighter drop-shadow-md group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2] transition-all duration-500">
-              3
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* 3. DIRECT ACTION CTA - Matching "Why It Stops Now" Context style */}
-      <section className="relative bg-[#02050A] py-32 lg:py-48 border-b border-white/10 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
-
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
-            
-            <div className="flex flex-col justify-center">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-[2px] bg-[#1877F2]"></div>
-                <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Direct Action</h2>
-              </div>
-              <h3 className="text-5xl lg:text-7xl font-black text-white tracking-tighter leading-[1.1] mb-8 uppercase">
-                CONTACT YOUR <br className="hidden lg:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">REPRESENTATIVES.</span>
-              </h3>
-              <p className="text-slate-400 text-lg lg:text-xl leading-relaxed mb-12 max-w-xl font-medium">
-                Use our fast 2-minute wizard to find your MP and send a personalized letter demanding a 12-month limit on IOPC investigations. Don't let silence be an option.
-              </p>
-              <div>
-                <Link href="/take-action/contact-mp">
-                  <Button className="border border-white/20 text-white bg-transparent hover:bg-white hover:text-black font-bold px-10 py-7 rounded-full text-xs tracking-widest uppercase transition-all shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1">
-                    START EMAIL WIZARD
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative p-10 md:p-16 lg:p-20 border border-white/10 bg-[#0a1120]/50 backdrop-blur-2xl rounded-[3rem] group hover:bg-[#0a1120]/80 transition-colors duration-700 shadow-2xl">
-              <Mail className="w-24 h-24 text-[#1877F2]/10 absolute top-8 left-8 group-hover:scale-110 group-hover:text-[#1877F2]/30 transition-all duration-700" />
-              <div className="relative z-10">
-                <p className="text-3xl md:text-5xl text-white font-medium leading-[1.2] tracking-tight mb-10">
-                  "One voice can be ignored. <span className="text-[#1877F2]">Thousands cannot.</span> Demand change today."
+        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-white/10 max-w-[1600px] mx-auto">
+          {BENEFITS.map((benefit) => {
+            const Icon = benefit.icon;
+            return (
+              <div key={benefit.id} className="p-10 lg:p-14 flex flex-col justify-start group hover:bg-white/[0.02] transition-colors duration-500">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-[#1877F2]/10 flex items-center justify-center border border-[#1877F2]/20 group-hover:bg-[#1877F2] transition-colors duration-500">
+                    <Icon className="w-5 h-5 text-[#1877F2] group-hover:text-white transition-colors duration-500" />
+                  </div>
+                  <h3 className="font-bold text-lg text-white leading-tight">{benefit.title}</h3>
+                </div>
+                <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
+                  {benefit.description}
                 </p>
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-[2px] bg-white/20 group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
-                  <span className="text-slate-500 text-xs font-bold tracking-[0.2em] uppercase">The Power of Action</span>
+                <div className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+                  <AnimatedCounter from={0} to={benefit.value} duration={2} />+
                 </div>
               </div>
-            </div>
-
-          </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* 4. CAMPAIGNS GRID - Matching "Our Mission" Pillar style */}
-      <section className="relative bg-[#02050A] py-32 border-b border-white/10">
+      {/* 3. FEATURED CAMPAIGNS SECTION */}
+      <section className="relative bg-[#020611] py-32 border-b border-white/10">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-8">
             <div>
               <div className="flex items-center gap-4 mb-6">
@@ -167,205 +195,201 @@ export default function TakeActionPage() {
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Targeted Action</h2>
               </div>
               <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
-                ACTIVE <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">CAMPAIGNS.</span>
+                FEATURED <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">CAMPAIGNS.</span>
               </h3>
             </div>
-            <p className="text-slate-400 text-lg max-w-lg font-medium leading-relaxed">
-              Focus your efforts where they matter most. Join our active campaigns to force legislative and procedural change.
-            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {CAMPAIGNS.map((campaign, idx) => (
-              <div key={campaign.id} className="group relative p-10 lg:p-14 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2 flex flex-col h-full min-h-[400px]">
-                <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.03] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">{idx + 1}</div>
-                
-                <div className="relative z-10 flex flex-col flex-grow">
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-10 self-start flex items-center gap-3 group-hover:text-white/80 transition-colors duration-500">
-                    <div className="w-1.5 h-1.5 bg-[#1877F2] group-hover:bg-white rounded-full shadow-[0_0_10px_#1877F2] group-hover:shadow-none transition-colors duration-500" /> {campaign.impact}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {CAMPAIGNS.map((campaign) => {
+              const CampaignIcon = campaign.icon;
+              return (
+                <div key={campaign.id} className="group relative rounded-[2rem] border border-white/10 overflow-hidden min-h-[400px] flex flex-col justify-end p-8 hover:border-[#1877F2]/50 transition-colors duration-500 shadow-xl">
+                  {/* Background Image Overlay */}
+                  <div className="absolute inset-0 z-0">
+                    <img src={campaign.bgImage} alt={campaign.title} className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 group-hover:grayscale-0 transition-transform duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/80 to-transparent" />
                   </div>
                   
-                  <h3 className="font-black text-3xl lg:text-4xl text-white mb-6 uppercase tracking-tighter leading-none group-hover:text-white transition-colors duration-500">
-                    {campaign.title}
-                  </h3>
-                  
-                  <p className="text-slate-500 text-lg font-medium leading-relaxed group-hover:text-white/90 transition-colors duration-500 mb-12 flex-grow">
-                    {campaign.goal}
-                  </p>
-                  
-                  <Link href="/take-action/contact-mp" className="mt-auto self-start text-white font-bold text-[10px] uppercase tracking-widest flex items-center group-hover:text-white transition-colors">
-                    SUPPORT CAMPAIGN <ArrowRight className="w-4 h-4 ml-3 transform group-hover:translate-x-2 transition-transform" />
-                  </Link>
+                  <div className="relative z-10 flex flex-col gap-4">
+                    <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 mb-2">
+                      <CampaignIcon className="w-5 h-5 text-white" />
+                    </div>
+                    <h4 className="font-bold text-2xl text-white uppercase tracking-tight">{campaign.title}</h4>
+                    <p className="text-slate-300 text-sm leading-relaxed mb-4">{campaign.description}</p>
+                    <div className="inline-flex items-center gap-2 bg-[#1877F2]/20 border border-[#1877F2]/30 text-[#1877F2] font-bold text-[10px] uppercase tracking-widest px-4 py-2 rounded-lg self-start">
+                      <FileText className="w-3 h-3" /> {campaign.templatesAvailable} Templates Available
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
-
         </div>
       </section>
 
-      {/* 5. TEMPLATE LIBRARY & PERSONALIZATION - Premium Redesign */}
-      <section id="templates" className="relative bg-[#050A14] py-32 border-b border-white/10">
+      {/* 4. LIST LETTER TEMPLATES & PERSONALIZATION SIDEBAR */}
+      <section className="relative bg-[#050A14] py-32 pb-48">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Resources</h2>
               </div>
-              <h3 className="font-sans text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[1.1]">
+              <h3 className="font-sans text-4xl md:text-6xl font-black uppercase tracking-tighter text-white leading-[1.1]">
                 TEMPLATE <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">LIBRARY.</span>
               </h3>
             </div>
-            <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-xl pb-4 border-l-2 border-white/10 pl-6 font-medium">
-              Download expertly drafted letters to send to MPs, Police and Crime Commissioners, or Chief Constables.
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-xl pb-4 font-medium">
+              Find the right template, personalize it with your details, and take immediate action.
             </p>
           </div>
-          
-          <div className="flex flex-col lg:flex-row gap-12">
+
+          <div className="flex flex-col lg:flex-row gap-12 items-start">
             
-            {/* Sidebar: Filters & Search */}
-            <div className="lg:w-1/3 flex flex-col gap-8">
+            {/* Left: Templates List with Search & Sort */}
+            <div className="w-full lg:w-2/3 flex flex-col gap-8">
               
-              <div className="bg-[#02050A] border border-white/10 rounded-[2rem] p-8 shadow-2xl">
-                <div className="relative mb-8">
+              {/* Search & Filters */}
+              <div className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-6 flex flex-col md:flex-row gap-4 shadow-xl">
+                <div className="relative flex-grow">
                   <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                  <input type="text" placeholder="SEARCH TEMPLATES..." className="w-full pl-12 pr-4 py-4 text-[10px] font-bold uppercase tracking-widest bg-white/[0.02] border border-white/10 rounded-xl focus:outline-none focus:border-[#1877F2]/50 text-white placeholder-slate-600 transition-colors" />
+                  <input 
+                    type="text" 
+                    placeholder="Search templates by keyword..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3.5 text-xs font-bold text-white bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-500" 
+                  />
                 </div>
-                
-                <h4 className="font-bold text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6 flex items-center">
-                  <Filter className="w-3 h-3 mr-3" /> Categories
-                </h4>
-                <div className="space-y-3">
-                  <button className="w-full text-left px-5 py-4 text-[11px] font-bold bg-[#1877F2] text-white rounded-xl uppercase tracking-widest shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">All Templates</button>
-                  <button className="w-full text-left px-5 py-4 text-[11px] font-bold text-slate-400 bg-transparent border border-transparent hover:bg-white/5 hover:border-white/10 hover:text-white rounded-xl uppercase tracking-widest transition-all">Parliament (MPs)</button>
-                  <button className="w-full text-left px-5 py-4 text-[11px] font-bold text-slate-400 bg-transparent border border-transparent hover:bg-white/5 hover:border-white/10 hover:text-white rounded-xl uppercase tracking-widest transition-all">Leadership (PCCs)</button>
-                  <button className="w-full text-left px-5 py-4 text-[11px] font-bold text-slate-400 bg-transparent border border-transparent hover:bg-white/5 hover:border-white/10 hover:text-white rounded-xl uppercase tracking-widest transition-all">Personal / Family</button>
-                </div>
+                <select 
+                  value={recipientFilter}
+                  onChange={(e) => setRecipientFilter(e.target.value)}
+                  className="bg-white/5 border border-white/10 text-white text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px]"
+                >
+                  <option value="All">All Recipients</option>
+                  <option value="MP">MP</option>
+                  <option value="PCC">PCC</option>
+                  <option value="Chief Constable">Chief Constable</option>
+                </select>
+                <select 
+                  value={toneFilter}
+                  onChange={(e) => setToneFilter(e.target.value)}
+                  className="bg-white/5 border border-white/10 text-white text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px]"
+                >
+                  <option value="All">All Tones</option>
+                  <option value="Formal">Formal</option>
+                  <option value="Evidence-led">Evidence-led</option>
+                  <option value="Personal">Personal</option>
+                </select>
               </div>
 
-              {/* Template List */}
-              <div className="space-y-4">
-                {TEMPLATES.map((template) => (
-                  <div 
-                    key={template.id} 
-                    onClick={() => setActiveTemplate(template)}
-                    className={`p-6 rounded-[1.5rem] cursor-pointer transition-all border ${activeTemplate.id === template.id ? 'bg-[#02050A] border-[#1877F2]/50 scale-105 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-10' : 'bg-transparent border-white/10 hover:bg-white/5'}`}
-                  >
-                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                      <div className={`w-1.5 h-1.5 rounded-full ${activeTemplate.id === template.id ? 'bg-[#1877F2]' : 'bg-slate-600'}`} />
-                      {template.category}
-                    </div>
-                    <h5 className="font-bold text-sm text-white leading-tight uppercase tracking-wide">{template.title}</h5>
+              {/* Templates List */}
+              <div className="flex flex-col gap-4">
+                {filteredTemplates.length === 0 ? (
+                  <div className="p-12 text-center border border-white/10 border-dashed rounded-[1.5rem]">
+                    <SearchX className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                    <p className="text-slate-400 font-medium">No templates match your search criteria.</p>
                   </div>
-                ))}
-              </div>
-
-            </div>
-
-            {/* Main Area: Preview & Personalization */}
-            <div className="lg:w-2/3 flex flex-col xl:flex-row gap-8">
-              
-              {/* Preview Area */}
-              <div className="flex-grow bg-[#02050A] border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl">
-                
-                <div className="bg-white/[0.02] border-b border-white/10 p-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#1877F2]/10 flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-[#1877F2]" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-500 uppercase tracking-[0.2em] block mb-1">Document Preview</span>
-                      <span className="font-bold text-sm text-white uppercase tracking-widest">{activeTemplate.title}</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <Button variant="outline" className="h-12 px-6 text-[10px] bg-transparent border-white/20 text-white hover:bg-white hover:text-black rounded-full font-bold tracking-widest uppercase transition-colors"><Download className="w-4 h-4 mr-2" /> PDF</Button>
-                    <Button variant="outline" className="h-12 px-6 text-[10px] bg-transparent border-white/20 text-white hover:bg-white hover:text-black rounded-full font-bold tracking-widest uppercase transition-colors"><Download className="w-4 h-4 mr-2" /> DOCX</Button>
-                  </div>
-                </div>
-                
-                <div className="p-10 md:p-14 flex-grow bg-[#02050A] text-[15px] leading-loose text-slate-300 font-medium">
-                  <p className="text-slate-500 mb-8 font-mono text-sm">[Date]</p>
-                  <p className="text-white mb-6">Dear [MP Name],</p>
-                  <p className="mb-6">
-                    I am writing to you as a constituent residing at <span className="inline-block bg-[#1877F2]/10 border border-[#1877F2]/20 px-3 py-1 rounded-md text-[#1877F2] font-mono text-sm mx-1 shadow-inner">[Your Postcode]</span> regarding a matter of urgent national importance affecting the welfare of our police officers.
-                  </p>
-                  <p className="mb-8">
-                    Currently, police officers who are subjected to investigations by the IOPC face average delays of over 4 years. During this time, they are often suspended on restricted duties, isolated from their peers, and treated as guilty until proven innocent. The human cost is devastating, with a direct correlation between investigation delays and severe mental health crises, including suicide.
-                  </p>
-                  
-                  <div className="border-l-4 border-[#1877F2] pl-6 bg-gradient-to-r from-[#1877F2]/10 to-transparent py-6 pr-6 rounded-r-2xl my-8">
-                    <p className="text-white font-bold mb-0">
-                      As a <span className="inline-block bg-[#1877F2] text-white px-3 py-1 rounded-md text-xs mx-1 uppercase tracking-wider">{personalization.role || "[Your Connection]"}</span>, I see this devastation firsthand. {personalization.name ? `My name is ${personalization.name} and I am asking you to intervene.` : ""}
-                    </p>
-                  </div>
-
-                  <p className="mb-6">
-                    I urge you to support the "It Stops Now" campaign's call for a strict 12-month time limit on all misconduct investigations. After 12 months, if no tribunal or criminal charge is brought, the case must be closed.
-                  </p>
-                  <p className="mb-12">Please confirm that you will raise this issue with the Home Secretary.</p>
-                  <p className="text-white mb-2">Yours sincerely,</p>
-                  <p className="text-slate-500 font-mono text-sm"><span className="text-[#1877F2] font-sans text-base font-bold">{personalization.name || "[Your Name]"}</span><br/>[Your Address]</p>
-                </div>
-
-                <div className="bg-white/[0.02] border-t border-white/10 p-8 flex flex-col sm:flex-row justify-end gap-4">
-                  <Button variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white hover:text-black text-[10px] font-bold uppercase tracking-widest py-7 px-8 rounded-full transition-colors"><Copy className="w-4 h-4 mr-2" /> Copy text</Button>
-                  <Link href="/take-action/contact-mp" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-blue-600 text-[10px] font-bold uppercase tracking-widest py-7 px-8 rounded-full shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-colors"><Mail className="w-4 h-4 mr-2" /> Send via Wizard</Button>
-                  </Link>
-                </div>
-              </div>
-
-              {/* Personalization Sidebar */}
-              <div className="xl:w-80 shrink-0">
-                <div className="bg-[#02050A] border border-white/10 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden h-full">
-                  <div className="flex items-center gap-3 mb-8 pb-6 border-b border-white/10">
-                    <div className="w-8 h-8 rounded-full bg-[#1877F2]/10 flex items-center justify-center">
-                      <Filter className="w-4 h-4 text-[#1877F2]" />
-                    </div>
-                    <h4 className="font-bold text-[10px] text-white uppercase tracking-[0.2em]">Personalize</h4>
-                  </div>
-                  
-                  <div className="space-y-8 relative z-10">
-                    <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 block">Your Name</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. John Smith" 
-                        value={personalization.name}
-                        onChange={(e) => setPersonalization({...personalization, name: e.target.value})}
-                        className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600 shadow-inner" 
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 block">Your Connection</label>
-                      <select 
-                        value={personalization.role}
-                        onChange={(e) => setPersonalization({...personalization, role: e.target.value})}
-                        className="w-full bg-[#050A14] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors appearance-none shadow-inner"
-                      >
-                        <option value="">Select an option...</option>
-                        <option value="Serving Officer">Serving Officer</option>
-                        <option value="Former Officer">Former Officer</option>
-                        <option value="Family Member">Family Member</option>
-                        <option value="Concerned Citizen">Concerned Citizen</option>
-                      </select>
-                    </div>
-                    <div className="pt-8 border-t border-white/10 mt-12">
-                      <div className="flex items-start gap-3">
-                        <AlertCircle className="w-5 h-5 text-[#1877F2] shrink-0 mt-0.5" />
-                        <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
-                          Customize the preview here to see how your letter will look, or download the DOCX to edit locally.
-                        </p>
+                ) : (
+                  filteredTemplates.map(template => (
+                    <div key={template.id} className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-6 lg:p-8 hover:border-[#1877F2]/50 transition-colors shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                      <div className="flex-grow">
+                        <h4 className="text-xl font-bold text-white mb-4 leading-tight">{template.title}</h4>
+                        <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                          <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-[#1877F2]" /> {template.recipient}</span>
+                          <span className="flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5 text-amber-500" /> {template.tone}</span>
+                          <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-emerald-500" /> {template.readTime}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap md:flex-nowrap gap-3 shrink-0 w-full md:w-auto">
+                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-white/20 hover:bg-white hover:text-black text-white text-[10px] font-bold uppercase tracking-widest h-11 px-5 rounded-xl">
+                          <Search className="w-3.5 h-3.5 mr-2" /> Preview
+                        </Button>
+                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest h-11 px-5 rounded-xl transition-all">
+                          <Download className="w-3.5 h-3.5 mr-2" /> PDF
+                        </Button>
+                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest h-11 px-5 rounded-xl transition-all">
+                          <Download className="w-3.5 h-3.5 mr-2" /> DOCX
+                        </Button>
                       </div>
                     </div>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Right: Personalization Sidebar */}
+            <div className="w-full lg:w-1/3">
+              <div className="bg-gradient-to-b from-[#02050A] to-[#050A14] border border-[#1877F2]/20 rounded-[2rem] p-8 shadow-2xl sticky top-32">
+                <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/10">
+                  <div className="w-10 h-10 rounded-full bg-[#1877F2]/10 flex items-center justify-center">
+                    <Settings className="w-5 h-5 text-[#1877F2]" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-white uppercase tracking-widest">Personalize</h4>
+                    <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Setup Your Letter</p>
                   </div>
                 </div>
-              </div>
 
+                <div className="space-y-6">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Your Name</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. John Doe"
+                      value={personalization.name}
+                      onChange={(e) => setPersonalization({...personalization, name: e.target.value})}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Police Force</label>
+                    <select 
+                      value={personalization.policeForce}
+                      onChange={(e) => setPersonalization({...personalization, policeForce: e.target.value})}
+                      className="w-full bg-[#050A14] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors appearance-none"
+                    >
+                      <option value="">Select Force (Optional)...</option>
+                      <option value="Metropolitan Police">Metropolitan Police</option>
+                      <option value="Greater Manchester Police">Greater Manchester Police</option>
+                      <option value="West Midlands Police">West Midlands Police</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Postcode <span className="text-red-500">*</span></label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. SW1A 1AA"
+                      value={personalization.postcode}
+                      onChange={(e) => setPersonalization({...personalization, postcode: e.target.value})}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600"
+                    />
+                    <p className="text-[10px] text-slate-500 mt-2">Required to find your local MP.</p>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Additional Details</label>
+                    <textarea 
+                      placeholder="Add any personal context or specific demands..."
+                      value={personalization.details}
+                      onChange={(e) => setPersonalization({...personalization, details: e.target.value})}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600 h-24 resize-none"
+                    />
+                  </div>
+
+                  <Button 
+                    onClick={handlePersonalize}
+                    className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold tracking-widest uppercase text-xs py-7 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all mt-4"
+                  >
+                    Personalize & Find MP <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>

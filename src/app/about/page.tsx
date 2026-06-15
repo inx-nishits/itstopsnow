@@ -1,10 +1,34 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Shield, ShieldAlert, Heart, Activity, ArrowRight, ExternalLink, Headphones, Download, Smartphone, CheckCircle, BarChart, Users } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useInView, animate } from "framer-motion";
+import { Shield, ShieldAlert, Heart, Activity, ArrowRight, ExternalLink, Headphones, Download, Smartphone, CheckCircle, BarChart, Users, Star, Quote, HeartPulse } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+
+function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isFloat = false }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string, isFloat?: boolean }) {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(nodeRef, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const node = nodeRef.current;
+      if (node) {
+        const controls = animate(from, to, {
+          duration,
+          ease: "easeOut",
+          onUpdate(value) {
+            const formattedValue = isFloat ? value.toFixed(1) : Math.round(value).toLocaleString();
+            node.textContent = `${prefix}${formattedValue}${suffix}`;
+          },
+        });
+        return () => controls.stop();
+      }
+    }
+  }, [isInView, from, to, duration, prefix, suffix, isFloat]);
+
+  return <span ref={nodeRef}>{prefix}{from}{suffix}</span>;
+}
 
 export default function AboutPage() {
   const [currentAppIndex, setCurrentAppIndex] = useState(0);
@@ -66,7 +90,7 @@ export default function AboutPage() {
       </section>
 
       {/* 2. WHO IS POCKET SERGEANT */}
-      <section className="py-10 md:py-16 relative">
+      <section className="py-20 md:py-32 relative">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
@@ -93,12 +117,19 @@ export default function AboutPage() {
               </div>
             </div>
             
-            {/* 3. APP SHOWCASE / SCREENSHOTS */}
+            {/* APP SHOWCASE / SCREENSHOTS */}
             <div className="relative">
               <div className="absolute inset-0 bg-[#1877F2]/10 rounded-[2rem] transform rotate-2 blur-xl"></div>
-              <div className="bg-[#050B14] rounded-[2rem] p-6 border border-white/10 shadow-2xl relative z-10 overflow-hidden flex flex-col items-center">
+              <div className="bg-[#050B14] rounded-[2rem] p-8 border border-white/10 shadow-2xl relative z-10 overflow-hidden flex flex-col items-center">
                 
-                <div className="flex w-full justify-center items-center gap-4 h-[240px] sm:h-[300px] mt-2 mb-4">
+                {/* Short App Description / Tagline */}
+                <div className="text-center mb-10 max-w-sm relative z-30">
+                  <Smartphone className="w-8 h-8 text-[#1877F2] mx-auto mb-3" />
+                  <h3 className="text-xl font-bold text-white mb-2">The Officer's Essential Toolkit</h3>
+                  <p className="text-xs text-slate-400">Everything you need to navigate modern policing, right in your pocket. Built by officers, for officers.</p>
+                </div>
+
+                <div className="flex w-full justify-center items-center gap-4 h-[240px] sm:h-[300px] mb-8">
                   {appImages.map((img, idx) => {
                     const isActive = idx === currentAppIndex;
                     return (
@@ -122,7 +153,7 @@ export default function AboutPage() {
                 </div>
                 
                 {/* Store Downloads */}
-                <div className="flex flex-wrap justify-center gap-4 mt-8 w-full border-t border-white/10 pt-6">
+                <div className="flex flex-wrap justify-center gap-4 w-full border-t border-white/10 pt-6">
                   <button className="bg-white/5 backdrop-blur-md border border-white/10 text-white flex items-center gap-3 px-6 py-4 rounded-xl hover:bg-white/10 transition-colors">
                     <Download className="w-5 h-5 text-[#1877F2]" />
                     <div className="text-left">
@@ -144,8 +175,62 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. WHY SUPPORTING THIS MOVEMENT */}
-      <section className="py-32 bg-[#050B14] border-t border-white/5 relative">
+      {/* STATISTICS SECTION */}
+      <section className="py-24 bg-[#050B14] border-t border-white/5 relative overflow-hidden">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Reach</h2>
+            <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">IMPACT BY THE NUMBERS</h2>
+            <p className="text-slate-400 text-lg leading-relaxed">Pocket Sergeant's organizational achievements and the community we've built.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+                <Users className="w-7 h-7" />
+              </div>
+              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+                <AnimatedCounter from={0} to={50} suffix="k+" duration={2} />
+              </h3>
+              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Active users across UK police forces relying on Pocket Sergeant daily.</p>
+            </div>
+
+            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+                <Download className="w-7 h-7" />
+              </div>
+              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+                <AnimatedCounter from={0} to={200} suffix="k+" duration={2} />
+              </h3>
+              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Total app downloads since launch, showing widespread adoption.</p>
+            </div>
+
+            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+                <Star className="w-7 h-7" />
+              </div>
+              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+                <AnimatedCounter from={0} to={4.8} isFloat duration={1.5} />
+              </h3>
+              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Average rating on both App Store and Google Play.</p>
+            </div>
+
+            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+                <BarChart className="w-7 h-7" />
+              </div>
+              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+                <AnimatedCounter from={0} to={10} suffix="+" duration={1.5} />
+              </h3>
+              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Years of continuous service providing operational guidance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHY SUPPORTING THIS MOVEMENT */}
+      <section className="py-32 bg-[#020611] border-t border-white/5 relative">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Commitment</h2>
@@ -153,31 +238,35 @@ export default function AboutPage() {
             <p className="text-slate-400 text-lg leading-relaxed">We see the reality of policing every day through our user base. We couldn't stand by and watch the system break our colleagues.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group hover:border-[#1877F2]/50 transition-colors shadow-xl">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/5 rounded-bl-[100px] -z-0 group-hover:bg-[#1877F2]/10 transition-colors"></div>
-              <Activity className="w-10 h-10 text-[#1877F2] mb-8 relative z-10" />
-              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 relative z-10">THE DATA IS CLEAR</h3>
-              <p className="text-slate-400 text-sm leading-relaxed relative z-10">Our internal wellbeing surveys showed a devastating trend of burnout, trauma, and lack of support from professional standards departments.</p>
+          <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 md:p-16 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-5">
+              <Quote className="w-32 h-32 text-white" />
             </div>
-            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group hover:border-[#1877F2]/50 transition-colors shadow-xl">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/5 rounded-bl-[100px] -z-0 group-hover:bg-[#1877F2]/10 transition-colors"></div>
-              <Users className="w-10 h-10 text-[#1877F2] mb-8 relative z-10" />
-              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 relative z-10">WE LOST FRIENDS</h3>
-              <p className="text-slate-400 text-sm leading-relaxed relative z-10">Like many in the police family, our founding team has personally lost colleagues to suicide while under protracted investigation.</p>
-            </div>
-            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group hover:border-[#1877F2]/50 transition-colors shadow-xl">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/5 rounded-bl-[100px] -z-0 group-hover:bg-[#1877F2]/10 transition-colors"></div>
-              <Shield className="w-10 h-10 text-[#1877F2] mb-8 relative z-10" />
-              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 relative z-10">MORAL OBLIGATION</h3>
-              <p className="text-slate-400 text-sm leading-relaxed relative z-10">If you have the platform to demand change, you have the obligation to use it. We are using our voice to protect yours.</p>
+            <div className="flex flex-col md:flex-row gap-12 items-center relative z-10">
+              <div className="shrink-0">
+                <img 
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400" 
+                  alt="Paul Cooper" 
+                  className="w-48 h-48 rounded-full object-cover border-4 border-[#1877F2]/30 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500" 
+                />
+              </div>
+              <div>
+                <Quote className="w-8 h-8 text-[#1877F2] mb-6" />
+                <p className="text-xl md:text-2xl font-serif text-white leading-relaxed italic mb-8">
+                  "Having served as an officer myself, I know the immense pressure the job places on you. When I saw the rising number of colleagues suffering from PTSD and leaving the force due to disproportionate and prolonged investigations, I knew Pocket Sergeant had to step up. We are funding 'It Stops Now' because those who protect the public deserve natural justice and care, not a system designed to find fault at all costs."
+                </p>
+                <div className="flex flex-col border-l-2 border-[#1877F2] pl-4">
+                  <span className="font-bold text-lg text-white uppercase tracking-wider">Paul Cooper</span>
+                  <span className="text-[#1877F2] text-sm font-bold uppercase tracking-widest">Founder, Pocket Sergeant / Former Police Officer</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. FUNDING TRANSPARENCY */}
-      <section className="py-32 bg-[#020611] border-t border-white/5 relative">
+      {/* FUNDING TRANSPARENCY */}
+      <section className="py-32 bg-[#050B14] border-y border-white/5 relative">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Accountability</h2>
@@ -188,9 +277,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            {/* Card 1 */}
-            <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Shield className="w-7 h-7 text-[#1877F2]" />
               </div>
@@ -206,8 +293,7 @@ export default function AboutPage() {
               </ul>
             </div>
 
-            {/* Card 2 */}
-            <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Heart className="w-7 h-7 text-[#1877F2]" />
               </div>
@@ -223,8 +309,7 @@ export default function AboutPage() {
               </ul>
             </div>
 
-            {/* Card 3 */}
-            <div className="bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Activity className="w-7 h-7 text-[#1877F2]" />
               </div>
@@ -239,13 +324,12 @@ export default function AboutPage() {
                 </li>
               </ul>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 6. PODCAST SECTION */}
-      <section className="py-32 bg-[#050B14] border-t border-white/5">
+      {/* PODCAST SECTION */}
+      <section className="py-32 bg-[#020611] border-b border-white/5">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="lg:w-1/2 relative">
@@ -301,24 +385,55 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 7. LEARN MORE / CTA */}
-      <section className="py-32 bg-gradient-to-b from-[#020611] to-[#050B14] border-t border-white/5 text-center relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-4xl relative z-10">
-          <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Join The Fight</h2>
-          <h2 className="font-sans text-4xl md:text-6xl font-bold uppercase tracking-tight mb-8 text-white">STAND WITH US</h2>
-          <p className="text-slate-400 mb-12 text-xl leading-relaxed">Whether you are an officer, a family member, or a concerned citizen, your voice is needed to drive reform.</p>
-          <div className="flex flex-wrap justify-center gap-6">
-            <Link href="/take-action">
-              <Button className="bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-12 py-7 rounded-full shadow-[0_0_30px_rgba(24,119,242,0.3)] transition-all hover:scale-105">
-                Get Involved Today
-              </Button>
-            </Link>
-            <Link href="https://pocketsergeant.co.uk" target="_blank">
-              <Button variant="outline" className="border-white/20 bg-white/5 backdrop-blur-md text-white hover:bg-white/10 font-bold uppercase tracking-widest text-xs px-12 py-7 rounded-full transition-all">
-                Visit Pocket Sergeant <ExternalLink className="w-4 h-4 ml-3" />
-              </Button>
-            </Link>
+      {/* LEARN MORE ABOUT POCKET SERGEANT CTA SECTION */}
+      <section className="py-32 bg-gradient-to-b from-[#050B14] to-[#020611] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Explore the App</h2>
+            <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8 text-white">LEARN MORE ABOUT POCKET SERGEANT</h2>
+            <p className="text-slate-400 mb-12 text-xl leading-relaxed">Discover how our app supports officers on the front lines every day with essential resources, legal guidance, and wellbeing tools.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="bg-[#020611] border border-white/10 rounded-3xl p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+              <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <ShieldAlert className="w-8 h-8 text-[#1877F2]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">Operational Guidance</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">Access up-to-date legal definitions, checklists, and procedural guidance instantly.</p>
+              <Link href="https://pocketsergeant.co.uk/features" target="_blank" className="w-full">
+                <Button variant="outline" className="w-full border-white/20 bg-transparent text-white hover:bg-white/10 font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors">
+                  View Features <ExternalLink className="w-3 h-3 ml-2" />
+                </Button>
+              </Link>
+            </div>
+            
+            <div className="bg-[#020611] border border-white/10 rounded-3xl p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+              <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <HeartPulse className="w-8 h-8 text-[#1877F2]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">Wellbeing Support</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">Confidential tools and resources to help manage the psychological demands of the job.</p>
+              <Link href="https://pocketsergeant.co.uk/wellbeing" target="_blank" className="w-full">
+                <Button variant="outline" className="w-full border-white/20 bg-transparent text-white hover:bg-white/10 font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors">
+                  Get Support <ExternalLink className="w-3 h-3 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            <div className="bg-[#020611] border border-white/10 rounded-3xl p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+              <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Smartphone className="w-8 h-8 text-[#1877F2]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">Download Now</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">Available on iOS and Android devices for all serving police officers and staff.</p>
+              <Link href="https://pocketsergeant.co.uk/download" target="_blank" className="w-full">
+                <Button className="w-full bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors">
+                  Get The App
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

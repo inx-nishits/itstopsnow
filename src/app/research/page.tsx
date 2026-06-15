@@ -174,7 +174,7 @@ export default function ResearchListing() {
       </section>
 
       {/* SEARCH & FILTERS */}
-      <section className="sticky top-[72px] z-40 bg-[#050B14]/90 backdrop-blur-xl border-b border-white/5 py-5 shadow-xl">
+      <section className="sticky top-20 md:top-24 z-40 bg-[#050B14]/90 backdrop-blur-xl border-b border-white/5 py-5 shadow-xl">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
             <div className="relative w-full md:max-w-md">

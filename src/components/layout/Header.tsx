@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
   { label: "The Issue", href: "/the-issue" },
   { label: "News", href: "/news" },
   { label: "Stories", href: "/stories" },
@@ -92,7 +93,7 @@ export default function Header() {
 
           {/* MOBILE TOGGLE */}
           <button 
-            className="lg:hidden text-white p-2 -mr-2"
+            className="lg:hidden text-white p-2 -mr-2 relative z-[60] bg-black/20 rounded-lg backdrop-blur-sm shadow-sm"
             onClick={() => setMobileMenuOpen(true)}
           >
             <Menu className="w-7 h-7" />

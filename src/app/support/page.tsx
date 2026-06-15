@@ -2,104 +2,341 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Search, Smartphone, Book, Headphones, ShieldAlert, Star, ExternalLink, Phone } from "lucide-react";
+import { Heart, Search, Smartphone, Book, Headphones, Star, ExternalLink, Filter } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-const MOCK_RESOURCES = [
+const MOCK_APPS = [
   {
-    id: "s1",
-    type: "app",
-    slug: "headspace-for-responders",
-    title: "Headspace for Responders",
-    author: "Headspace Health",
+    id: "app1",
+    name: "Headspace for Responders",
+    description: "Guided meditation and mindfulness specifically tailored for the high-stress environment of first responders.",
+    category: "Mental Health",
+    badge: "Most Popular",
     rating: 4.8,
     reviews: 1240,
-    recommendedBy: "IOPC Reform Coalition",
-    category: "Mental Health",
-    summary: "Guided meditation and mindfulness specifically tailored for the high-stress environment of first responders.",
-    image: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800&auto=format&fit=crop"
+    logo: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=400&auto=format&fit=crop",
+    link: "https://www.headspace.com"
   },
   {
-    id: "s2",
-    type: "book",
-    slug: "emotional-survival-for-law-enforcement",
-    title: "Emotional Survival for Law Enforcement",
-    author: "Dr. Kevin M. Gilmartin",
+    id: "app2",
+    name: "Pocket Sergeant",
+    description: "The essential app created by police, for police. Includes wellbeing resources alongside operational guidance.",
+    category: "Wellbeing & Operational",
+    badge: "Official Supporter",
     rating: 4.9,
-    reviews: 3200,
-    recommendedBy: "Police Federation Wellbeing Lead",
-    category: "Psychology",
-    summary: "The definitive guide on the psychological toll of police work and how to protect your personal life and mental health.",
-    image: "https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=800&auto=format&fit=crop"
+    reviews: 50000,
+    logo: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=400&auto=format&fit=crop",
+    link: "https://pocketsergeant.co.uk"
   },
   {
-    id: "s3",
-    type: "podcast",
-    slug: "the-briefing-room",
-    title: "The Briefing Room Wellbeing Cast",
-    author: "Police Care UK",
+    id: "app3",
+    name: "Calm",
+    description: "Helps you manage stress, sleep better, and live a happier, healthier life with guided meditations and sleep stories.",
+    category: "Sleep & Anxiety",
+    badge: "Staff Pick",
     rating: 4.7,
-    reviews: 850,
-    recommendedBy: "Police Care UK Panel",
-    category: "Wellbeing",
-    summary: "Real conversations with serving and retired officers about trauma, investigations, and finding a path forward.",
-    image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop"
-  },
-  {
-    id: "s4",
-    type: "org",
-    slug: "police-firearms-officers-association",
-    title: "Police Firearms Officers Association (PFOA)",
-    author: "National Support Network",
-    rating: 5.0,
-    reviews: 95,
-    recommendedBy: "Metropolitan Police Firearms Association",
-    category: "Legal & Support",
-    summary: "Providing crucial welfare support, legal guidance, and counseling for firearms officers and their families during post-incident procedures.",
-    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop"
+    reviews: 3200,
+    logo: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=400&auto=format&fit=crop",
+    link: "https://www.calm.com"
   }
 ];
 
-const TABS = [
-  { id: "all", label: "All Resources", icon: Heart },
-  { id: "app", label: "Apps", icon: Smartphone },
-  { id: "book", label: "Books", icon: Book },
-  { id: "podcast", label: "Podcasts", icon: Headphones },
-  { id: "org", label: "Organisations", icon: ShieldAlert },
+const MOCK_BOOKS = [
+  {
+    id: "book1",
+    title: "Emotional Survival for Law Enforcement",
+    author: "Dr. Kevin M. Gilmartin",
+    description: "The definitive guide on the psychological toll of police work and how to protect your personal life and mental health.",
+    category: "Psychology",
+    recommendedBy: "Police Federation Wellbeing Lead",
+    cover: "https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=800&auto=format&fit=crop",
+    link: "https://www.amazon.com/dp/0971725403"
+  },
+  {
+    id: "book2",
+    title: "Trauma Stewardship",
+    author: "Laura van Dernoot Lipsky",
+    description: "An everyday guide to caring for self while caring for others, perfect for front-line public service workers.",
+    category: "Self-Care",
+    recommendedBy: "Mental Health Specialists",
+    cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop",
+    link: "https://www.amazon.com"
+  },
+  {
+    id: "book3",
+    title: "The Body Keeps the Score",
+    author: "Bessel van der Kolk",
+    description: "Brain, mind, and body in the healing of trauma. A fundamental read for understanding PTSD.",
+    category: "Medical & Trauma",
+    recommendedBy: "IOPC Reform Coalition",
+    cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+    link: "https://www.amazon.com"
+  }
 ];
 
-export default function SupportListing() {
-  const [activeTab, setActiveTab] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState("Rating"); // Rating, Reviews, Title
-  const [currentPage, setCurrentPage] = useState(1);
+const MOCK_PODCASTS = [
+  {
+    id: "pod1",
+    title: "The Pocket Sergeant Podcast",
+    description: "Real conversations with serving and retired officers about trauma, investigations, and finding a path forward.",
+    topic: "Wellbeing & Law",
+    logo: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop",
+    link: "https://spotify.com"
+  },
+  {
+    id: "pod2",
+    title: "Police Care UK Wellbeing Cast",
+    description: "Advice, resources, and shared experiences from the national charity dedicated to police welfare.",
+    topic: "Welfare Support",
+    logo: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop",
+    link: "https://spotify.com"
+  },
+  {
+    id: "pod3",
+    title: "First Responder Wellness",
+    description: "Experts discuss mental health strategies tailored for the extreme stress of frontline emergency work.",
+    topic: "Mental Health",
+    logo: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=800&auto=format&fit=crop",
+    link: "https://spotify.com"
+  }
+];
 
+
+// Section components with local state
+const AppsSection = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("Rating");
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
-  const filteredResources = MOCK_RESOURCES.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab = activeTab === "all" || item.type === activeTab;
-    return matchesSearch && matchesTab;
+  const filtered = MOCK_APPS.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === "Title") return a.name.localeCompare(b.name);
+    return b.rating - a.rating;
   });
-
-  const sortedResources = [...filteredResources].sort((a, b) => {
-    if (sortBy === "Title") {
-      return a.title.localeCompare(b.title);
-    }
-    if (sortBy === "Reviews") {
-      return b.reviews - a.reviews;
-    }
-    return b.rating - a.rating; // Default Rating
-  });
-
-  const totalPages = Math.ceil(sortedResources.length / itemsPerPage);
-  const paginatedResources = sortedResources.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  
+  const totalPages = Math.ceil(sorted.length / itemsPerPage);
+  const paginated = sorted.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="min-h-screen bg-[#020611] text-white pb-32 font-sans">
-      
+    <section className="py-24 border-b border-white/5 relative">
+      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+          <div>
+            <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
+              <Smartphone className="w-5 h-5" /> Digital Tools
+            </h2>
+            <h3 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Apps</h3>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
+            <div className="relative w-full">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <input 
+                type="text" 
+                placeholder="SEARCH APPS..."
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+              />
+            </div>
+          </div>
+        </div>
 
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <AnimatePresence mode="popLayout">
+            {paginated.map((item, idx) => (
+              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-[#050A14] border border-white/10 rounded-2xl overflow-hidden hover:border-[#1877F2]/50 transition-colors flex flex-col group">
+                <div className="p-8 flex-grow flex flex-col">
+                  <div className="flex justify-between items-start mb-6">
+                    <img src={item.logo} alt={item.name} className="w-16 h-16 rounded-2xl object-cover border border-white/10 group-hover:scale-110 transition-transform duration-500" />
+                    {item.badge && <span className="bg-[#1877F2]/20 text-[#1877F2] text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">{item.badge}</span>}
+                  </div>
+                  <h4 className="text-xl font-bold text-white mb-2">{item.name}</h4>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                    <span className="text-sm font-bold text-white">{item.rating}</span>
+                    <span className="text-[10px] text-slate-500 uppercase tracking-widest ml-1">({item.reviews})</span>
+                  </div>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-4 inline-block">{item.category}</span>
+                  <p className="text-sm text-slate-400 leading-relaxed mb-8 flex-grow">{item.description}</p>
+                  
+                  <Link href={item.link} target="_blank">
+                    <Button className="w-full bg-white/5 hover:bg-[#1877F2] hover:text-white text-slate-300 font-bold uppercase tracking-widest text-[10px] py-6 transition-all border border-white/10 group-hover:border-[#1877F2]">
+                      Visit App <ExternalLink className="w-3 h-3 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-12">
+            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Pg {currentPage} / {totalPages}</span>
+            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+
+const BooksSection = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
+
+  const filtered = MOCK_BOOKS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  return (
+    <section className="py-24 border-b border-white/5 relative">
+      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+          <div>
+            <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
+              <Book className="w-5 h-5" /> Reading Material
+            </h2>
+            <h3 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Books</h3>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
+            <div className="relative w-full">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <input 
+                type="text" 
+                placeholder="SEARCH BOOKS..."
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatePresence mode="popLayout">
+            {paginated.map((item, idx) => (
+              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-transparent border border-white/10 rounded-none overflow-hidden hover:border-[#1877F2]/50 transition-colors flex flex-col group">
+                <div className="aspect-[4/3] overflow-hidden relative border-b border-white/10">
+                  <img src={item.cover} alt={item.title} className="w-full h-full object-cover grayscale opacity-70 group-hover:scale-105 group-hover:grayscale-0 transition-transform duration-700" />
+                  <div className="absolute top-4 left-4 bg-[#020611] text-white px-4 py-2 text-[9px] font-bold uppercase tracking-widest border border-white/10">
+                    {item.category}
+                  </div>
+                </div>
+                <div className="p-8 flex-grow flex flex-col bg-[#050A14]">
+                  <h4 className="text-xl font-bold text-white mb-2 leading-tight">{item.title}</h4>
+                  <p className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em] mb-6">BY {item.author}</p>
+                  
+                  <div className="bg-white/5 border border-white/10 p-4 mb-6 relative">
+                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Recommended By</p>
+                    <p className="text-xs font-bold text-slate-300">{item.recommendedBy}</p>
+                  </div>
+                  
+                  <p className="text-sm text-slate-400 leading-relaxed mb-8 flex-grow">{item.description}</p>
+                  
+                  <Link href={item.link} target="_blank">
+                    <Button className="w-full bg-transparent text-[#1877F2] hover:bg-[#1877F2] hover:text-white border border-[#1877F2]/30 font-bold uppercase tracking-widest text-[10px] py-6 transition-all rounded-none">
+                      Buy / View Book <ExternalLink className="w-3 h-3 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-12">
+            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Pg {currentPage} / {totalPages}</span>
+            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+
+const PodcastsSection = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
+  const filtered = MOCK_PODCASTS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  return (
+    <section className="py-24 border-b border-white/5 relative bg-[#020611]">
+      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+          <div>
+            <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
+              <Headphones className="w-5 h-5" /> Audio Resources
+            </h2>
+            <h3 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Podcasts</h3>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
+            <div className="relative w-full">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <input 
+                type="text" 
+                placeholder="SEARCH PODCASTS..."
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AnimatePresence mode="popLayout">
+            {paginated.map((item, idx) => (
+              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#1877F2]/50 transition-colors flex items-center gap-6 group">
+                <div className="shrink-0 relative">
+                  <div className="absolute inset-0 bg-[#1877F2] blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></div>
+                  <img src={item.logo} alt={item.title} className="w-24 h-24 rounded-xl object-cover border border-white/20 grayscale group-hover:grayscale-0 transition-all duration-500 relative z-10" />
+                </div>
+                <div className="flex-grow">
+                  <div className="text-[9px] font-bold text-[#1877F2] uppercase tracking-widest mb-2">{item.topic}</div>
+                  <h4 className="text-xl font-bold text-white mb-2 tracking-tight leading-tight">{item.title}</h4>
+                  <p className="text-sm text-slate-400 leading-relaxed mb-4 line-clamp-2">{item.description}</p>
+                  <Link href={item.link} target="_blank" className="inline-flex items-center gap-2 text-[10px] font-bold text-white uppercase tracking-widest hover:text-[#1877F2] transition-colors">
+                    Listen Now <ExternalLink className="w-3 h-3" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-12">
+            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Pg {currentPage} / {totalPages}</span>
+            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+
+export default function SupportListing() {
+  return (
+    <div className="min-h-screen bg-[#020611] text-white font-sans">
+      
       {/* HERO */}
       <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
@@ -134,190 +371,16 @@ export default function SupportListing() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
             >
-              You are not alone. Explore our curated directory of mental health resources, legal support organizations, and wellbeing tools.
+              You are not alone. Explore our curated directory of mental health resources, books, and podcasts tailored for police wellbeing.
             </motion.p>
           </div>
         </div>
       </section>
 
-      {/* EMERGENCY CRISIS SUPPORT BLOCK */}
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] mt-12">
-        <div className="bg-red-950/40 border border-red-500/30 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden backdrop-blur-sm">
-          <div className="absolute top-0 left-0 w-2.5 h-full bg-red-600 animate-[pulse_2s_infinite]" />
-          <div className="flex items-start gap-4">
-            <div className="bg-red-500/10 text-red-500 p-3 mt-1 shrink-0 rounded-none border border-red-500/20">
-              <Phone className="w-6 h-6 animate-pulse" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold uppercase tracking-wider text-white mb-2">Emergency Crisis Support</h2>
-              <p className="text-slate-300 text-xs md:text-sm max-w-3xl leading-relaxed">
-                If you are a policing professional undergoing an active investigation, suspension, or experiencing severe distress, help is available. You are not alone. Please reach out to these confidential resources immediately:
-              </p>
-              <div className="flex flex-wrap items-center gap-6 mt-4 text-xs font-semibold text-slate-400">
-                <span className="flex items-center gap-2"><strong className="text-white uppercase">Samaritans:</strong> <a href="tel:116123" className="text-red-400 hover:text-red-300 transition-colors">116 123 (UK)</a></span>
-                <span className="hidden md:inline text-slate-700">|</span>
-                <span className="flex items-center gap-2"><strong className="text-white uppercase">Police Care UK:</strong> <a href="tel:03000120030" className="text-red-400 hover:text-red-300 transition-colors">0300 012 0030</a></span>
-                <span className="hidden md:inline text-slate-700">|</span>
-                <span className="flex items-center gap-2"><strong className="text-white uppercase">Mind Blue Light:</strong> <a href="tel:03003035999" className="text-red-400 hover:text-red-300 transition-colors">0300 303 5999</a></span>
-              </div>
-            </div>
-          </div>
-          <div className="shrink-0 w-full md:w-auto">
-            <a 
-              href="tel:116123" 
-              className="inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold uppercase tracking-wider text-[10px] px-8 py-4 w-full md:w-auto transition-colors"
-            >
-              Call Samaritans Now
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* TABS & SEARCH */}
-      <section className="sticky top-[72px] z-40 bg-[#050B14]/90 backdrop-blur-xl border-b border-white/5 py-5 shadow-xl">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
-            <div className="flex gap-3 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
-              {TABS.map(tab => {
-                const Icon = tab.icon;
-                return (
-                  <button 
-                    key={tab.id}
-                    onClick={() => { setActiveTab(tab.id); setCurrentPage(1); }}
-                    className={`whitespace-nowrap px-6 py-4 rounded-none text-[10px] font-bold tracking-widest uppercase transition-all flex items-center gap-2 ${activeTab === tab.id ? 'bg-[#1877F2] text-white' : 'bg-transparent border border-white/10 text-white hover:bg-white/5'}`}
-                  >
-                    <Icon className="w-4 h-4" /> {tab.label}
-                  </button>
-                );
-              })}
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 w-full lg:max-w-xl shrink-0 items-center mt-4 lg:mt-0">
-              <div className="flex gap-2 items-center bg-white/5 border border-white/10 px-4 py-3 w-full sm:w-auto">
-                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Sort:</span>
-                <select 
-                  value={sortBy} 
-                  onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
-                  className="bg-transparent text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none cursor-pointer border-none"
-                >
-                  <option value="Rating" className="bg-[#050A14] text-white">Highest Rated</option>
-                  <option value="Reviews" className="bg-[#050A14] text-white">Most Reviewed</option>
-                  <option value="Title" className="bg-[#050A14] text-white">Title A-Z</option>
-                </select>
-              </div>
-              
-              <div className="relative w-full">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input 
-                  type="text" 
-                  placeholder="SEARCH RESOURCES..."
-                  value={searchQuery}
-                  onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                  className="w-full bg-[#050A14] border border-white/10 rounded-none pl-14 pr-6 py-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-500"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* GRID */}
-      <section className="w-full px-6 lg:px-16 mx-auto mt-24 max-w-[1600px]">
-        {paginatedResources.length === 0 ? (
-          <div className="text-center py-32 bg-[#050A14] rounded-none border border-white/10">
-            <Heart className="w-16 h-16 text-slate-600 mx-auto mb-6" />
-            <h3 className="text-2xl font-sans font-bold text-white mb-2 uppercase tracking-tight">No resources found</h3>
-            <p className="text-slate-400">Try adjusting your search or category filters.</p>
-            <Button onClick={() => { setSearchQuery(""); setActiveTab("all"); setCurrentPage(1); }} variant="outline" className="mt-8 border-white/20 text-white hover:bg-white/10 rounded-none px-8 py-6 text-[10px] font-bold uppercase tracking-widest bg-transparent">Clear Filters</Button>
-          </div>
-        ) : (
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              <AnimatePresence mode="popLayout">
-                {paginatedResources.map((item, index) => (
-                  <motion.div 
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }} 
-                    animate={{ opacity: 1, scale: 1 }} 
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    key={item.id}
-                    className="h-full"
-                  >
-                    <Link href={`/support/${item.type}/${item.slug}`} className="group flex flex-col h-full bg-transparent border border-white/10 hover:border-white/30 transition-colors duration-300 rounded-none">
-                      <div className="aspect-[4/3] overflow-hidden relative border-b border-white/10">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-cover grayscale opacity-60 group-hover:scale-105 group-hover:grayscale-0 transition-transform duration-700" />
-                        <div className="absolute top-0 left-0 bg-white text-black px-4 py-2 text-[9px] font-bold uppercase tracking-[0.2em] flex items-center shadow-none rounded-none">
-                          {item.type === 'app' && <Smartphone className="w-3 h-3 mr-2 text-black" />}
-                          {item.type === 'book' && <Book className="w-3 h-3 mr-2 text-black" />}
-                          {item.type === 'podcast' && <Headphones className="w-3 h-3 mr-2 text-black" />}
-                          {item.type === 'org' && <ShieldAlert className="w-3 h-3 mr-2 text-black" />}
-                          {item.type}
-                        </div>
-                      </div>
-                      
-                      <div className="p-8 flex flex-col flex-grow relative z-10">
-                        <h3 className="font-sans text-xl font-bold uppercase text-white mb-4 group-hover:text-white transition-colors leading-tight tracking-tight">
-                          {item.title}
-                        </h3>
-                        
-                        <div className="flex items-center gap-2 text-white mb-4">
-                          <Star className="w-4 h-4 fill-current text-amber-500" />
-                          <span className="text-sm font-bold text-white">{item.rating}</span>
-                          <span className="text-[9px] text-slate-500 uppercase tracking-widest ml-1">({item.reviews} Reviews)</span>
-                        </div>
-
-                        {item.recommendedBy && (
-                          <div className="mb-6 inline-block bg-white/5 border border-white/10 px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-slate-400">
-                            ★ Rec: {item.recommendedBy}
-                          </div>
-                        )}
-
-                        <p className="text-slate-400 text-sm mb-8 flex-grow leading-relaxed">
-                          {item.summary}
-                        </p>
-                        
-                        <div className="border-t border-white/10 pt-6 mt-auto flex items-center justify-between">
-                          <p className="text-[10px] font-bold text-white uppercase tracking-[0.2em]">{item.author}</p>
-                          {item.type === 'podcast' && <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">LISTEN NOW <ExternalLink className="w-3 h-3" /></span>}
-                          {item.type === 'book' && <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">VIEW BOOK <ExternalLink className="w-3 h-3" /></span>}
-                          {item.type === 'app' && <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">GET APP <ExternalLink className="w-3 h-3" /></span>}
-                          {item.type === 'org' && <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">VISIT SITE <ExternalLink className="w-3 h-3" /></span>}
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-
-            {/* PAGINATION CONTROLS */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-4 mt-16">
-                <Button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  variant="outline"
-                  className="border-white/10 text-white hover:bg-white/10 rounded-none px-6 py-4 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 disabled:pointer-events-none bg-transparent"
-                >
-                  Previous
-                </Button>
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <Button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  variant="outline"
-                  className="border-white/10 text-white hover:bg-white/10 rounded-none px-6 py-4 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 disabled:pointer-events-none bg-transparent"
-                >
-                  Next
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
-      </section>
+      {/* THREE DISTINCT SECTIONS WITH THEIR OWN LOCAL STATE */}
+      <AppsSection />
+      <BooksSection />
+      <PodcastsSection />
 
     </div>
   );

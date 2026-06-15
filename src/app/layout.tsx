@@ -30,9 +30,9 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-[#010b19] text-white" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-sans bg-[#010b19] text-white overflow-x-hidden" suppressHydrationWarning>
         <Header />
-        <main className="flex-1 w-full">{children}</main>
+        <main className="flex-1 w-full overflow-x-hidden">{children}</main>
         <Footer />
       </body>
     </html>

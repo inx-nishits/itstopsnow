@@ -1,0 +1,485 @@
+,,,,,,,,,
+,Introduction,,e3177 || IT Stops Now,,,,,,
+,Technology,,Web Panel & Web Services:  React & Sanity CMS,,,,,,
+,Supported Browsers,,"All latest versions of Firefox, Chrome & Safari supported ; Internet Explorer not supported",,,,,,
+,#,Module,Sub-Module,Web Page Description,CMS Notes,Hours,,Notes,Client Comments
+,,,,,,React,Sanity CMS,,
+,,,,,,,,,
+,,Language,English,,,,,Adding any other languages may require additional effort,
+,,,,,,,,,
+,,Currency,Euro,,,,,Adding any other currencies may require additional effort,
+,,,,,,,,,
+,,Country,UK,,,,,Please let us know if the site will not be available in any countries,
+,,,,,,,,,
+,,API Integration,,,,,,,
+,,,,,,,,,
+,,Maichimp / Sendgrid,,For newsletter integration,,16,,"License & any other cost associated with using this, will be provided by the client. Hours will vary if some other service is used",
+,,,,,,,,,
+,,MP Lookup Integration,,For find the MP of the constituency.,,,,"License & any other cost associated with using this, will be provided by the client. Hours will vary if some other service is used",
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,Database Design,,,,8,       ,,
+,,,,,,,,,
+,,Project Setup,,,,12,,,
+,,,,,,,,,
+,,User Roles,,,,,,,
+,,,,,,,,,
+,,End User,,Website,,,,,
+,,,,,,,,,
+,,Admin,,Sanity CMS,,,,,
+,,,,,,,,,
+,,Applicant,,,,,,,
+,,,,,,,,,
+,,Website Menu,,The following options will be shown in the site menu. User can navigate to the various sections from here,,,,,
+,,,Home,This will take the user to the 'Home' screen,,3,1,,
+,,,About,This will take the user to the 'About' screen,,,,,
+,,,The Issue,This will take the user to the 'The Issue' screen,,,,,
+,,,News,This will take the user to the 'News' screen,,,,,
+,,,Stories,This will take the user to the 'Stories' screen,,,,,
+,,,Wall of Rememberence,This will take the user to the 'Wall of Rememberence' screen,,,,,
+,,,Research and Evidence,This will take the user to the 'Research and Evidence' screen,,,,,
+,,,Recover and Support,This will take the user to the 'Recover and Support' screen,,,,,
+,,,Take Actions,This will take the user to the 'About Us' screen,,,,,
+,,,,,,,,,
+,,Homepage,,,,,,,We will need ability to change logo.
+,,,Hero Section,,Content would be added from CMS,2,2,,
+,,,,Large banner image/background video.,,,,,Need to be able to change banner colour at the top and any images
+,,,,Main heading text.,,,,,"Need ability to change font type, size and colour. This includes, changing colour of single words - not just the whole block"
+,,,,Supporting subheading/description.,,,,,"Need ability to change font type, size and colour. This includes, changing colour of single words - not just the whole block"
+,,,     Multiple CTA buttons:,,,1,1,,
+,,,,Get Involved,,,,,Ability to change button text and link to a webpage. Ability to change colour of text within the button and button colour
+,,,,Read Stories,,,,,Ability to change button text and link to a webpage. Ability to change colour of text within the button and button colour
+,,,,View Roll of Honour,,,,,Ability to change button text and link to a webpage. Ability to change colour of text within the button and button colour
+,,,Awareness Statistics Section,,,2,1,,
+,,,     Statistics Cards,Display key statistics in card/grid layout. Each card includes:,,,,,"Need to be able to change icons, text and statistics."
+,,,,Icon/image,,,,,
+,,,,Main statistic number,,,,,
+,,,,Supporting description,,,,,
+,,,     Animated Counter,Number counting animation on scroll.,,,,,All numbers should increase fairly quickly but the statistic 12 (In 12 of 13) should increase slower and be pulsing like a heart
+,,,     Information Alert Box,Highlight important notice/information.,,,,,
+,,,Quote & Emotional Section,,,3,2,,
+,,,     Quote Block,Display emotional/supportive quote.,,,,,"Allow me to change block colour, change fonts of title and text and the holding image. It doesn't need the additional icon option 
+whereit says ""support"" ""reform"" ""Change"" ""speakout"". But the get involved button needs to go somewhere. So do we populate some 
+sort of  contact form? Asking people's name, role, email address, telephone number, what they can bring to the organisation? Would 
+need to be spam-proof."
+,,,,Image support in addition to the quote,,,,,
+,,,     Quote Cards Section,Display informational cards with each card having following component,,,,,
+,,,,Icon/image,,,,,
+,,,,Title,,,,,
+,,,,Short description,,,,,
+,,,Objectives / Mission Goals Section,,,4,2,,
+,,,     Goal/Objective Section,Display organization goals/objectives in a card-based grid layout. Each objective card contains:,,,,,Must be able to change icons and text font types / sizes.
+,,,,Serial number,,,,,
+,,,,Icon/image,,,,,
+,,,,Objective title,,,,,
+,,,,Short description,,,,,
+,,,     Mission Statement Banner,Full-width highlighted mission statement area.,,,,,"I will need ability to change block colour, icon, font type, size and colour (even for individual words)"
+,,,,Left-side icon/image support.,,,,,
+,,,,Main motivational statement.,,,,,
+,,,,Supporting subtitle/message.,,,,,
+,,,,Quote/testimonial display with author name.,,,,,
+,,,Founder Showcase Section,Display founding members in card/grid layout. Each card/grid layout would contain following:,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",3,1,,"Also need ability to change font type of the titles for eg. ""Our Founder"" and ""Our Founding Members"""
+,,,,Profile image.,,,,,
+,,,,Member name.,,,,,
+,,,,Designation/title.,,,,,
+,,,,Short supporting quote/statement.,,,,,
+,,,,"“View Bio” CTA, clicking upon this  the card will flip to showcase the bio details",,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,About,,,,,,,"I think access to this section should be accessible via a banner / link on the home page. I don't think it should have it's own place on the
+main menu at the top of the website. There is a proper ""ABOUT"" section in the Word document I sent you of what should be included
+regarding the organisation that has been formed."
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,5,2,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,“Who Is Pocket Sergeant?” Section,Informational section about supporting organization,,,,,
+,,,,Large section heading.,,,,,
+,,,,Short description,,,,,
+,,,     Mobile App Showcase,Product/app showcase image,,,,,
+,,,,Short app description/tagline.,,,,,
+,,,,Google Playstore App CTA Button,,,,,
+,,,,Apple Playstore App CTA Button,,,,,
+,,,     Statistics Section,Display organizational achievements such as in card/grid layout. Each card component would consist,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",2,1,,
+,,,,Icon/image,,,,,
+,,,,Numeric value,,,,,
+,,,,Supporting text,,,,,
+,,,,Animated Counters: Number animation on scroll.,,,,,
+,,,“Why Are They Supporting This Movement?” Section,Header Section with Title,Content would be added from CMS,2,1,,
+,,,,Supporting description text.,,,,,
+,,,,Quote/testimonial display with author name / designation.,,,,,
+,,,,Image associated in the section.,,,,,
+,,,Funding & Transparency Information Section,Display funding and Transparency section in a card-based grid layout. Each objective card contains:,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",2,1,,
+,,,,Icon,,,,,
+,,,,Title,,,,,
+,,,,Description,,,,,
+,,,,Bullet points (optional),,,,,
+,,,“Learn More About Pocket Sergeant” CTA Section,Title for section,Content would be added from CMS,3,2,,
+,,,,Description,,,,,
+,,,,Display multiple action cards such as:,,,,,
+,,,,Icon/image,,,,,
+,,,,Title,,,,,
+,,,,Description,,,,,
+,,,,Button clicking upon which user would be redirected to external link.,,,,,
+,,,,,,,,,Maybe add somewhere I can add links / hokding images to the Pocket Sergeant Podcast too on this page.
+,,,,,,,,,
+,,The Issue,,,,,,,
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,1,1,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,“The Facts” Statistics Section,Display issue-related statistics in card/grid layout. Each fact card includes:,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",2,2,,
+,,,,Icon,,,,,
+,,,,Statistic number/value,,,,,
+,,,,Supporting text,,,,,
+,,,,Additional explanation,,,,,
+,,,,Animated Counter Support: Count-up number animation on scroll.,,,,,
+,,,“What’s Going Wrong?” Awareness Cards Section,Display key problem areas in card/grid layout. Each problem area consist:,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",3,2,,
+,,,,Background image.,,,,,
+,,,,Overlay effect.,,,,,
+,,,,Icon.,,,,,
+,,,,Title.,,,,,
+,,,,Description.,,,,,
+,,,“The Impact” Informational Section,Heading Title,Content would be added from CMS,2,2,,
+,,,,Text-based informational section.,,,,,
+,,,,Bullet-point style impact listing.,,,,,
+,,,,Icon-supported list items.,,,,,
+,,,“Change Is Possible” CTA Panel,Heading.,Content would be added from CMS,2,1,,"Maybe we can reword the Take Action Now button and make it the something like Get Involved now that would open up a
+contact form like on the home screen? Because the Take Action tab would be primarily a tool for visitors to use the online tool in contacting
+their MP when what we are wanting is for them to get involved."
+,,,,Supporting description.,,,,,
+,,,,Action list items.,,,,,
+,,,,"CTA button, user would be redirected to Take Action page.",,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,Stories,,,,,,,
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,1,1,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,List of Story Section,Display stories in responsive card layout. Each Story Card Components would consist:,"Add/edit/delete stories.
+Reorder list item dynamically.
+Save draft/publish functionality.
+Schedule story publishing.",4,3,,
+,,,,Featured image.,,,,,
+,,,,Story category label.,,,,,
+,,,,Story title.,,,,,
+,,,,Short excerpt/preview text.,,,,,
+,,,,Publish date.,,,,,
+,,,,Estimated reading time.,,,,,
+,,,,“Read Story” CTA link.,,,,,
+,,,     Pagination / Infinite Scroll,Pagination / Infinite scrolling support.,,,,,
+,,,     Story Category Filter,Category-based filtering option would be provided to user to filter the story. ,"Add/edit/delete story categories.
+Enable/disable categories.",2,2,,
+,,,     Search Functionality,"User can search story by:
+Title
+Keywords
+Tags
+Category",,1,1,,
+,,,Individual Story Detail Page,"When user clicks upon Read Story, user would be redirected to detailed page of the story consisting following information.",,3,2,,"We are going to need to work closely on the design. But I would also want functionality for adding images, adding embedded videos ie
+YouTube and also embedding images with URLs so people can click / tap the image and it will take you to the URL in question. 
+Also, need to be able to add general URLs. So if in a story we are cross referencing something else, we can link it."
+,,,,Large banner image.,,,,,
+,,,,Featured image.,,,,,
+,,,,Story category label.,,,,,
+,,,,Story title.,,,,,
+,,,,Author name.,,,,,
+,,,,Publish date.,,,,,"We need to be able to schedule date and time article goes live,"
+,,,,Estimated reading time.,,,,,
+,,,,Full article/story content.,,,,,
+,,,     Social Sharing,User can copy the story link and would have share option to:,,6,1,,
+,,,,Facebook,,,,,
+,,,,Twitter/X,,,,,
+,,,,LinkedIn,,,,,
+,,,,Email,,,,,
+,,,“Your Story Could Save A Life” CTA Section,This section would encourage users to share their stories.,Story Submission CMS Module,18,6,,
+,,,,Background image.,"List of all the stories submitted from the website would be shown here with pagination, searching and sorting functionality.",,,,
+,,,,Main heading.,Admin will receive an email for each story submission.,,,,
+,,,,Supporting description.,,,,,
+,,,,CTA buttons: Share Your Story,,,,,Would this populate some sort ot contact form?
+,,,,Supportive quote block.,,,,,
+,,,     Story Submission System,Users can submit personal stories by providing following information.,,,,,
+,,,,Name (optional anonymous mode).,,,,,
+,,,,Email.,,,,,
+,,,,Story title.,,,,,
+,,,,Story content.,,,,,
+,,,          File Upload Support,Upload images/documents.,,,,,
+,,,,Consent checkbox.,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,News,,,,,,,
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,1,2,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,List of News Section,Display News in responsive card layout. Each News Card Components would consist:,"Add/edit/delete news.
+Reorder list item dynamically.
+Save draft/publish functionality.
+Schedule news for publishing.
+User can send the news published via newsletter to all the subscribed users.",5,3,,
+,,,,Featured image.,,,,,
+,,,,News category label.,,,,,
+,,,,Story title.,,,,,
+,,,,Short excerpt/preview text.,,,,,
+,,,,Publish date.,,,,,
+,,,,Estimated reading time.,,,,,
+,,,,“Read Story” CTA link.,,,,,
+,,,     Pagination / Infinite Scroll,Pagination / Infinite scrolling support.,,,,,
+,,,     Story Category Filter,Category-based filtering option would be provided to user to filter the news. ,"Add/edit/delete news categories.
+Enable/disable categories.",2,2,,
+,,,     Search Functionality,"User can search story by:
+Title
+Keywords
+Tags
+Category",,1,1,,
+,,,Individual News Detail Page,"When user clicks upon Read News, user would be redirected to detailed page of the news consisting following information.",,2,2,,
+,,,,Large banner image.,,,,,
+,,,,Featured image.,,,,,
+,,,,News category label.,,,,,
+,,,,Story title.,,,,,
+,,,,Author name.,,,,,
+,,,,Publish date.,,,,,
+,,,,Estimated reading time.,,,,,
+,,,,Full article/news content.,,,,,
+,,,     Social Sharing,User can copy the story link and would have share option to:,,6,1,,
+,,,,Facebook,,,,,
+,,,,Twitter/X,,,,,
+,,,,LinkedIn,,,,,
+,,,,Email,,,,,
+,,,“What We’re Working On” Section,Showcase organizational initiatives in a card format. Each card would consist of:,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",2,2,,
+,,,,Icon/image.,,,,,
+,,,,Title.,,,,,
+,,,,Short description.,,,,,
+,,,Newsletter Section,Email subscription form.,Newsletter CMS Module,5,2,,
+,,,,User can signup for newsletter email by providing their email.,"List of all the user subscribed for newsletter would be shown here with pagination, searching and sorting functionality",,,,
+,,,,Email validation.,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,Take Action,,,,,,,
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,1,1,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,Action Benefits Statistics Strip Section,Showcase action taken benifits in a card format. Each card would consist of:,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",2,1,,
+,,,,Icon/image support.,,,,,
+,,,,Title and short description.,,,,,
+,,,,Counter/statistic display.,,,,,
+,,,Featured Campaigns Section,Showcase featured campaigns in a card format. Each card would consist of:,"Add/edit/delete functionality per list item.
+Reorder list item dynamically.",2,1,,
+,,,,Background image.,,,,,
+,,,,Icon.,,,,,
+,,,,Campaign title.,,,,,
+,,,,Short description.,,,,,
+,,,,Number of templates available.,,,,,
+,,,List Letter Templates Section,"Display list of all the templates availabe with pagination, searching and sorting functionality. Each template would have following information.","Add/edit/delete letter templates.
+Reorder list item dynamically.
+",24,8,,
+,,,,Template title.,,,,,
+,,,,"Intended recipient type: (MP, PCC, Cheif Constable etc).",,,,,
+,,,,"Tone category: (Personal, Formal, Evidence-led)",,,,,
+,,,,Estimated read/send time.,,,,,
+,,,Actions Available,Following action can be taken per list template item.,,,,,
+,,,     Preview template.,"Button, clicking upon this user can view the template in the pdf viewer.",,,,,
+,,,     Download PDF,"Button, clicking upon this user can download the template in the pdf format.",,,,,
+,,,     Download Word document.,"Button, clicking upon this user can download the template in the word format.",,,,,
+,,,     Search & Filtering,"User can search and filter the list of templates by any keyword. (Recipient type, Tone, Template Title)",,,,,
+,,,Letter Personalization Sidebar Section,Allow users to personalize letters for their need by providing following information.,,2,1,,
+,,,,User name.,,,,,
+,,,,Police force selection.,,,,,
+,,,,Postcode.,,,,,
+,,,,Additional optional details.,,,,,
+,,,,"Personalize: Button, clickign upon this user would be redirected to personalize email page.",,,,,
+,,,Personalize Email Page,,,,,,
+,,,     Find MP,"Postcode, prefilled from previous page. An API integration would be done to find the details of the MP for the given postcode.",,24,12,,
+,,,     Choose Template ,"Dropdown, User can choose the template from the dropdown.",,,,,
+,,,     Preview Letter ,User can preview the letter which is choosen from the template,,,,,
+,,,,User can edit the letter of the template.,,,,,
+,,,,User has the functionality to reset the template on original format.,,,,,
+,,,     Send Letter,"Button, clicking upon this user can send the letter to email address to the fetched MP..",,,,,
+,,,,Note: In case email is not available the email would not be send.,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,Wall of Remembrance,,,,,,,
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,7,4,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,Candle Count Display,Dynamic remembrance total candle count.,,,,,
+,,,Memorial Statistics Strip Section,Below would be dynamic data featched from user activity/content added on website.,,,,,
+,,,,Officers & staff remembered,,,,,
+,,,,Monthly remembrance average,,,,,
+,,,,Forces represented,,,,,
+,,,,Candles lit,,,,,
+,,,,“Not Forgotten” percentage,,,,,
+,,,List of Memorial,"Display list of all the memorial availabe in card/grid format with pagination, searching and sorting functionality. Each card would have following information.","Add/edit/delete memorial.
+Reorder list item dynamically.
+",6,4,,
+,,,,Profile image.,,,,,
+,,,,Name.,,,,,
+,,,,Role/designation.,,,,,
+,,,,Police force.,,,,,
+,,,,Birth/death years.,,,,,
+,,,,Candle/tribute count.,,,,,
+,,,     Action Button,"View Tribute: Button, clicking upon this user would be redirected to detailed page.",,,,,
+,,,Memorial Detail Page,Below would be the detailed page of the memorial. Following information would be shown here.,,40,20,,
+,,,     Memorial Profile Banner,Large memorial hero section with emotional background image,,,,,
+,,,,Full memorial identity display:,,,,,
+,,,,Name,,,,,
+,,,,Rank/designation,,,,,
+,,,,Police force,,,,,
+,,,,Birth/death dates,,,,,
+,,,,Age,,,,,
+,,,     Memorial Quote/Tribute,Family or colleague remembrance quote displayed below profile details.,,,,,
+,,,     “Their Story” Section,Full memorial biography/story section.,,,,,
+,,,     Photo Gallery Section,Multiple memorial images.,,,,,
+,,,,Gallery grid/carousel support.,,,,,
+,,,,“View All Photos” CTA: Clicking upon this a modal would open where user can view all the photos added.,,,,,
+,,,     Service & Career Timeline Section,Chronological career/service milestones. Each milestone would include following information.,,,,,
+,,,,Year/date.,,,,,
+,,,,Position/title.,,,,,
+,,,,Description of achievements/service.,,,,,
+,,,,“View Full Timeline” CTA: Clicking upon this user can Expand full career history.,,,,,
+,,,     “Remembered By” Tribute Messages Section,Message section showcasing message in card format. Each Tribute Card Components would consist,,,,,"There should be a clear CTA somehwere that allows users to click to leave a message and it may populate a contact form with a number
+of fields. This must be spam-proof and also must allow an admin to moderate any comments that come in to filter out any nasty comments.
+Or is there a plugin we can use that will help us moderate them? But also allow us the ability to edit, or delete any messages left."
+,,,,Message text.,,,,,
+,,,,Visitor/family/colleague name.,,,,,
+,,,,Relationship designation (optional).,,,,,
+,,,,Slider/Carousel Support: Rotate tribute messages dynamically.,,,,,
+,,,     “Light a Candle” Sidebar Section,Users can light memorial candle by clicking on button.,,,,,
+,,,     Candle Counter,Display total candles lit.,,,,,
+,,,,Counter increases dynamically after interaction.,,,,,
+,,,     Tribute Message Submission System,Users can submit personal stories by providing following information.,Tribute Submission CMS Module,,,,
+,,,,Tribute By,"List of all the tribute submitted from the website would be shown here with pagination, searching and sorting functionality.",,,,
+,,,,Tribute To,Admin will receive an email for each tribute submission.,,,,
+,,,,Email.,,,,,
+,,,,Tribute title.,,,,,
+,,,,Tribute Content,,,,,
+,,,     Memorial Animation,"At first, the candle is unlit (no flame showing).
+When a person clicks/taps the candle, the candle lights up with a flame animation.
+As the candle lights, the black-and-white photo slowly gains colour.
+After some time, the photo fades back to black and white again.
+
+To stop fake engagement:
+
+Each person can only light the candle once.
+Or, even if they click many times, only their first lighting is counted.
+
+Another idea is to make the photo permanently gain more colour as more people light candles overall:
+
+0–100 candles lit → photo is almost fully black and white (about 95% monochrome)
+500 candles → a little colour appears
+2,000 candles → photo becomes half colour / half monochrome
+5,000–10,000 candles → photo becomes fully colourful and vibrant
+
+So the experience becomes:
+
+A user lights a candle.
+They see a personal animated moment where the portrait comes alive in colour.
+At the same time, every new candle contributes to gradually restoring the portrait permanently for everyone.",,,,,
+,,,     Social Sharing Section,User can Share memorial tribute via:,,6,1,,
+,,,,Facebook,,,,,
+,,,,Twitter/X,,,,,
+,,,,Email,,,,,
+,,,,Copy Share Link: Copy direct memorial URL.,,,,,
+,,,     Generate Memorial PDF,Generate a custom designed personalize pdf for the police personal consisting all the details of the memorial page added on the webpage.,On the CMS side,16,0,"Developer Notes:
+- as there is no mention of adding and storing the pdf from sanity side so we will manage the same from react side only by react-pdf-renderer library.","Closer to the time, I will work with you closely on the design. But it will need to look like a professionally produced book of condolence
+as we will be able to populate as PDF, print and give a copy to the family member."
+,,,,,,,,,
+,,,,,,,,,
+,,Research and Evidence,,,,,,,"Maybe have this designed differently to the UI of Stories and News buf keep functionality similar. But also add option for someone to upload
+a PDF document as well as writing an article about the research paper. "
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,1,2,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,List of research,"Display list of all the research availabe with pagination, searching and sorting functionality. Each research card/grid would have following information.","Add/edit/delete research.
+Reorder list item dynamically.
+",4,3,,
+,,,,Image/banner.,,,,,
+,,,,Featured tag/badge.,,,,,
+,,,,Research title.,,,,,
+,,,,Author/institution name.,,,,,
+,,,,Publish date.,,,,,
+,,,,Short summary/excerpt.,,,,,
+,,,,Key findings section.,,,,,
+,,,,“Read Reseach Story” CTA link.,,,,,
+,,,     Research Category Filter,Category-based filtering option would be provided to user to filter the research article. ,"Add/edit/delete categories.
+Enable/disable categories.",4,2,,
+,,,     Research Actions,Following actions can be taken per list item.,,,,,
+,,,          Download PDF,"Button, clicking upon this user can download the research story in pdf format.",,,,,
+,,,          Read Story,"Button, clicking upon this user can view the research story in pdf viewer.",,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,Recovery and Support,,,,,,,Would this be to be added manually or via an API?
+,,,Hero Banner,Large full-width banner image/background.,Content would be added from CMS,1,2,,
+,,,,Main heading text.,,,,,
+,,,,Supporting description text.,,,,,
+,,,Recommended Apps,"Display mental health/support-related apps in horizontal scroll or grid layout with pagination, searching and sorting functionality. Each card would consist following components","Add/edit/delete app.
+Reorder list item dynamically.",4,4,,
+,,,,App logo/icon.,,,,,
+,,,,App name.,,,,,
+,,,,Short description.,,,,,
+,,,,Category/tag ,,,,,
+,,,,Recommendation Badge,,,,,
+,,,,Ratings Display (Star ratings. and Numeric Values),,,,,
+,,,     CTA Actions,"Visit App, user would be redirected to the external link",,,,,
+,,,Recommended Books Section,"Display recommended books in card format with pagination, searching and sorting functionality. Each card would consist following components","Add/edit/delete book.
+Reorder list item dynamically.",4,4,,
+,,,,Book cover image.,,,,,
+,,,,Book title.,,,,,
+,,,,Author name.,,,,,
+,,,,Short description/summary.,,,,,
+,,,,“Recommended by” section.,,,,,
+,,,,Category/tag,,,,,
+,,,     CTA Actions,"Buy/View Book (optional external link), user would be redirected to external link.",,1,1,,
+,,,Recommended Podcasts Section,"Display podcast recommendations in compact card/list layout with pagination, searching and sorting functionality. Each card would consist following components","Add/edit/delete podcast.
+Reorder list item dynamically.",4,4,,
+,,,,Podcast logo/icon.,,,,,
+,,,,Podcast title.,,,,,
+,,,,Short description.,,,,,
+,,,,Topic/category,,,,,
+,,,     CTA Actions,"Listen Now, user would be redirected to the external link.",,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,CMS,"Ability to change the any module block colours, font type, size  and colours of individuals words where required.",,,40,30,"Developer Notes:
+- yes we will be able to change the colors, type, size but changing those properties for each and every individual word or letter will not be possible we can change them for the entire sentence only.",
+,,,,,,,,,
+,,Role Based Access ,"Role based access for the admin panel, so that sub user can have access to publish / edit an article, news, stories, memorial.",,,0,8,"Dev Notes:
+- role based access is possible but in free tier of sanity studio there will be less features available to use all of the features of role based access we will need paid plan of sanity cms studio.",
+,,,,,,,,,
+,,Footer,Footer of the every page would be static ,,,3,3,,
+,,,,,,,,,
+,,Timing Material,Design and page content may vary as per client request. ,,,,,Hours may vary based upon the changes suggested.,
+,,,,,,,,,
+,,Notifications,,,,,,,
+,,,,,,,,,
+,,Email Notifications,,,,,,Do let us know in case any other email notification is required.,
+,,,Newsletter,User would receive email if they subscribed to newsletter,,,2, ,
+,,,,,,,,,
+,,,Admin,Admin would recieve notification for stories submitted by the users.,,,2,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,Project Deployment,,,,,,,
+,,,,,,,,,
+,,Deployment,,,One time deployment on LIVE server only,12,,,
+,,,,,,,,,
+,,,,,,345,176,,
+,,,,,,,,,
+,,Design,,,Bespoke front-end site design,104,,Logo design hours not included,
+,,,,,,,,,
+,,Analysis & Project Management,,,,52,,,
+,,,,,,,,,
+,,Quality Assurance,,,,78,,,
+,,,,,,,,,
+,,,,,,755,,,
+,Efforts may vary if anything is added / updated from mentioned features list,,,,,,,,
+,Page content may be added or deleted as per client request and hours may vary depending upon the changes,,,,,,,,
+,Event page would be considered in next phase.,,,,,,,,
+,The Third-party tools / plugins / APIs will be purchased and provided by client,,,,,,,,
+,The efforts for deployment are considered for one time deployment on LIVE server only,,,,,,,,
+,"Default email templates will be used, it will require additional effort to create custom email templates",,,,,,,,

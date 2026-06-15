@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Quote, Calendar, ArrowRight, Mail, Heart, Clock, AlertTriangle, X } from "lucide-react";
+import { Quote, Calendar, ArrowRight, Mail, Heart, Clock, AlertTriangle, X, Users, Scale, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, animate, useInView, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
-function StatCounter({ end, suffix = "", prefix = "", isPulsing = false, decimals }: { end: number, suffix?: string, prefix?: string, isPulsing?: boolean, decimals?: number }) {
+function StatCounter({ end, suffix = "", prefix = "", isPulsing = false, decimals, duration = 2.5 }: { end: number, suffix?: string, prefix?: string, isPulsing?: boolean, decimals?: number, duration?: number }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px" });
@@ -16,7 +16,7 @@ function StatCounter({ end, suffix = "", prefix = "", isPulsing = false, decimal
   useEffect(() => {
     if (isInView) {
       const controls = animate(0, end, {
-        duration: 2.5,
+        duration: duration,
         ease: "easeOut",
         onUpdate(value) {
           setCount(value);
@@ -24,7 +24,7 @@ function StatCounter({ end, suffix = "", prefix = "", isPulsing = false, decimal
       });
       return () => controls.stop();
     }
-  }, [end, isInView]);
+  }, [end, isInView, duration]);
 
   return (
     <div ref={ref} className={`text-5xl lg:text-7xl font-black text-white tracking-tighter drop-shadow-md group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2] transition-all duration-500 flex items-center gap-2`}>
@@ -40,16 +40,53 @@ function StatCounter({ end, suffix = "", prefix = "", isPulsing = false, decimal
   );
 }
 
-export default function Home() {
-  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
-  const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
+const STATS_DATA = [
+  {
+    id: "officers",
+    label: "Officers Supported",
+    endValue: 42850,
+    prefix: "",
+    suffix: "+",
+    icon: Users,
+    duration: 2.0,
+    description: "Policing professionals and first responders supported nationwide through our mental health and welfare advocacy networks."
+  },
+  {
+    id: "lives",
+    label: "Lives Saved",
+    endValue: 12,
+    prefix: "",
+    suffix: "",
+    suffixText: " of 13",
+    icon: Heart,
+    duration: 4.5,
+    isPulsing: true,
+    description: "Active interventions preventing officer suicide during traumatic multi-year misconduct investigations."
+  },
+  {
+    id: "victories",
+    label: "Legal Victories",
+    endValue: 38,
+    prefix: "",
+    suffix: "",
+    icon: Scale,
+    duration: 2.0,
+    description: "Successful challenges against disproportionate suspension terms and unsubstantiated misconduct charges."
+  },
+  {
+    id: "funds",
+    label: "Funds Secured",
+    endValue: 14.2,
+    prefix: "£",
+    suffix: "M",
+    icon: ShieldCheck,
+    duration: 2.0,
+    description: "In welfare grants, psychological therapy funding, and legal aid secured for officers and their families."
+  }
+];
 
-  const toggleFlip = (index: number) => {
-    setFlippedCards((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-  };
+export default function Home() {
+  const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#030712] text-white font-sans">
@@ -131,49 +168,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS SECTION - Brutalist / High-End Modern */}
-      <section className="relative z-20 bg-[#02050A] border-b border-white/10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-white/10">
-          
-          {/* Stat 1 */}
-          <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
-            <div className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_#1877F2] group-hover:scale-150 transition-transform duration-500" />
-              OFFICERS SUPPORTED
-            </div>
-            <StatCounter end={42850} suffix="+" />
-          </div>
+      {/* AWARENESS STATISTICS SECTION */}
+      <section className="relative z-20 bg-[#02050A] py-24 border-b border-white/10 overflow-hidden">
+        {/* Glow effect behind the cards to fit the premium theme */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-full" />
+        
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {STATS_DATA.map((stat) => {
+              const IconComponent = stat.icon;
+              return (
+                <div 
+                  key={stat.id} 
+                  className="group relative bg-[#050A14] border border-white/10 hover:border-[#1877F2]/40 rounded-3xl p-8 transition-all duration-500 hover:shadow-[0_0_35px_rgba(24,119,242,0.15)] flex flex-col h-full hover:-translate-y-1"
+                >
+                  {/* Card Header: Icon & Label */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-all duration-500 shadow-lg">
+                      <IconComponent className={`w-6 h-6 ${stat.isPulsing ? 'animate-[pulse_1.5s_infinite]' : ''}`} />
+                    </div>
+                    <span className="text-[10px] md:text-xs font-bold text-slate-500 group-hover:text-slate-300 transition-colors uppercase tracking-[0.2em]">
+                      {stat.label}
+                    </span>
+                  </div>
 
-          {/* Stat 2 */}
-          <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
-            <div className="text-[10px] md:text-xs font-bold text-[#1877F2] uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <Heart className="w-4 h-4 text-[#1877F2] animate-[pulse_3s_infinite]" fill="currentColor" />
-              LIVES SAVED
-            </div>
-            <div className="flex items-end">
-              <StatCounter end={12} isPulsing={true} />
-              <span className="text-3xl font-black text-slate-600 ml-2 pb-1">of 13</span>
-            </div>
-          </div>
+                  {/* Card Body: Main Statistic Number */}
+                  <div className="flex items-baseline gap-1 mb-4">
+                    <StatCounter 
+                      end={stat.endValue} 
+                      prefix={stat.prefix} 
+                      suffix={stat.suffix} 
+                      duration={stat.duration} 
+                      isPulsing={stat.isPulsing}
+                    />
+                    {stat.suffixText && (
+                      <span className="text-2xl font-black text-slate-500 tracking-tight pb-1">
+                        {stat.suffixText}
+                      </span>
+                    )}
+                  </div>
 
-          {/* Stat 3 */}
-          <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
-            <div className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_#1877F2] group-hover:scale-150 transition-transform duration-500" />
-              LEGAL VICTORIES
-            </div>
-            <StatCounter end={38} />
+                  {/* Card Footer: Supporting Description */}
+                  <p className="text-slate-400 text-sm leading-relaxed font-normal group-hover:text-slate-300 transition-colors">
+                    {stat.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
-
-          {/* Stat 4 */}
-          <div className="p-10 lg:p-16 flex flex-col justify-center group hover:bg-white/[0.02] transition-colors duration-500">
-            <div className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_#1877F2] group-hover:scale-150 transition-transform duration-500" />
-              FUNDS SECURED
-            </div>
-            <StatCounter end={14.2} prefix="£" suffix="M" />
-          </div>
-
         </div>
       </section>
 
@@ -183,15 +225,15 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             {/* Left side: Context */}
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center lg:col-span-5">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Why It Stops Now</h2>
               </div>
-              <h3 className="text-5xl lg:text-7xl font-black text-white tracking-tighter leading-[1.1] mb-8">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.2] mb-6">
                 EVERY NUMBER IS <br className="hidden lg:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">A LIFE LEFT BEHIND.</span>
               </h3>
@@ -207,29 +249,81 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right side: Quote */}
-            <div className="relative p-10 md:p-16 lg:p-20 border border-white/10 bg-[#0a1120]/50 backdrop-blur-2xl rounded-[3rem] group hover:bg-[#0a1120]/80 transition-colors duration-700 shadow-2xl">
-              <Quote className="w-24 h-24 text-[#1877F2]/10 absolute top-8 left-8 group-hover:scale-110 group-hover:text-[#1877F2]/30 transition-all duration-700" />
-              <div className="relative z-10">
-                <p className="text-3xl md:text-5xl text-white font-medium leading-[1.2] tracking-tight mb-10">
-                  "To protect and serve others, they gave everything. Now, <span className="text-[#1877F2]">it's our turn to protect them.</span>"
-                </p>
-                <div className="flex items-center justify-between flex-wrap gap-6 mt-10">
-                  <div className="flex items-center gap-6">
-                    <div className="w-16 h-[2px] bg-white/20 group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
-                    <span className="text-slate-500 text-xs font-bold tracking-[0.2em] uppercase">The Mission</span>
+            {/* Right side: Quote with Cinematic Image Support (Side-by-Side layout with larger image) */}
+            <div className="relative p-8 md:p-12 border border-white/10 bg-[#0a1120]/85 backdrop-blur-2xl rounded-[3rem] group hover:border-[#1877F2]/30 transition-all duration-500 shadow-2xl overflow-hidden lg:col-span-7">
+              <div className="flex flex-col md:flex-row gap-8 items-stretch">
+                
+                {/* Quote Text & Actions (Left Side) */}
+                <div className="flex-1 flex flex-col justify-between relative z-10">
+                  <div className="relative">
+                    <Quote className="w-12 h-12 text-[#1877F2]/10 mb-4 group-hover:scale-110 group-hover:text-[#1877F2]/30 transition-all duration-500" />
+                    <p className="text-2xl md:text-3xl text-white font-medium leading-[1.3] tracking-tight mb-8">
+                      "To protect and serve others, they gave everything. Now, <span className="text-[#1877F2]">it's our turn to protect them.</span>"
+                    </p>
                   </div>
-                  <button 
-                    onClick={() => setIsGetInvolvedOpen(true)}
-                    className="bg-[#1877F2] text-white hover:bg-white hover:text-black text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)] hover:-translate-y-0.5 cursor-pointer"
-                  >
-                    Get Involved
-                  </button>
+                  
+                  <div className="flex items-center justify-between flex-wrap gap-4 mt-auto">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-[2px] bg-white/20 group-hover:bg-[#1877F2]/50 transition-colors duration-500"></div>
+                      <span className="text-slate-500 text-xs font-bold tracking-[0.2em] uppercase">The Mission</span>
+                    </div>
+                    <button 
+                      onClick={() => setIsGetInvolvedOpen(true)}
+                      className="bg-[#1877F2] text-white hover:bg-white hover:text-black text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)] hover:-translate-y-0.5 cursor-pointer"
+                    >
+                      Get Involved
+                    </button>
+                  </div>
                 </div>
+
+                {/* Styled Visible Image Container (Right Side) - Increased size */}
+                <div className="w-full md:w-[280px] lg:w-[320px] shrink-0 relative rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/10 group-hover:border-white/20 transition-all duration-500 min-h-[260px] md:min-h-auto">
+                  <img 
+                    src="/images/quote-bg.png" 
+                    alt="Supportive holding background" 
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  />
+                  {/* Subtle color highlight overlay on hover */}
+                  <div className="absolute inset-0 bg-[#1877F2]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                </div>
+
               </div>
             </div>
 
           </div>
+
+          {/* QUOTE CARDS SECTION (Icon, Title, Short Description) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pt-16 mt-20 border-t border-white/10 relative z-10">
+            
+            {/* Quote Card 1 */}
+            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
+              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
+              </div>
+              <h3 className="text-xl font-bold text-white tracking-wide mb-4">Systemic Failures</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">The current investigative bodies act without accountability, leaving officers suspended in limbo for years for simply doing their duty.</p>
+            </div>
+
+            {/* Quote Card 2 */}
+            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
+              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+              </div>
+              <h3 className="text-xl font-bold text-white tracking-wide mb-4">Mental Health Toll</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">Prolonged investigations are destroying families and lives. We demand a 12-month time limit to prevent further psychological damage.</p>
+            </div>
+
+            {/* Quote Card 3 */}
+            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
+              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>
+              </div>
+              <h3 className="text-xl font-bold text-white tracking-wide mb-4">Legal Protection</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">Officers deserve immediate, robust legal support after critical incidents, untainted by political pressures or media narratives.</p>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
@@ -325,515 +419,171 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* VOICES OF COURAGE - 2x2 HORIZONTAL CARDS GRID */}
-      <section className="relative bg-[#02050A] py-24 border-y border-white/5 overflow-hidden">
-        {/* Background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-[100%]" />
-
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          
-          <div className="text-center mb-20">
-            <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-              Voices of Courage
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-            </h2>
-            <h3 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-6 text-white leading-tight">
-              REAL STORIES. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-white/80">REAL PEOPLE.</span>
-            </h3>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-              Hear directly from the officers, staff, and families we've supported through their darkest moments.
-            </p>
-          </div>
-
-          {/* 2x2 Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {[
-              { num: "01", name: "PC James Holloway", quote: "Left in Shadows", excerpt: "After 15 years of unblemished service, I was suspended for 3 years over a false claim. It ruined my family.", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600" },
-              { num: "02", name: "PCSO Sarah Mitchell", quote: "Finding Light", excerpt: "The mental health toll was unimaginable. Without this support network, I wouldn't be here today.", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" },
-              { num: "03", name: "The Thompson Family", quote: "Family Strength", excerpt: "We watched him fade away waiting for answers that never came. The system is fundamentally broken.", img: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=600" },
-              { num: "04", name: "Sgt Mark Roberts", quote: "Breaking Point", excerpt: "The anxiety of the investigation was worse than the incidents we faced on the streets. We need systemic change.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600" },
-            ].map((item, i) => (
-              <div key={i} className="group relative bg-[#050A14] border border-white/10 hover:border-[#1877F2]/40 rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgba(24,119,242,0.1)] hover:-translate-y-1 flex flex-col sm:flex-row">
-                
-                {/* Left Side: Image (Edge-to-edge full width) */}
-                <div className="w-full sm:w-[40%] h-64 sm:h-auto bg-[#02050A] relative border-b sm:border-b-0 sm:border-r border-white/5 overflow-hidden">
-                  <div className="absolute inset-0 bg-[#1877F2]/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none mix-blend-overlay"></div>
-                  <img 
-                    src={item.img} 
-                    alt={item.name} 
-                    className="absolute inset-0 w-full h-full object-cover filter grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
-                  />
-                  {/* Highly Visible Case Number Badge */}
-                  <div className="absolute top-4 left-4 z-20 bg-[#1877F2] text-white rounded-md px-3 py-1.5 text-[10px] font-black tracking-widest uppercase shadow-[0_4px_15px_rgba(0,0,0,0.8)] border border-white/10">
-                    Case {item.num}
-                  </div>
-                </div>
-
-                {/* Right Side: Text Content */}
-                <div className="w-full sm:w-[60%] p-8 flex flex-col justify-center">
-                  <Quote className="w-8 h-8 text-[#1877F2]/30 mb-4 group-hover:text-[#1877F2] transition-colors" />
-                  <h4 className="text-2xl font-black text-white mb-3 tracking-tight">"{item.quote}"</h4>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                    {item.excerpt}
-                  </p>
-                  
-                  <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
-                    <div>
-                      <p className="text-white font-bold text-sm tracking-wide">{item.name}</p>
-                    </div>
-                    <Link href={`/stories/${i+1}`}>
-                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] transition-colors group/btn">
-                        <ArrowRight className="w-4 h-4 text-white group-hover/btn:translate-x-1 transition-transform" />
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-             <Link href="/stories">
-               <Button className="border border-white/20 text-white bg-transparent hover:bg-white hover:text-black font-bold text-xs uppercase tracking-[0.2em] rounded-full py-6 px-12 transition-all duration-300">
-                 View All Stories
-               </Button>
-             </Link>
-          </div>
-
-        </div>
-      </section>
-
-      {/* CINEMATIC QUOTE SECTION */}
-      <section className="relative py-32 md:py-48 flex items-center justify-center overflow-hidden">
-        {/* Deep Gradient Background */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#010b19] via-[#050A14] to-[#0a1224]" />
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1877F2]/10 via-transparent to-transparent" />
-        
-        <div className="relative z-10 container mx-auto px-6 text-center max-w-5xl">
-          <Quote className="w-16 h-16 md:w-24 md:h-24 text-[#1877F2] opacity-30 mx-auto mb-10 transform -scale-x-100" />
-          <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium text-white leading-[1.1] tracking-tight mb-12 drop-shadow-2xl">
-            "We are fighting for the day when the uniform is a symbol of pride, not a target for endless scrutiny."
-          </h2>
-          <div className="flex items-center justify-center gap-6">
-            <div className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#1877F2]" />
-            <p className="text-[#1877F2] font-bold tracking-[0.2em] text-sm md:text-base uppercase">The It Stops Now Movement</p>
-            <div className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#1877F2]" />
-          </div>
-        </div>
-      </section>
-
-      {/* QUOTE CARDS SECTION (Supporting the Cinematic Quote) */}
-      <section className="bg-[#0a1224] py-16 border-b border-white/5 relative z-10">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Quote Card 1 */}
-            <div className="bg-[#050A14] border border-[#1877F2]/20 rounded-2xl p-8 relative hover:-translate-y-2 transition-transform duration-500 shadow-lg group">
-              <Quote className="w-10 h-10 text-[#1877F2]/20 absolute top-6 right-6 group-hover:scale-110 transition-transform" />
-              <p className="text-slate-300 font-medium italic text-sm mb-6 relative z-10 leading-relaxed">
-                "We are not asking for immunity. We are simply asking for fairness and for investigations to not drag out for years, destroying our mental health."
-              </p>
-              <div className="flex items-center gap-3 border-t border-white/10 pt-4 mt-auto">
-                <div className="w-8 h-8 rounded-full bg-[#1877F2]/20 flex items-center justify-center font-bold text-[#1877F2] text-xs">A</div>
-                <div>
-                  <p className="text-white text-xs font-bold tracking-wide">Anonymous Officer</p>
-                  <p className="text-slate-500 text-[10px] uppercase tracking-widest">Metropolitan Police</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Quote Card 2 */}
-            <div className="bg-[#050A14] border border-[#1877F2]/20 rounded-2xl p-8 relative hover:-translate-y-2 transition-transform duration-500 shadow-lg group">
-              <Quote className="w-10 h-10 text-[#1877F2]/20 absolute top-6 right-6 group-hover:scale-110 transition-transform" />
-              <p className="text-slate-300 font-medium italic text-sm mb-6 relative z-10 leading-relaxed">
-                "The lack of welfare support during these 4-year IOPC proceedings is a national scandal. It Stops Now is our only voice."
-              </p>
-              <div className="flex items-center gap-3 border-t border-white/10 pt-4 mt-auto">
-                <div className="w-8 h-8 rounded-full bg-[#1877F2]/20 flex items-center justify-center font-bold text-[#1877F2] text-xs">P</div>
-                <div>
-                  <p className="text-white text-xs font-bold tracking-wide">Police Federation Rep</p>
-                  <p className="text-slate-500 text-[10px] uppercase tracking-widest">National Body</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Quote Card 3 */}
-            <div className="bg-[#050A14] border border-[#1877F2]/20 rounded-2xl p-8 relative hover:-translate-y-2 transition-transform duration-500 shadow-lg group">
-              <Quote className="w-10 h-10 text-[#1877F2]/20 absolute top-6 right-6 group-hover:scale-110 transition-transform" />
-              <p className="text-slate-300 font-medium italic text-sm mb-6 relative z-10 leading-relaxed">
-                "My partner was completely cleared of all charges, but the 3-year wait took a toll we can never repair. This system must change."
-              </p>
-              <div className="flex items-center gap-3 border-t border-white/10 pt-4 mt-auto">
-                <div className="w-8 h-8 rounded-full bg-[#1877F2]/20 flex items-center justify-center font-bold text-[#1877F2] text-xs">S</div>
-                <div>
-                  <p className="text-white text-xs font-bold tracking-wide">Spouse of Officer</p>
-                  <p className="text-slate-500 text-[10px] uppercase tracking-widest">Family Member</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* MISSION PILLARS (Formerly Quote Cards) */}
-      <section className="bg-[#010b19] pb-24 border-b border-white/5 relative z-10">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 -mt-12">
-            
-            {/* Pillar 1 */}
-            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
-              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white tracking-wide mb-4">Systemic Failures</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">The current investigative bodies act without accountability, leaving officers suspended in limbo for years for simply doing their duty.</p>
-            </div>
-
-            {/* Pillar 2 */}
-            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
-              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white tracking-wide mb-4">Mental Health Toll</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">Prolonged investigations are destroying families and lives. We demand a 12-month time limit to prevent further psychological damage.</p>
-            </div>
-
-            {/* Pillar 3 */}
-            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
-              <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white tracking-wide mb-4">Legal Protection</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">Officers deserve immediate, robust legal support after critical incidents, untainted by political pressures or media narratives.</p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* FOUNDING MEMBERS - EDITORIAL PROFILE REVAMP */}
-      <section className="bg-[#010610] py-32 border-b border-white/5 relative overflow-hidden">
+      {/* MISSION STATEMENT BANNER - PREMIUM REVAMP */}
+      <section className="relative w-full py-24 lg:py-40 bg-[#02050A] border-y border-white/5 overflow-hidden">
         {/* Background Accents */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
         
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
-          <div className="text-center mb-24">
-            <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-              The Team
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-            </h2>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-white mb-6">
-              Founding Members
-            </h3>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-              The dedicated individuals who turned their own experiences into a nationwide movement for change.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
-            {[
-              { 
-                name: "Paul Cooper", 
-                role: "Founder & Ex-Officer", 
-                bio: "Paul served for 15 years as a frontline officer before being subjected to a grueling 3-year IOPC investigation following a high-pressure incident. Although completely cleared, the systemic lack of support inspired him to found It Stops Now.", 
-                img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800" 
-              },
-              { 
-                name: "Sarah Jenkins", 
-                role: "Legal Director", 
-                bio: "Sarah is a leading human rights and defense attorney who specializes in representing public servants. She leads the legal advocacy arm, fighting for fair representation and pushing for legislative changes to protect officers' rights.", 
-                img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800" 
-              },
-              { 
-                name: "Michael Davis", 
-                role: "Head of Welfare", 
-                bio: "As a former police psychologist, Michael has treated hundreds of officers suffering from severe PTSD. He directs our support networks, providing confidential counseling, peer-to-peer support, and urgent crisis intervention.", 
-                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" 
-              }
-            ].map((member, i) => (
-              <div key={i} className="group flex flex-col h-full">
-                
-                {/* Mobile Layout (Static - Always Visible) */}
-                <div className="md:hidden flex flex-col bg-[#050A14] border border-white/10 rounded-3xl p-6 shadow-xl h-full">
-                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 border border-white/10 bg-[#02050A]">
-                    <img 
-                      src={member.img} 
-                      alt={member.name} 
-                      className="absolute inset-0 w-full h-full object-cover object-top" 
-                    />
-                  </div>
-                  <div className="flex flex-col flex-grow pl-4 border-l-2 border-[#1877F2]">
-                    <h4 className="text-2xl font-black text-white uppercase tracking-tight mb-1">
-                      {member.name}
-                    </h4>
-                    <p className="text-[#1877F2] font-bold text-xs uppercase tracking-widest mb-4">
-                      {member.role}
-                    </p>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                      {member.bio}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Desktop Layout (3D Flipping Card) */}
-                <div className="hidden md:block perspective-1000 w-full h-[520px] relative">
-                  <div className={`w-full h-full duration-700 preserve-3d transition-transform ${flippedCards[i] ? 'rotate-y-180' : ''}`}>
-                    
-                    {/* Front Face */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden bg-[#050A14] border border-white/10 rounded-3xl p-6 flex flex-col">
-                      <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 border border-white/10 shadow-xl bg-[#02050A]">
-                        <img 
-                          src={member.img} 
-                          alt={member.name} 
-                          className="absolute inset-0 w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700" 
-                        />
-                      </div>
-                      <div className="flex flex-col flex-grow pl-4 border-l-2 border-white/10 group-hover:border-[#1877F2] transition-colors duration-500">
-                        <h4 className="text-2xl font-black text-white uppercase tracking-tight mb-1 group-hover:text-[#1877F2] transition-colors duration-300">
-                          {member.name}
-                        </h4>
-                        <p className="text-[#1877F2] font-bold text-xs uppercase tracking-widest mb-4">
-                          {member.role}
-                        </p>
-                        <button 
-                          onClick={() => toggleFlip(i)} 
-                          className="mt-auto inline-flex items-center text-white text-xs font-bold uppercase tracking-widest hover:text-[#1877F2] transition-colors cursor-pointer text-left self-start"
-                        >
-                          <span className="w-8 h-[1px] bg-white group-hover:bg-[#1877F2] mr-4 transition-colors"></span>
-                          View Bio
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Back Face */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-[#0a1120] border border-white/10 rounded-3xl p-8 flex flex-col">
-                      <div className="flex flex-col flex-grow pl-4 border-l-2 border-[#1877F2]">
-                        <h4 className="text-2xl font-black text-[#1877F2] uppercase tracking-tight mb-1">
-                          {member.name}
-                        </h4>
-                        <p className="text-white font-bold text-xs uppercase tracking-widest mb-6">
-                          {member.role}
-                        </p>
-                        <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
-                          {member.bio}
-                        </p>
-                        <button 
-                          onClick={() => toggleFlip(i)} 
-                          className="mt-auto inline-flex items-center text-white text-xs font-bold uppercase tracking-widest hover:text-[#1877F2] transition-colors cursor-pointer text-left self-start"
-                        >
-                          <span className="w-8 h-[1px] bg-[#1877F2] mr-4 transition-colors"></span>
-                          View Photo
-                        </button>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT CAMPAIGN PROMOTION BANNER */}
-      <section className="relative bg-[#050A14] py-24 border-y border-white/5 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-transparent mix-blend-screen pointer-events-none" />
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="bg-[#0c1322] border border-white/10 rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#1877F2]/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="w-full lg:w-2/3">
-              <div className="flex items-center gap-4 mb-6">
-                <span className="bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full">
-                  About The Campaign
-                </span>
-              </div>
-              <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-6 leading-tight">
-                Our Inception & <span className="text-[#1877F2]">The Mission</span>
-              </h3>
-              <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-4">
-                Founded by ex-officers, legal professionals, and psychologists, *It Stops Now* arose directly from the front line. We saw first-hand the devastating toll that prolonged, unaccountable investigations take on officers and their loved ones.
-              </p>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                We advocate for reform, provide immediate crisis welfare support, and coordinate national legal defense efforts to restore fairness and support to those who stand in harm's way for our safety.
-              </p>
-            </div>
-            <div className="w-full lg:w-auto shrink-0">
-              <Link href="/about">
-                <Button className="w-full lg:w-auto bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold px-10 py-8 rounded-full text-xs tracking-[0.2em] uppercase transition-all duration-500 shadow-xl hover:-translate-y-1">
-                  Read Our Story <ArrowRight className="w-4 h-4 ml-3" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* NEWS & EVENTS SECTION - PREMIUM BENTO REVAMP */}
-      <section className="relative bg-[#02050A] py-32 border-t border-white/5 overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
-          
-          <div className="text-center mb-20">
-            <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-              News & Action
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-            </h2>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-white">
-              The Latest Updates
-            </h3>
-          </div>
-          
-          {/* Premium Bento Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             
-            {/* Main Featured News (Left, 7 columns) */}
-            <div className="lg:col-span-7 group relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[500px] lg:h-[600px] flex items-end shadow-2xl bg-[#050A14]">
-              <img 
-                src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&q=80&w=1200" 
-                alt="Parliament"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent"></div>
-              
-              <div className="relative z-10 p-8 md:p-12 w-full">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="bg-[#1877F2] text-white text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full shadow-[0_0_15px_rgba(24,119,242,0.5)]">
-                    Featured News
-                  </span>
-                  <span className="text-slate-300 text-xs font-bold tracking-widest uppercase flex items-center">
-                    <Calendar className="w-3 h-3 mr-2 text-[#1877F2]" /> Oct 12, 2026
-                  </span>
-                </div>
+            {/* Left Image Side with Overlapping Glass Card */}
+            <div className="w-full lg:w-1/2 relative">
+              <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 aspect-[4/5] lg:aspect-auto lg:h-[700px] shadow-2xl group">
+                <img 
+                  src="/images/mission-support.png" 
+                  alt="Officers Standing Shoulder to Shoulder" 
+                  className="w-full h-full object-cover grayscale mix-blend-luminosity group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                />
+                {/* Deep dramatic overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#02050A] via-transparent to-[#1877F2]/10 opacity-80 mix-blend-multiply pointer-events-none"></div>
+                <div className="absolute inset-0 bg-[#1877F2]/10 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-1000 pointer-events-none"></div>
                 
-                <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6 leading-tight tracking-tight group-hover:text-[#1877F2] transition-colors duration-500">
-                  Parliamentary Debate on Investigation Time Limits
-                </h3>
-                <p className="text-slate-300 text-base md:text-lg mb-8 line-clamp-2 max-w-2xl font-medium">
-                  The Home Secretary has announced a formal review following our relentless campaign for a 12-month hard limit on all IOPC proceedings.
+                {/* Embedded Badge */}
+                <div className="absolute top-8 left-8 flex items-center gap-3">
+                  <div className="w-3 h-3 rounded-full bg-[#1877F2] animate-pulse"></div>
+                  <span className="text-white text-xs font-black tracking-widest uppercase shadow-black drop-shadow-md">The Mission</span>
+                </div>
+              </div>
+
+              {/* Overlapping Glass Quote Card */}
+              <div className="lg:absolute relative -mt-16 lg:mt-0 lg:-bottom-10 right-0 lg:-right-16 w-[90%] sm:w-[400px] ml-auto lg:ml-0 bg-[#050b16]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform lg:hover:-translate-y-2 transition-transform duration-500 z-20">
+                <Quote className="w-10 h-10 text-[#1877F2] mb-6 opacity-80" />
+                <p className="text-white text-lg lg:text-xl font-medium leading-relaxed mb-6 italic">
+                  "This organization is not just about reform; it's about saving lives right now. They stepped in when no one else would listen."
                 </p>
-                
-                <Link href="/news" className="inline-flex items-center text-white bg-white/10 hover:bg-white hover:text-black backdrop-blur-md transition-colors duration-300 font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full border border-white/20 hover:border-white">
-                  Read Full Story <ArrowRight className="w-4 h-4 ml-3" />
-                </Link>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-[2px] bg-[#1877F2]"></div>
+                  <div>
+                    <p className="text-white font-bold text-xs uppercase tracking-widest">Sgt. David Miller</p>
+                    <p className="text-slate-500 text-[10px] uppercase tracking-widest">Police Federation</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Right Side Stack: Events (Right, 5 columns) */}
-            <div className="lg:col-span-5 h-full">
+            {/* Right Content Side */}
+            <div className="w-full lg:w-1/2 pt-8 lg:pt-0 pb-8 lg:pb-0 pl-0 lg:pl-12">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-[1px] bg-[#1877F2]"></div>
+                <span className="text-[#1877F2] text-xs font-bold tracking-[0.3em] uppercase">Why We Stand</span>
+              </div>
               
-              {/* Upcoming Events Box */}
-              <div className="bg-[#050A14] border border-white/10 rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden group h-full flex flex-col justify-center">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.02] rounded-full blur-3xl pointer-events-none group-hover:bg-[#1877F2]/5 transition-colors duration-700"></div>
-                
-                <h3 className="text-2xl font-black uppercase tracking-tighter text-white mb-8 flex items-center">
-                  <Calendar className="w-6 h-6 text-[#1877F2] mr-3" /> Upcoming Events
-                </h3>
-                
-                <div className="space-y-4 relative z-10">
-                  {[
-                    { date: "NOV 11", title: "Annual Memorial Service", loc: "St Paul's Cathedral, London" },
-                    { date: "NOV 25", title: "Parliament Lobby Day", loc: "Westminster, London" },
-                    { date: "DEC 05", title: "Officer Welfare Seminar", loc: "Online Virtual Event" }
-                  ].map((evt, i) => (
-                    <div key={i} className="flex items-center gap-5 p-4 rounded-2xl hover:bg-[#1877F2]/10 transition-colors duration-300 border border-transparent hover:border-[#1877F2]/20 cursor-pointer group/item">
-                      {/* Date Badge */}
-                      <div className="w-16 h-16 rounded-xl bg-white/5 border border-white/10 flex flex-col items-center justify-center shrink-0 group-hover/item:bg-[#1877F2] group-hover/item:border-[#1877F2] transition-colors duration-300 shadow-inner">
-                        <span className="text-[10px] font-black text-slate-400 group-hover/item:text-white/80 uppercase tracking-widest leading-none mb-1 transition-colors">{evt.date.split(' ')[0]}</span>
-                        <span className="text-2xl font-black text-white leading-none transition-colors">{evt.date.split(' ')[1]}</span>
-                      </div>
-                      
-                      {/* Event Info */}
-                      <div>
-                        <h4 className="font-bold text-white text-lg mb-1 group-hover/item:text-[#1877F2] transition-colors">{evt.title}</h4>
-                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
-                          <Clock className="w-3 h-3 mr-1.5 text-slate-500" /> {evt.loc}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-10">
-                  <Link href="/events" className="inline-flex items-center text-slate-400 hover:text-white transition-colors font-bold text-xs uppercase tracking-widest">
-                    View Full Calendar <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </div>
-
+              <h3 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter text-white mb-8 leading-[1.05] drop-shadow-lg">
+                Our Mission <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-cyan-400">Is Clear.</span>
+              </h3>
+              
+              <div className="space-y-6 border-l-2 border-white/5 pl-8 lg:pl-10 relative">
+                <div className="absolute left-[-2px] top-0 w-[2px] h-1/3 bg-gradient-to-b from-[#1877F2] to-transparent"></div>
+                <p className="text-slate-300 text-xl lg:text-2xl leading-relaxed font-medium">
+                  We are building an unshakeable foundation of support to ensure that no police officer or family member ever has to face the devastating consequences of systemic investigations alone. 
+                </p>
+                <p className="text-slate-400 text-base lg:text-lg leading-relaxed">
+                  We stand for fairness, mental health advocacy, and swift justice. By providing urgent crisis intervention, independent legal support, and driving legislative reform, we ensure the protectors are protected.
+                </p>
               </div>
 
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* MAKE A DIFFERENCE TODAY */}
-      <section className="relative bg-[#02050A] py-16 lg:py-24 border-t border-white/10 overflow-hidden">
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="bg-[#1877F2] rounded-[3rem] py-16 px-8 md:py-20 md:px-16 lg:py-24 lg:px-20 relative overflow-hidden flex flex-col justify-center text-center items-center shadow-[0_30px_60px_rgba(24,119,242,0.3)] border border-white/10">
-            
-            {/* Dynamic Background Image */}
-            <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('https://images.unsplash.com/photo-1521634586221-a36c84c1f1ec?auto=format&fit=crop&q=80&w=1600')] bg-cover bg-center"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1877F2] to-transparent opacity-50 pointer-events-none"></div>
-            
-            <div className="relative z-10 w-full max-w-4xl mx-auto">
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter mb-8 text-white drop-shadow-xl">
-                MAKE A DIFFERENCE <br className="hidden md:block"/> TODAY
-              </h2>
-              <p className="text-white/90 text-lg md:text-xl lg:text-2xl mb-12 leading-relaxed font-medium drop-shadow-md">
-                Your action today can save a life tomorrow. Demand accountability from the authorities and demand a 12-month limit on investigations.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center w-full items-center">
-                <Link href="/take-action/contact-mp" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-white text-[#1877F2] hover:bg-[#02050A] hover:text-white font-bold px-12 py-8 rounded-full text-xs tracking-[0.2em] uppercase transition-all duration-500 shadow-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] hover:-translate-y-2">
-                    CONTACT YOUR MP
-                  </Button>
-                </Link>
-                <Link href="/stories/submit" className="w-full sm:w-auto">
-                  <Button className="border-2 border-white w-full sm:w-auto bg-transparent text-white hover:bg-white hover:text-[#1877F2] font-bold px-12 py-8 rounded-full text-xs tracking-[0.2em] uppercase transition-all duration-500 hover:shadow-[0_20px_40px_rgba(255,255,255,0.2)] hover:-translate-y-2">
-                    SHARE YOUR STORY
+              <div className="mt-12 flex items-center gap-6">
+                <Link href="/about">
+                  <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-black px-10 py-7 rounded-full text-xs tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(24,119,242,0.3)] hover:shadow-[0_0_30px_rgba(24,119,242,0.5)] hover:-translate-y-1">
+                    Discover Our Story
                   </Button>
                 </Link>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* POCKET SERGEANT SPONSORSHIP BANNER */}
-      <section className="relative bg-[#02050A] py-12 border-t border-white/5">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] flex flex-col md:flex-row items-center justify-between gap-6 opacity-80 hover:opacity-100 transition-opacity duration-300">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
-              <Heart className="w-5 h-5 text-red-500 animate-pulse" />
+
+      {/* FOUNDING MEMBERS - ALTERNATING EDITORIAL REVAMP */}
+      <section className="bg-[#02050A] py-32 border-b border-white/5 relative overflow-hidden">
+        
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 mb-20 text-center">
+          <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
+            <span className="w-8 h-px bg-[#1877F2]"></span>
+            The Architects
+            <span className="w-8 h-px bg-[#1877F2]"></span>
+          </h2>
+          <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
+            Founding Members
+          </h3>
+        </div>
+
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1400px] flex flex-col gap-24 lg:gap-32">
+          {[
+            { 
+              name: "Paul Cooper", 
+              role: "Founder & Ex-Officer", 
+              quote: "No officer should ever have to stand alone in the dark.",
+              bio: "Paul served for 15 years as a frontline officer before being subjected to a grueling 3-year IOPC investigation. Although completely cleared, the systemic lack of support inspired him to found It Stops Now.", 
+              img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=1200",
+              align: "left"
+            },
+            { 
+              name: "Sarah Jenkins", 
+              role: "Legal Director", 
+              quote: "Justice is not just for the public; it must protect the protectors too.",
+              bio: "Sarah is a leading human rights and defense attorney who specializes in representing public servants. She leads the legal advocacy arm, fighting for fair representation and pushing for legislative changes.", 
+              img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=1200",
+              align: "right"
+            },
+            { 
+              name: "Michael Davis", 
+              role: "Head of Welfare", 
+              quote: "Welfare is not an afterthought; it is a frontline necessity.",
+              bio: "As a former police psychologist, Michael has treated hundreds of officers suffering from severe PTSD. He directs our support networks, providing confidential counseling and urgent crisis intervention.", 
+              img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1200",
+              align: "left"
+            }
+          ].map((member, i) => (
+            <div key={i} className={`flex flex-col ${member.align === 'right' ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-20 group`}>
+              
+              {/* Image Side */}
+              <div className="w-full lg:w-1/2 relative">
+                <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl bg-[#050A14] z-10">
+                  <img 
+                    src={member.img} 
+                    alt={member.name} 
+                    className="absolute inset-0 w-full h-full object-cover object-top grayscale mix-blend-luminosity opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" 
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t from-[#02050A] via-transparent to-transparent opacity-80`}></div>
+                </div>
+                {/* Decorative floating accent */}
+                <div className={`absolute -bottom-8 ${member.align === 'right' ? '-left-8' : '-right-8'} w-64 h-64 bg-[#1877F2]/10 rounded-full blur-[100px] pointer-events-none`}></div>
+              </div>
+
+              {/* Content Side */}
+              <div className="w-full lg:w-1/2 flex flex-col justify-center">
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="w-12 h-[2px] bg-[#1877F2]"></div>
+                  <span className="text-[#1877F2] font-black text-xs uppercase tracking-[0.3em]">{member.role}</span>
+                </div>
+                
+                <h4 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-8 drop-shadow-md">
+                  {member.name}
+                </h4>
+
+                <div className="bg-[#050A14] border-l-2 border-[#1877F2] p-8 rounded-r-3xl mb-8 relative overflow-hidden group-hover:bg-[#1877F2]/5 transition-colors duration-500">
+                  <Quote className="w-8 h-8 text-[#1877F2] absolute top-4 right-6 opacity-10" />
+                  <p className="text-white text-xl md:text-2xl font-medium italic leading-relaxed relative z-10">
+                    "{member.quote}"
+                  </p>
+                </div>
+                
+                <p className="text-slate-400 text-lg leading-relaxed max-w-xl">
+                  {member.bio}
+                </p>
+              </div>
+
             </div>
-            <div>
-              <p className="text-white text-xs font-bold uppercase tracking-widest">PROUDLY SUSTAINED BY</p>
-              <p className="text-slate-400 text-sm">Pocket Sergeant Ltd — Supporting UK Policing</p>
-            </div>
-          </div>
-          <div className="flex gap-6 items-center flex-wrap">
-            <span className="text-slate-500 text-xs font-medium">Fully funded, zero public donation dependencies.</span>
-            <a 
-              href="https://pocketsergeant.co.uk" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-[#1877F2] hover:text-white text-xs font-bold uppercase tracking-widest flex items-center transition-colors"
-            >
-              Learn More <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-            </a>
-          </div>
+          ))}
         </div>
       </section>
+
+
 
       {/* GET INVOLVED MODAL */}
       <AnimatePresence>

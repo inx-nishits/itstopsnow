@@ -115,25 +115,37 @@ export const generateDOCX = async (data: { content: string, mpName: string, send
 // Memorial PDF Components
 const MemorialPDF = ({ officer, tributes }: any) => (
   <Document>
-    <Page size="A4" style={styles.page}>
-      <Text style={{ fontSize: 32, marginBottom: 10, color: '#0f172a', fontWeight: 'bold', textAlign: 'center' }}>{officer.name}</Text>
-      <Text style={{ fontSize: 14, marginBottom: 30, color: '#64748b', textAlign: 'center' }}>{officer.force} | {officer.years}</Text>
+    <Page size="A4" style={{ ...styles.page, padding: 40, backgroundColor: '#020611' }}>
       
-      <Text style={{ fontSize: 18, marginBottom: 20, fontStyle: 'italic', color: '#1e3a8a', textAlign: 'center' }}>
-        {officer.quote}
-      </Text>
+      {/* Header section with deep blue styling */}
+      <View style={{ marginBottom: 40, paddingBottom: 20, borderBottom: '1px solid #1e293b', alignItems: 'center' }}>
+        <Text style={{ fontSize: 10, color: '#1877F2', textTransform: 'uppercase', letterSpacing: 2, marginBottom: 10 }}>{officer.role}</Text>
+        <Text style={{ fontSize: 36, color: '#ffffff', fontWeight: 'bold', textAlign: 'center', marginBottom: 10 }}>{officer.name}</Text>
+        <Text style={{ fontSize: 12, color: '#94a3b8', textAlign: 'center', letterSpacing: 1 }}>{officer.force}  •  {officer.years}  •  Age {officer.age}</Text>
+      </View>
+      
+      {/* Quote */}
+      <View style={{ marginBottom: 40, alignItems: 'center', paddingHorizontal: 40 }}>
+        <Text style={{ fontSize: 16, fontStyle: 'italic', color: '#ffffff', textAlign: 'center', lineHeight: 1.5 }}>
+          {officer.quote}
+        </Text>
+      </View>
 
-      <Text style={{ fontSize: 14, marginTop: 40, marginBottom: 20, fontWeight: 'bold', color: '#0f172a' }}>Book of Condolence</Text>
+      <Text style={{ fontSize: 14, marginTop: 20, marginBottom: 20, fontWeight: 'bold', color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1 }}>Book of Condolence</Text>
       
       {tributes.map((tribute: any, i: number) => (
-        <View key={i} style={{ marginBottom: 20, padding: 15, borderLeft: '3px solid #1e3a8a', backgroundColor: '#f8fafc' }}>
-          <Text style={{ fontSize: 12, marginBottom: 10, color: '#334155' }}>"{tribute.text}"</Text>
-          <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#0f172a' }}>{tribute.name}</Text>
-          <Text style={{ fontSize: 10, color: '#64748b' }}>{tribute.type}</Text>
+        <View key={i} style={{ marginBottom: 15, padding: 20, backgroundColor: '#0f172a', borderRadius: 8, borderLeft: '4px solid #1877F2' }}>
+          <Text style={{ fontSize: 12, marginBottom: 15, color: '#e2e8f0', lineHeight: 1.5, fontStyle: 'italic' }}>"{tribute.text}"</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#ffffff', marginRight: 10 }}>{tribute.name}</Text>
+            <Text style={{ fontSize: 9, color: '#1877F2', textTransform: 'uppercase', letterSpacing: 1 }}>{tribute.type}</Text>
+          </View>
         </View>
       ))}
 
-      <Text style={styles.footer}>Produced by It Stops Now - Memorial Archive</Text>
+      <Text style={{ position: 'absolute', bottom: 30, left: 40, right: 40, fontSize: 10, color: '#475569', textAlign: 'center', borderTop: '1px solid #1e293b', paddingTop: 10 }}>
+        Generated via itstopsnow.org - Honouring their service.
+      </Text>
     </Page>
   </Document>
 );

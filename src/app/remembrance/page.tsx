@@ -315,7 +315,8 @@ export default function RemembrancePage() {
                 
                 <div>
                   <h3 className="font-bold text-white text-[13px] leading-tight mb-1">{officer.name}</h3>
-                  <p className="text-slate-300 text-[8px] uppercase tracking-widest leading-tight mb-3 line-clamp-2 opacity-80 group-hover:opacity-100 transition-opacity">{officer.role} • {officer.force}</p>
+                  <p className="text-slate-300 text-[8px] uppercase tracking-widest leading-tight mb-1 line-clamp-2 opacity-80 group-hover:opacity-100 transition-opacity">{officer.role} • {officer.force}</p>
+                  <p className="text-slate-400 text-[9px] font-medium leading-tight mb-3 opacity-80 group-hover:opacity-100 transition-opacity">{officer.years}</p>
                   
                   <div className="h-8 opacity-100 transition-all duration-500 overflow-hidden">
                     <span className="flex items-center justify-center w-full bg-[#1877F2]/20 hover:bg-[#1877F2] text-[#1877F2] hover:text-white border border-[#1877F2]/50 text-[9px] font-bold uppercase tracking-widest py-2 rounded transition-colors shadow-[0_0_15px_rgba(24,119,242,0.3)]">
