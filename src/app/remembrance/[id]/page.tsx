@@ -1,32 +1,72 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Link from "next/link";
-import { ChevronRight, Share2, Flame, MessageCircle, Heart, Calendar, ArrowRight, Download, Camera, Clock, X } from "lucide-react";
+import { ChevronRight, Share2, Flame, MessageCircle, Heart, Calendar, ArrowRight, Download, Camera, Clock, X, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { generateMemorialPDF } from "@/lib/documentGenerator";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function MemorialDetailPage({ params }: { params: { id: string } }) {
+const RealisticCandle = ({ isLit }: { isLit: boolean }) => (
+  <div className="relative flex flex-col items-center justify-end h-40 w-16 group">
+    {/* Flame and Glow */}
+    <div className={`absolute top-0 transition-all duration-1000 flex flex-col items-center ${isLit ? 'opacity-100' : 'opacity-0 scale-50 translate-y-4'}`}>
+      {/* Deep Outer Glow */}
+      <div className="absolute top-2 w-32 h-32 bg-amber-600/20 rounded-full blur-2xl animate-pulse"></div>
+      {/* Inner Glow */}
+      <div className="absolute top-4 w-16 h-16 bg-yellow-400/40 rounded-full blur-xl animate-pulse" style={{ animationDuration: '2s' }}></div>
+      
+      {/* Flame Body */}
+      <div className="relative w-5 h-12 bg-gradient-to-t from-orange-500 via-amber-300 to-yellow-100 rounded-[50%_50%_20%_20%] shadow-[0_0_20px_rgba(251,191,36,1)] origin-bottom animate-[flicker_3s_infinite]" style={{ filter: 'blur(0.5px)' }}>
+        {/* Inner bright core */}
+        <div className="absolute bottom-1.5 left-[4px] w-3 h-6 bg-white rounded-full blur-[1px]"></div>
+      </div>
+    </div>
+    
+    {/* Wick */}
+    <div className="w-1 h-3 bg-zinc-900 rounded-t-sm z-10 relative">
+      {isLit && <div className="absolute -top-1 left-0 right-0 h-2 bg-orange-600 blur-[1px] rounded-full"></div>}
+    </div>
+    
+    {/* Wax Body */}
+    <div className={`w-10 h-24 rounded-t-sm rounded-b-md shadow-inner relative overflow-hidden transition-colors duration-1000 ${isLit ? 'bg-gradient-to-b from-amber-100 via-slate-100 to-slate-200 border-amber-200' : 'bg-gradient-to-b from-slate-200 via-slate-100 to-slate-300 border-slate-300'}`}>
+      {/* Melted top pool */}
+      <div className={`absolute top-0 left-0 right-0 h-3 rounded-[50%] transition-colors duration-1000 ${isLit ? 'bg-amber-200/60 shadow-[inset_0_-2px_4px_rgba(0,0,0,0.1)]' : 'bg-slate-300/50'}`}></div>
+      
+      {/* Dynamic Wax drips if lit */}
+      <div className={`absolute top-2 left-1.5 w-1 bg-amber-50 rounded-b-full transition-all duration-[5000ms] shadow-sm ${isLit ? 'h-10 opacity-90' : 'h-0 opacity-0'}`}></div>
+      <div className={`absolute top-1 right-2 w-1.5 bg-amber-50/80 rounded-b-full transition-all duration-[8000ms] shadow-sm ${isLit ? 'h-14 opacity-80' : 'h-0 opacity-0'}`}></div>
+      
+      {/* Subtle texture/gradient line */}
+      <div className="absolute inset-y-0 left-2 w-px bg-white/40"></div>
+    </div>
+  </div>
+);
+
+export default function MemorialDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
+  const id = resolvedParams.id;
+  
   const [isLit, setIsLit] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [globalCandles, setGlobalCandles] = useState(85); // Starting with a low number to demo the effect
+  const [globalCandles, setGlobalCandles] = useState(85);
   const [localGrayscaleOverride, setLocalGrayscaleOverride] = useState<number | null>(null);
+  
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
   const [isAllPhotosModalOpen, setIsAllPhotosModalOpen] = useState(false);
   const [isTimelineExpanded, setIsTimelineExpanded] = useState(false);
   const [currentTributeIndex, setCurrentTributeIndex] = useState(0);
+  
   const [isTributeFormOpen, setIsTributeFormOpen] = useState(false);
   const [tributeForm, setTributeForm] = useState({ name: "", email: "", title: "", content: "" });
 
   useEffect(() => {
-    const litState = localStorage.getItem(`isn_lit_candle_${params.id}`);
+    const litState = localStorage.getItem(`isn_lit_candle_${id}`);
     if (litState) {
       setIsLit(true);
     }
-  }, [params.id]);
+  }, [id]);
 
-  // Mock data based on the design
   const officer = {
     name: "PC ANDREW HARPER",
     role: "Police Constable (PC)",
@@ -40,7 +80,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
       remembered: "8,432",
       dateOfLoss: "24 MAY 2019"
     },
-    about: "Andrew was a dedicated police officer who served with pride and compassion. He was known for his kindness, his sense of humor, and his unwavering commitment to protecting his community.\n\nHe is deeply missed by his family, friends, colleagues, and all whose lives he touched.",
+    about: "Andrew was a dedicated police officer who served with pride and compassion. He was known for his kindness, his sense of humour, and his unwavering commitment to protecting his community.\n\nHe is deeply missed by his family, friends, colleagues, and all whose lives he touched.",
     familyQuote: "He just loved helping people.\nThat was Andrew.\nHe would do anything for anyone.\nHe was our hero."
   };
 
@@ -67,14 +107,12 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
     }
   };
 
-  // Calculate grayscale based on global candle count
   const calculateGrayscale = (count: number) => {
     if (count <= 100) return 95;
     if (count >= 5000) return 0;
-    // Logarithmic-like decay for smooth transition
-    if (count <= 500) return 95 - ((count - 100) / 400) * 15; // 95 to 80
-    if (count <= 2000) return 80 - ((count - 500) / 1500) * 30; // 80 to 50
-    return 50 - ((count - 2000) / 3000) * 50; // 50 to 0
+    if (count <= 500) return 95 - ((count - 100) / 400) * 15;
+    if (count <= 2000) return 80 - ((count - 500) / 1500) * 30;
+    return 50 - ((count - 2000) / 3000) * 50;
   };
 
   const grayscaleValue = calculateGrayscale(globalCandles);
@@ -82,23 +120,29 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
 
   const handleLightCandle = () => {
     if (isLit) return;
-    
     setIsLit(true);
-    localStorage.setItem(`isn_lit_candle_${params.id}`, 'true');
+    localStorage.setItem(`isn_lit_candle_${id}`, 'true');
     setGlobalCandles(prev => prev + 1);
-
-    // Personal Animation Moment: Force full color
     setLocalGrayscaleOverride(0);
-
-    // Fade back to global baseline after 5 seconds
     setTimeout(() => {
       setLocalGrayscaleOverride(null);
     }, 5000);
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pt-24 pb-24">
-      <div className="container mx-auto px-4 md:px-8 max-w-[1440px]">
+    <div className="min-h-screen bg-[#030712] text-white font-sans pt-24 pb-24 selection:bg-[#1877F2] selection:text-white">
+      
+      {/* Custom keyframes for candle flicker */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes flicker {
+          0%, 100% { transform: scale(1) rotate(-1deg); opacity: 1; }
+          25% { transform: scale(1.05) rotate(1deg); opacity: 0.95; }
+          50% { transform: scale(0.98) rotate(-0.5deg); opacity: 0.9; }
+          75% { transform: scale(1.02) rotate(0.5deg); opacity: 0.95; }
+        }
+      `}} />
+
+      <div className="container mx-auto px-4 md:px-8 max-w-[1200px]">
         
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500 mb-8 pt-4">
@@ -109,361 +153,252 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
           <span className="text-white">{officer.name}</span>
         </div>
 
-        {/* Large Memorial Hero Banner */}
-        <section className="relative w-full min-h-[60vh] flex flex-col justify-end bg-[#050A14] mb-12 rounded-2xl overflow-hidden border border-white/5">
-          <div className="absolute inset-0 z-0">
-            <img 
-              src={officer.image} 
-              alt={officer.name} 
-              style={{ filter: `grayscale(${currentGrayscale}%)` }}
-              className={`w-full h-full object-cover object-top transition-all duration-[5000ms] ease-in-out ${isLit ? 'scale-105' : 'scale-100'}`}
-            />
-            <div className={`absolute inset-0 transition-opacity duration-[5000ms] ${isLit ? 'bg-gradient-to-t from-[#030712] via-[#030712]/60 to-transparent opacity-80' : 'bg-gradient-to-t from-[#030712] via-[#030712]/90 to-black/40 opacity-100'}`} />
-            {isLit && <div className="absolute inset-0 bg-amber-500/10 mix-blend-overlay transition-opacity duration-1000" />}
-          </div>
-
-          <div className="relative z-10 p-8 md:p-12 xl:p-16 w-full flex flex-col md:flex-row items-end justify-between gap-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[#1877F2] text-xs font-bold uppercase tracking-[0.2em] bg-[#1877F2]/10 px-4 py-1.5 rounded-full border border-[#1877F2]/20 shadow-[0_0_15px_rgba(24,119,242,0.2)]">
-                  {officer.role}
-                </span>
-                <span className="text-white/80 text-xs font-bold uppercase tracking-[0.2em]">
-                  {officer.force}
-                </span>
-              </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter uppercase drop-shadow-2xl mb-4">
-                {officer.name}
-              </h1>
-              <div className="flex flex-wrap items-center gap-4 text-slate-300 text-sm font-medium tracking-widest uppercase">
-                <span>{officer.years}</span>
-                <span className="w-1.5 h-1.5 bg-white/30 rounded-full" />
-                <span>Age {officer.age}</span>
-              </div>
-              
-              <div className="mt-8 border-l-2 border-[#1877F2] pl-6 max-w-2xl">
-                <p className="text-xl md:text-2xl italic font-serif text-white/90 leading-relaxed drop-shadow-md whitespace-pre-line">
-                  {officer.quote}
-                </p>
-              </div>
+        {/* 1. REVAMPED HERO BANNER: Split Layout */}
+        <section className="bg-[#050A14] border border-white/5 rounded-3xl overflow-hidden shadow-2xl mb-16 relative">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544813545-482723290c48?auto=format&fit=crop&q=80')] bg-cover opacity-5 mix-blend-screen pointer-events-none"></div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 relative z-10">
+            
+            {/* Left: Officer Portrait */}
+            <div className="relative h-[60vh] lg:h-auto min-h-[650px]">
+              <img 
+                src={officer.image} 
+                alt={officer.name} 
+                style={{ filter: `grayscale(${currentGrayscale}%)` }}
+                className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-[5000ms] ease-in-out ${isLit ? 'scale-105' : 'scale-100'}`}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#050A14]" />
+              {isLit && <div className="absolute inset-0 bg-amber-500/10 mix-blend-overlay transition-opacity duration-1000" />}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
-              <Button 
-                onClick={() => setIsTributeFormOpen(true)}
-                className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-10 py-7 rounded-md text-[11px] tracking-[0.2em] uppercase transition-colors shadow-lg"
-              >
-                LEAVE A TRIBUTE
-              </Button>
+            {/* Right: Officer Details & Actions */}
+            <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center relative">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 mb-6">
+                <div className="inline-flex">
+                  <span className="text-[#1877F2] text-[10px] md:text-xs font-bold uppercase tracking-widest bg-[#1877F2]/10 px-4 py-2 rounded-full border border-[#1877F2]/20 whitespace-nowrap">
+                    {officer.role}
+                  </span>
+                </div>
+                <div className="inline-flex">
+                  <span className="text-white/70 text-[10px] md:text-xs font-bold uppercase tracking-widest border-l-0 sm:border-l sm:border-white/20 sm:pl-4 whitespace-nowrap">
+                    {officer.force}
+                  </span>
+                </div>
+              </div>
+              
+              <h1 className="text-3xl md:text-4xl xl:text-5xl font-black text-white tracking-tighter uppercase mb-4 leading-tight">
+                {officer.name}
+              </h1>
+              
+              <div className="flex flex-wrap items-center gap-4 text-slate-400 text-sm font-medium tracking-widest uppercase mb-10">
+                <span>{officer.years}</span>
+                <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
+                <span>Age {officer.age}</span>
+                <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
+                <span>{officer.stats.dateOfLoss}</span>
+              </div>
+
+              {/* Action Box */}
+              <div className="bg-[#020611]/80 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row items-center sm:items-stretch gap-6 md:gap-8">
+                
+                {/* Candle Interact */}
+                <div className="flex flex-col items-center justify-center min-w-[120px]">
+                  <RealisticCandle isLit={isLit} />
+                  <div className="mt-4 text-center">
+                    <div className="text-2xl font-bold text-white mb-1">{globalCandles.toLocaleString()}</div>
+                    <div className="text-[9px] uppercase tracking-widest text-slate-500">Candles Lit</div>
+                  </div>
+                </div>
+
+                {/* Primary Buttons */}
+                <div className="flex flex-col justify-center gap-4 flex-grow w-full">
+                  <Button 
+                    onClick={handleLightCandle}
+                    disabled={isLit}
+                    className={`w-full py-7 font-bold text-xs tracking-widest uppercase transition-all duration-500 ${
+                      isLit 
+                      ? 'bg-white/5 text-white/50 border border-white/5 cursor-not-allowed' 
+                      : 'bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:-translate-y-1'
+                    }`}
+                  >
+                    {isLit ? <span className="flex items-center gap-2">CANDLE LIT <Flame className="w-4 h-4 text-amber-500"/></span> : 'LIGHT A CANDLE'}
+                  </Button>
+                  
+                  <div className="flex flex-wrap gap-4 w-full">
+                    <Button 
+                      onClick={() => setIsTributeFormOpen(true)}
+                      className="flex-1 min-w-[150px] bg-white hover:bg-slate-200 text-[#050A14] font-bold text-[10px] md:text-xs tracking-widest uppercase h-12 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-0.5 flex items-center justify-center gap-2 transition-all border-none px-4"
+                    >
+                      <MessageCircle className="w-4 h-4 shrink-0" /> 
+                      <span className="whitespace-nowrap">LEAVE TRIBUTE</span>
+                    </Button>
+                    <Button 
+                      onClick={handleDownloadPDF}
+                      disabled={isGenerating}
+                      variant="outline"
+                      className="flex-1 min-w-[150px] bg-transparent border-white/30 hover:bg-white/10 text-white font-bold text-[10px] md:text-xs tracking-widest uppercase h-12 flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5 px-4"
+                    >
+                      {isGenerating ? "GENERATING..." : (
+                        <div className="flex items-center justify-center gap-2">
+                          <Download className="w-4 h-4 shrink-0" /> 
+                          <span className="whitespace-nowrap">DOWNLOAD PDF</span>
+                        </div>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
 
-        {/* Stats Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 border-y border-white/10 py-8 mb-16 gap-6">
-          <div className="flex items-center gap-4 border-r border-white/5 last:border-0 px-4">
-            <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center shrink-0">
-              <Flame className={`w-5 h-5 text-amber-500 ${isLit ? 'animate-pulse' : ''}`} />
-            </div>
-            <div>
-              <div className="text-xl font-bold text-white mb-1">{globalCandles.toLocaleString()}</div>
-              <div className="text-[9px] uppercase tracking-widest text-slate-500">GLOBAL CANDLES LIT</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 border-r border-white/5 last:border-0 px-4">
-            <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
-              <MessageCircle className="w-5 h-5 text-[#1877F2]" />
-            </div>
-            <div>
-              <div className="text-xl font-bold text-white mb-1">{officer.stats.tributes}</div>
-              <div className="text-[9px] uppercase tracking-widest text-slate-500">TRIBUTES</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 border-r border-white/5 last:border-0 px-4">
-            <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center shrink-0">
-              <Heart className="w-5 h-5 text-red-500" />
-            </div>
-            <div>
-              <div className="text-xl font-bold text-white mb-1">{officer.stats.remembered}</div>
-              <div className="text-[9px] uppercase tracking-widest text-slate-500">PEOPLE REMEMBERED</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 px-4">
-            <div className="w-10 h-10 rounded-full bg-slate-500/10 flex items-center justify-center shrink-0">
-              <Calendar className="w-5 h-5 text-slate-400" />
-            </div>
-            <div>
-              <div className="text-xl font-bold text-white mb-1">{officer.stats.dateOfLoss}</div>
-              <div className="text-[9px] uppercase tracking-widest text-slate-500">DATE OF LOSS</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+        {/* 2. STREAMLINED CONTENT LAYOUT */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
           
-          {/* LEFT COLUMN */}
-          <div className="lg:col-span-2 space-y-16">
+          {/* Main Story Column */}
+          <div className="lg:col-span-8 space-y-16">
             
-            {/* THEIR STORY */}
-            <section>
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white mb-6">THEIR STORY</h3>
-              <div className="text-slate-400 text-sm leading-relaxed whitespace-pre-line max-w-3xl">
+            <section className="prose prose-invert prose-lg max-w-none">
+              <h2 className="text-2xl font-bold uppercase tracking-widest text-white mb-8 border-b border-white/10 pb-4">
+                THEIR STORY
+              </h2>
+              <p className="text-xl italic font-serif text-[#1877F2] leading-relaxed mb-8 border-l-4 border-[#1877F2] pl-6">
+                {officer.quote}
+              </p>
+              <div className="text-slate-300 leading-loose whitespace-pre-line">
                 {officer.about}
               </div>
             </section>
 
-            {/* TIMELINE */}
             <section>
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white mb-8 flex items-center gap-2"><Clock className="w-4 h-4 text-[#1877F2]"/> SERVICE & CAREER TIMELINE</h3>
-              <div className="relative border-l border-white/10 ml-3 space-y-8 pb-4">
+              <h2 className="text-2xl font-bold uppercase tracking-widest text-white mb-8 border-b border-white/10 pb-4 flex items-center gap-3">
+                <Camera className="w-6 h-6 text-slate-500"/> PHOTO GALLERY
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                <img onClick={() => setActivePhoto("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800")} src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 1" />
+                <img onClick={() => setActivePhoto("https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=800")} src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=400" className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 2" />
+                <img onClick={() => setActivePhoto("https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800")} src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 3" />
+              </div>
+              <Button onClick={() => setIsAllPhotosModalOpen(true)} variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/5 text-[10px] tracking-widest uppercase">
+                View All Photos <ArrowRight className="w-3 h-3 ml-2"/>
+              </Button>
+            </section>
+          </div>
+
+          {/* Sidebar Column */}
+          <div className="lg:col-span-4 space-y-12">
+            
+            <section className="bg-[#051024] p-8 rounded-3xl border border-white/5">
+              <h2 className="text-sm font-bold uppercase tracking-widest text-white mb-8 flex items-center gap-3">
+                <Clock className="w-4 h-4 text-[#1877F2]"/> CAREER TIMELINE
+              </h2>
+              <div className="relative border-l border-white/10 ml-2 space-y-8 pb-4">
                 <div className="relative pl-8">
-                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
                   <h4 className="text-white font-bold text-sm">Response Officer</h4>
                   <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2010</p>
-                  <p className="text-slate-400 text-xs leading-relaxed">Completed initial training and was posted to response team, distinguishing himself early on for his commitment.</p>
+                  <p className="text-slate-400 text-xs leading-relaxed">Completed initial training and was posted to response team.</p>
                 </div>
                 <div className="relative pl-8">
-                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
-                  <h4 className="text-white font-bold text-sm">Bravery Commendation Awardee</h4>
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
+                  <h4 className="text-white font-bold text-sm">Bravery Commendation</h4>
                   <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2014</p>
-                  <p className="text-slate-400 text-xs leading-relaxed">Awarded Chief Constable's Commendation for off-duty intervention in an armed robbery.</p>
+                  <p className="text-slate-400 text-xs leading-relaxed">Awarded Chief Constable's Commendation.</p>
                 </div>
-                
                 {isTimelineExpanded && (
-                  <>
-                    <div className="relative pl-8">
-                      <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
-                      <h4 className="text-white font-bold text-sm">Advanced Driver</h4>
-                      <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2016</p>
-                      <p className="text-slate-400 text-xs leading-relaxed">Completed advanced driver training, demonstrating exceptional vehicle control and situational awareness.</p>
-                    </div>
-                  </>
+                  <div className="relative pl-8">
+                    <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
+                    <h4 className="text-white font-bold text-sm">Advanced Driver</h4>
+                    <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2016</p>
+                    <p className="text-slate-400 text-xs leading-relaxed">Completed advanced driver training.</p>
+                  </div>
                 )}
-                
                 <div className="relative pl-8">
-                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] shadow-[0_0_10px_rgba(24,119,242,0.5)]"></div>
-                  <h4 className="text-white font-bold text-sm">Traffic Officer</h4>
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2]"></div>
+                  <h4 className="text-white font-bold text-sm">Roads Policing Officer</h4>
                   <p className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mb-2">2018</p>
-                  <p className="text-slate-400 text-xs leading-relaxed">Moved to specialized roads policing unit, fulfilling a long-held career ambition.</p>
+                  <p className="text-slate-400 text-xs leading-relaxed">Moved to specialized roads policing unit.</p>
                 </div>
               </div>
-              <Button 
-                onClick={() => setIsTimelineExpanded(!isTimelineExpanded)}
-                variant="ghost" 
-                className="mt-4 text-[#1877F2] hover:text-blue-400 hover:bg-[#1877F2]/10 text-[10px] font-bold uppercase tracking-widest px-4 py-2"
-              >
-                {isTimelineExpanded ? "COLLAPSE TIMELINE" : "VIEW FULL TIMELINE"}
+              <Button onClick={() => setIsTimelineExpanded(!isTimelineExpanded)} variant="ghost" className="w-full mt-4 text-[#1877F2] hover:text-blue-400 hover:bg-[#1877F2]/10 text-[10px] tracking-widest uppercase">
+                {isTimelineExpanded ? "COLLAPSE" : "EXPAND TIMELINE"}
               </Button>
             </section>
 
-            {/* PHOTO GALLERY */}
-            <section>
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white mb-6 flex items-center gap-2"><Camera className="w-4 h-4 text-[#1877F2]"/> PHOTO GALLERY</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <img 
-                  onClick={() => setActivePhoto("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800")}
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" 
-                  className="w-full h-40 object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
-                  alt="Gallery 1" 
-                />
-                <img 
-                  onClick={() => setActivePhoto("https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=800")}
-                  src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=400" 
-                  className="w-full h-40 object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
-                  alt="Gallery 2" 
-                />
-                <img 
-                  onClick={() => setActivePhoto("https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800")}
-                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" 
-                  className="w-full h-40 object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
-                  alt="Gallery 3" 
-                />
-              </div>
-              <Button 
-                onClick={() => setIsAllPhotosModalOpen(true)}
-                variant="outline" 
-                className="mt-6 border-white/20 text-white bg-transparent hover:bg-white/10 font-bold px-6 py-4 rounded-md text-[10px] tracking-widest uppercase transition-colors"
-              >
-                VIEW ALL PHOTOS
-              </Button>
+            <section className="bg-gradient-to-br from-[#1877F2]/10 to-transparent p-8 rounded-3xl border border-[#1877F2]/20">
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#1877F2] mb-4">FAMILY TRIBUTE</h3>
+              <p className="text-white font-serif italic leading-relaxed text-lg whitespace-pre-line">
+                {officer.familyQuote}
+              </p>
             </section>
 
-            {/* REMEMBERED BY TRIBUTES */}
-            <section>
-              <div className="flex justify-between items-end mb-6 border-b border-white/5 pb-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-white">REMEMBERED BY</h3>
-                <Link href="/remembrance" className="text-[#1877F2] text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors">
-                  View all ({officer.stats.tributes})
-                </Link>
+            {/* SOCIAL SHARING SECTION */}
+            <div className="bg-[#050A14] border border-white/5 rounded-3xl p-8 shadow-xl">
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
+                <Share2 className="w-3 h-3"/> SHARE MEMORIAL
+              </h3>
+              <div className="flex flex-col gap-3">
+                <button onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')} className="w-full bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/20 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                  Share on Facebook
+                </button>
+                <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Honouring ${officer.name}`)}`, '_blank')} className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                  Share on X / Twitter
+                </button>
               </div>
-              
-              <div className="relative">
-                <div className="overflow-hidden">
-                  <div 
-                    className="flex transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(-${currentTributeIndex * 50}%)` }}
-                  >
-                    {tributes.map((tribute, i) => (
-                      <div key={i} className="min-w-full md:min-w-[50%] lg:min-w-[50%] px-2">
-                        <div className="bg-[#051024] border border-white/5 p-8 rounded-xl flex flex-col h-full shadow-lg relative overflow-hidden group hover:border-white/10 transition-colors">
-                          <div className="absolute top-0 right-0 p-4 opacity-5 text-white">
-                            <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
-                          </div>
-                          <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-8 flex-grow relative z-10 italic">
-                            "{tribute.text}"
-                          </p>
-                          <div className="flex items-center gap-4 mt-auto border-t border-white/5 pt-4">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1877F2]/20 to-transparent flex items-center justify-center text-sm font-bold text-white border border-[#1877F2]/30">
-                              {tribute.name.charAt(0)}
-                            </div>
-                            <div>
-                              <div className="text-sm font-bold text-white">{tribute.name}</div>
-                              <div className="text-[9px] text-[#1877F2] uppercase tracking-wider font-bold">{tribute.type}</div>
-                            </div>
-                          </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* 3. DEDICATED TRIBUTES SECTION (FULL WIDTH) */}
+      <section className="border-t border-white/10 bg-[#050A14] py-24">
+        <div className="container mx-auto px-4 md:px-8 max-w-[1200px]">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tighter text-white mb-2">REMEMBERED BY</h2>
+              <p className="text-slate-400">Read tributes left by friends, family, and colleagues.</p>
+            </div>
+            <Button onClick={() => setIsTributeFormOpen(true)} className="bg-[#1877F2] hover:bg-blue-600 text-white px-8 py-6 rounded-md text-xs font-bold uppercase tracking-widest transition-colors">
+              LEAVE A TRIBUTE
+            </Button>
+          </div>
+
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentTributeIndex * (100/3)}%)` }}>
+                {tributes.map((tribute, i) => (
+                  <div key={i} className="min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-3">
+                    <div className="bg-[#030712] border border-white/5 p-8 rounded-2xl flex flex-col h-full hover:border-white/10 transition-colors">
+                      <p className="text-slate-300 text-base leading-relaxed mb-8 flex-grow italic">"{tribute.text}"</p>
+                      <div className="flex items-center gap-4 border-t border-white/5 pt-6">
+                        <div className="w-12 h-12 rounded-full bg-[#1877F2]/10 flex items-center justify-center text-lg font-bold text-[#1877F2] border border-[#1877F2]/20">
+                          {tribute.name.charAt(0)}
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-white mb-1">{tribute.name}</div>
+                          <div className="text-[10px] text-slate-500 uppercase tracking-widest">{tribute.type}</div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex justify-center gap-2 mt-6">
-                  {/* Slider dots logic adjusted for 50% width items */}
-                  {Array.from({ length: Math.ceil(tributes.length / 2) }).map((_, i) => (
-                    <button 
-                      key={i} 
-                      onClick={() => setCurrentTributeIndex(i * 2)}
-                      className={`w-2 h-2 rounded-full transition-all ${i * 2 === currentTributeIndex || i * 2 === currentTributeIndex - 1 ? 'bg-[#1877F2] w-6' : 'bg-white/20'}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* RECENT CANDLES */}
-            <section>
-              <div className="flex justify-between items-end mb-6 border-b border-white/5 pb-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-white">RECENT CANDLES</h3>
-              </div>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-                {[
-                  { name: isLit ? "You" : "Mark D.", msg: "Lit a candle" },
-                  { name: "Clare W.", msg: "Lit a candle" },
-                  { name: "Anonymous", msg: "Lit a candle" },
-                  { name: "Tom H.", msg: "Lit a candle" },
-                  { name: "Rachel F.", msg: "Lit a candle" }
-                ].map((candle, i) => (
-                  <div key={i} className="bg-[#051024] border border-white/5 p-4 rounded-xl flex flex-col items-center text-center">
-                    <Flame className={`w-8 h-8 mb-3 ${isLit && i === 0 ? 'text-amber-500 animate-pulse drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]' : 'text-amber-500/50'}`} />
-                    <div className="text-[10px] font-bold text-white uppercase tracking-wider mb-1">{candle.name}</div>
-                    <div className="text-[9px] text-slate-500">{candle.msg}</div>
+                    </div>
                   </div>
                 ))}
               </div>
-            </section>
-
-            {/* BOOK OF CONDOLENCE */}
-            <section className="bg-[#051024] border border-white/5 rounded-2xl overflow-hidden relative shadow-2xl">
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="p-10 flex flex-col justify-center">
-                  <h3 className="text-xl font-bold uppercase tracking-widest text-white mb-4">BOOK OF CONDOLENCE</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                    Download all tributes and messages to create a printed book for {officer.name}'s family.
-                  </p>
-                  <div>
-                    <Button 
-                      onClick={handleDownloadPDF} 
-                      disabled={isGenerating}
-                      className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-colors"
-                    >
-                      {isGenerating ? "GENERATING..." : <span className="flex items-center gap-2"><Download className="w-4 h-4"/> GENERATE MEMORIAL PDF</span>}
-                    </Button>
-                  </div>
-                </div>
-                <div className="bg-[url('https://images.unsplash.com/photo-1544813545-482723290c48?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center min-h-[250px] opacity-80"></div>
-              </div>
-            </section>
-
-          </div>
-
-          {/* RIGHT COLUMN */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-32 space-y-8">
-              
-              {/* LIGHT A CANDLE SIDEBAR SECTION */}
-              <div className="bg-[#051024] border border-white/5 rounded-2xl p-8 text-center relative overflow-hidden shadow-xl">
-                <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent pointer-events-none"></div>
-                <div className="relative z-10 flex flex-col items-center">
-                  <div className="relative mb-6">
-                    <div className={`absolute inset-0 bg-amber-500/20 rounded-full blur-xl transition-all duration-1000 ${isLit ? 'opacity-100 scale-150' : 'opacity-0 scale-50'}`} />
-                    <Flame className={`w-16 h-16 relative z-10 transition-colors duration-1000 ${isLit ? 'text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]' : 'text-slate-600'}`} />
-                  </div>
-                  
-                  <div className="text-5xl font-black text-white tracking-tighter mb-1">
-                    {globalCandles.toLocaleString()}
-                  </div>
-                  <div className="text-[10px] font-bold text-amber-500 uppercase tracking-[0.2em] mb-8">
-                    Total Candles Lit
-                  </div>
-                  
-                  <Button 
-                    onClick={handleLightCandle}
-                    disabled={isLit}
-                    className={`w-full font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-all duration-500 ${isLit ? 'bg-[#050A14] text-white border border-white/10' : 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white shadow-[0_0_20px_rgba(245,158,11,0.3)]'}`}
-                  >
-                    {isLit ? <span className="flex items-center justify-center gap-2">CANDLE LIT</span> : 'LIGHT A CANDLE'}
-                  </Button>
-                </div>
-              </div>
-
-              {/* SOCIAL SHARING SECTION */}
-              <div className="bg-[#051024] border border-white/5 rounded-2xl p-8 relative overflow-hidden shadow-xl">
-                <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
-                  <Share2 className="w-3 h-3"/> SHARE MEMORIAL
-                </h3>
-                <div className="flex flex-col gap-3">
-                  <button 
-                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
-                    className="w-full bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/20 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer"
-                  >
-                    Share on Facebook
-                  </button>
-                  <button 
-                    onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Honouring ${officer.name}`)}`, '_blank')}
-                    className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer"
-                  >
-                    Share on X / Twitter
-                  </button>
-                  <button 
-                    onClick={() => window.location.href = `mailto:?subject=${encodeURIComponent(`Honouring ${officer.name}`)}&body=${encodeURIComponent(`View the memorial wall: ${window.location.href}`)}`}
-                    className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer"
-                  >
-                    Share via Email
-                  </button>
-                </div>
-              </div>
-
-              {/* IN THEIR OWN WORDS */}
-              <div>
-                <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-6">IN THEIR OWN WORDS</h3>
-                <div className="bg-[#051024] border border-white/5 p-10 rounded-2xl">
-                  <p className="text-xl font-serif text-white leading-relaxed italic mb-8 whitespace-pre-line">
-                    {officer.familyQuote}
-                  </p>
-                  <p className="text-[#1877F2] text-xs font-bold uppercase tracking-widest">
-                    – Family Tribute
-                  </p>
-                </div>
-              </div>
-              
+            </div>
+            
+            <div className="flex justify-center gap-2 mt-10">
+              {Array.from({ length: Math.ceil(tributes.length / 3) }).map((_, i) => (
+                <button 
+                  key={i} 
+                  onClick={() => setCurrentTributeIndex(i * 3)}
+                  className={`h-2 rounded-full transition-all ${i * 3 === currentTributeIndex ? 'bg-[#1877F2] w-8' : 'bg-white/20 w-2 hover:bg-white/40'}`}
+                />
+              ))}
             </div>
           </div>
-
         </div>
-
-      </div>
+      </section>
 
       {/* ALL PHOTOS MODAL */}
       <AnimatePresence>
@@ -480,14 +415,11 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="relative bg-[#051024] border border-white/10 max-w-5xl w-full max-h-[90vh] overflow-y-auto rounded-2xl p-8 z-10"
+              className="relative bg-[#051024] border border-white/10 max-w-5xl w-full max-h-[90vh] overflow-y-auto rounded-3xl p-8 z-10"
             >
-              <div className="flex justify-between items-center mb-8 sticky top-0 bg-[#051024] py-2 z-20">
-                <h2 className="text-2xl font-bold uppercase tracking-widest text-white">ALL PHOTOS ({officer.name})</h2>
-                <button
-                  onClick={() => setIsAllPhotosModalOpen(false)}
-                  className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all cursor-pointer"
-                >
+              <div className="flex justify-between items-center mb-8 sticky top-0 bg-[#051024] py-4 z-20 border-b border-white/5">
+                <h2 className="text-2xl font-bold uppercase tracking-widest text-white">ALL PHOTOS</h2>
+                <button onClick={() => setIsAllPhotosModalOpen(false)} className="text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all">
                   <X className="w-6 h-6" />
                 </button>
               </div>
@@ -500,13 +432,7 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
                   "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
                   "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
                 ].map((imgUrl, i) => (
-                  <img 
-                    key={i}
-                    onClick={() => setActivePhoto(imgUrl)}
-                    src={imgUrl} 
-                    className="w-full aspect-square object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" 
-                    alt={`Gallery item ${i}`} 
-                  />
+                  <img key={i} onClick={() => setActivePhoto(imgUrl)} src={imgUrl} className="w-full aspect-square object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" alt={`Gallery item ${i}`} />
                 ))}
               </div>
             </motion.div>
@@ -529,14 +455,11 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="relative bg-[#051024] border border-white/10 max-w-2xl w-full rounded-2xl p-8 z-10 shadow-2xl"
+              className="relative bg-[#051024] border border-white/10 max-w-2xl w-full rounded-3xl p-8 md:p-12 z-10 shadow-2xl"
             >
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-2xl font-bold uppercase tracking-widest text-white">LEAVE A TRIBUTE</h2>
-                <button
-                  onClick={() => setIsTributeFormOpen(false)}
-                  className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all cursor-pointer"
-                >
+                <button onClick={() => setIsTributeFormOpen(false)} className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all">
                   <X className="w-6 h-6" />
                 </button>
               </div>
@@ -544,70 +467,35 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute By (Your Name)</label>
-                    <input 
-                      type="text" 
-                      value={tributeForm.name}
-                      onChange={(e) => setTributeForm({...tributeForm, name: e.target.value})}
-                      placeholder="e.g. John Smith" 
-                      className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2]"
-                    />
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Your Name</label>
+                    <input type="text" value={tributeForm.name} onChange={(e) => setTributeForm({...tributeForm, name: e.target.value})} placeholder="e.g. John Smith" className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-[#1877F2]"/>
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute To</label>
-                    <input 
-                      type="text" 
-                      value={officer.name}
-                      readOnly
-                      className="bg-[#030712]/50 border border-white/5 text-slate-400 text-sm px-4 py-3 rounded-lg cursor-not-allowed"
-                    />
+                    <input type="text" value={officer.name} readOnly className="bg-[#030712]/50 border border-white/5 text-slate-400 text-sm px-4 py-3 rounded-xl cursor-not-allowed"/>
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Your Email Address</label>
-                    <input 
-                      type="email" 
-                      value={tributeForm.email}
-                      onChange={(e) => setTributeForm({...tributeForm, email: e.target.value})}
-                      placeholder="john@example.com" 
-                      className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2]"
-                    />
+                    <input type="email" value={tributeForm.email} onChange={(e) => setTributeForm({...tributeForm, email: e.target.value})} placeholder="john@example.com" className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-[#1877F2]"/>
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute Title</label>
-                    <input 
-                      type="text" 
-                      value={tributeForm.title}
-                      onChange={(e) => setTributeForm({...tributeForm, title: e.target.value})}
-                      placeholder="e.g. A True Friend" 
-                      className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2]"
-                    />
+                    <input type="text" value={tributeForm.title} onChange={(e) => setTributeForm({...tributeForm, title: e.target.value})} placeholder="e.g. A True Friend" className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-[#1877F2]"/>
                   </div>
                 </div>
                 
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tribute Content</label>
-                  <textarea 
-                    rows={5}
-                    value={tributeForm.content}
-                    onChange={(e) => setTributeForm({...tributeForm, content: e.target.value})}
-                    placeholder="Write your message here..." 
-                    className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-lg focus:outline-none focus:border-[#1877F2] resize-none"
-                  ></textarea>
+                  <textarea rows={5} value={tributeForm.content} onChange={(e) => setTributeForm({...tributeForm, content: e.target.value})} placeholder="Write your message here..." className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-[#1877F2] resize-none"></textarea>
                 </div>
                 
-                <Button 
-                  onClick={() => {
-                    alert("Tribute submitted for moderation. Thank you.");
-                    setIsTributeFormOpen(false);
-                  }}
-                  className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-colors"
-                >
+                <Button onClick={() => { alert("Tribute submitted for moderation."); setIsTributeFormOpen(false); }} className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-6 rounded-xl text-[10px] tracking-widest uppercase transition-colors">
                   SUBMIT TRIBUTE
                 </Button>
-                <p className="text-center text-[10px] text-slate-500 mt-4">All tributes are moderated before being published to the wall.</p>
+                <p className="text-center text-[10px] text-slate-500 mt-4 flex items-center justify-center gap-1.5"><Info className="w-3 h-3"/> All tributes are moderated before being published.</p>
               </div>
             </motion.div>
           </div>
@@ -618,30 +506,12 @@ export default function MemorialDetailPage({ params }: { params: { id: string } 
       <AnimatePresence>
         {activePhoto && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActivePhoto(null)}
-              className="absolute inset-0 bg-black/95 backdrop-blur-md"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="relative max-w-4xl w-full max-h-[80vh] flex items-center justify-center z-10"
-            >
-              <button
-                onClick={() => setActivePhoto(null)}
-                className="absolute -top-12 right-0 text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all cursor-pointer"
-              >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActivePhoto(null)} className="absolute inset-0 bg-black/95 backdrop-blur-md" />
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center z-10">
+              <button onClick={() => setActivePhoto(null)} className="absolute -top-12 right-0 text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all">
                 <X className="w-6 h-6" />
               </button>
-              <img 
-                src={activePhoto} 
-                alt="Memorial Lightbox" 
-                className="max-w-full max-h-[80vh] object-contain rounded-lg border border-white/10 shadow-2xl" 
-              />
+              <img src={activePhoto} alt="Memorial Lightbox" className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl" />
             </motion.div>
           </div>
         )}

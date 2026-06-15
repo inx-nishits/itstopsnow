@@ -155,13 +155,13 @@ export default function Home() {
                 <AlertTriangle className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-white font-bold text-sm tracking-wide">URGENT ACTION REQUIRED</p>
-                <p className="text-white/80 text-xs font-medium">The Parliamentary Debate is scheduled for Nov 25th. Have you contacted your MP?</p>
+                <p className="text-white font-bold text-sm tracking-wide">TAKE ACTION TODAY</p>
+                <p className="text-white/80 text-xs font-medium">Your support is vital to our cause. Find out how you can get involved and make a difference.</p>
               </div>
             </div>
             <Link href="/take-action">
               <Button className="bg-white text-[#1877F2] hover:bg-slate-100 font-bold px-6 py-2 rounded-full text-xs tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                Contact MP Now
+                Get Involved
               </Button>
             </Link>
           </div>

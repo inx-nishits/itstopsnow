@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Newspaper, Video, Mic, Calendar, User, Search, Filter, Mail, ArrowLeft, Clock } from "lucide-react";
+import { ArrowRight, Newspaper, Video, Mic, Calendar, User, Search, Filter, Mail, ArrowLeft, Clock, Scale, Headphones, Database } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -253,11 +253,14 @@ export default function NewsPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: "Misconduct Timelimit Bill", status: "DRAFTING STAGE", desc: "Coordinating with MPs and legal advisors to draft the 12-month misconduct investigation limit bill for Parliament." },
-              { title: "Officer Crisis Helpline", status: "LAUNCHING Q4", desc: "Partnering with leading police charities to launch a dedicated 24/7 welfare helpline for suspended officers." },
-              { title: "National Investigation Database", status: "DATA INGESTION", desc: "Aggregating data from police federations to document system-wide investigation delays and showcase patterns of failure." }
+              { icon: <Scale className="w-6 h-6 text-[#1877F2]" />, title: "Misconduct Timelimit Bill", status: "DRAFTING STAGE", desc: "Coordinating with MPs and legal advisors to draft the 12-month misconduct investigation limit bill for Parliament." },
+              { icon: <Headphones className="w-6 h-6 text-[#1877F2]" />, title: "Officer Crisis Helpline", status: "LAUNCHING Q4", desc: "Partnering with leading police charities to launch a dedicated 24/7 welfare helpline for suspended officers." },
+              { icon: <Database className="w-6 h-6 text-[#1877F2]" />, title: "National Investigation Database", status: "DATA INGESTION", desc: "Aggregating data from police federations to document system-wide investigation delays and showcase patterns of failure." }
             ].map((init, i) => (
-              <div key={i} className="bg-[#020611] border border-white/10 rounded-2xl p-8 hover:border-[#1877F2]/50 transition-colors group">
+              <div key={i} className="bg-[#020611] border border-white/10 rounded-2xl p-8 hover:border-[#1877F2]/50 transition-colors group relative overflow-hidden">
+                <div className="w-12 h-12 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  {init.icon}
+                </div>
                 <span className="text-[9px] font-bold text-[#1877F2] bg-[#1877F2]/10 border border-[#1877F2]/20 px-3 py-1 rounded-full">{init.status}</span>
                 <h4 className="font-bold text-lg text-white mt-4 mb-2 group-hover:text-[#1877F2] transition-colors">{init.title}</h4>
                 <p className="text-slate-400 text-xs leading-relaxed">{init.desc}</p>

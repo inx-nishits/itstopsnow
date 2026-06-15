@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Download, FileText, Share2, FileDown, BookOpen } from "lucide-react";
 import Link from "next/link";
@@ -23,7 +24,9 @@ const MOCK_REPORT = {
   methodology: "Data was collected via anonymized surveys across 43 territorial police forces in England and Wales between Jan 2023 and Dec 2024. Statistical analysis was performed using SPSS, with qualitative interviews coded via NVivo."
 };
 
-export default function ResearchDetail({ params }: { params: { slug: string } }) {
+export default function ResearchDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = use(params);
+  const slug = resolvedParams.slug;
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans">
       

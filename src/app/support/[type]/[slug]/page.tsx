@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { ArrowLeft, Star, ExternalLink, ShieldAlert, Heart, Info, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,10 @@ const MOCK_DETAIL = {
   link: "https://pfoa.co.uk"
 };
 
-export default function SupportDetail({ params }: { params: { type: string, slug: string } }) {
+export default function SupportDetail({ params }: { params: Promise<{ type: string, slug: string }> }) {
+  const resolvedParams = use(params);
+  const type = resolvedParams.type;
+  const slug = resolvedParams.slug;
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans">
       

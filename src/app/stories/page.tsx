@@ -257,11 +257,11 @@ export default function StoriesPage() {
               {paginatedStories.map((story) => (
                 <div key={story.id} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden hover:border-[#1877F2]/50 transition-all duration-300 group hover:-translate-y-2 relative flex flex-col h-full shadow-xl">
                   {/* Featured Image */}
-                  <div className="h-52 w-full relative overflow-hidden bg-[#02050A] border-b border-white/5">
+                  <div className="h-64 w-full relative overflow-hidden bg-[#02050A] border-b border-white/5">
                     <img 
                       src={story.image} 
                       alt={story.title} 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                      className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
                     />
                   </div>
 
