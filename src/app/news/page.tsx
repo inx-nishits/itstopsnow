@@ -72,6 +72,8 @@ export const LATEST_NEWS = [
 export default function NewsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const filteredNews = LATEST_NEWS.filter((news) => {
     const matchesSearch = news.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -284,20 +286,42 @@ export default function NewsPage() {
               Stay updated with the latest campaign news, media releases, and parliamentary bill progress.
             </p>
             
-            <form onSubmit={(e) => { e.preventDefault(); alert("Subscribed successfully!"); }} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            {isSubscribed ? (
+              <div className="flex flex-col items-center justify-center p-8">
+                <div className="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h4 className="text-xl font-bold uppercase tracking-tight text-white mb-2">Subscribed!</h4>
+                <p className="text-slate-400 text-sm max-w-sm">
+                  Thank you for subscribing to our newsletter. You're now on the list.
+                </p>
+              </div>
+            ) : (
+            <>
+            <form onSubmit={(e) => { 
+              e.preventDefault(); 
+              setIsSubscribing(true);
+              setTimeout(() => {
+                setIsSubscribing(false);
+                setIsSubscribed(true);
+              }, 1500);
+            }} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input 
                 type="email" 
                 required
+                disabled={isSubscribing}
                 placeholder="YOUR EMAIL ADDRESS" 
                 className="flex-grow bg-[#020611] border border-white/10 rounded-xl px-5 py-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors" 
               />
-              <Button type="submit" className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
-                Subscribe
+              <Button type="submit" disabled={isSubscribing} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
+                {isSubscribing ? "Subscribing..." : "Subscribe"}
               </Button>
             </form>
             <div className="text-[9px] uppercase tracking-widest text-slate-500 mt-6">
               We respect your privacy. No spam.
             </div>
+            </>
+            )}
           </div>
         </div>
       </section>

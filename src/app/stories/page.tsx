@@ -127,6 +127,8 @@ export default function StoriesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const itemsPerPage = 6;
 
   const filters = ["All", "Serving Officer", "Former Officer", "Family Member", "Recovery"];
@@ -402,14 +404,31 @@ export default function StoriesPage() {
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-[#02050A]">
                 <div>
-                  <h3 className="text-white font-bold tracking-widest uppercase text-lg">Submit Your Story</h3>
-                  <p className="text-slate-400 text-xs">Share your experience to help drive change.</p>
+                  <h3 className="text-white font-bold tracking-widest uppercase text-lg">
+                    {isSuccess ? 'STORY SUBMITTED' : 'Submit Your Story'}
+                  </h3>
+                  {!isSuccess && <p className="text-slate-400 text-xs">Share your experience to help drive change.</p>}
                 </div>
-                <button onClick={() => setIsSubmitModalOpen(false)} className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors">
+                <button onClick={() => { setIsSubmitModalOpen(false); setTimeout(() => setIsSuccess(false), 300); }} className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
               
+              {isSuccess ? (
+                <div className="flex-1 flex flex-col items-center justify-center p-12 text-center min-h-[400px]">
+                  <div className="w-20 h-20 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-6">
+                    <Check className="w-10 h-10" />
+                  </div>
+                  <h4 className="text-2xl font-bold uppercase tracking-tight text-white mb-4">Thank You</h4>
+                  <p className="text-slate-400 max-w-md mx-auto mb-8">
+                    Your story has been securely submitted. Our team will review it shortly. Your courage in sharing your experience helps drive real change.
+                  </p>
+                  <Button onClick={() => { setIsSubmitModalOpen(false); setTimeout(() => setIsSuccess(false), 300); }} className="bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-full">
+                    Close Window
+                  </Button>
+                </div>
+              ) : (
+              <>
               <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
                 
                 <div className="space-y-4">
@@ -466,7 +485,7 @@ export default function StoriesPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Upload Evidence / Documents</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Upload images/documents</label>
                   <div className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:border-[#1877F2]/50 hover:bg-[#1877F2]/5 transition-all cursor-pointer group">
                     <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-[#1877F2]/20 transition-colors">
                       <Upload className="w-5 h-5 text-slate-400 group-hover:text-[#1877F2] transition-colors" />
@@ -488,14 +507,25 @@ export default function StoriesPage() {
               </div>
 
               <div className="p-6 bg-[#02050A] border-t border-white/10 flex justify-end gap-4 shrink-0">
-                <Button onClick={() => setIsSubmitModalOpen(false)} variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/5 text-xs tracking-widest uppercase font-bold px-6">
+                <Button onClick={() => setIsSubmitModalOpen(false)} disabled={isSubmitting} variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/5 text-xs tracking-widest uppercase font-bold px-6">
                   Cancel
                 </Button>
-                <Button className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-full shadow-[0_0_20px_rgba(24,119,242,0.3)]">
-                  Submit Story
+                <Button 
+                  onClick={() => {
+                    setIsSubmitting(true);
+                    setTimeout(() => {
+                      setIsSubmitting(false);
+                      setIsSuccess(true);
+                    }, 1500);
+                  }}
+                  disabled={isSubmitting} 
+                  className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-full shadow-[0_0_20px_rgba(24,119,242,0.3)]"
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Story"}
                 </Button>
               </div>
-
+              </>
+              )}
             </motion.div>
           </div>
         )}

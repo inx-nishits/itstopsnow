@@ -125,7 +125,6 @@ export default function AboutPage() {
                 {/* Short App Description / Tagline */}
                 <div className="text-center mb-10 max-w-sm relative z-30">
                   <Smartphone className="w-8 h-8 text-[#1877F2] mx-auto mb-3" />
-                  <h3 className="text-xl font-bold text-white mb-2">The Officer's Essential Toolkit</h3>
                   <p className="text-xs text-slate-400">Everything you need to navigate modern policing, right in your pocket. Built by officers, for officers.</p>
                 </div>
 

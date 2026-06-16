@@ -4,7 +4,6 @@ import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { ChevronRight, Share2, Flame, MessageCircle, Heart, Calendar, ArrowRight, ArrowLeft, Download, Camera, Clock, X, Info, Mail, Link as LinkIcon, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { generateMemorialPDF } from "@/lib/documentGenerator";
 import { motion, AnimatePresence } from "framer-motion";
 
 const GALLERY_PHOTOS = [
@@ -57,7 +56,6 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
   const id = resolvedParams.id;
   
   const [isLit, setIsLit] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
   const [globalCandles, setGlobalCandles] = useState(85);
   const [localGrayscaleOverride, setLocalGrayscaleOverride] = useState<number | null>(null);
   
@@ -69,6 +67,8 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
   const [isTributeFormOpen, setIsTributeFormOpen] = useState(false);
   const [tributeForm, setTributeForm] = useState({ name: "", email: "", title: "", content: "" });
   const [isCopied, setIsCopied] = useState(false);
+  const [isSubmittingTribute, setIsSubmittingTribute] = useState(false);
+  const [tributeSuccess, setTributeSuccess] = useState(false);
   
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -106,22 +106,6 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
     { name: "Emma T.", type: "Friend", time: "4 days ago", text: "Your smile and kindness will never be forgotten." },
     { name: "Michael K.", type: "Colleague", time: "1 week ago", text: "An absolute honour to have served alongside you." }
   ];
-
-  const handleDownloadPDF = async () => {
-    setIsGenerating(true);
-    try {
-      const blob = await generateMemorialPDF(officer, tributes);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `Memorial_${officer.name.replace(/\s+/g, '_')}.pdf`;
-      a.click();
-    } catch (err) {
-      console.error("PDF generation failed", err);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
 
   const calculateGrayscale = (count: number) => {
     if (count <= 100) return 95;
@@ -247,19 +231,6 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
                     >
                       <MessageCircle className="w-4 h-4 shrink-0" /> 
                       <span className="whitespace-nowrap">LEAVE TRIBUTE</span>
-                    </Button>
-                    <Button 
-                      onClick={handleDownloadPDF}
-                      disabled={isGenerating}
-                      variant="outline"
-                      className="flex-1 min-w-[150px] bg-transparent border-white/30 hover:bg-white/10 text-white font-bold text-[10px] md:text-xs tracking-widest uppercase h-12 flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5 px-4"
-                    >
-                      {isGenerating ? "GENERATING..." : (
-                        <div className="flex items-center justify-center gap-2">
-                          <Download className="w-4 h-4 shrink-0" /> 
-                          <span className="whitespace-nowrap">DOWNLOAD PDF</span>
-                        </div>
-                      )}
                     </Button>
                   </div>
                 </div>
@@ -474,12 +445,28 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
               className="relative bg-[#051024] border border-white/10 max-w-2xl w-full rounded-3xl p-8 md:p-12 z-10 shadow-2xl"
             >
               <div className="flex justify-between items-center mb-8">
-                <h2 className="text-2xl font-bold uppercase tracking-widest text-white">LEAVE A TRIBUTE</h2>
-                <button onClick={() => setIsTributeFormOpen(false)} className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all">
+                <h2 className="text-2xl font-bold uppercase tracking-widest text-white">
+                  {tributeSuccess ? "TRIBUTE SUBMITTED" : "LEAVE A TRIBUTE"}
+                </h2>
+                <button onClick={() => { setIsTributeFormOpen(false); setTimeout(() => setTributeSuccess(false), 300); }} className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-all">
                   <X className="w-6 h-6" />
                 </button>
               </div>
               
+              {tributeSuccess ? (
+                <div className="flex flex-col items-center justify-center p-12 text-center min-h-[300px]">
+                  <div className="w-20 h-20 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-6">
+                    <Check className="w-10 h-10" />
+                  </div>
+                  <h4 className="text-2xl font-bold uppercase tracking-tight text-white mb-4">Thank You</h4>
+                  <p className="text-slate-400 max-w-md mx-auto mb-8 leading-relaxed">
+                    Your tribute has been securely submitted. All tributes are moderated before being published to ensure a respectful environment.
+                  </p>
+                  <Button onClick={() => { setIsTributeFormOpen(false); setTimeout(() => setTributeSuccess(false), 300); }} className="bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-full">
+                    Close Window
+                  </Button>
+                </div>
+              ) : (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
@@ -508,11 +495,22 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
                   <textarea rows={5} value={tributeForm.content} onChange={(e) => setTributeForm({...tributeForm, content: e.target.value})} placeholder="Write your message here..." className="bg-[#030712] border border-white/10 text-white text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-[#1877F2] resize-none"></textarea>
                 </div>
                 
-                <Button onClick={() => { alert("Tribute submitted for moderation."); setIsTributeFormOpen(false); }} className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-6 rounded-xl text-[10px] tracking-widest uppercase transition-colors">
-                  SUBMIT TRIBUTE
+                <Button 
+                  onClick={() => {
+                    setIsSubmittingTribute(true);
+                    setTimeout(() => {
+                      setIsSubmittingTribute(false);
+                      setTributeSuccess(true);
+                    }, 1500);
+                  }} 
+                  disabled={isSubmittingTribute}
+                  className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-6 rounded-xl text-[10px] tracking-widest uppercase transition-colors"
+                >
+                  {isSubmittingTribute ? "SUBMITTING..." : "SUBMIT TRIBUTE"}
                 </Button>
                 <p className="text-center text-[10px] text-slate-500 mt-4 flex items-center justify-center gap-1.5"><Info className="w-3 h-3"/> All tributes are moderated before being published.</p>
               </div>
+              )}
             </motion.div>
           </div>
         )}

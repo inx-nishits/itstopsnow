@@ -50,23 +50,20 @@ export default function ContactMpWizard() {
     posthog.capture('Letter Started', { postcode: cleanPostcode });
     
     try {
-      const response = await fetch(`/api/mp-lookup?postcode=${encodeURIComponent(cleanPostcode)}`);
-      const data = await response.json();
+      // Mock network delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to find MP');
-      }
-
+      // Mock Data
       setMpDetails({
-        name: data.name,
-        constituency: data.constituency,
-        party: data.party,
-        email: data.email,
-        image: data.image
+        name: "Rt Hon. Jane Doe MP",
+        constituency: "Mock Constituency (Simulated)",
+        party: "Independent",
+        email: "jane.doe.mp@parliament.uk",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"
       });
       setStep(2);
     } catch (err: any) {
-      setError(err.message || "We couldn't find an MP for that postcode. Please check it and try again.");
+      setError("An unexpected error occurred while looking up the MP.");
     } finally {
       setIsSearching(false);
     }
@@ -105,31 +102,13 @@ I urge you to support the "It Stops Now" campaign and raise this with the Home S
     posthog.capture('Letter Completed', { campaign: selectedCampaign });
 
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mpName: mpDetails.name,
-          mpEmail: mpDetails.email,
-          constituency: mpDetails.constituency,
-          senderName: senderDetails.name,
-          senderEmail: senderDetails.email,
-          senderAddress: senderDetails.address,
-          letterContent: letterContent,
-          campaignId: "campaign_12_month_limit", // Example hardcoded ref, would be dynamic
-        })
-      });
-
-      const data = await response.json();
+      // Mock network delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send email');
-      }
-
       posthog.capture('Letter Sent', { campaign: selectedCampaign, mp: mpDetails.name });
       setStep(6);
     } catch (err: any) {
-      setError(err.message || "Something went wrong while sending. Please try again.");
+      setError("Something went wrong while sending. Please try again.");
     } finally {
       setIsSending(false);
     }
