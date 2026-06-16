@@ -187,16 +187,18 @@ export default function Home() {
           
           {/* Left Content */}
           <div className="w-full lg:w-full max-w-[1200px] pt-20 lg:pt-0">
-            <h1 className="text-7xl md:text-[6rem] xl:text-[9rem] font-black leading-[0.9] mb-8 tracking-tighter uppercase drop-shadow-2xl py-2">
-              <span className="text-white block">A SYSTEM</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 block pr-4">IN CRISIS</span>
+            <Link href="/about" className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#050A14]/60 border border-white/10 text-white/90 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8 hover:border-[#1877F2]/50 transition-colors backdrop-blur-md shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-[#1877F2]"></span>
+              LEARN ABOUT THE ORGANISATION BEHIND THE MOVEMENT &rarr;
+            </Link>
+
+            <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-[0.9] mb-8 tracking-tighter uppercase drop-shadow-2xl py-2 max-w-5xl">
+              <span className="text-white block">BEHIND EVERY UNIFORM</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 block pr-4">IS A HUMAN BEING</span>
             </h1>
-            <h2 className="text-2xl md:text-3xl xl:text-4xl font-medium text-white mb-8 leading-tight tracking-tight drop-shadow-md max-w-4xl">
-              Supporting the Men and Women who Protect Us.
-            </h2>
 
             <p className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-3xl drop-shadow">
-              We champion the mental health, legal rights, and wellbeing of officers nationwide. Your dedicated ally against the pressures of duty.
+              We champion the voices of serving and retired police officers, honor the fallen, and demand the deep cultural change that is long overdue. You are not alone.
             </p>
             
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">

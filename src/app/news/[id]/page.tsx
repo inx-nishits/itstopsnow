@@ -99,10 +99,10 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
             <div className="mt-16 pt-8 border-t border-white/10">
                <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Share this update</h4>
                <div className="flex flex-wrap gap-3">
-                  <button onClick={() => window.open(\`https://twitter.com/intent/tweet?url=\${encodeURIComponent(window.location.href)}&text=\${encodeURIComponent(MOCK_NEWS.title)}\`, '_blank')} className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                  <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(MOCK_NEWS.title)}`, '_blank')} className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors cursor-pointer">
                     X / Twitter
                   </button>
-                  <button onClick={() => window.open(\`https://www.facebook.com/sharer/sharer.php?u=\${encodeURIComponent(window.location.href)}\`, '_blank')} className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                  <button onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')} className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors cursor-pointer">
                     Facebook
                   </button>
                   <button onClick={handleCopyLink} className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors cursor-pointer">
