@@ -2,7 +2,7 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, Loader2, FileText, CheckCircle } from "lucide-react";
+import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, Loader2, FileText, CheckCircle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -54,8 +54,7 @@ function PersonalizeContent() {
     }
   }, [postcode]);
 
-  // Update Letter Content dynamically when fields change
-  useEffect(() => {
+  const updateLetterContent = () => {
     const template = TEMPLATES.find(t => t.id === selectedTemplate);
     if (template) {
       let content = template.content;
@@ -66,10 +65,19 @@ function PersonalizeContent() {
       content = content.replace(/\[DETAILS\]/g, details ? `Additional context: ${details}` : "");
       setLetterContent(content);
     }
+  };
+
+  // Update Letter Content dynamically when fields change
+  useEffect(() => {
+    updateLetterContent();
   }, [selectedTemplate, name, postcode, role, details, mpFound]);
 
+  const handleReset = () => {
+    updateLetterContent();
+  };
+
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pt-24 pb-32">
+    <div className="min-h-screen bg-[#030712] text-white font-sans pt-32 lg:pt-40 pb-32">
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1400px]">
         
         {/* Header */}
@@ -182,9 +190,14 @@ function PersonalizeContent() {
               </div>
 
               <div className="bg-white/[0.02] border-t border-white/10 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <Button variant="outline" className="w-full sm:w-auto bg-transparent border-white/20 text-white hover:bg-white hover:text-black font-bold uppercase tracking-widest text-xs py-6 px-8 rounded-xl transition-all">
-                  <Save className="w-4 h-4 mr-2" /> Save Draft
-                </Button>
+                <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
+                  <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto bg-transparent border-white/10 text-slate-400 hover:bg-white/5 hover:text-white hover:border-white/20 font-bold uppercase tracking-widest text-xs py-6 px-6 rounded-xl transition-all">
+                    <RotateCcw className="w-4 h-4 mr-2" /> Reset
+                  </Button>
+                  <Button variant="outline" className="w-full sm:w-auto bg-transparent border-white/20 text-white hover:bg-white/10 hover:border-white/30 font-bold uppercase tracking-widest text-xs py-6 px-8 rounded-xl transition-all">
+                    <Save className="w-4 h-4 mr-2" /> Save Draft
+                  </Button>
+                </div>
                 <Button className="w-full sm:w-auto bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs py-6 px-10 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
                   <Send className="w-4 h-4 mr-2" /> Send to MP
                 </Button>
