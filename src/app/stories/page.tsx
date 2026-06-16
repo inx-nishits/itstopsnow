@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Search, Filter, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Filter, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -122,10 +122,12 @@ We spent two years in financial terror, wondering if we would lose our home. She
 ];
 
 export default function StoriesPage() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const itemsPerPage = 6;
 
   const filters = ["All", "Serving Officer", "Former Officer", "Family Member", "Recovery"];
   
@@ -340,11 +342,12 @@ export default function StoriesPage() {
       <section className="relative w-full py-32 border-t border-white/5 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1541872511475-cb56767676f6?auto=format&fit=crop&q=80&w=1920" 
-            alt="Advocacy support background" 
-            className="w-full h-full object-cover mix-blend-luminosity opacity-20 grayscale"
+            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920" 
+            alt="Supportive community background" 
+            className="w-full h-full object-cover mix-blend-luminosity opacity-40 grayscale"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-[#020611]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#020611] via-[#020611]/70 to-[#020611]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-transparent to-[#020611]" />
         </div>
 
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
@@ -355,11 +358,9 @@ export default function StoriesPage() {
               By sharing your story, you help break the stigma, hold the system accountable, and show others they are not alone.
             </p>
             <div className="mt-4">
-              <Link href="/stories/submit">
-                <Button className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-10 py-6 rounded-full shadow-[0_0_30px_rgba(24,119,242,0.3)] transition-all hover:-translate-y-1">
-                  Share Your Story Today
-                </Button>
-              </Link>
+              <Button onClick={() => setIsSubmitModalOpen(true)} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-10 py-6 rounded-full shadow-[0_0_30px_rgba(24,119,242,0.3)] transition-all hover:-translate-y-1">
+                Share Your Story Today
+              </Button>
             </div>
           </div>
 
@@ -381,6 +382,124 @@ export default function StoriesPage() {
           </div>
         </div>
       </section>
+
+      {/* STORY SUBMISSION MODAL */}
+      <AnimatePresence>
+        {isSubmitModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => setIsSubmitModalOpen(false)} 
+              className="absolute inset-0 bg-[#020611]/95 backdrop-blur-md" 
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.95, y: 20 }} 
+              className="relative w-full max-w-2xl bg-[#050A14] border border-white/10 rounded-3xl overflow-hidden flex flex-col z-10 shadow-2xl max-h-[90vh]"
+            >
+              <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-[#02050A]">
+                <div>
+                  <h3 className="text-white font-bold tracking-widest uppercase text-lg">Submit Your Story</h3>
+                  <p className="text-slate-400 text-xs">Share your experience to help drive change.</p>
+                </div>
+                <button onClick={() => setIsSubmitModalOpen(false)} className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+                
+                <div className="space-y-4">
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <div className="flex-1 space-y-2">
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Full Name</label>
+                      <input 
+                        type="text" 
+                        disabled={isAnonymous}
+                        className={`w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors ${isAnonymous ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
+                      <input 
+                        type="email" 
+                        className="w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                  </div>
+
+                  <label className="flex items-center gap-3 cursor-pointer group w-fit">
+                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isAnonymous ? 'bg-[#1877F2] border-[#1877F2]' : 'border-white/20 group-hover:border-[#1877F2]/50'}`}>
+                      {isAnonymous && <Check className="w-3 h-3 text-white" />}
+                    </div>
+                    <input 
+                      type="checkbox" 
+                      className="hidden" 
+                      checked={isAnonymous} 
+                      onChange={() => setIsAnonymous(!isAnonymous)}
+                    />
+                    <span className="text-xs text-slate-300 font-medium group-hover:text-white transition-colors">Submit anonymously (name will be hidden)</span>
+                  </label>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Story Title</label>
+                  <input 
+                    type="text" 
+                    className="w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors"
+                    placeholder="E.g., 3 Years of Unnecessary Investigation"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Story</label>
+                  <textarea 
+                    rows={8}
+                    className="w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors resize-none"
+                    placeholder="Tell us what happened. Take your time..."
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Upload Evidence / Documents</label>
+                  <div className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:border-[#1877F2]/50 hover:bg-[#1877F2]/5 transition-all cursor-pointer group">
+                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-[#1877F2]/20 transition-colors">
+                      <Upload className="w-5 h-5 text-slate-400 group-hover:text-[#1877F2] transition-colors" />
+                    </div>
+                    <p className="text-sm font-bold text-white mb-1">Click to upload or drag and drop</p>
+                    <p className="text-xs text-slate-500">SVG, PNG, JPG or PDF (max. 10MB)</p>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-white/5">
+                  <label className="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" className="w-5 h-5 mt-0.5 rounded border-white/20 bg-transparent text-[#1877F2] focus:ring-[#1877F2]/50 cursor-pointer" />
+                    <span className="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
+                      I consent to IT STOPS NOW collecting my story and processing my personal data in accordance with the Privacy Policy. I understand my story may be used for campaigning purposes.
+                    </span>
+                  </label>
+                </div>
+
+              </div>
+
+              <div className="p-6 bg-[#02050A] border-t border-white/10 flex justify-end gap-4 shrink-0">
+                <Button onClick={() => setIsSubmitModalOpen(false)} variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/5 text-xs tracking-widest uppercase font-bold px-6">
+                  Cancel
+                </Button>
+                <Button className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-full shadow-[0_0_20px_rgba(24,119,242,0.3)]">
+                  Submit Story
+                </Button>
+              </div>
+
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

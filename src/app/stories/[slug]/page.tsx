@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight, Share2, User, Calendar, Clock, ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { STORIES } from "../page";
 
-export default function StoryDetail({ params }: { params: { slug: string } }) {
-  const story = STORIES.find(s => s.id.toString() === params.slug) || STORIES[0];
+export default function StoryDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = use(params);
+  const story = STORIES.find(s => s.id.toString() === resolvedParams.slug) || STORIES[0];
   
   const [shareUrl, setShareUrl] = useState("");
   useEffect(() => {

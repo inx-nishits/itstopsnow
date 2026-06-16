@@ -1,28 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ChevronDown, Flame } from "lucide-react";
+import { Search, ChevronDown, Flame, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Mock Data
 const OFFICERS = [
-  { id: 1, name: "PC Andrew Harper", role: "Police Constable (PC)", force: "Thames Valley Police", region: "London", years: "1990 – 2019", tributes: "2,845", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" },
-  { id: 2, name: "PCSO Julie James", role: "PCSO", force: "West Midlands Police", region: "Midlands", years: "1992 – 2020", tributes: "1,927", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" },
-  { id: 3, name: "PC Liam O'Brien", role: "Police Constable (PC)", force: "Greater Manchester Police", region: "North", years: "1985 – 2020", tributes: "1,521", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" },
-  { id: 4, name: "DC Matthew Boyd", role: "Detective Constable (DC)", force: "Metropolitan Police", region: "London", years: "1979 – 2021", tributes: "2,112", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400" },
-  { id: 5, name: "PC Sarah Evans", role: "Police Constable (PC)", force: "Kent Police", region: "London", years: "1993 – 2021", tributes: "1,298", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" },
-  { id: 6, name: "PC David Whyte", role: "Police Constable (PC)", force: "Police Scotland", region: "Scotland", years: "1987 – 2021", tributes: "1,744", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400" },
-  { id: 7, name: "PCSO Morgan Smith", role: "PCSO", force: "Hampshire Police", region: "London", years: "1994 – 2022", tributes: "1,105", image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&q=80&w=400" },
-  { id: 8, name: "DC Chloe Lewis", role: "Detective Constable (DC)", force: "West Yorkshire Police", region: "North", years: "1988 – 2022", tributes: "943", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400" },
-  { id: 9, name: "PC John Atkinson", role: "Police Constable (PC)", force: "Northumbria Police", region: "North", years: "1970 – 2022", tributes: "856", image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=400" },
-  { id: 10, name: "PCSO Kevin Jones", role: "PCSO", force: "Essex Police", region: "London", years: "1986 – 2023", tributes: "1,202", image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&q=80&w=400" },
-  { id: 11, name: "PC Mark Collins", role: "Police Constable (PC)", force: "South Yorkshire Police", region: "North", years: "1985 – 2023", tributes: "1,412", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400" },
-  { id: 12, name: "DC Richard Hayes", role: "Detective Constable (DC)", force: "Avon & Somerset Police", region: "London", years: "1976 – 2023", tributes: "702", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400" },
-  { id: 13, name: "PC Emily Davies", role: "Police Constable (PC)", force: "Thames Valley Police", region: "London", years: "1995 – 2023", tributes: "1,145", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" },
-  { id: 14, name: "PCSO Mark Thomas", role: "PCSO", force: "West Midlands Police", region: "Midlands", years: "1980 – 2023", tributes: "827", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" },
-  { id: 15, name: "PC Sara Connor", role: "Police Constable (PC)", force: "Greater Manchester Police", region: "North", years: "1991 – 2022", tributes: "2,521", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" },
-  { id: 16, name: "DC John Smith", role: "Detective Constable (DC)", force: "Metropolitan Police", region: "London", years: "1982 – 2021", tributes: "1,112", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400" }
+  { id: 1, name: "PC Andrew Harper", role: "Police Constable (PC)", force: "Thames Valley Police", region: "London", years: "1990 – 2019", tributes: "2,845", quote: "He was the bravest, funniest, and most dedicated officer we ever knew.", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" },
+  { id: 2, name: "PCSO Julie James", role: "PCSO", force: "West Midlands Police", region: "Midlands", years: "1992 – 2020", tributes: "1,927", quote: "Her smile lit up the community. She is deeply missed by everyone.", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" },
+  { id: 3, name: "PC Liam O'Brien", role: "Police Constable (PC)", force: "Greater Manchester Police", region: "North", years: "1985 – 2020", tributes: "1,521", quote: "A true hero who always put others before himself. Rest easy, Liam.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" },
+  { id: 4, name: "DC Matthew Boyd", role: "Detective Constable (DC)", force: "Metropolitan Police", region: "London", years: "1979 – 2021", tributes: "2,112", quote: "His commitment to justice was unmatched. A devastating loss for the force.", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400" },
+  { id: 5, name: "PC Sarah Evans", role: "Police Constable (PC)", force: "Kent Police", region: "London", years: "1993 – 2021", tributes: "1,298", quote: "She brought kindness and empathy to every single call she answered.", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" },
+  { id: 6, name: "PC David Whyte", role: "Police Constable (PC)", force: "Police Scotland", region: "Scotland", years: "1987 – 2021", tributes: "1,744", quote: "A steadfast friend and an incredible father. We will never forget you.", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400" },
+  { id: 7, name: "PCSO Morgan Smith", role: "PCSO", force: "Hampshire Police", region: "London", years: "1994 – 2022", tributes: "1,105", quote: "Morgan had a gift for bringing people together. He leaves a massive void.", image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&q=80&w=400" },
+  { id: 8, name: "DC Chloe Lewis", role: "Detective Constable (DC)", force: "West Yorkshire Police", region: "North", years: "1988 – 2022", tributes: "943", quote: "Brilliant, sharp, and fiercely protective of her team. We lost one of the best.", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400" },
+  { id: 9, name: "PC John Atkinson", role: "Police Constable (PC)", force: "Northumbria Police", region: "North", years: "1970 – 2022", tributes: "856", quote: "John was the heart and soul of our shift. His legacy will endure forever.", image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=400" },
+  { id: 10, name: "PCSO Kevin Jones", role: "PCSO", force: "Essex Police", region: "London", years: "1986 – 2023", tributes: "1,202", quote: "Always quick with a joke and even quicker to help those in need.", image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&q=80&w=400" },
+  { id: 11, name: "PC Mark Collins", role: "Police Constable (PC)", force: "South Yorkshire Police", region: "North", years: "1985 – 2023", tributes: "1,412", quote: "He wore the uniform with immense pride and unwavering integrity.", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400" },
+  { id: 12, name: "DC Richard Hayes", role: "Detective Constable (DC)", force: "Avon & Somerset Police", region: "London", years: "1976 – 2023", tributes: "702", quote: "A quiet professional whose impact was felt loudly across the entire community.", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400" },
+  { id: 13, name: "PC Emily Davies", role: "Police Constable (PC)", force: "Thames Valley Police", region: "London", years: "1995 – 2023", tributes: "1,145", quote: "Emily was a ray of sunshine in the darkest moments. She was our guiding light.", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" },
+  { id: 14, name: "PCSO Mark Thomas", role: "PCSO", force: "West Midlands Police", region: "Midlands", years: "1980 – 2023", tributes: "827", quote: "Mark knew every resident by name. The streets are emptier without him.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" },
+  { id: 15, name: "PC Sara Connor", role: "Police Constable (PC)", force: "Greater Manchester Police", region: "North", years: "1991 – 2022", tributes: "2,521", quote: "An absolute force of nature. Sara's courage inspired us all.", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" },
+  { id: 16, name: "DC John Smith", role: "Detective Constable (DC)", force: "Metropolitan Police", region: "London", years: "1982 – 2021", tributes: "1,112", quote: "A brilliant investigator and a steadfast mentor to so many young officers.", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400" }
 ];
 
 export default function RemembrancePage() {
@@ -33,7 +33,13 @@ export default function RemembrancePage() {
   const [selectedYear, setSelectedYear] = useState("All");
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [sortBy, setSortBy] = useState("All"); // All, Recently, MostTributed
-  const [visibleCount, setVisibleCount] = useState(16);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+  // Reset to page 1 when search or filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedForce, selectedRole, selectedRegion, selectedYear, sortBy]);
 
   const filteredOfficers = OFFICERS.filter((officer) => {
     const matchesSearch = officer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -67,7 +73,8 @@ export default function RemembrancePage() {
     return 0; // Default
   });
 
-  const visibleOfficers = sortedOfficers.slice(0, visibleCount);
+  const totalPages = Math.ceil(sortedOfficers.length / itemsPerPage);
+  const paginatedOfficers = sortedOfficers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-24">
@@ -293,7 +300,7 @@ export default function RemembrancePage() {
 
         {/* Grid - Mosaic Wall Layout */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 mb-16">
-          {visibleOfficers.map((officer) => (
+          {paginatedOfficers.map((officer) => (
             <Link href={`/remembrance/${officer.id}`} key={officer.id} className="relative group rounded-xl overflow-hidden aspect-[3/4] block shadow-lg border border-white/5 bg-[#020611]">
               {/* Image */}
               <img 
@@ -318,6 +325,12 @@ export default function RemembrancePage() {
                   <p className="text-slate-300 text-[8px] uppercase tracking-widest leading-tight mb-1 line-clamp-2 opacity-80 group-hover:opacity-100 transition-opacity">{officer.role} • {officer.force}</p>
                   <p className="text-slate-400 text-[9px] font-medium leading-tight mb-3 opacity-80 group-hover:opacity-100 transition-opacity">{officer.years}</p>
                   
+                  {officer.quote && (
+                    <div className="overflow-hidden transition-all duration-500 max-h-0 group-hover:max-h-20 opacity-0 group-hover:opacity-100 mb-0 group-hover:mb-3">
+                      <p className="text-white/90 text-[10px] italic leading-snug line-clamp-3">"{officer.quote}"</p>
+                    </div>
+                  )}
+
                   <div className="h-8 opacity-100 transition-all duration-500 overflow-hidden">
                     <span className="flex items-center justify-center w-full bg-[#1877F2]/20 hover:bg-[#1877F2] text-[#1877F2] hover:text-white border border-[#1877F2]/50 text-[9px] font-bold uppercase tracking-widest py-2 rounded transition-colors shadow-[0_0_15px_rgba(24,119,242,0.3)]">
                       View Tribute
@@ -329,38 +342,42 @@ export default function RemembrancePage() {
           ))}
         </div>
 
-        {/* Load More */}
-        {visibleCount < sortedOfficers.length && (
-          <div className="text-center mb-24">
+        {/* PAGINATION */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-3 mt-16 mb-24 pt-10 border-t border-white/10">
             <Button 
-              onClick={() => setVisibleCount(prev => prev + 4)}
+              onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+              disabled={currentPage === 1}
               variant="outline" 
-              className="border-white/20 text-white bg-transparent hover:bg-white/10 font-bold px-10 py-6 rounded-md text-[10px] tracking-widest uppercase transition-colors"
+              className={`w-12 h-12 p-0 rounded-full border-white/10 ${currentPage === 1 ? 'bg-white/5 text-slate-500 opacity-50 cursor-not-allowed' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-colors'}`}
             >
-              LOAD MORE OFFICERS
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            
+            {Array.from({ length: totalPages }).map((_, idx) => (
+              <Button 
+                key={idx}
+                onClick={() => setCurrentPage(idx + 1)}
+                className={`w-12 h-12 p-0 rounded-full font-bold text-sm transition-colors ${
+                  currentPage === idx + 1 
+                    ? 'bg-[#1877F2] text-white shadow-[0_0_20px_rgba(24,119,242,0.3)]' 
+                    : 'border border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20'
+                }`}
+              >
+                {idx + 1}
+              </Button>
+            ))}
+
+            <Button 
+              onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+              disabled={currentPage === totalPages}
+              variant="outline" 
+              className={`w-12 h-12 p-0 rounded-full border-white/10 ${currentPage === totalPages ? 'bg-white/5 text-slate-500 opacity-50 cursor-not-allowed' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-colors'}`}
+            >
+              <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         )}
-
-        {/* Bottom Banner */}
-        <div className="relative rounded-lg overflow-hidden p-12 text-center">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1616859752817-09434863076a?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center opacity-30 mix-blend-luminosity"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/80 to-transparent"></div>
-          
-          <div className="relative z-10">
-            <h2 className="text-2xl font-bold uppercase tracking-widest text-white mb-2">LIGHT A CANDLE. LEAVE A TRIBUTE.</h2>
-            <p className="text-slate-400 text-sm mb-8">Honor their memory. Support their families.</p>
-            
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-colors">
-                LIGHT A CANDLE
-              </Button>
-              <Button variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10 font-bold px-8 py-6 rounded-md text-[10px] tracking-widest uppercase transition-colors">
-                LEAVE A TRIBUTE
-              </Button>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>

@@ -2,10 +2,19 @@
 
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
-import { ChevronRight, Share2, Flame, MessageCircle, Heart, Calendar, ArrowRight, Download, Camera, Clock, X, Info } from "lucide-react";
+import { ChevronRight, Share2, Flame, MessageCircle, Heart, Calendar, ArrowRight, ArrowLeft, Download, Camera, Clock, X, Info, Mail, Link as LinkIcon, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { generateMemorialPDF } from "@/lib/documentGenerator";
 import { motion, AnimatePresence } from "framer-motion";
+
+const GALLERY_PHOTOS = [
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
+];
 
 const RealisticCandle = ({ isLit }: { isLit: boolean }) => (
   <div className="relative flex flex-col items-center justify-end h-40 w-16 group">
@@ -52,13 +61,20 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
   const [globalCandles, setGlobalCandles] = useState(85);
   const [localGrayscaleOverride, setLocalGrayscaleOverride] = useState<number | null>(null);
   
-  const [activePhoto, setActivePhoto] = useState<string | null>(null);
+  const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
   const [isAllPhotosModalOpen, setIsAllPhotosModalOpen] = useState(false);
   const [isTimelineExpanded, setIsTimelineExpanded] = useState(false);
   const [currentTributeIndex, setCurrentTributeIndex] = useState(0);
   
   const [isTributeFormOpen, setIsTributeFormOpen] = useState(false);
   const [tributeForm, setTributeForm] = useState({ name: "", email: "", title: "", content: "" });
+  const [isCopied, setIsCopied] = useState(false);
+  
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   useEffect(() => {
     const litState = localStorage.getItem(`isn_lit_candle_${id}`);
@@ -276,9 +292,9 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
                 <Camera className="w-6 h-6 text-slate-500"/> PHOTO GALLERY
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-                <img onClick={() => setActivePhoto("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800")} src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 1" />
-                <img onClick={() => setActivePhoto("https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=800")} src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=400" className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 2" />
-                <img onClick={() => setActivePhoto("https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800")} src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400" className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 3" />
+                <img onClick={() => setActivePhotoIndex(0)} src={GALLERY_PHOTOS[0]} className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 1" />
+                <img onClick={() => setActivePhotoIndex(1)} src={GALLERY_PHOTOS[1]} className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 2" />
+                <img onClick={() => setActivePhotoIndex(2)} src={GALLERY_PHOTOS[2]} className="w-full aspect-square object-cover rounded-xl opacity-70 hover:opacity-100 transition-opacity cursor-pointer border border-white/5 hover:border-white/20" alt="Gallery 3" />
               </div>
               <Button onClick={() => setIsAllPhotosModalOpen(true)} variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/5 text-[10px] tracking-widest uppercase">
                 View All Photos <ArrowRight className="w-3 h-3 ml-2"/>
@@ -344,6 +360,13 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
                 </button>
                 <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Honouring ${officer.name}`)}`, '_blank')} className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
                   Share on X / Twitter
+                </button>
+                <button onClick={() => window.location.href = `mailto:?subject=${encodeURIComponent(`Honouring ${officer.name}`)}&body=${encodeURIComponent(`I would like to share this memorial with you:\n\n`)}` + encodeURIComponent(window.location.href)} className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                  <Mail className="w-4 h-4"/> Share via Email
+                </button>
+                <button onClick={handleCopyLink} className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                  {isCopied ? <Check className="w-4 h-4 text-green-400"/> : <LinkIcon className="w-4 h-4"/>} 
+                  {isCopied ? <span className="text-green-400">Link Copied!</span> : "Copy Share Link"}
                 </button>
               </div>
             </div>
@@ -424,15 +447,8 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
                 </button>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {[
-                  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
-                  "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=800",
-                  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
-                  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
-                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
-                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
-                ].map((imgUrl, i) => (
-                  <img key={i} onClick={() => setActivePhoto(imgUrl)} src={imgUrl} className="w-full aspect-square object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" alt={`Gallery item ${i}`} />
+                {GALLERY_PHOTOS.map((imgUrl, i) => (
+                  <img key={i} onClick={() => setActivePhotoIndex(i)} src={imgUrl} className="w-full aspect-square object-cover rounded-xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer border border-white/5" alt={`Gallery item ${i}`} />
                 ))}
               </div>
             </motion.div>
@@ -504,14 +520,33 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
 
       {/* LIGHTBOX MODAL */}
       <AnimatePresence>
-        {activePhoto && (
+        {activePhotoIndex !== null && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActivePhoto(null)} className="absolute inset-0 bg-black/95 backdrop-blur-md" />
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center z-10">
-              <button onClick={() => setActivePhoto(null)} className="absolute -top-12 right-0 text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActivePhotoIndex(null)} className="absolute inset-0 bg-black/95 backdrop-blur-md" />
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center z-10 group">
+              <button onClick={() => setActivePhotoIndex(null)} className="absolute -top-12 right-0 text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all z-20">
                 <X className="w-6 h-6" />
               </button>
-              <img src={activePhoto} alt="Memorial Lightbox" className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl" />
+
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActivePhotoIndex((prev) => (prev! > 0 ? prev! - 1 : GALLERY_PHOTOS.length - 1)); }}
+                className="absolute -left-4 md:-left-16 w-12 h-12 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#1877F2] transition-colors border border-white/10 z-20 hidden md:flex"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </button>
+
+              <img src={GALLERY_PHOTOS[activePhotoIndex]} alt="Memorial Lightbox" className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl" />
+              
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActivePhotoIndex((prev) => (prev! < GALLERY_PHOTOS.length - 1 ? prev! + 1 : 0)); }}
+                className="absolute -right-4 md:-right-16 w-12 h-12 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#1877F2] transition-colors border border-white/10 z-20 hidden md:flex"
+              >
+                <ArrowRight className="w-6 h-6" />
+              </button>
+
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-white tracking-widest border border-white/10 z-20">
+                {activePhotoIndex + 1} / {GALLERY_PHOTOS.length}
+              </div>
             </motion.div>
           </div>
         )}
