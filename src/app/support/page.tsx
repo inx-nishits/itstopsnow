@@ -120,14 +120,14 @@ const AppsSection = () => {
   const paginated = sorted.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <section className="py-24 border-b border-white/5 relative">
+    <section className="py-12 lg:py-24 border-b border-white/5 relative">
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
               <Smartphone className="w-5 h-5" /> Digital Tools
             </h2>
-            <h3 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Apps</h3>
+            <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Apps</h3>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
@@ -138,7 +138,7 @@ const AppsSection = () => {
                 placeholder="SEARCH APPS..."
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ const AppsSection = () => {
           <AnimatePresence mode="popLayout">
             {paginated.map((item, idx) => (
               <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-[#050A14] border border-white/10 rounded-2xl overflow-hidden hover:border-[#1877F2]/50 transition-colors flex flex-col group">
-                <div className="p-8 flex-grow flex flex-col">
+                <div className="p-6 md:p-8 flex-grow flex flex-col">
                   <div className="flex justify-between items-start mb-6">
                     <img src={item.logo} alt={item.name} className="w-16 h-16 rounded-2xl object-cover border border-white/10 group-hover:scale-110 transition-transform duration-500" />
                     {item.badge && <span className="bg-[#1877F2]/20 text-[#1877F2] text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">{item.badge}</span>}
@@ -196,14 +196,14 @@ const BooksSection = () => {
   const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <section className="py-24 border-b border-white/5 relative">
+    <section className="py-12 lg:py-24 border-b border-white/5 relative">
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
               <Book className="w-5 h-5" /> Reading Material
             </h2>
-            <h3 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Books</h3>
+            <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Books</h3>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
@@ -214,7 +214,7 @@ const BooksSection = () => {
                 placeholder="SEARCH BOOKS..."
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
               />
             </div>
           </div>
@@ -230,7 +230,7 @@ const BooksSection = () => {
                     {item.category}
                   </div>
                 </div>
-                <div className="p-8 flex-grow flex flex-col bg-[#050A14]">
+                <div className="p-6 md:p-8 flex-grow flex flex-col bg-[#050A14]">
                   <h4 className="text-xl font-bold text-white mb-2 leading-tight">{item.title}</h4>
                   <p className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em] mb-6">BY {item.author}</p>
                   
@@ -275,14 +275,14 @@ const PodcastsSection = () => {
   const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <section className="py-24 border-b border-white/5 relative bg-[#020611]">
+    <section className="py-12 lg:py-24 border-b border-white/5 relative bg-[#020611]">
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
               <Headphones className="w-5 h-5" /> Audio Resources
             </h2>
-            <h3 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Podcasts</h3>
+            <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Podcasts</h3>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
@@ -293,7 +293,7 @@ const PodcastsSection = () => {
                 placeholder="SEARCH PODCASTS..."
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
               />
             </div>
           </div>
@@ -302,7 +302,7 @@ const PodcastsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AnimatePresence mode="popLayout">
             {paginated.map((item, idx) => (
-              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#1877F2]/50 transition-colors flex items-center gap-6 group">
+              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-6 hover:border-[#1877F2]/50 transition-colors flex items-center gap-6 group">
                 <div className="shrink-0 relative">
                   <div className="absolute inset-0 bg-[#1877F2] blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></div>
                   <img src={item.logo} alt={item.title} className="w-24 h-24 rounded-xl object-cover border border-white/20 grayscale group-hover:grayscale-0 transition-all duration-500 relative z-10" />
@@ -338,7 +338,7 @@ export default function SupportListing() {
     <div className="min-h-screen bg-[#020611] text-white font-sans">
       
       {/* HERO */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920" 
@@ -359,7 +359,7 @@ export default function SupportListing() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
+              className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
               <span className="text-white">RECOVERY & </span><br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">SUPPORT.</span>

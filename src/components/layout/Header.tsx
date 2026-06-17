@@ -93,7 +93,7 @@ export default function Header() {
 
           {/* MOBILE TOGGLE */}
           <button 
-            className="lg:hidden text-white p-2 -mr-2 relative z-[60] bg-black/20 rounded-lg backdrop-blur-sm shadow-sm"
+            className="lg:hidden text-white p-2 -mr-2 relative z-[60] bg-black/20 rounded-lg backdrop-blur-sm shadow-sm min-w-[48px] min-h-[48px] flex items-center justify-center"
             onClick={() => setMobileMenuOpen(true)}
           >
             <Menu className="w-7 h-7" />
@@ -117,7 +117,7 @@ export default function Header() {
               </Link>
               <button 
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-slate-400 hover:text-white p-2 -mr-2"
+                className="text-slate-400 hover:text-white p-2 -mr-2 min-w-[48px] min-h-[48px] flex items-center justify-center"
               >
                 <X className="w-7 h-7" />
               </button>
@@ -128,7 +128,7 @@ export default function Header() {
                 <Link 
                   key={link.href} 
                   href={link.href}
-                  className={`text-2xl font-medium tracking-tight ${
+                  className={`text-2xl font-medium tracking-tight py-2 ${
                     pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
                       ? "text-white" 
                       : "text-slate-400 hover:text-white"

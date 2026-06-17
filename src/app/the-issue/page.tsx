@@ -32,10 +32,10 @@ function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isF
 
 export default function TheIssuePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-24">
+    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-12 lg:pb-24">
 
       {/* HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80&w=1920"
@@ -56,7 +56,7 @@ export default function TheIssuePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
+              className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
               <span className="text-white">A SYSTEM </span><br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">IN CRISIS.</span>
@@ -75,54 +75,54 @@ export default function TheIssuePage() {
       </section>
 
       {/* THE FACTS STATISTICS SECTION */}
-      <section className="py-32 bg-[#020611] relative border-b border-white/5">
+      <section className="py-12 lg:py-32 bg-[#020611] relative border-b border-white/5">
         <div className="absolute left-0 top-0 w-[500px] h-[500px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="text-center mb-24 max-w-3xl mx-auto">
+          <div className="text-center mb-12 lg:mb-24 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Facts</h2>
             <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">THE HARD TRUTH</h2>
             <p className="text-slate-400 text-lg leading-relaxed">The data reveals a devastating pattern of systemic failure in how police officers are treated during misconduct and post-incident investigations.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-[#050B14] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
+            <div className="bg-[#050B14] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
               <div className="w-16 h-16 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10 shadow-lg">
                 <Clock className="w-8 h-8" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+              <h3 className="font-bold text-5xl max-sm:text-4xl text-white mb-4 font-sans tracking-tight relative z-10">
                 <AnimatedCounter from={0} to={68} suffix="%" duration={2} />
               </h3>
               <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">PROLONGED INVESTIGATIONS</p>
               <p className="text-slate-400 leading-relaxed text-sm relative z-10">Over two-thirds of gross misconduct investigations take longer than 12 months to resolve, leaving officers in career paralysis.</p>
             </div>
             
-            <div className="bg-[#050B14] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
+            <div className="bg-[#050B14] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
               <div className="w-16 h-16 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10 shadow-lg">
                 <SearchX className="w-8 h-8" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+              <h3 className="font-bold text-5xl max-sm:text-4xl text-white mb-4 font-sans tracking-tight relative z-10">
                 <AnimatedCounter from={0} to={8.2} isFloat suffix="%" duration={2} />
               </h3>
               <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">IOPC CONVICTION RATE</p>
               <p className="text-slate-400 leading-relaxed text-sm relative z-10">Despite years of scrutiny and millions in public funding, only a tiny fraction of investigations result in convictions.</p>
             </div>
             
-            <div className="bg-[#050B14] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
+            <div className="bg-[#050B14] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
               <div className="w-16 h-16 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10 shadow-lg">
                 <HeartPulse className="w-8 h-8" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10 flex items-baseline">
+              <h3 className="font-bold text-5xl max-sm:text-4xl text-white mb-4 font-sans tracking-tight relative z-10 flex items-baseline">
                 <AnimatedCounter from={0} to={1} duration={1} /> <span className="text-2xl ml-2">in 5</span>
               </h3>
               <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">CLINICAL PTSD</p>
               <p className="text-slate-400 leading-relaxed text-sm relative z-10">One in five serving officers suffer from PTSD, exacerbated directly by the stress of investigation processes.</p>
             </div>
             
-            <div className="bg-[#050B14] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
+            <div className="bg-[#050B14] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-2xl hover:border-[#1877F2]/50 transition-colors">
               <div className="w-16 h-16 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10 shadow-lg">
                 <Briefcase className="w-8 h-8" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+              <h3 className="font-bold text-5xl max-sm:text-4xl text-white mb-4 font-sans tracking-tight relative z-10">
                 <AnimatedCounter from={0} to={9000} suffix="+" duration={2} />
               </h3>
               <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">OFFICERS RESIGNING</p>
@@ -133,39 +133,39 @@ export default function TheIssuePage() {
       </section>
 
       {/* WHAT'S GOING WRONG AWARENESS CARDS */}
-      <section className="py-32 bg-[#050B14] border-b border-white/5 relative">
+      <section className="py-12 lg:py-32 bg-[#050B14] border-b border-white/5 relative">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="text-center mb-20 max-w-3xl mx-auto">
+          <div className="text-center mb-10 lg:mb-20 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Flaws</h2>
             <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">WHAT IS GOING WRONG?</h2>
             <p className="text-slate-400 text-lg leading-relaxed">The current framework is designed to find fault, not facts, leaving officers isolated and criminalized for doing their jobs.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="relative rounded-3xl overflow-hidden group min-h-[400px] border border-white/10">
+            <div className="relative rounded-3xl overflow-hidden group min-h-[350px] sm:min-h-[400px] border border-white/10">
               <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Prolonged Investigations" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-transparent"></div>
-              <div className="absolute inset-0 p-10 flex flex-col justify-end">
+              <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
                 <Clock className="w-10 h-10 text-[#1877F2] mb-6 shadow-xl drop-shadow-[0_0_15px_rgba(24,119,242,0.5)]" />
                 <h3 className="font-bold text-2xl uppercase tracking-widest text-white mb-4">PROLONGED INVESTIGATIONS</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">Officers are routinely placed under investigation for years, suspended or placed on restricted duties, effectively freezing their careers and lives.</p>
               </div>
             </div>
 
-            <div className="relative rounded-3xl overflow-hidden group min-h-[400px] border border-white/10">
+            <div className="relative rounded-3xl overflow-hidden group min-h-[350px] sm:min-h-[400px] border border-white/10">
               <img src="https://images.unsplash.com/photo-1584483766114-2cea6facdf57?auto=format&fit=crop&q=80&w=800" alt="Lack of Trauma Care" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-transparent"></div>
-              <div className="absolute inset-0 p-10 flex flex-col justify-end">
+              <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
                 <Activity className="w-10 h-10 text-[#1877F2] mb-6 shadow-xl drop-shadow-[0_0_15px_rgba(24,119,242,0.5)]" />
                 <h3 className="font-bold text-2xl uppercase tracking-widest text-white mb-4">LACK OF TRAUMA CARE</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">Post-incident procedures prioritize gathering evidence against the officer over providing psychological first aid after traumatic, life-altering events.</p>
               </div>
             </div>
 
-            <div className="relative rounded-3xl overflow-hidden group min-h-[400px] border border-white/10">
+            <div className="relative rounded-3xl overflow-hidden group min-h-[350px] sm:min-h-[400px] border border-white/10">
               <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=800" alt="Guilty Until Proven Innocent" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-transparent"></div>
-              <div className="absolute inset-0 p-10 flex flex-col justify-end">
+              <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
                 <Scale className="w-10 h-10 text-[#1877F2] mb-6 shadow-xl drop-shadow-[0_0_15px_rgba(24,119,242,0.5)]" />
                 <h3 className="font-bold text-2xl uppercase tracking-widest text-white mb-4">GUILTY UNTIL PROVEN INNOCENT</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">Officers face trial by media and anonymous malicious complaints with no consequences for members of the public who make fabricated allegations.</p>
@@ -176,7 +176,7 @@ export default function TheIssuePage() {
       </section>
 
       {/* THE IMPACT INFORMATIONAL SECTION */}
-      <section className="py-32 bg-[#020611] relative border-b border-white/5">
+      <section className="py-12 lg:py-32 bg-[#020611] relative border-b border-white/5">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Collateral Damage</h2>
@@ -184,7 +184,7 @@ export default function TheIssuePage() {
             <p className="text-slate-400 text-lg leading-relaxed max-w-3xl mx-auto">A broken misconduct system doesn't just damage the individual officer. The collateral damage spans across families, colleagues, and the public they serve.</p>
           </div>
 
-          <div className="bg-[#050B14] border border-white/10 rounded-3xl p-10 md:p-16 shadow-2xl">
+          <div className="bg-[#050B14] border border-white/10 rounded-3xl p-5 sm:p-10 md:p-16 shadow-2xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
                 <h3 className="font-bold text-2xl text-white mb-8 border-b border-white/10 pb-4">On the Individual</h3>
@@ -245,13 +245,13 @@ export default function TheIssuePage() {
       </section>
 
       {/* CHANGE IS POSSIBLE CTA PANEL */}
-      <section className="py-32 bg-[#050B14] relative overflow-hidden">
+      <section className="py-12 lg:py-32 bg-[#050B14] relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#020611] border border-[#1877F2]/30 rounded-3xl p-12 lg:p-20 shadow-[0_0_50px_rgba(24,119,242,0.15)] flex flex-col md:flex-row items-center gap-12">
+          <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#020611] border border-[#1877F2]/30 rounded-3xl p-6 sm:p-12 lg:p-20 shadow-[0_0_50px_rgba(24,119,242,0.15)] flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1">
               <AlertTriangle className="w-16 h-16 text-[#1877F2] mb-8" />
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">CHANGE IS POSSIBLE</h2>
+              <h2 className="text-3xl max-sm:text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">CHANGE IS POSSIBLE</h2>
               <p className="text-slate-300 text-lg leading-relaxed mb-8">
                 The time for performative sympathy is over. We demand concrete legislative changes to protect the officers who protect us.
               </p>

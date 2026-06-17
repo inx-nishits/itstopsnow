@@ -49,10 +49,10 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-24">
+    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-12 lg:pb-24">
       
       {/* HERO / BANNER */}
-      <section className="relative w-full min-h-[500px] flex flex-col justify-end pt-32 pb-16">
+      <section className="relative w-full min-h-[500px] flex flex-col justify-end pt-16 lg:pt-32 pb-16">
         <div className="absolute inset-0 z-0">
           <img 
             src={MOCK_NEWS.image} 
@@ -96,7 +96,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
             </div>
             
             {/* Inline Share actions at the bottom of the article for mobile/desktop */}
-            <div className="mt-16 pt-8 border-t border-white/10">
+            <div className="mt-8 lg:mt-16 pt-8 border-t border-white/10">
                <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Share this update</h4>
                <div className="flex flex-wrap gap-3">
                   <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(MOCK_NEWS.title)}`, '_blank')} className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors cursor-pointer">

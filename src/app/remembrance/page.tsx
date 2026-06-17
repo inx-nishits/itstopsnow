@@ -77,10 +77,10 @@ export default function RemembrancePage() {
   const paginatedOfficers = sortedOfficers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-24">
+    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-12 lg:pb-24">
       
       {/* HERO */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="/images/uk_police_memorial_bg.png" 
@@ -97,7 +97,7 @@ export default function RemembrancePage() {
               <Flame className="w-5 h-5" /> HONOR & RESPECT
             </h3>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
+            <h1 className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black text-white leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
               WALL OF <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">REMEMBRANCE.</span>
             </h1>
             
@@ -114,7 +114,7 @@ export default function RemembrancePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 relative z-10 -mt-24">
           
           {/* Main Hero Stat - Candles */}
-          <div className="md:col-span-2 lg:col-span-2 lg:row-span-2 bg-[#051024]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 lg:p-12 flex flex-col justify-center items-center relative overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          <div className="md:col-span-2 lg:col-span-2 lg:row-span-2 bg-[#051024]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-12 flex flex-col justify-center items-center relative overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-blue-500/5 opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] pointer-events-none" />
             
@@ -131,7 +131,7 @@ export default function RemembrancePage() {
           </div>
 
           {/* Stat 1: Officers Remembered */}
-          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
+          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-5 md:p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 relative z-10">Officers Remembered</span>
             <div className="flex items-baseline gap-2 relative z-10">
@@ -140,7 +140,7 @@ export default function RemembrancePage() {
           </div>
 
           {/* Stat 2: Forces Represented */}
-          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
+          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-5 md:p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 relative z-10">Forces Represented</span>
             <div className="flex items-baseline gap-2 relative z-10">
@@ -150,7 +150,7 @@ export default function RemembrancePage() {
           </div>
 
           {/* Stat 3: Monthly Average */}
-          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
+          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-5 md:p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 relative z-10">Monthly Average</span>
             <div className="flex items-baseline gap-2 relative z-10">
@@ -160,7 +160,7 @@ export default function RemembrancePage() {
           </div>
 
           {/* Stat 4: Not Forgotten */}
-          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
+          <div className="bg-[#051024]/80 backdrop-blur-md border border-white/10 rounded-3xl p-5 md:p-6 flex flex-col justify-center relative overflow-hidden group hover:border-[#1877F2]/30 transition-colors shadow-lg">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em] mb-3 relative z-10">Not Forgotten</span>
             <div className="flex items-baseline gap-2 relative z-10">
@@ -174,29 +174,29 @@ export default function RemembrancePage() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-          <div className="flex gap-8 text-xs font-bold uppercase tracking-widest">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
+          <div className="flex flex-wrap gap-4 sm:gap-8 text-xs font-bold uppercase tracking-widest">
             <span 
               onClick={() => setSortBy("All")}
-              className={`pb-2 cursor-pointer transition-colors ${sortBy === "All" ? "text-[#1877F2] border-b-2 border-[#1877F2]" : "text-slate-500 hover:text-white"}`}
+              className={`py-2 min-h-[48px] flex items-center cursor-pointer transition-colors ${sortBy === "All" ? "text-[#1877F2] border-b-2 border-[#1877F2]" : "text-slate-500 hover:text-white"}`}
             >
               All Officers
             </span>
             <span 
               onClick={() => setSortBy("Recently")}
-              className={`pb-2 cursor-pointer transition-colors ${sortBy === "Recently" ? "text-[#1877F2] border-b-2 border-[#1877F2]" : "text-slate-500 hover:text-white"}`}
+              className={`py-2 min-h-[48px] flex items-center cursor-pointer transition-colors ${sortBy === "Recently" ? "text-[#1877F2] border-b-2 border-[#1877F2]" : "text-slate-500 hover:text-white"}`}
             >
               Recently Added
             </span>
             <span 
               onClick={() => setSortBy("MostTributed")}
-              className={`pb-2 cursor-pointer transition-colors ${sortBy === "MostTributed" ? "text-[#1877F2] border-b-2 border-[#1877F2]" : "text-slate-500 hover:text-white"}`}
+              className={`py-2 min-h-[48px] flex items-center cursor-pointer transition-colors ${sortBy === "MostTributed" ? "text-[#1877F2] border-b-2 border-[#1877F2]" : "text-slate-500 hover:text-white"}`}
             >
               Most Tributed
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
             <div className="relative w-full md:w-64">
               <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
               <input 
@@ -204,13 +204,13 @@ export default function RemembrancePage() {
                 placeholder="Search by name or force..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#051024] border border-white/10 text-white text-xs px-10 py-3 rounded-md focus:outline-none focus:border-[#1877F2]/50 placeholder-slate-600 transition-colors"
+                className="w-full bg-[#051024] border border-white/10 text-white text-xs px-10 min-h-[48px] rounded-md focus:outline-none focus:border-[#1877F2]/50 placeholder-slate-600 transition-colors"
               />
             </div>
             <Button 
               onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)}
               variant="outline" 
-              className="border-white/20 text-white bg-transparent hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest py-5 rounded-md flex items-center gap-2 cursor-pointer animate-none"
+              className="w-full sm:w-auto min-h-[48px] border-white/20 text-white bg-transparent hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest py-5 rounded-md flex items-center justify-center gap-2 cursor-pointer animate-none"
             >
               FILTERS <ChevronDown className="w-3 h-3" />
             </Button>
@@ -219,14 +219,14 @@ export default function RemembrancePage() {
 
         {/* FILTER PANEL */}
         {isFilterPanelOpen && (
-          <div className="bg-[#051024] border border-white/10 rounded-2xl p-6 mb-8 grid grid-cols-1 sm:grid-cols-4 gap-6">
+          <div className="bg-[#051024] border border-white/10 rounded-2xl p-5 md:p-6 mb-8 grid grid-cols-1 sm:grid-cols-4 gap-6">
             {/* Force Filter */}
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Filter by Force</label>
               <select 
                 value={selectedForce}
                 onChange={(e) => setSelectedForce(e.target.value)}
-                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#1877F2]"
+                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 min-h-[48px] rounded-lg focus:outline-none focus:border-[#1877F2]"
               >
                 <option value="All">All Forces</option>
                 <option value="Thames Valley Police">Thames Valley Police</option>
@@ -250,7 +250,7 @@ export default function RemembrancePage() {
               <select 
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value)}
-                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#1877F2]"
+                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 min-h-[48px] rounded-lg focus:outline-none focus:border-[#1877F2]"
               >
                 <option value="All">All Roles</option>
                 <option value="PC">Police Constable (PC)</option>
@@ -265,7 +265,7 @@ export default function RemembrancePage() {
               <select 
                 value={selectedRegion}
                 onChange={(e) => setSelectedRegion(e.target.value)}
-                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#1877F2]"
+                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 min-h-[48px] rounded-lg focus:outline-none focus:border-[#1877F2]"
               >
                 <option value="All">All Regions</option>
                 <option value="London">London & South</option>
@@ -281,7 +281,7 @@ export default function RemembrancePage() {
               <select 
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#1877F2]"
+                className="bg-[#030712] border border-white/10 text-slate-300 text-xs px-3 min-h-[48px] rounded-lg focus:outline-none focus:border-[#1877F2]"
               >
                 <option value="All">All Years</option>
                 <option value="2019">2019</option>
@@ -344,7 +344,7 @@ export default function RemembrancePage() {
 
         {/* PAGINATION */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-3 mt-16 mb-24 pt-10 border-t border-white/10">
+          <div className="flex justify-center items-center gap-3 mt-8 lg:mt-16 mb-12 lg:mb-24 pt-10 border-t border-white/10">
             <Button 
               onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
               disabled={currentPage === 1}

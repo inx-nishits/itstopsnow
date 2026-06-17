@@ -4,9 +4,9 @@ import { Shield } from "lucide-react";
 
 export default function TermsAndConditions() {
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pb-32">
+    <div className="min-h-screen bg-[#030712] text-white font-sans pb-16 lg:pb-32">
       {/* HERO */}
-      <section className="relative w-full min-h-[50vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[50vh] flex flex-col justify-center bg-[#050A14] pt-16 lg:pt-32 pb-16 lg:pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1920" 
@@ -30,7 +30,7 @@ export default function TermsAndConditions() {
         </div>
       </section>
 
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-4xl mt-16">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-4xl mt-8 lg:mt-16">
         <div className="prose prose-invert prose-lg max-w-none text-slate-300">
           <h2 className="text-white font-bold uppercase tracking-widest text-xl mb-4 mt-12">1. Acceptance of Terms</h2>
           <p>

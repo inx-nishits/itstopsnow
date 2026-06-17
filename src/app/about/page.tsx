@@ -45,7 +45,7 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
       
       {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
         
         {/* Full-Screen Background Image */}
         <div className="absolute inset-0 z-0">
@@ -71,7 +71,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
+              className="text-4xl max-sm:text-4xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
               <span className="text-white">DRIVEN BY THOSE<br/></span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">WHO KNOW THE JOB.</span>
@@ -90,7 +90,7 @@ export default function AboutPage() {
       </section>
 
       {/* 2. WHO IS POCKET SERGEANT */}
-      <section className="py-20 md:py-32 relative">
+      <section className="py-12 md:py-32 relative">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
@@ -103,7 +103,7 @@ export default function AboutPage() {
               </p>
               
               {/* Trust Indicators */}
-              <div className="flex gap-8 mt-6 border-t border-white/10 pt-6">
+              <div className="flex flex-wrap gap-8 mt-6 border-t border-white/10 pt-6">
                 <div>
                   <h4 className="font-bold text-white uppercase text-[10px] tracking-widest mb-1">TRUSTED BY</h4>
                   <p className="text-xl font-bold text-[#1877F2] font-sans leading-none">50,000+</p>
@@ -120,7 +120,7 @@ export default function AboutPage() {
             {/* APP SHOWCASE / SCREENSHOTS */}
             <div className="relative">
               <div className="absolute inset-0 bg-[#1877F2]/10 rounded-[2rem] transform rotate-2 blur-xl"></div>
-              <div className="bg-[#050B14] rounded-[2rem] p-8 border border-white/10 shadow-2xl relative z-10 overflow-hidden flex flex-col items-center">
+              <div className="bg-[#050B14] rounded-[2rem] p-6 md:p-8 border border-white/10 shadow-2xl relative z-10 overflow-hidden flex flex-col items-center">
                 
                 {/* Short App Description / Tagline */}
                 <div className="text-center mb-10 max-w-sm relative z-30">
@@ -175,7 +175,7 @@ export default function AboutPage() {
       </section>
 
       {/* STATISTICS SECTION */}
-      <section className="py-24 bg-[#050B14] border-t border-white/5 relative overflow-hidden">
+      <section className="py-12 lg:py-24 bg-[#050B14] border-t border-white/5 relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-16 max-w-3xl mx-auto">
@@ -185,7 +185,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
               <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <Users className="w-7 h-7" />
               </div>
@@ -195,7 +195,7 @@ export default function AboutPage() {
               <p className="text-slate-400 leading-relaxed text-sm relative z-10">Active users across UK police forces relying on Pocket Sergeant daily.</p>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
               <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <Download className="w-7 h-7" />
               </div>
@@ -205,7 +205,7 @@ export default function AboutPage() {
               <p className="text-slate-400 leading-relaxed text-sm relative z-10">Total app downloads since launch, showing widespread adoption.</p>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
               <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <Star className="w-7 h-7" />
               </div>
@@ -215,7 +215,7 @@ export default function AboutPage() {
               <p className="text-slate-400 leading-relaxed text-sm relative z-10">Average rating on both App Store and Google Play.</p>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 p-10 rounded-3xl relative overflow-hidden group shadow-xl">
+            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
               <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <BarChart className="w-7 h-7" />
               </div>
@@ -229,7 +229,7 @@ export default function AboutPage() {
       </section>
 
       {/* WHY SUPPORTING THIS MOVEMENT */}
-      <section className="py-32 bg-[#020611] border-t border-white/5 relative">
+      <section className="py-12 lg:py-32 bg-[#020611] border-t border-white/5 relative">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Commitment</h2>
@@ -237,7 +237,7 @@ export default function AboutPage() {
             <p className="text-slate-400 text-lg leading-relaxed">We see the reality of policing every day through our user base. We couldn't stand by and watch the system break our colleagues.</p>
           </div>
           
-          <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-10 md:p-16 shadow-2xl relative overflow-hidden">
+          <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#050B14] to-[#020611] border border-[#1877F2]/20 rounded-3xl p-6 md:p-16 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-5">
               <Quote className="w-32 h-32 text-white" />
             </div>
@@ -265,7 +265,7 @@ export default function AboutPage() {
       </section>
 
       {/* FUNDING TRANSPARENCY */}
-      <section className="py-32 bg-[#050B14] border-y border-white/5 relative">
+      <section className="py-12 lg:py-32 bg-[#050B14] border-y border-white/5 relative">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Accountability</h2>
@@ -276,7 +276,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-6 md:p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Shield className="w-7 h-7 text-[#1877F2]" />
               </div>
@@ -292,7 +292,7 @@ export default function AboutPage() {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-6 md:p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Heart className="w-7 h-7 text-[#1877F2]" />
               </div>
@@ -308,7 +308,7 @@ export default function AboutPage() {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-6 md:p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Activity className="w-7 h-7 text-[#1877F2]" />
               </div>
@@ -328,9 +328,9 @@ export default function AboutPage() {
       </section>
 
       {/* PODCAST SECTION */}
-      <section className="py-32 bg-[#020611] border-b border-white/5">
+      <section className="py-12 lg:py-32 bg-[#020611] border-b border-white/5">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex flex-col lg:flex-row gap-16 items-center">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
             <div className="lg:w-1/2 relative">
               <div className="absolute inset-0 bg-[#1877F2]/20 rounded-full blur-[100px] pointer-events-none"></div>
               <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=800" alt="Podcast recording" className="w-full h-auto rounded-3xl relative z-10 border border-white/10 shadow-2xl grayscale mix-blend-luminosity opacity-80" />
@@ -349,7 +349,7 @@ export default function AboutPage() {
               </p>
               
               <div className="space-y-4 mb-12">
-                <div className="bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-2xl flex items-center gap-6 hover:border-[#1877F2]/50 transition-colors cursor-pointer group">
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 md:p-5 rounded-2xl flex items-center gap-6 hover:border-[#1877F2]/50 transition-colors cursor-pointer group">
                   <div className="w-14 h-14 bg-[#020611] rounded-xl flex items-center justify-center shrink-0 border border-white/5 group-hover:scale-110 transition-transform">
                     <Headphones className="w-6 h-6 text-[#1877F2]" />
                   </div>
@@ -359,7 +359,7 @@ export default function AboutPage() {
                   </div>
                   <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">45 Min</div>
                 </div>
-                <div className="bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-2xl flex items-center gap-6 hover:border-[#1877F2]/50 transition-colors cursor-pointer group">
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 md:p-5 rounded-2xl flex items-center gap-6 hover:border-[#1877F2]/50 transition-colors cursor-pointer group">
                   <div className="w-14 h-14 bg-[#020611] rounded-xl flex items-center justify-center shrink-0 border border-white/5 group-hover:scale-110 transition-transform">
                     <Headphones className="w-6 h-6 text-[#1877F2]" />
                   </div>
@@ -385,7 +385,7 @@ export default function AboutPage() {
       </section>
 
       {/* LEARN MORE ABOUT POCKET SERGEANT CTA SECTION */}
-      <section className="py-32 bg-gradient-to-b from-[#050B14] to-[#020611] relative overflow-hidden">
+      <section className="py-12 lg:py-32 bg-gradient-to-b from-[#050B14] to-[#020611] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
           <div className="text-center mb-16 max-w-3xl mx-auto">
@@ -395,7 +395,7 @@ export default function AboutPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="bg-[#020611] border border-white/10 rounded-3xl p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+            <div className="bg-[#020611] border border-white/10 rounded-3xl p-6 md:p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
               <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <ShieldAlert className="w-8 h-8 text-[#1877F2]" />
               </div>
@@ -408,7 +408,7 @@ export default function AboutPage() {
               </Link>
             </div>
             
-            <div className="bg-[#020611] border border-white/10 rounded-3xl p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+            <div className="bg-[#020611] border border-white/10 rounded-3xl p-6 md:p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
               <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <HeartPulse className="w-8 h-8 text-[#1877F2]" />
               </div>
@@ -421,7 +421,7 @@ export default function AboutPage() {
               </Link>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 rounded-3xl p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+            <div className="bg-[#020611] border border-white/10 rounded-3xl p-6 md:p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
               <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <Smartphone className="w-8 h-8 text-[#1877F2]" />
               </div>

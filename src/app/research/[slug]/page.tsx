@@ -28,10 +28,10 @@ export default function ResearchDetail({ params }: { params: Promise<{ slug: str
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 pb-12 lg:pb-24 font-sans">
       
       {/* HERO */}
-      <section className="relative w-full min-h-[50vh] pt-32 pb-20 bg-[#010B19] flex flex-col justify-end overflow-hidden text-white">
+      <section className="relative w-full min-h-[50vh] pt-16 lg:pt-32 pb-10 lg:pb-20 bg-[#010B19] flex flex-col justify-end overflow-hidden text-white">
         <div className="absolute inset-0 z-0">
           <img src={MOCK_REPORT.coverImage} className="w-full h-full object-cover mix-blend-luminosity opacity-30 lg:opacity-40" alt="Cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#010B19] via-[#010B19]/80 to-transparent lg:bg-gradient-to-r lg:from-[#010B19] lg:via-[#010B19]/90 lg:to-transparent" />
@@ -71,7 +71,7 @@ export default function ResearchDetail({ params }: { params: Promise<{ slug: str
         </div>
       </section>
 
-      <div className="container mx-auto px-4 md:px-8 mt-16 max-w-[1200px] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <div className="container mx-auto px-4 md:px-8 mt-8 lg:mt-16 max-w-[1200px] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
         
         {/* LEFT COL: Content */}
         <div className="lg:col-span-8 space-y-16">

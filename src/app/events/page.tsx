@@ -107,15 +107,15 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020611] text-white pb-32 font-sans pt-24 md:pt-32">
+    <div className="min-h-screen bg-[#020611] text-white pb-16 lg:pb-32 font-sans pt-12 lg:pt-20 md:pt-32">
       
       {/* HERO SECTION */}
-      <section className="relative w-full py-16 md:py-24 border-b border-white/5">
+      <section className="relative w-full py-12 md:py-24 border-b border-white/5">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] flex flex-col items-start gap-6">
           <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm flex items-center gap-3">
             <Calendar className="w-5 h-5 animate-pulse" /> Campaign Calendar
           </h3>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-none tracking-tighter uppercase">
+          <h1 className="text-3xl max-sm:text-3xl md:text-6xl lg:text-7xl font-black leading-none tracking-tighter uppercase">
             CAMPAIGN <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">EVENTS.</span>
           </h1>
           <p className="text-base md:text-lg text-slate-300 max-w-2xl leading-relaxed">
@@ -123,12 +123,12 @@ export default function EventsPage() {
           </p>
           
           {/* TAB FILTERS */}
-          <div className="flex gap-3 mt-8">
+          <div className="flex flex-wrap gap-3 mt-8">
             {(["all", "upcoming", "past"] as const).map(filter => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-6 py-3 text-[10px] font-bold tracking-widest uppercase transition-all rounded-none ${
+                className={`min-h-[48px] px-6 text-[10px] font-bold tracking-widest uppercase transition-all rounded-none ${
                   activeFilter === filter
                     ? "bg-[#1877F2] text-white shadow-[0_0_15px_rgba(24,119,242,0.3)]"
                     : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
@@ -142,7 +142,7 @@ export default function EventsPage() {
       </section>
 
       {/* EVENTS GRID */}
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] mt-16">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] mt-8 lg:mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
             {filteredEvents.map((event, idx) => (
@@ -157,7 +157,7 @@ export default function EventsPage() {
                   event.type === "upcoming" ? "border-white/10 hover:border-[#1877F2]/50" : "border-white/5 opacity-80 hover:opacity-100"
                 } overflow-hidden transition-all duration-300 hover:-translate-y-1`}
               >
-                <div className="p-8 flex flex-col h-full justify-between">
+                <div className="p-6 md:p-8 flex flex-col h-full justify-between">
                   <div>
                     {/* Header Strip */}
                     <div className="flex justify-between items-center mb-6">
@@ -211,7 +211,7 @@ export default function EventsPage() {
                     {event.type === "upcoming" ? (
                       <button
                         onClick={() => setSelectedEvent(event)}
-                        className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:text-blue-400 transition-colors"
+                        className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:text-blue-400 min-h-[48px] transition-colors"
                       >
                         <span>Register Interest</span>
                         <ArrowRight className="w-4 h-4" />
@@ -242,12 +242,12 @@ export default function EventsPage() {
               initial={{ scale: 0.95, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md bg-[#050A14] border border-white/10 p-8 shadow-2xl overflow-hidden"
+              className="relative w-full max-w-md bg-[#050A14] border border-white/10 p-6 md:p-8 shadow-2xl overflow-hidden"
             >
               {/* Close Button */}
               <button
                 onClick={closeRegisterModal}
-                className="absolute top-4 right-4 p-2 hover:bg-white/5 rounded-full text-slate-400 hover:text-white transition-colors"
+                className="absolute top-4 right-4 min-w-[48px] min-h-[48px] flex items-center justify-center hover:bg-white/5 rounded-full text-slate-400 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -277,7 +277,7 @@ export default function EventsPage() {
                         value={registerName}
                         onChange={(e) => setRegisterName(e.target.value)}
                         placeholder="John Doe"
-                        className="w-full bg-[#020611] border border-white/10 px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#1877F2]"
+                        className="w-full bg-[#020611] border border-white/10 px-4 min-h-[48px] text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#1877F2]"
                       />
                     </div>
 
@@ -291,7 +291,7 @@ export default function EventsPage() {
                         value={registerEmail}
                         onChange={(e) => setRegisterEmail(e.target.value)}
                         placeholder="john.doe@met.police.uk"
-                        className="w-full bg-[#020611] border border-white/10 px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#1877F2]"
+                        className="w-full bg-[#020611] border border-white/10 px-4 min-h-[48px] text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#1877F2]"
                       />
                     </div>
 
@@ -304,7 +304,7 @@ export default function EventsPage() {
                         value={registerForce}
                         onChange={(e) => setRegisterForce(e.target.value)}
                         placeholder="Metropolitan Police"
-                        className="w-full bg-[#020611] border border-white/10 px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#1877F2]"
+                        className="w-full bg-[#020611] border border-white/10 px-4 min-h-[48px] text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#1877F2]"
                       />
                     </div>
                   </div>
@@ -312,7 +312,7 @@ export default function EventsPage() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] py-4 disabled:opacity-50"
+                    className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] min-h-[48px] disabled:opacity-50"
                   >
                     {isSubmitting ? "Processing Registration..." : "Confirm Attendance"}
                   </Button>
@@ -332,7 +332,7 @@ export default function EventsPage() {
                   </div>
                   <Button
                     onClick={closeRegisterModal}
-                    className="bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-4 mt-4"
+                    className="bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold uppercase tracking-widest text-[10px] px-8 min-h-[48px] mt-4"
                   >
                     Close Panel
                   </Button>

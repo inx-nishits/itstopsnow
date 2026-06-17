@@ -88,7 +88,7 @@ export default function NewsPage() {
     <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
       
       {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920" 
@@ -109,7 +109,7 @@ export default function NewsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
+              className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
               <span className="text-white">STAY </span><br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">INFORMED.</span>
@@ -137,7 +137,7 @@ export default function NewsPage() {
                 <button 
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer ${
+                  className={`min-h-[48px] px-6 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer ${
                     activeCategory === cat 
                       ? "bg-white text-black shadow-sm" 
                       : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
@@ -165,7 +165,7 @@ export default function NewsPage() {
       </section>
 
       {/* 3. LATEST NEWS GRID */}
-      <section className="py-24 bg-[#020611] relative">
+      <section className="py-12 lg:py-24 bg-[#020611] relative">
         <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-[#1877F2]/5 blur-[150px] pointer-events-none rounded-full" />
         <div className="container mx-auto px-4 md:px-8 max-w-[1440px] relative z-10">
           
@@ -175,7 +175,7 @@ export default function NewsPage() {
           </div>
 
           {filteredNews.length === 0 ? (
-            <div className="text-center py-20 text-slate-500 bg-white/5 border border-white/10 rounded-3xl">
+            <div className="text-center py-10 lg:py-20 text-slate-500 bg-white/5 border border-white/10 rounded-3xl">
               <Search className="w-12 h-12 mx-auto mb-4 opacity-20" />
               <p className="font-bold uppercase tracking-widest text-sm">No articles found matching your search.</p>
               <button onClick={() => { setSearchTerm(""); setActiveCategory("All"); }} className="mt-4 text-[#1877F2] hover:text-white transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer">Clear Filters</button>
@@ -194,7 +194,7 @@ export default function NewsPage() {
                     />
                   </div>
 
-                  <div className="p-8 flex flex-col flex-grow">
+                  <div className="p-6 md:p-8 flex flex-col flex-grow">
                     <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
                       <span className="text-[9px] font-bold text-[#1877F2] uppercase tracking-[0.2em] bg-[#1877F2]/10 px-3 py-1.5 rounded-full border border-[#1877F2]/20">
                         {news.category}
@@ -227,7 +227,7 @@ export default function NewsPage() {
           )}
 
           {/* Pagination */}
-          <div className="flex justify-center items-center gap-3 mt-20 pt-8 border-t border-white/10">
+          <div className="flex justify-center items-center gap-3 mt-10 lg:mt-20 pt-8 border-t border-white/10">
             <Button variant="outline" className="w-12 h-12 p-0 rounded-full border-white/10 bg-white/5 text-slate-500 opacity-50 cursor-not-allowed"><ArrowLeft className="w-4 h-4" /></Button>
             <Button className="w-12 h-12 p-0 rounded-full bg-[#1877F2] text-white font-bold text-sm shadow-[0_0_20px_rgba(24,119,242,0.3)]">1</Button>
             <Button variant="outline" className="w-12 h-12 p-0 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20 font-bold text-sm transition-colors">2</Button>
@@ -240,7 +240,7 @@ export default function NewsPage() {
       </section>
 
       {/* 4. WHAT WE'RE WORKING ON - INITIATIVES SECTION */}
-      <section className="bg-[#050A14] py-24 border-t border-white/5 relative overflow-hidden">
+      <section className="bg-[#050A14] py-12 lg:py-24 border-t border-white/5 relative overflow-hidden">
         <div className="absolute inset-0 bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="container mx-auto px-4 md:px-8 max-w-[1440px] relative z-10">
           <div className="text-center mb-16">
@@ -259,7 +259,7 @@ export default function NewsPage() {
               { icon: <Headphones className="w-6 h-6 text-[#1877F2]" />, title: "Officer Crisis Helpline", status: "LAUNCHING Q4", desc: "Partnering with leading police charities to launch a dedicated 24/7 welfare helpline for suspended officers." },
               { icon: <Database className="w-6 h-6 text-[#1877F2]" />, title: "National Investigation Database", status: "DATA INGESTION", desc: "Aggregating data from police federations to document system-wide investigation delays and showcase patterns of failure." }
             ].map((init, i) => (
-              <div key={i} className="bg-[#020611] border border-white/10 rounded-2xl p-8 hover:border-[#1877F2]/50 transition-colors group relative overflow-hidden">
+              <div key={i} className="bg-[#020611] border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#1877F2]/50 transition-colors group relative overflow-hidden">
                 <div className="w-12 h-12 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   {init.icon}
                 </div>
@@ -273,10 +273,10 @@ export default function NewsPage() {
       </section>
 
       {/* 5. NEWSLETTER SECTION */}
-      <section className="bg-[#020611] py-24 border-t border-white/5 relative overflow-hidden">
+      <section className="bg-[#020611] py-12 lg:py-24 border-t border-white/5 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-full" />
         <div className="container mx-auto px-4 md:px-8 max-w-[800px] relative z-10 text-center">
-          <div className="bg-[#050A14] border border-white/10 rounded-[3rem] p-10 md:p-16 shadow-2xl relative overflow-hidden group">
+          <div className="bg-[#050A14] border border-white/10 rounded-[3rem] p-6 md:p-16 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
             
             <h3 className="font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-4">
@@ -311,7 +311,7 @@ export default function NewsPage() {
                 required
                 disabled={isSubscribing}
                 placeholder="YOUR EMAIL ADDRESS" 
-                className="flex-grow bg-[#020611] border border-white/10 rounded-xl px-5 py-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors" 
+                className="flex-grow bg-[#020611] border border-white/10 rounded-xl px-5 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors" 
               />
               <Button type="submit" disabled={isSubscribing} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
                 {isSubscribing ? "Subscribing..." : "Subscribe"}

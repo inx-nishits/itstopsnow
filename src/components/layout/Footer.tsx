@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#02050A] pt-32 pb-12 text-white font-sans overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#02050A] pt-16 md:pt-32 pb-12 text-white font-sans overflow-hidden border-t border-white/5">
       
       {/* Massive Background Typography */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.06] translate-y-[10%]">
@@ -17,7 +17,7 @@ export default function Footer() {
       <div className="w-full px-6 lg:px-12 mx-auto relative z-10 max-w-[1600px]">
         
         {/* POCKET SERGEANT CTA */}
-        <div className="bg-gradient-to-r from-[#050b14] to-[#0a1526] border border-[#1877F2]/30 rounded-[2rem] p-10 md:p-14 mb-8 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.15)] flex flex-col lg:flex-row items-center justify-between gap-8 w-full">
+        <div className="bg-gradient-to-r from-[#050b14] to-[#0a1526] border border-[#1877F2]/30 rounded-[2rem] p-6 md:p-14 mb-8 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.15)] flex flex-col lg:flex-row items-center justify-between gap-8 w-full">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#1877F2]/20 transition-colors duration-700 -translate-y-1/2 translate-x-1/3"></div>
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[80px] pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
           
@@ -26,17 +26,17 @@ export default function Footer() {
               <div className="w-8 h-[2px] bg-[#1877F2]"></div>
               <span className="text-[#1877F2] font-bold text-xs uppercase tracking-[0.3em]">Empowering Officers</span>
             </div>
-            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4 leading-tight">
+            <h3 className="text-2xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4 leading-tight">
               Pocket <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-cyan-400">Sergeant</span>
             </h3>
-            <p className="text-slate-300 font-medium text-lg leading-relaxed">
+            <p className="text-slate-300 font-medium text-sm md:text-lg leading-relaxed">
               Equipping our officers with the ultimate digital companion. From quick reference guides to essential support resources, Pocket Sergeant is revolutionizing how we serve on the frontline.
             </p>
           </div>
           
           <div className="relative z-10 shrink-0 w-full lg:w-auto flex justify-start lg:justify-end">
-            <Link href="/about">
-              <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-black uppercase tracking-[0.15em] text-xs rounded-full px-10 py-7 shadow-[0_0_20px_rgba(24,119,242,0.4)] hover:shadow-[0_0_40px_rgba(24,119,242,0.6)] transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto">
+            <Link href="/about" className="w-full sm:w-auto flex">
+              <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-black uppercase tracking-wider md:tracking-[0.15em] text-[10px] md:text-xs rounded-full px-6 md:px-10 py-5 md:py-7 shadow-[0_0_20px_rgba(24,119,242,0.4)] hover:shadow-[0_0_40px_rgba(24,119,242,0.6)] transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto whitespace-normal h-auto text-center leading-snug break-words">
                 Learn More About Pocket Sergeant
               </Button>
             </Link>
@@ -44,35 +44,35 @@ export default function Footer() {
         </div>
 
         {/* PRE-FOOTER NEWSLETTER */}
-        <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#050A14] border border-[#1877F2]/30 rounded-[2rem] p-10 md:p-14 mb-24 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.1)] flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
+        <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#050A14] border border-[#1877F2]/30 rounded-[2rem] p-6 md:p-14 mb-12 md:mb-24 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.1)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12 w-full">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#1877F2]/30 rounded-full blur-[80px] pointer-events-none group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
           
-          <div className="relative z-10 w-full md:w-1/2">
-            <h3 className="text-3xl font-black uppercase tracking-tighter text-white mb-3 flex items-center">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7 text-[#1877F2] mr-4"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              Stay Informed
+          <div className="relative z-10 w-full lg:w-1/2">
+            <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight md:tracking-tighter text-white mb-4 flex items-center gap-3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 md:w-7 md:h-7 text-[#1877F2] shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <span className="leading-tight break-words">Stay Informed</span>
             </h3>
-            <p className="text-slate-300 font-medium text-base">
+            <p className="text-slate-300 font-medium text-sm md:text-base leading-relaxed">
               Join our newsletter to receive crucial campaign updates and urgent calls to action. We never spam.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 relative z-10 w-full md:w-1/2 md:justify-end">
+          <div className="flex flex-col sm:flex-row gap-4 relative z-10 w-full lg:w-1/2 lg:justify-end">
             <input 
               type="email" 
               placeholder="Enter your email address" 
               className="w-full max-w-sm bg-[#02050A] border border-white/10 rounded-xl px-5 py-4 text-white text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] transition-all" 
             />
-            <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-[0.2em] text-xs rounded-xl px-8 h-[52px] shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all shrink-0">
+            <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-[0.2em] text-xs rounded-xl px-8 h-[52px] shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all shrink-0 w-full sm:w-auto">
               Join Now
             </Button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-16 lg:gap-8 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-16 lg:gap-8 mb-16 md:mb-32">
           
           {/* Brand Col */}
-          <div className="lg:col-span-2 flex flex-col items-start pr-8">
+          <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left pr-0 lg:pr-8">
             <Link href="/" className="mb-8 block">
               <img src="/ISN-Logo.svg" alt="It Stops Now Logo" className="h-14 w-auto opacity-90 hover:opacity-100 transition-opacity" />
             </Link>
@@ -86,38 +86,38 @@ export default function Footer() {
           </div>
 
           {/* Links 1 */}
-          <div className="lg:col-span-1">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center gap-3">
+          <div className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Explore
             </h4>
             <ul className="space-y-5 text-sm font-medium text-slate-400">
-              <li><Link href="/about" className="hover:text-white hover:translate-x-2 inline-block transition-all duration-300">About the Mission</Link></li>
-              <li><Link href="/the-issue" className="hover:text-white hover:translate-x-2 inline-block transition-all duration-300">The Issue</Link></li>
-              <li><Link href="/events" className="hover:text-white hover:translate-x-2 inline-block transition-all duration-300">Campaign Events</Link></li>
-              <li><Link href="/stories" className="hover:text-white hover:translate-x-2 inline-block transition-all duration-300">Voices of Courage</Link></li>
-              <li><Link href="/news" className="hover:text-white hover:translate-x-2 inline-block transition-all duration-300">News & Updates</Link></li>
+              <li><Link href="/about" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">About the Mission</Link></li>
+              <li><Link href="/the-issue" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">The Issue</Link></li>
+              <li><Link href="/events" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">Campaign Events</Link></li>
+              <li><Link href="/stories" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">Voices of Courage</Link></li>
+              <li><Link href="/news" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">News & Updates</Link></li>
             </ul>
           </div>
 
           {/* Links 2 */}
-          <div className="lg:col-span-1">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center gap-3">
+          <div className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Action
             </h4>
             <ul className="space-y-5 text-sm font-medium text-slate-400">
-              <li><Link href="/take-action" className="hover:text-[#1877F2] hover:translate-x-2 inline-block transition-all duration-300">How to Help</Link></li>
-              <li><Link href="/take-action/contact-mp" className="hover:text-[#1877F2] hover:translate-x-2 inline-block transition-all duration-300">Contact Your MP</Link></li>
-              <li><Link href="/stories/submit" className="hover:text-[#1877F2] hover:translate-x-2 inline-block transition-all duration-300">Share Your Story</Link></li>
-              <li><Link href="/support" className="hover:text-[#1877F2] hover:translate-x-2 inline-block transition-all duration-300">Get Support Now</Link></li>
+              <li><Link href="/take-action" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">How to Help</Link></li>
+              <li><Link href="/take-action/contact-mp" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Contact Your MP</Link></li>
+              <li><Link href="/stories/submit" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Share Your Story</Link></li>
+              <li><Link href="/support" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Get Support Now</Link></li>
             </ul>
           </div>
 
           {/* Connect */}
-          <div className="lg:col-span-2">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center gap-3">
+          <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Connect
             </h4>
-            <div className="flex flex-nowrap gap-4">
+            <div className="flex justify-center lg:justify-start flex-nowrap gap-4">
               <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center hover:bg-[#1877F2] hover:border-[#1877F2] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                 <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5 fill-current"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>
               </Link>
@@ -140,7 +140,7 @@ export default function Footer() {
           <p className="flex items-center gap-2">
             © {new Date().getFullYear()} It Stops Now. All rights reserved.
           </p>
-          <div className="flex gap-8">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mt-4 md:mt-0">
             <Link href="/privacy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-slate-300 transition-colors">Terms & Conditions</Link>
           </div>

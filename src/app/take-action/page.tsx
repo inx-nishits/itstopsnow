@@ -161,7 +161,7 @@ export default function TakeActionPage() {
     <div className="flex flex-col min-h-screen bg-[#030712] text-white font-sans">
       
       {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-32 lg:pb-32 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="/bannerBg.png" 
@@ -177,7 +177,7 @@ export default function TakeActionPage() {
             <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
               <Megaphone className="w-5 h-5" /> DRIVE THE CHANGE
             </h3>
-            <h1 className="text-5xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
+            <h1 className="text-4xl max-sm:text-4xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
               <span className="text-white">TAKE </span><br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 pr-2">ACTION.</span>
             </h1>
@@ -194,7 +194,7 @@ export default function TakeActionPage() {
           {BENEFITS.map((benefit) => {
             const Icon = benefit.icon;
             return (
-              <div key={benefit.id} className="p-10 lg:p-14 flex flex-col justify-start group hover:bg-white/[0.02] transition-colors duration-500">
+              <div key={benefit.id} className="p-6 lg:p-14 flex flex-col justify-start group hover:bg-white/[0.02] transition-colors duration-500">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-[#1877F2]/10 flex items-center justify-center border border-[#1877F2]/20 group-hover:bg-[#1877F2] transition-colors duration-500">
                     <Icon className="w-5 h-5 text-[#1877F2] group-hover:text-white transition-colors duration-500" />
@@ -204,7 +204,7 @@ export default function TakeActionPage() {
                 <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
                   {benefit.description}
                 </p>
-                <div className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+                <div className="text-4xl max-sm:text-3xl lg:text-5xl font-black text-white tracking-tighter">
                   <AnimatedCounter from={0} to={benefit.value} duration={2} />+
                 </div>
               </div>
@@ -214,15 +214,15 @@ export default function TakeActionPage() {
       </section>
 
       {/* 3. FEATURED CAMPAIGNS SECTION */}
-      <section className="relative bg-[#020611] py-32 border-b border-white/10">
+      <section className="relative bg-[#020611] py-12 lg:py-32 border-b border-white/10">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 lg:mb-20 gap-8">
             <div>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Targeted Action</h2>
               </div>
-              <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
+              <h3 className="text-3xl max-sm:text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
                 FEATURED <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">CAMPAIGNS.</span>
               </h3>
             </div>
@@ -232,7 +232,7 @@ export default function TakeActionPage() {
             {CAMPAIGNS.map((campaign) => {
               const CampaignIcon = campaign.icon;
               return (
-                <div key={campaign.id} className="group relative rounded-[2rem] border border-white/10 overflow-hidden min-h-[400px] flex flex-col justify-end p-8 hover:border-[#1877F2]/50 transition-colors duration-500 shadow-xl">
+                <div key={campaign.id} className="group relative rounded-[2rem] border border-white/10 overflow-hidden min-h-[350px] sm:min-h-[400px] flex flex-col justify-end p-6 md:p-8 hover:border-[#1877F2]/50 transition-colors duration-500 shadow-xl">
                   {/* Background Image Overlay */}
                   <div className="absolute inset-0 z-0">
                     <img src={campaign.bgImage} alt={campaign.title} className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 group-hover:grayscale-0 transition-transform duration-700" />
@@ -257,7 +257,7 @@ export default function TakeActionPage() {
       </section>
 
       {/* 4. LIST LETTER TEMPLATES & PERSONALIZATION SIDEBAR */}
-      <section className="relative bg-[#050A14] py-32 pb-48">
+      <section className="relative bg-[#050A14] py-12 lg:py-32 pb-10 lg:pb-20 lg:pb-48">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
@@ -266,7 +266,7 @@ export default function TakeActionPage() {
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Resources</h2>
               </div>
-              <h3 className="font-sans text-4xl md:text-6xl font-black uppercase tracking-tighter text-white leading-[1.1]">
+              <h3 className="font-sans text-3xl max-sm:text-3xl md:text-6xl font-black uppercase tracking-tighter text-white leading-[1.1]">
                 TEMPLATE <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">LIBRARY.</span>
               </h3>
             </div>
@@ -281,7 +281,7 @@ export default function TakeActionPage() {
             <div className="w-full lg:w-2/3 flex flex-col gap-8">
               
               {/* Search & Filters */}
-              <div className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-6 flex flex-col md:flex-row gap-4 shadow-xl">
+              <div className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-5 md:p-6 flex flex-col md:flex-row gap-4 shadow-xl">
                 <div className="relative flex-grow">
                   <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input 
@@ -332,7 +332,7 @@ export default function TakeActionPage() {
                   </div>
                 ) : (
                   paginatedTemplates.map(template => (
-                    <div key={template.id} className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-6 lg:p-8 hover:border-[#1877F2]/50 transition-colors shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div key={template.id} className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-5 md:p-6 lg:p-8 hover:border-[#1877F2]/50 transition-colors shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                       <div className="flex-grow">
                         <h4 className="text-xl font-bold text-white mb-4 leading-tight">{template.title}</h4>
                         <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
@@ -342,13 +342,13 @@ export default function TakeActionPage() {
                         </div>
                       </div>
                       <div className="flex flex-wrap md:flex-nowrap gap-3 shrink-0 w-full md:w-auto">
-                        <Button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} variant="outline" className="w-full md:w-auto bg-transparent border-white/20 hover:bg-white hover:text-black text-white text-[10px] font-bold uppercase tracking-widest h-11 px-5 rounded-xl">
+                        <Button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} variant="outline" className="w-full md:w-auto bg-transparent border-white/20 hover:bg-white hover:text-black text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl">
                           <Search className="w-3.5 h-3.5 mr-2" /> Preview
                         </Button>
-                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest h-11 px-5 rounded-xl transition-all">
+                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
                           <Download className="w-3.5 h-3.5 mr-2" /> PDF
                         </Button>
-                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest h-11 px-5 rounded-xl transition-all">
+                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
                           <Download className="w-3.5 h-3.5 mr-2" /> DOCX
                         </Button>
                       </div>
@@ -397,7 +397,7 @@ export default function TakeActionPage() {
 
             {/* Right: Personalization Sidebar */}
             <div className="w-full lg:w-1/3">
-              <div className="bg-gradient-to-b from-[#02050A] to-[#050A14] border border-[#1877F2]/20 rounded-[2rem] p-8 shadow-2xl sticky top-32">
+              <div className="bg-gradient-to-b from-[#02050A] to-[#050A14] border border-[#1877F2]/20 rounded-[2rem] p-5 sm:p-8 shadow-2xl sticky top-32">
                 <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/10">
                   <div className="w-10 h-10 rounded-full bg-[#1877F2]/10 flex items-center justify-center">
                     <Settings className="w-5 h-5 text-[#1877F2]" />
@@ -493,14 +493,14 @@ export default function TakeActionPage() {
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   {editableContent !== previewTemplate.content && (
-                    <Button onClick={() => setEditableContent(previewTemplate.content)} variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/10 h-9 px-4 text-[10px] font-bold uppercase tracking-widest transition-all">
+                    <Button onClick={() => setEditableContent(previewTemplate.content)} variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/10 max-sm:min-h-[48px] px-4 text-[10px] font-bold uppercase tracking-widest transition-all">
                       <RotateCcw className="w-3.5 h-3.5 mr-2" /> Reset
                     </Button>
                   )}
-                  <Button variant="outline" className="bg-transparent border-[#1877F2]/30 text-[#1877F2] hover:bg-[#1877F2] hover:text-white h-9 px-4 text-[10px] font-bold uppercase tracking-widest transition-all">
+                  <Button variant="outline" className="bg-transparent border-[#1877F2]/30 text-[#1877F2] hover:bg-[#1877F2] hover:text-white max-sm:min-h-[48px] px-4 text-[10px] font-bold uppercase tracking-widest transition-all">
                     <Download className="w-3.5 h-3.5 mr-2" /> Download PDF
                   </Button>
-                  <button onClick={() => setPreviewTemplate(null)} className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors ml-2">
+                  <button onClick={() => setPreviewTemplate(null)} className="min-w-[48px] min-h-[48px] flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors ml-2">
                     <X className="w-5 h-5" />
                   </button>
                 </div>

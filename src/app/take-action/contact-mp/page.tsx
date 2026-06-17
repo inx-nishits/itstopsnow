@@ -159,9 +159,9 @@ I urge you to support the "It Stops Now" campaign and raise this with the Home S
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans pb-12 lg:pb-24">
       {/* HEADER */}
-      <section className="relative w-full min-h-[50vh] pt-32 pb-32 bg-[#050A14] flex flex-col justify-center overflow-hidden border-b border-white/5">
+      <section className="relative w-full min-h-[50vh] pt-16 lg:pt-32 pb-16 lg:pb-32 bg-[#050A14] flex flex-col justify-center overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1533036412154-8c8fbab123d2?auto=format&fit=crop&q=80&w=1920" className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40" alt="UK Parliament" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />

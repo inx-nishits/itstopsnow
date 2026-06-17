@@ -45,10 +45,10 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-24">
+    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-12 lg:pb-24">
       
       {/* HERO / BANNER */}
-      <section className="relative w-full h-[60vh] min-h-[500px] flex flex-col justify-start pt-32 lg:pt-40 border-b border-white/5">
+      <section className="relative w-full h-[60vh] min-h-[500px] flex flex-col justify-start pt-12 lg:pt-24 lg:pt-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src={MOCK_STORY.image} 
@@ -59,7 +59,7 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
         </div>
 
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1200px] pb-16">
-          <Link href="/stories" className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest mb-8 transition-colors">
+          <Link href="/stories" className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest mb-8 py-2 transition-colors">
             <ArrowLeft className="w-3 h-3 mr-2" /> Back to Stories
           </Link>
           
@@ -69,7 +69,7 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-tight mb-6 tracking-tighter uppercase max-w-4xl">
+          <h1 className="text-3xl max-sm:text-3xl md:text-5xl lg:text-7xl font-black text-white leading-tight mb-6 tracking-tighter uppercase max-w-4xl">
             {MOCK_STORY.title}
           </h1>
           
@@ -84,8 +84,8 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
       </section>
 
       {/* CONTENT */}
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1200px] mt-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1200px] mt-8 lg:mt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           
           {/* Main Article */}
           <div className="lg:col-span-8">
@@ -101,7 +101,7 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
 
           {/* Sidebar */}
           <div className="lg:col-span-4 space-y-8">
-            <div className="bg-[#051024] border border-white/5 rounded-3xl p-8 sticky top-32 shadow-xl">
+            <div className="bg-[#051024] border border-white/5 rounded-3xl p-6 sm:p-8 sticky top-32 shadow-xl">
               <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
                 <Share2 className="w-3 h-3"/> SHARE THIS STORY
               </h3>

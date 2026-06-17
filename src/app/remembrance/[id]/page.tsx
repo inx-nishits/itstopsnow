@@ -130,7 +130,7 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pt-24 pb-24 selection:bg-[#1877F2] selection:text-white">
+    <div className="min-h-screen bg-[#030712] text-white font-sans pt-12 lg:pt-24 pb-12 lg:pb-24 selection:bg-[#1877F2] selection:text-white">
       
       {/* Custom keyframes for candle flicker */}
       <style dangerouslySetInnerHTML={{__html: `
@@ -241,7 +241,7 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
         </section>
 
         {/* 2. STREAMLINED CONTENT LAYOUT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12 lg:mb-24">
           
           {/* Main Story Column */}
           <div className="lg:col-span-8 space-y-16">
@@ -347,7 +347,7 @@ export default function MemorialDetailPage({ params }: { params: Promise<{ id: s
       </div>
 
       {/* 3. DEDICATED TRIBUTES SECTION (FULL WIDTH) */}
-      <section className="border-t border-white/10 bg-[#050A14] py-24">
+      <section className="border-t border-white/10 bg-[#050A14] py-12 lg:py-24">
         <div className="container mx-auto px-4 md:px-8 max-w-[1200px]">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div>

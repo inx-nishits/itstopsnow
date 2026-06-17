@@ -104,7 +104,7 @@ function FounderCard({ member }: { member: any }) {
             <img src={member.img} alt={member.name} className="w-full h-full object-cover object-top grayscale mix-blend-luminosity opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/10 to-transparent pointer-events-none"></div>
           </div>
-          <div className="p-6 flex flex-col flex-grow relative z-10 bg-[#050A14]">
+          <div className="p-5 md:p-6 flex flex-col flex-grow relative z-10 bg-[#050A14]">
             <div className="flex flex-col flex-grow justify-center overflow-hidden">
               <div className="mb-2">
                 <span className="text-[#1877F2] font-black text-[10px] md:text-xs uppercase tracking-[0.2em]">{member.role}</span>
@@ -130,7 +130,7 @@ function FounderCard({ member }: { member: any }) {
         {/* Back */}
         <div 
           onClick={() => setIsFlipped(false)}
-          className="absolute inset-0 [backface-visibility:hidden] flex flex-col bg-[#1877F2] rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(24,119,242,0.4)] overflow-hidden cursor-pointer" 
+          className="absolute inset-0 [backface-visibility:hidden] flex flex-col bg-[#1877F2] rounded-3xl p-5 md:p-8 shadow-[0_0_40px_rgba(24,119,242,0.4)] overflow-hidden cursor-pointer" 
           style={{ transform: "rotateY(180deg) translateZ(1px)" }}
         >
            {/* Decorative background elements */}
@@ -168,7 +168,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-[#030712] text-white font-sans">
       
       {/* HERO SECTION */}
-      <section className="relative w-full min-h-[100dvh] flex flex-col justify-center bg-[#050A14] pt-24 pb-16 lg:pt-32 lg:pb-16 border-b border-white/5 overflow-hidden">
+      <section className="relative w-full min-h-[100dvh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-24 pb-12 lg:pt-32 lg:pb-16 border-b border-white/5 overflow-hidden">
         
         {/* Full-Screen Background Image */}
         <div className="absolute inset-0 z-0">
@@ -178,42 +178,43 @@ export default function Home() {
             className="w-full h-full object-cover object-[70%_center] opacity-90 mix-blend-luminosity"
           />
           {/* Dark gradient overlay to blend image into the background and ensure text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[30%] via-[#050A14]/40 via-[60%] to-transparent to-[90%]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[#050A14]/85 md:bg-transparent" />
+          <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-[#050A14] from-[30%] via-[#050A14]/40 via-[60%] to-transparent to-[90%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/80 md:via-[#050A14]/50 to-transparent h-1/2 mt-auto" />
         </div>
 
         {/* Content Container */}
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col lg:flex-row items-center lg:justify-between gap-12 max-w-[1600px] pb-32 md:pb-20">
+        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col lg:flex-row items-center lg:justify-between gap-12 max-w-[1600px] pb-20 lg:pb-40 md:pb-20">
           
           {/* Left Content */}
-          <div className="w-full lg:w-full max-w-[1200px] pt-20 lg:pt-0">
-            <Link href="/about" className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#050A14]/60 border border-white/10 text-white/90 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8 hover:border-[#1877F2]/50 transition-colors backdrop-blur-md shadow-lg">
-              <span className="w-2 h-2 rounded-full bg-[#1877F2]"></span>
-              LEARN ABOUT THE ORGANISATION BEHIND THE MOVEMENT &rarr;
+          <div className="w-full lg:w-full max-w-[1200px] pt-12 md:pt-20 lg:pt-0">
+            <Link href="/about" className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-[#050A14]/60 border border-white/10 text-white/90 text-[9px] md:text-xs font-bold uppercase tracking-widest mb-6 md:mb-8 hover:border-[#1877F2]/50 transition-colors backdrop-blur-md shadow-lg w-fit">
+              <span className="w-1.5 h-1.5 md:w-2 md:h-2 shrink-0 rounded-full bg-[#1877F2]"></span>
+              <span className="leading-tight"><span className="hidden sm:inline">LEARN ABOUT THE ORGANISATION BEHIND THE MOVEMENT</span><span className="sm:hidden">OUR ORGANISATION</span> &rarr;</span>
             </Link>
 
-            <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-[0.9] mb-8 tracking-tighter uppercase drop-shadow-2xl py-2 max-w-5xl">
-              <span className="text-white block">BEHIND EVERY UNIFORM</span>
+            <h1 className="text-4xl max-sm:text-[2.2rem] sm:text-5xl md:text-6xl xl:text-7xl font-black leading-[0.95] mb-5 md:mb-8 tracking-tighter uppercase drop-shadow-2xl py-2 max-w-5xl">
+              <span className="text-white block mb-1 md:mb-0">BEHIND EVERY UNIFORM</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 block pr-4">IS A HUMAN BEING</span>
             </h1>
 
-            <p className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-3xl drop-shadow">
+            <p className="text-[15px] max-sm:text-sm md:text-lg xl:text-xl text-slate-300 mb-8 md:mb-10 font-normal leading-relaxed max-w-3xl drop-shadow">
               We champion the voices of serving and retired police officers, honor the fallen, and demand the deep cultural change that is long overdue. You are not alone.
             </p>
             
-            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-              <Link href="/take-action">
-                <Button className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold px-8 py-7 rounded-full text-sm tracking-wide transition-colors">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 w-full">
+              <Link href="/take-action" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto min-h-[50px] md:min-h-[48px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold px-8 py-3 md:py-7 rounded-full text-xs md:text-sm tracking-wide transition-colors">
                   GET INVOLVED
                 </Button>
               </Link>
-              <Link href="/stories">
-                <Button className="border border-white w-full sm:w-auto bg-transparent text-white hover:bg-white hover:text-black font-bold px-8 py-7 rounded-full text-sm tracking-wide transition-colors backdrop-blur-sm">
+              <Link href="/stories" className="w-full sm:w-auto">
+                <Button className="border border-white w-full sm:w-auto min-h-[50px] md:min-h-[48px] bg-transparent text-white hover:bg-white hover:text-black font-bold px-8 py-3 md:py-7 rounded-full text-xs md:text-sm tracking-wide transition-colors backdrop-blur-sm">
                   READ STORIES
                 </Button>
               </Link>
-              <Link href="/remembrance">
-                <Button className="border border-white/50 w-full sm:w-auto bg-white/5 text-white hover:bg-white hover:text-black font-bold px-8 py-7 rounded-full text-sm tracking-wide transition-colors backdrop-blur-sm">
+              <Link href="/remembrance" className="w-full sm:w-auto">
+                <Button className="border border-white/50 w-full sm:w-auto min-h-[50px] md:min-h-[48px] bg-white/5 text-white hover:bg-white hover:text-black font-bold px-8 py-3 md:py-7 rounded-full text-xs md:text-sm tracking-wide transition-colors backdrop-blur-sm">
                   VIEW ROLL OF HONOUR
                 </Button>
               </Link>
@@ -226,19 +227,19 @@ export default function Home() {
 
         </div>
         {/* INFORMATION ALERT BOX (Pinned to bottom of Hero) */}
-        <div className="absolute bottom-0 left-0 w-full bg-[#1877F2] py-4 border-b border-white/10 z-20 shadow-[0_10px_30px_rgba(24,119,242,0.15)]">
-          <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
-            <div className="flex items-start md:items-center gap-4">
+        <div className="absolute bottom-0 left-0 w-full bg-[#1877F2] py-3 md:py-4 border-b border-white/10 z-20 shadow-[0_10px_30px_rgba(24,119,242,0.15)]">
+          <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-6">
+            <div className="flex items-start md:items-center gap-3 md:gap-4">
               <div className="bg-white/20 p-2 rounded-full shrink-0">
-                <AlertTriangle className="w-5 h-5 text-white" />
+                <AlertTriangle className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </div>
               <div>
-                <p className="text-white font-bold text-sm tracking-wide">TAKE ACTION TODAY</p>
-                <p className="text-white/80 text-xs font-medium">Your support is vital to our cause. Find out how you can get involved and make a difference.</p>
+                <p className="text-white font-bold text-xs md:text-sm tracking-wide">TAKE ACTION TODAY</p>
+                <p className="text-white/80 text-[10px] md:text-xs font-medium">Your support is vital to our cause. Find out how you can get involved.</p>
               </div>
             </div>
-            <Link href="/take-action" className="w-full md:w-auto">
-              <Button className="w-full md:w-auto bg-white text-[#1877F2] hover:bg-slate-100 font-bold px-6 py-3 md:py-2 rounded-full text-xs tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 mt-2 md:mt-0">
+            <Link href="/take-action" className="w-full md:w-auto shrink-0">
+              <Button className="w-full md:w-auto min-h-[44px] md:min-h-[48px] bg-white text-[#1877F2] hover:bg-slate-100 font-bold px-6 py-2 rounded-full text-[10px] md:text-xs tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                 Get Involved
               </Button>
             </Link>
@@ -247,7 +248,7 @@ export default function Home() {
       </section>
 
       {/* AWARENESS STATISTICS SECTION */}
-      <section className="relative z-20 bg-[#02050A] py-24 border-b border-white/10 overflow-hidden">
+      <section className="relative z-20 bg-[#02050A] py-10 lg:py-24 border-b border-white/10 overflow-hidden">
         {/* Glow effect behind the cards to fit the premium theme */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-full" />
         
@@ -258,7 +259,7 @@ export default function Home() {
               return (
                 <div 
                   key={stat.id} 
-                  className="group relative bg-[#050A14] border border-white/10 hover:border-[#1877F2]/40 rounded-3xl p-8 transition-all duration-500 hover:shadow-[0_0_35px_rgba(24,119,242,0.15)] flex flex-col h-full hover:-translate-y-1"
+                  className="group relative bg-[#050A14] border border-white/10 hover:border-[#1877F2]/40 rounded-3xl p-5 md:p-8 transition-all duration-500 hover:shadow-[0_0_35px_rgba(24,119,242,0.15)] flex flex-col h-full hover:-translate-y-1"
                 >
                   {/* Card Header: Icon & Label */}
                   <div className="flex items-center justify-between mb-6">
@@ -298,7 +299,7 @@ export default function Home() {
       </section>
 
       {/* WHY IT STOPS NOW */}
-      <section className="relative bg-[#02050A] py-32 lg:py-48 border-b border-white/10 overflow-hidden">
+      <section className="relative bg-[#02050A] py-12 lg:py-48 border-b border-white/10 overflow-hidden">
         {/* Abstract Background Element to match top section */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
@@ -311,7 +312,7 @@ export default function Home() {
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Why It Stops Now</h2>
               </div>
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.2] mb-6">
+              <h3 className="text-3xl max-sm:text-2xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.2] mb-6">
                 EVERY NUMBER IS <br className="hidden lg:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">A LIFE LEFT BEHIND.</span>
               </h3>
@@ -328,7 +329,7 @@ export default function Home() {
             </div>
 
             {/* Right side: Quote with Cinematic Image Support (Side-by-Side layout with larger image) */}
-            <div className="relative p-8 md:p-12 border border-white/10 bg-[#0a1120]/85 backdrop-blur-2xl rounded-[3rem] group hover:border-[#1877F2]/30 transition-all duration-500 shadow-2xl overflow-hidden lg:col-span-7">
+            <div className="relative p-6 md:p-12 border border-white/10 bg-[#0a1120]/85 backdrop-blur-2xl rounded-[2rem] md:rounded-[3rem] group hover:border-[#1877F2]/30 transition-all duration-500 shadow-2xl overflow-hidden lg:col-span-7">
               <div className="flex flex-col md:flex-row gap-8 items-stretch">
                 
                 {/* Quote Text & Actions (Left Side) */}
@@ -355,11 +356,11 @@ export default function Home() {
                 </div>
 
                 {/* Styled Visible Image Container (Right Side) - Increased size */}
-                <div className="w-full md:w-[280px] lg:w-[320px] shrink-0 relative rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/10 group-hover:border-white/20 transition-all duration-500 min-h-[260px] md:min-h-auto">
+                <div className="w-full md:w-[280px] lg:w-[320px] shrink-0 relative rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/10 group-hover:border-white/20 transition-all duration-500 bg-[#050A14]">
                   <img 
                     src="/images/quote-bg.png" 
                     alt="Supportive holding background" 
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-auto md:h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Subtle color highlight overlay on hover */}
                   <div className="absolute inset-0 bg-[#1877F2]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -371,10 +372,10 @@ export default function Home() {
           </div>
 
           {/* QUOTE CARDS SECTION (Icon, Title, Short Description) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pt-16 mt-20 border-t border-white/10 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12 pt-10 md:pt-16 mt-12 md:mt-20 border-t border-white/10 relative z-10">
             
             {/* Quote Card 1 */}
-            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
+            <div className="bg-[#050A14]/90 backdrop-blur-xl p-6 md:p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
               </div>
@@ -383,7 +384,7 @@ export default function Home() {
             </div>
 
             {/* Quote Card 2 */}
-            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
+            <div className="bg-[#050A14]/90 backdrop-blur-xl p-6 md:p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
               </div>
@@ -392,7 +393,7 @@ export default function Home() {
             </div>
 
             {/* Quote Card 3 */}
-            <div className="bg-[#050A14]/90 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
+            <div className="bg-[#050A14]/90 backdrop-blur-xl p-6 md:p-10 rounded-2xl border border-white/10 shadow-2xl hover:border-[#1877F2]/40 hover:-translate-y-2 transition-all duration-500 group">
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>
               </div>
@@ -406,16 +407,16 @@ export default function Home() {
       </section>
 
       {/* OUR MISSION */}
-      <section className="relative bg-[#02050A] py-32 border-b border-white/10">
+      <section className="relative bg-[#02050A] py-12 lg:py-32 border-b border-white/10">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-20 gap-6 md:gap-8">
             <div>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Our Mission</h2>
               </div>
-              <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
+              <h3 className="text-4xl max-sm:text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
                 A Future Where <br className="hidden md:block"/> No Officer <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">Stands Alone.</span>
               </h3>
             </div>
@@ -427,9 +428,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {/* Pillar 1 */}
-            <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
+            <div className="group relative p-6 md:p-8 lg:p-10 bg-white/[0.02] border border-white/10 rounded-[2rem] md:rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
               <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">1</div>
-              <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
+              <div className="relative z-10 h-full flex flex-col justify-between min-h-0 sm:min-h-[320px]">
                 <div className="flex justify-between items-center">
                   <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
@@ -444,9 +445,9 @@ export default function Home() {
             </div>
 
             {/* Pillar 2 */}
-            <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
+            <div className="group relative p-6 md:p-8 lg:p-10 bg-white/[0.02] border border-white/10 rounded-[2rem] md:rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
               <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">2</div>
-              <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
+              <div className="relative z-10 h-full flex flex-col justify-between min-h-0 sm:min-h-[320px]">
                 <div className="flex justify-between items-center">
                   <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
@@ -461,9 +462,9 @@ export default function Home() {
             </div>
 
             {/* Pillar 3 */}
-            <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
+            <div className="group relative p-6 md:p-8 lg:p-10 bg-white/[0.02] border border-white/10 rounded-[2rem] md:rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
               <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">3</div>
-              <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
+              <div className="relative z-10 h-full flex flex-col justify-between min-h-0 sm:min-h-[320px]">
                 <div className="flex justify-between items-center">
                   <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
@@ -478,9 +479,9 @@ export default function Home() {
             </div>
 
             {/* Pillar 4 */}
-            <div className="group relative p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
+            <div className="group relative p-6 md:p-8 lg:p-10 bg-white/[0.02] border border-white/10 rounded-[2rem] md:rounded-[2.5rem] hover:bg-[#1877F2] transition-colors duration-500 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(24,119,242,0.3)] hover:-translate-y-2">
               <div className="absolute top-0 right-0 -translate-y-4 translate-x-4 text-[150px] font-black text-white/[0.08] group-hover:text-black/10 transition-colors duration-500 pointer-events-none leading-none tracking-tighter">4</div>
-              <div className="relative z-10 h-full flex flex-col justify-between min-h-[320px]">
+              <div className="relative z-10 h-full flex flex-col justify-between min-h-0 sm:min-h-[320px]">
                 <div className="flex justify-between items-center">
                   <div className="w-16 h-16 rounded-full bg-[#1877F2]/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-500 shadow-inner">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-[#1877F2] group-hover:text-white transition-colors duration-500"><path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
@@ -498,12 +499,12 @@ export default function Home() {
         </div>
       </section>
       {/* MISSION STATEMENT BANNER - PREMIUM REVAMP */}
-      <section className="relative w-full py-24 lg:py-40 bg-[#02050A] border-y border-white/5 overflow-hidden">
+      <section className="relative w-full py-12 lg:py-40 bg-[#02050A] border-y border-white/5 overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
         
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
             
             {/* Left Image Side with Overlapping Glass Card */}
             <div className="w-full lg:w-1/2 relative">
@@ -525,7 +526,7 @@ export default function Home() {
               </div>
 
               {/* Overlapping Glass Quote Card */}
-              <div className="lg:absolute relative -mt-16 lg:mt-0 lg:-bottom-10 right-0 lg:-right-16 w-[90%] sm:w-[400px] ml-auto lg:ml-0 bg-[#050b16]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform lg:hover:-translate-y-2 transition-transform duration-500 z-20">
+              <div className="lg:absolute relative -mt-16 lg:mt-0 lg:-bottom-10 right-0 lg:-right-16 w-[90%] sm:w-[400px] ml-auto lg:ml-0 bg-[#050b16]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform lg:hover:-translate-y-2 transition-transform duration-500 z-20">
                 <Quote className="w-10 h-10 text-[#1877F2] mb-6 opacity-80" />
                 <p className="text-white text-lg lg:text-xl font-medium leading-relaxed mb-6 italic">
                   "This organization is not just about reform; it's about saving lives right now. They stepped in when no one else would listen."
@@ -547,7 +548,7 @@ export default function Home() {
                 <span className="text-[#1877F2] text-xs font-bold tracking-[0.3em] uppercase">Why We Stand</span>
               </div>
               
-              <h3 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter text-white mb-8 leading-[1.05] drop-shadow-lg">
+              <h3 className="text-4xl max-sm:text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-tighter text-white mb-8 leading-[1.05] drop-shadow-lg">
                 Our Mission <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-cyan-400">Is Clear.</span>
               </h3>
@@ -577,15 +578,15 @@ export default function Home() {
 
 
       {/* FOUNDING MEMBERS - ALTERNATING EDITORIAL REVAMP */}
-      <section className="bg-[#02050A] py-32 border-b border-white/5 relative overflow-hidden">
+      <section className="bg-[#02050A] py-12 lg:py-32 border-b border-white/5 relative overflow-hidden">
         
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 mb-20 text-center">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 mb-12 md:mb-20 text-center">
           <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
             <span className="w-8 h-px bg-[#1877F2]"></span>
             The Architects
             <span className="w-8 h-px bg-[#1877F2]"></span>
           </h2>
-          <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
+          <h3 className="text-3xl max-sm:text-3xl md:text-4xl lg:text-6xl font-black uppercase tracking-tighter text-white">
             Founding Members
           </h3>
         </div>
@@ -664,7 +665,7 @@ export default function Home() {
                   <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Name</label>
                   <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2] text-sm" placeholder="Your Name" />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Role / Force</label>
                     <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2] text-sm" placeholder="e.g. PC / Supporter" />

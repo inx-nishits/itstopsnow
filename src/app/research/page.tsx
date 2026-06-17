@@ -131,10 +131,10 @@ export default function ResearchListing() {
   const paginatedResearch = sortedResearch.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="min-h-screen bg-[#020611] text-white font-sans pb-32">
+    <div className="min-h-screen bg-[#020611] text-white font-sans pb-16 lg:pb-32">
       
       {/* HERO */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-16 lg:pt-32 pb-16 lg:pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1920" 
@@ -218,9 +218,9 @@ export default function ResearchListing() {
       </section>
 
       {/* GRID */}
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] mt-24">
+      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] mt-12 lg:mt-24">
         {paginatedResearch.length === 0 ? (
-          <div className="text-center py-32 bg-white/5 rounded-3xl border border-white/10">
+          <div className="text-center py-16 lg:py-32 bg-white/5 rounded-3xl border border-white/10">
             <FileText className="w-16 h-16 text-slate-600 mx-auto mb-6" />
             <h3 className="text-2xl font-sans font-bold text-white mb-2 uppercase tracking-tight">No research found</h3>
             <p className="text-slate-400">Try adjusting your search or category filters.</p>
@@ -312,7 +312,7 @@ export default function ResearchListing() {
 
             {/* PAGINATION CONTROLS */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-4 mt-16">
+              <div className="flex items-center justify-center gap-4 mt-8 lg:mt-16">
                 <Button
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}

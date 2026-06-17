@@ -159,7 +159,7 @@ export default function StoriesPage() {
     <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
       
       {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-32 pb-32 lg:pt-40 lg:pb-40 border-b border-white/5">
+      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1920" 
@@ -180,7 +180,7 @@ export default function StoriesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
+              className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
             >
               <span className="text-white">REAL PEOPLE.</span><br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">REAL STORIES.</span>
@@ -243,15 +243,15 @@ export default function StoriesPage() {
       </section>
 
       {/* 4. STORY GRID & COUNTER */}
-      <section className="py-24 bg-[#020611]">
+      <section className="py-12 lg:py-24 bg-[#020611]">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex justify-between items-end border-b border-white/10 pb-8 mb-16">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-white/10 pb-8 mb-10 sm:mb-16">
             <h2 className="font-sans text-3xl font-bold uppercase tracking-tight text-white">LATEST STORIES</h2>
             <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {filteredStories.length} stories</div>
           </div>
 
           {filteredStories.length === 0 ? (
-            <div className="text-center py-20 text-slate-500">
+            <div className="text-center py-10 lg:py-20 text-slate-500">
               <Search className="w-12 h-12 mx-auto mb-4 opacity-20" />
               <p className="font-bold uppercase tracking-widest text-sm">No stories found matching your search.</p>
               <button onClick={() => { setSearchTerm(""); setActiveFilter("All"); }} className="mt-4 text-[#1877F2] hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">Clear Filters</button>
@@ -269,7 +269,7 @@ export default function StoriesPage() {
                     />
                   </div>
 
-                  <div className="p-8 flex flex-col flex-grow">
+                  <div className="p-5 sm:p-8 flex flex-col flex-grow">
                     <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
                       <span className="text-[9px] font-bold text-[#1877F2] uppercase tracking-[0.2em] bg-[#1877F2]/10 px-3 py-1.5 rounded-full border border-[#1877F2]/20">
                         {story.type}
@@ -303,7 +303,7 @@ export default function StoriesPage() {
 
           {/* 5. PAGINATION */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-3 mt-24 pt-10 border-t border-white/10">
+            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mt-8 lg:mt-16 lg:mt-24 pt-10 border-t border-white/10">
               <Button 
                 onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
@@ -341,7 +341,7 @@ export default function StoriesPage() {
       </section>
 
       {/* 6. CALL TO ACTION BANNER */}
-      <section className="relative w-full py-32 border-t border-white/5 overflow-hidden">
+      <section className="relative w-full py-12 lg:py-32 border-t border-white/5 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920" 
@@ -352,10 +352,10 @@ export default function StoriesPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-transparent to-[#020611]" />
         </div>
 
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
           <div className="lg:w-1/2 flex flex-col items-start gap-6 text-left">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2]">YOU ARE NOT ALONE</h2>
-            <h3 className="font-sans text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">YOUR VOICE COULD SAVE A LIFE</h3>
+            <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">YOUR VOICE COULD SAVE A LIFE</h3>
             <p className="text-slate-300 text-base leading-relaxed max-w-xl">
               By sharing your story, you help break the stigma, hold the system accountable, and show others they are not alone.
             </p>
@@ -368,7 +368,7 @@ export default function StoriesPage() {
 
           <div className="lg:w-1/2 w-full">
             {/* Supportive Quote Block */}
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 relative overflow-hidden shadow-2xl group">
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-6 md:p-10 relative overflow-hidden shadow-2xl group">
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
               <svg viewBox="0 0 24 24" className="w-10 h-10 text-[#1877F2] opacity-30 mb-6 fill-current" aria-hidden="true">
                 <path d="M11.19 10.43c0 2.2-1.29 3.44-2.53 4.41C7.4 15.82 6.5 17 6.5 19H5c0-2.42 1.34-3.88 2.5-4.79 1.05-.82 1.69-1.67 1.69-2.78H5V5h6.19v5.43zm9.81 0c0 2.2-1.29 3.44-2.53 4.41-1.26.98-2.16 2.16-2.16 4.16h-1.5c0-2.42 1.34-3.88 2.5-4.79 1.05-.82 1.69-1.67 1.69-2.78H16V5h6.19v5.43z"/>
@@ -409,7 +409,7 @@ export default function StoriesPage() {
                   </h3>
                   {!isSuccess && <p className="text-slate-400 text-xs">Share your experience to help drive change.</p>}
                 </div>
-                <button onClick={() => { setIsSubmitModalOpen(false); setTimeout(() => setIsSuccess(false), 300); }} className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors">
+                <button onClick={() => { setIsSubmitModalOpen(false); setTimeout(() => setIsSuccess(false), 300); }} className="min-w-[48px] min-h-[48px] flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -429,7 +429,7 @@ export default function StoriesPage() {
                 </div>
               ) : (
               <>
-              <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+              <div className="flex-1 overflow-y-auto p-5 md:p-8 space-y-6">
                 
                 <div className="space-y-4">
                   <div className="flex flex-col md:flex-row gap-4">
@@ -462,7 +462,7 @@ export default function StoriesPage() {
                       checked={isAnonymous} 
                       onChange={() => setIsAnonymous(!isAnonymous)}
                     />
-                    <span className="text-xs text-slate-300 font-medium group-hover:text-white transition-colors">Submit anonymously (name will be hidden)</span>
+                    <span className="text-xs text-slate-300 font-medium group-hover:text-white transition-colors pl-2 py-3">Submit anonymously (name will be hidden)</span>
                   </label>
                 </div>
 
@@ -498,7 +498,7 @@ export default function StoriesPage() {
                 <div className="pt-4 border-t border-white/5">
                   <label className="flex items-start gap-3 cursor-pointer group">
                     <input type="checkbox" className="w-5 h-5 mt-0.5 rounded border-white/20 bg-transparent text-[#1877F2] focus:ring-[#1877F2]/50 cursor-pointer" />
-                    <span className="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
+                    <span className="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors pl-2 py-3">
                       I consent to IT STOPS NOW collecting my story and processing my personal data in accordance with the Privacy Policy. I understand my story may be used for campaigning purposes.
                     </span>
                   </label>

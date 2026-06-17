@@ -77,7 +77,7 @@ function PersonalizeContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pt-32 lg:pt-40 pb-32">
+    <div className="min-h-screen bg-[#030712] text-white font-sans pt-12 lg:pt-24 lg:pt-40 pb-10 lg:pb-20 lg:pb-32">
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1400px]">
         
         {/* Header */}
@@ -85,7 +85,7 @@ function PersonalizeContent() {
           <button onClick={() => router.back()} className="flex items-center gap-2 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Templates
           </button>
-          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4">
+          <h1 className="text-3xl max-sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4">
             PERSONALIZE & <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">SEND.</span>
           </h1>
           <p className="text-slate-400 text-lg">Review your representative details and customize your letter before sending.</p>
@@ -113,7 +113,7 @@ function PersonalizeContent() {
                     placeholder="Enter Postcode"
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors"
                   />
-                  <Button variant="outline" className="bg-transparent border-white/20 hover:bg-white hover:text-black">
+                  <Button variant="outline" className="w-12 h-12 bg-transparent border-white/20 hover:bg-white hover:text-black">
                     <Search className="w-4 h-4" />
                   </Button>
                 </div>
