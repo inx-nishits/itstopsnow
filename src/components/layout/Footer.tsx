@@ -16,6 +16,33 @@ export default function Footer() {
 
       <div className="w-full px-6 lg:px-12 mx-auto relative z-10 max-w-[1600px]">
         
+        {/* POCKET SERGEANT CTA */}
+        <div className="bg-gradient-to-r from-[#050b14] to-[#0a1526] border border-[#1877F2]/30 rounded-[2rem] p-10 md:p-14 mb-8 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.15)] flex flex-col lg:flex-row items-center justify-between gap-8 w-full">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#1877F2]/20 transition-colors duration-700 -translate-y-1/2 translate-x-1/3"></div>
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[80px] pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
+          
+          <div className="relative z-10 max-w-3xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-[2px] bg-[#1877F2]"></div>
+              <span className="text-[#1877F2] font-bold text-xs uppercase tracking-[0.3em]">Empowering Officers</span>
+            </div>
+            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4 leading-tight">
+              Pocket <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-cyan-400">Sergeant</span>
+            </h3>
+            <p className="text-slate-300 font-medium text-lg leading-relaxed">
+              Equipping our officers with the ultimate digital companion. From quick reference guides to essential support resources, Pocket Sergeant is revolutionizing how we serve on the frontline.
+            </p>
+          </div>
+          
+          <div className="relative z-10 shrink-0 w-full lg:w-auto flex justify-start lg:justify-end">
+            <Link href="/about">
+              <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-black uppercase tracking-[0.15em] text-xs rounded-full px-10 py-7 shadow-[0_0_20px_rgba(24,119,242,0.4)] hover:shadow-[0_0_40px_rgba(24,119,242,0.6)] transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto">
+                Learn More About Pocket Sergeant
+              </Button>
+            </Link>
+          </div>
+        </div>
+
         {/* PRE-FOOTER NEWSLETTER */}
         <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#050A14] border border-[#1877F2]/30 rounded-[2rem] p-10 md:p-14 mb-24 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.1)] flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#1877F2]/30 rounded-full blur-[80px] pointer-events-none group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
