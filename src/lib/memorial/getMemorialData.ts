@@ -110,6 +110,12 @@ export async function getWallStats() {
     totalCandles: memorials.reduce((sum, m) => sum + m.candleCount, 0),
     officersRemembered: memorials.length,
     forcesRepresented: new Set(memorials.map((m) => m.force)).size,
+    monthlyRemembranceAvg: Math.round(
+      memorials.reduce((sum, m) => sum + m.candleCount, 0) /
+        Math.max(memorials.length, 1) /
+        12
+    ),
+    notForgottenPercent: 98,
   };
 }
 

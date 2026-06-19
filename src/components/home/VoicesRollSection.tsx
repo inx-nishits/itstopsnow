@@ -15,10 +15,11 @@ interface VoicesRollSectionProps {
 }
 
 export default function VoicesRollSection({ voices, rollPreview }: VoicesRollSectionProps) {
-  const featured = voices.find((v) => v.featured) ?? voices[0];
-  const supporting = voices.filter((v) => v.id !== featured?.id).slice(0, 2);
-  const [activeVoiceId, setActiveVoiceId] = useState(featured?.id ?? voices[0]?.id);
-  const activeVoice = voices.find((v) => v.id === activeVoiceId) ?? featured ?? voices[0];
+  const displayVoices = voices.slice(0, 3);
+  const defaultId = voices.find((v) => v.featured)?.id ?? voices[0]?.id;
+  const [activeVoiceId, setActiveVoiceId] = useState(defaultId);
+  const activeVoice =
+    voices.find((v) => v.id === activeVoiceId) ?? displayVoices[0] ?? voices[0];
 
   if (!voices.length && !rollPreview.length) return null;
 
@@ -68,45 +69,58 @@ export default function VoicesRollSection({ voices, rollPreview }: VoicesRollSec
 
                 <div className="lg:col-span-7 flex flex-col justify-center">
                   <Quote className="w-10 h-10 text-[#1877F2]/25 mb-4 shrink-0" />
-                  <AnimatePresence mode="wait">
-                    <motion.blockquote
-                      key={activeVoice.id}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.4 }}
-                      className="text-xl sm:text-2xl md:text-3xl text-[#010B19] font-medium leading-[1.35] tracking-tight mb-6 sm:mb-8"
-                    >
-                      &ldquo;{activeVoice.quote}&rdquo;
-                    </motion.blockquote>
-                  </AnimatePresence>
+                  <div className="min-h-[8rem] sm:min-h-[9rem]">
+                    <AnimatePresence mode="wait">
+                      <motion.blockquote
+                        key={activeVoice.id}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.35 }}
+                        className="text-xl sm:text-2xl md:text-3xl text-[#010B19] font-medium leading-[1.35] tracking-tight mb-6 sm:mb-8"
+                      >
+                        &ldquo;{activeVoice.quote}&rdquo;
+                      </motion.blockquote>
+                    </AnimatePresence>
+                  </div>
                   <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl mb-8">
                     Real words from families, colleagues, and friends who live with the human cost of
                     prolonged investigations — and who believe change cannot wait.
                   </p>
 
-                  {supporting.length > 0 && (
+                  {displayVoices.length > 1 && (
                     <div className="flex flex-col sm:flex-row gap-3">
-                      {[activeVoice, ...supporting]
-                        .filter((v, i, arr) => arr.findIndex((x) => x.id === v.id) === i)
-                        .slice(0, 3)
-                        .map((voice) => (
+                      {displayVoices.map((voice) => {
+                        const isActive = voice.id === activeVoiceId;
+                        return (
                           <button
                             key={voice.id}
                             type="button"
                             onClick={() => setActiveVoiceId(voice.id)}
-                            className={`text-left px-4 py-3 rounded-xl border transition-colors min-h-[48px] ${
-                              voice.id === activeVoiceId
-                                ? "border-[#1877F2]/40 bg-[#1877F2]/8 text-[#010B19]"
-                                : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-[#010B19]"
+                            aria-pressed={isActive}
+                            className={`text-left px-4 py-3 rounded-xl border-2 transition-all min-h-[48px] flex-1 sm:flex-initial ${
+                              isActive
+                                ? "border-[#1877F2] bg-white text-[#010B19] shadow-md ring-2 ring-[#1877F2]/15"
+                                : "border-slate-200 bg-white text-slate-600 hover:border-[#1877F2]/50 hover:text-[#010B19]"
                             }`}
                           >
-                            <span className="block text-xs font-bold truncate">{voice.name}</span>
-                            <span className="block text-[10px] uppercase tracking-wider truncate opacity-70">
+                            <span
+                              className={`block text-xs font-bold truncate ${
+                                isActive ? "text-[#1877F2]" : "text-[#010B19]"
+                              }`}
+                            >
+                              {voice.name}
+                            </span>
+                            <span
+                              className={`block text-[10px] uppercase tracking-wider truncate mt-0.5 ${
+                                isActive ? "text-slate-600" : "text-slate-500"
+                              }`}
+                            >
                               {voice.relationship}
                             </span>
                           </button>
-                        ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>

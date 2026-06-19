@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, Loader2, FileText, CheckCircle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { simulateSubmit } from "@/lib/mock/utils";
 import { motion } from "framer-motion";
 import { EditorialSection } from "@/components/layout/PageSection";
 import { PageHero } from "@/components/layout/PageHero";
@@ -37,6 +37,9 @@ function PersonalizeContent() {
   const [details, setDetails] = useState(searchParams.get("details") || "");
   const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATES[0].id);
   const [letterContent, setLetterContent] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [sendSuccess, setSendSuccess] = useState(false);
+  const [sendError, setSendError] = useState("");
 
   // Mock API Call to find MP
   useEffect(() => {
@@ -213,10 +216,31 @@ function PersonalizeContent() {
                     <Save className="w-4 h-4 mr-2" /> Save Draft
                   </Button>
                 </div>
-                <Button className="w-full sm:w-auto bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs py-6 px-10 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
-                  <Send className="w-4 h-4 mr-2" /> Send to MP
+                <Button
+                  type="button"
+                  disabled={isSending || !mpFound}
+                  onClick={async () => {
+                    if (!mpFound) return;
+                    setSendError("");
+                    setIsSending(true);
+                    await simulateSubmit(2000);
+                    setIsSending(false);
+                    setSendSuccess(true);
+                  }}
+                  className="w-full sm:w-auto bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs py-6 px-10 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all disabled:opacity-60"
+                >
+                  <Send className="w-4 h-4 mr-2" /> {isSending ? "Sending…" : sendSuccess ? "Sent!" : "Send to MP"}
                 </Button>
               </div>
+
+              {sendSuccess && (
+                <div className="mx-6 mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm">
+                  Your letter has been sent to {mpFound?.name ?? "your MP"} (prototype). A copy would be emailed to you when the backend is connected.
+                </div>
+              )}
+              {sendError && (
+                <p className="mx-6 mb-6 text-red-500 text-xs" role="alert">{sendError}</p>
+              )}
 
             </div>
           </div>

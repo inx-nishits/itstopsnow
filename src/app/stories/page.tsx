@@ -8,7 +8,10 @@ import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/compone
 import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { simulateSubmit, validateEmail } from "@/lib/mock/utils";
+import { Pagination } from "@/components/ui/Pagination";
 
 export const STORIES = [
   { 
@@ -125,7 +128,8 @@ We spent two years in financial terror, wondering if we would lose our home. She
   }
 ];
 
-export default function StoriesPage() {
+function StoriesPageContent() {
+  const searchParams = useSearchParams();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -133,7 +137,16 @@ export default function StoriesPage() {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", title: "", story: "" });
+  const [hasConsent, setHasConsent] = useState(false);
   const itemsPerPage = 6;
+
+  useEffect(() => {
+    if (searchParams.get("submit") === "1") {
+      setIsSubmitModalOpen(true);
+    }
+  }, [searchParams]);
 
   const filters = ["All", "Serving Officer", "Former Officer", "Family Member", "Recovery"];
   
@@ -419,6 +432,8 @@ export default function StoriesPage() {
                       <input 
                         type="text" 
                         disabled={isAnonymous}
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
                         className={`w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors ${isAnonymous ? 'opacity-50 cursor-not-allowed' : ''}`}
                         placeholder="John Doe"
                       />
@@ -427,6 +442,8 @@ export default function StoriesPage() {
                       <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
                       <input 
                         type="email" 
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
                         className="w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors"
                         placeholder="john@example.com"
                       />
@@ -451,6 +468,8 @@ export default function StoriesPage() {
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Story Title</label>
                   <input 
                     type="text" 
+                    value={form.title}
+                    onChange={(e) => setForm({ ...form, title: e.target.value })}
                     className="w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors"
                     placeholder="E.g., 3 Years of Unnecessary Investigation"
                   />
@@ -460,6 +479,8 @@ export default function StoriesPage() {
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Story</label>
                   <textarea 
                     rows={8}
+                    value={form.story}
+                    onChange={(e) => setForm({ ...form, story: e.target.value })}
                     className="w-full bg-[#02050A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors resize-none"
                     placeholder="Tell us what happened. Take your time..."
                   />
@@ -478,7 +499,7 @@ export default function StoriesPage() {
 
                 <div className="pt-4 border-t border-white/5">
                   <label className="flex items-start gap-3 cursor-pointer group">
-                    <input type="checkbox" className="w-5 h-5 mt-0.5 rounded border-white/20 bg-transparent text-[#1877F2] focus:ring-[#1877F2]/50 cursor-pointer" />
+                    <input type="checkbox" checked={hasConsent} onChange={(e) => setHasConsent(e.target.checked)} className="w-5 h-5 mt-0.5 rounded border-white/20 bg-transparent text-[#1877F2] focus:ring-[#1877F2]/50 cursor-pointer" />
                     <span className="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors pl-2 py-3">
                       I consent to IT STOPS NOW collecting my story and processing my personal data in accordance with the Privacy Policy. I understand my story may be used for campaigning purposes.
                     </span>
@@ -487,17 +508,33 @@ export default function StoriesPage() {
 
               </div>
 
+              {submitError && (
+                <p className="px-6 pb-2 text-red-400 text-xs" role="alert">{submitError}</p>
+              )}
+
               <div className="p-6 bg-[#02050A] border-t border-white/10 flex justify-end gap-4 shrink-0">
                 <Button onClick={() => setIsSubmitModalOpen(false)} disabled={isSubmitting} variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/5 text-xs tracking-widest uppercase font-bold px-6">
                   Cancel
                 </Button>
                 <Button 
-                  onClick={() => {
+                  onClick={async () => {
+                    setSubmitError("");
+                    if (!validateEmail(form.email)) {
+                      setSubmitError("Please enter a valid email address.");
+                      return;
+                    }
+                    if (!form.title.trim() || form.story.trim().length < 20) {
+                      setSubmitError("Please add a title and story (at least 20 characters).");
+                      return;
+                    }
+                    if (!hasConsent) {
+                      setSubmitError("Please consent to our privacy policy before submitting.");
+                      return;
+                    }
                     setIsSubmitting(true);
-                    setTimeout(() => {
-                      setIsSubmitting(false);
-                      setIsSuccess(true);
-                    }, 1500);
+                    await simulateSubmit();
+                    setIsSubmitting(false);
+                    setIsSuccess(true);
                   }}
                   disabled={isSubmitting} 
                   className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-full shadow-[0_0_20px_rgba(24,119,242,0.3)]"
@@ -513,5 +550,13 @@ export default function StoriesPage() {
       </AnimatePresence>
 
     </div>
+  );
+}
+
+export default function StoriesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center font-sans text-slate-500">Loading stories…</div>}>
+      <StoriesPageContent />
+    </Suspense>
   );
 }

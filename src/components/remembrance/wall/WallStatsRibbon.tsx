@@ -1,40 +1,23 @@
 "use client";
 
-import { Flame, Shield, Users, LayoutGrid } from "lucide-react";
+import { Flame, Shield, Users, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface WallStatsRibbonProps {
   officersRemembered: number;
   totalCandles: number;
   forcesRepresented: number;
-  onWallCount: number;
+  monthlyRemembranceAvg?: number;
+  notForgottenPercent?: number;
+  onWallCount?: number;
 }
 
 const statsConfig = [
-  {
-    key: "officers",
-    label: "Officers remembered",
-    icon: Users,
-    accent: false,
-  },
-  {
-    key: "candles",
-    label: "Candles lit",
-    icon: Flame,
-    accent: true,
-  },
-  {
-    key: "forces",
-    label: "Forces represented",
-    icon: Shield,
-    accent: false,
-  },
-  {
-    key: "wall",
-    label: "On this wall",
-    icon: LayoutGrid,
-    accent: false,
-  },
+  { key: "officers", label: "Officers remembered", icon: Users, accent: false },
+  { key: "monthly", label: "Monthly remembrance avg", icon: Heart, accent: false },
+  { key: "forces", label: "Forces represented", icon: Shield, accent: false },
+  { key: "candles", label: "Candles lit", icon: Flame, accent: true },
+  { key: "notForgotten", label: "Not forgotten", icon: Heart, accent: false },
 ] as const;
 
 /** Full-width memorial stats — bridges hero and roll of honour. */
@@ -42,13 +25,15 @@ export default function WallStatsRibbon({
   officersRemembered,
   totalCandles,
   forcesRepresented,
-  onWallCount,
+  monthlyRemembranceAvg = 0,
+  notForgottenPercent = 98,
 }: WallStatsRibbonProps) {
   const values: Record<(typeof statsConfig)[number]["key"], string> = {
     officers: officersRemembered.toLocaleString(),
-    candles: totalCandles.toLocaleString(),
+    monthly: monthlyRemembranceAvg.toLocaleString(),
     forces: String(forcesRepresented),
-    wall: String(onWallCount),
+    candles: totalCandles.toLocaleString(),
+    notForgotten: `${notForgottenPercent}%`,
   };
 
   return (
@@ -70,7 +55,7 @@ export default function WallStatsRibbon({
           A living record of remembrance
         </p>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 lg:gap-4">
           {statsConfig.map(({ key, label, icon: Icon, accent }) => (
             <article
               key={key}

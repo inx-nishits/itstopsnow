@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 
 const cardBase =
   "relative overflow-hidden rounded-2xl sm:rounded-[1.75rem] border border-[#1877F2]/30 shadow-[0_10px_40px_rgba(24,119,242,0.12)] flex flex-col h-full p-5 sm:p-8 lg:p-10";
 
 export default function Footer() {
+  const newsletter = useNewsletterSubscribe();
+
   return (
     <footer className="relative bg-[#02050A] pt-12 sm:pt-16 md:pt-24 pb-10 sm:pb-12 text-white font-sans overflow-hidden border-t border-white/5">
       
@@ -85,9 +88,18 @@ export default function Footer() {
                 </div>
               </div>
 
+              {newsletter.isSubscribed ? (
+                <div className="mt-auto pt-4 sm:pt-5 border-t border-white/10 flex flex-col items-center text-center py-4">
+                  <div className="w-12 h-12 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-3">
+                    <Check className="w-6 h-6" />
+                  </div>
+                  <p className="text-white text-sm font-bold mb-1">You&apos;re subscribed!</p>
+                  <p className="text-slate-400 text-xs">Campaign updates will arrive in your inbox.</p>
+                </div>
+              ) : (
               <form
                 className="mt-auto flex flex-col gap-3 sm:gap-3.5 pt-4 sm:pt-5 border-t border-white/10"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={newsletter.subscribe}
               >
                 <label htmlFor="footer-newsletter-email" className="sr-only">
                   Email address
@@ -96,16 +108,24 @@ export default function Footer() {
                   id="footer-newsletter-email"
                   type="email"
                   autoComplete="email"
+                  value={newsletter.email}
+                  onChange={(e) => newsletter.setEmail(e.target.value)}
+                  disabled={newsletter.isSubscribing}
                   placeholder="Enter your email address"
                   className="w-full min-h-[48px] bg-[#02050A]/80 border border-white/10 rounded-xl px-4 sm:px-5 text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-[#1877F2] focus:ring-2 focus:ring-[#1877F2]/30 transition-all"
                 />
+                {newsletter.error && (
+                  <p className="text-red-400 text-xs" role="alert">{newsletter.error}</p>
+                )}
                 <Button
                   type="submit"
-                  className="w-full min-h-[48px] sm:min-h-[52px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-[0.15em] text-xs rounded-xl px-6 shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all"
+                  disabled={newsletter.isSubscribing}
+                  className="w-full min-h-[48px] sm:min-h-[52px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-[0.15em] text-xs rounded-xl px-6 shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all disabled:opacity-60"
                 >
-                  Join Now
+                  {newsletter.isSubscribing ? "Joining…" : "Join Now"}
                 </Button>
               </form>
+              )}
             </div>
           </div>
         </div>
@@ -148,7 +168,7 @@ export default function Footer() {
             <ul className="space-y-5 text-sm font-medium text-slate-400">
               <li><Link href="/take-action" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">How to Help</Link></li>
               <li><Link href="/take-action/contact-mp" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Contact Your MP</Link></li>
-              <li><Link href="/stories/submit" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Share Your Story</Link></li>
+              <li><Link href="/stories?submit=1" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Share Your Story</Link></li>
               <li><Link href="/support" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Get Support Now</Link></li>
             </ul>
           </div>

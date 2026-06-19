@@ -174,6 +174,24 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       
       <HomeHero />
 
+      {/* INFORMATION ALERT */}
+      <div className="relative z-20 bg-[#050A14] border-y border-[#1877F2]/25">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] py-4 sm:py-5">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <span className="shrink-0 inline-flex items-center justify-center w-fit px-3 py-1 rounded-full bg-[#1877F2] text-white text-[10px] font-bold uppercase tracking-widest">
+              Important
+            </span>
+            <p className="text-sm sm:text-base text-white font-medium leading-relaxed">
+              In <strong className="text-[#1877F2]">12 of 13</strong> forces, misconduct investigations exceed 12 months.
+              Officers deserve timely justice — join the campaign for reform.
+            </p>
+            <Link href="/the-issue" className="shrink-0 text-[#1877F2] text-xs font-bold uppercase tracking-widest hover:text-white hover:underline whitespace-nowrap transition-colors">
+              Learn the facts →
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* AWARENESS STATISTICS — light editorial */}
       <section className="theme-editorial relative z-20 bg-[#f4f5f7] text-[#010B19] py-14 sm:py-16 lg:py-28 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#1877F2]/20 to-transparent pointer-events-none" />

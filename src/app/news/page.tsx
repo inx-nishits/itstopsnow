@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Newspaper, Video, Mic, Calendar, User, Search, Filter, Mail, ArrowLeft, Clock, Scale, Headphones, Database } from "lucide-react";
 import Link from "next/link";
@@ -9,6 +9,8 @@ import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/compone
 import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
+import { Pagination } from "@/components/ui/Pagination";
+import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 
 export const LATEST_NEWS = [
   { 
@@ -76,8 +78,9 @@ export const LATEST_NEWS = [
 export default function NewsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const newsletter = useNewsletterSubscribe();
+  const itemsPerPage = 6;
 
   const filteredNews = LATEST_NEWS.filter((news) => {
     const matchesSearch = news.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -87,6 +90,13 @@ export default function NewsPage() {
     
     return matchesSearch && matchesCategory;
   });
+
+  const totalPages = Math.max(1, Math.ceil(filteredNews.length / itemsPerPage));
+  const paginatedNews = filteredNews.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, activeCategory]);
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
@@ -165,7 +175,7 @@ export default function NewsPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredNews.map((news) => (
+              {paginatedNews.map((news) => (
                 <div key={news.id} className={cn(hybrid.editorialCard, hybrid.editorialCardHover, "overflow-hidden flex flex-col group hover:-translate-y-2 h-full")}>
                   
                   <div className={cn("h-48 relative overflow-hidden bg-slate-100 border-b", hybrid.editorialBorder)}>
@@ -208,15 +218,12 @@ export default function NewsPage() {
             </div>
           )}
 
-          <div className={cn("flex justify-center items-center gap-3 mt-10 lg:mt-20 pt-8 border-t", hybrid.editorialBorder)}>
-            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full opacity-50 cursor-not-allowed", hybrid.editorialChip)}><ArrowLeft className="w-4 h-4" /></Button>
-            <Button className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChipActive)}>1</Button>
-            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChip)}>2</Button>
-            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChip)}>3</Button>
-            <span className={cn("font-bold mx-2 tracking-[0.3em]", hybrid.editorialMuted)}>...</span>
-            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChip)}>8</Button>
-            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full", hybrid.editorialChip)}><ArrowRight className="w-4 h-4" /></Button>
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            className={cn("mt-10 lg:mt-20 pt-8 border-t", hybrid.editorialBorder)}
+          />
         </div>
       </EditorialSection>
 
@@ -267,37 +274,35 @@ export default function NewsPage() {
               Stay updated with the latest campaign news, media releases, and parliamentary bill progress.
             </p>
             
-            {isSubscribed ? (
+            {newsletter.isSubscribed ? (
               <div className="flex flex-col items-center justify-center p-8">
                 <div className="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-4">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
                 <h4 className="text-xl font-bold uppercase tracking-tight text-white mb-2">Subscribed!</h4>
                 <p className="text-slate-400 text-sm max-w-sm">
-                  Thank you for subscribing to our newsletter. You're now on the list.
+                  Thank you for subscribing. You&apos;ll receive campaign updates in your inbox.
                 </p>
               </div>
             ) : (
             <>
-            <form onSubmit={(e) => { 
-              e.preventDefault(); 
-              setIsSubscribing(true);
-              setTimeout(() => {
-                setIsSubscribing(false);
-                setIsSubscribed(true);
-              }, 1500);
-            }} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <form onSubmit={newsletter.subscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input 
                 type="email" 
                 required
-                disabled={isSubscribing}
+                value={newsletter.email}
+                onChange={(e) => newsletter.setEmail(e.target.value)}
+                disabled={newsletter.isSubscribing}
                 placeholder="YOUR EMAIL ADDRESS" 
                 className="flex-grow bg-[#020611] border border-white/10 rounded-xl px-5 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors" 
               />
-              <Button type="submit" disabled={isSubscribing} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
-                {isSubscribing ? "Subscribing..." : "Subscribe"}
+              <Button type="submit" disabled={newsletter.isSubscribing} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
+                {newsletter.isSubscribing ? "Subscribing..." : "Subscribe"}
               </Button>
             </form>
+            {newsletter.error && (
+              <p className="text-red-400 text-xs mt-3" role="alert">{newsletter.error}</p>
+            )}
             <div className="text-[9px] uppercase tracking-widest text-slate-500 mt-6">
               We respect your privacy. No spam.
             </div>

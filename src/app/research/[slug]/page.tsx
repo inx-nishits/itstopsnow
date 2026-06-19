@@ -59,6 +59,12 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
               type="button"
               variant="outline"
               className="min-h-[48px] border-slate-300 text-slate-700 hover:bg-white"
+              onClick={() =>
+                window.open(
+                  `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
+                  "_blank"
+                )
+              }
             >
               <Share2 className="w-4 h-4 mr-2" />
               Share

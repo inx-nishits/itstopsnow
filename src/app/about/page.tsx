@@ -351,12 +351,16 @@ export default function AboutPage() {
               </div>
               
               <div className="flex flex-wrap gap-4">
-                <Button className="bg-white text-black hover:bg-slate-200 font-bold uppercase tracking-widest text-[10px] py-6 px-10 rounded-full transition-colors">
-                  Listen on Spotify
-                </Button>
-                <Button variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/10 font-bold uppercase tracking-widest text-[10px] py-6 px-10 rounded-full transition-colors">
-                  Apple Podcasts
-                </Button>
+                <Link href="https://open.spotify.com/show/pocket-sergeant" target="_blank" rel="noopener noreferrer">
+                  <Button className="bg-white text-black hover:bg-slate-200 font-bold uppercase tracking-widest text-[10px] py-6 px-10 rounded-full transition-colors">
+                    Listen on Spotify
+                  </Button>
+                </Link>
+                <Link href="https://podcasts.apple.com/podcast/pocket-sergeant" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/10 font-bold uppercase tracking-widest text-[10px] py-6 px-10 rounded-full transition-colors">
+                    Apple Podcasts
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

@@ -208,5 +208,7 @@ export function getFallbackWallStats() {
     totalCandles,
     officersRemembered: memorials.length,
     forcesRepresented: forces,
+    monthlyRemembranceAvg: Math.round(totalCandles / Math.max(memorials.length, 1) / 12),
+    notForgottenPercent: 98,
   };
 }

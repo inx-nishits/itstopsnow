@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Flame } from "lucide-react";
 import type { MemorialSummary } from "@/lib/memorial/types";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
@@ -10,11 +10,14 @@ import WallStatsRibbon from "@/components/remembrance/wall/WallStatsRibbon";
 import WallSearchControls from "@/components/remembrance/wall/WallSearchControls";
 import WallFilterBottomSheet from "@/components/remembrance/wall/WallFilterBottomSheet";
 import MemorialWallTile from "@/components/remembrance/wall/MemorialWallTile";
+import { Pagination } from "@/components/ui/Pagination";
 
 interface WallStats {
   totalCandles: number;
   officersRemembered: number;
   forcesRepresented: number;
+  monthlyRemembranceAvg?: number;
+  notForgottenPercent?: number;
 }
 
 interface RemembranceWallClientProps {
@@ -31,6 +34,8 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 24;
 
   const forceOptions = useMemo(
     () => [...new Set(memorials.map((m) => m.force))].sort(),
@@ -77,6 +82,16 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
     return list;
   }, [filteredOfficers, sortBy]);
 
+  const totalPages = Math.max(1, Math.ceil(sortedOfficers.length / itemsPerPage));
+  const paginatedOfficers = sortedOfficers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedForce, selectedRole, selectedRegion, selectedYear, sortBy]);
+
   const searchProps = {
     searchQuery,
     onSearchChange: setSearchQuery,
@@ -110,7 +125,8 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
         officersRemembered={wallStats.officersRemembered}
         totalCandles={wallStats.totalCandles}
         forcesRepresented={wallStats.forcesRepresented}
-        onWallCount={memorials.length}
+        monthlyRemembranceAvg={wallStats.monthlyRemembranceAvg}
+        notForgottenPercent={wallStats.notForgottenPercent}
       />
 
       <CampaignSection variant="deep" noPadding className="pb-10 sm:pb-14 lg:pb-20">
@@ -138,7 +154,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
               role="list"
               aria-label="Memorial portraits"
             >
-              {sortedOfficers.map((officer) => (
+              {paginatedOfficers.map((officer) => (
                 <div key={officer.id} role="listitem">
                   <MemorialWallTile
                     id={officer.id}
@@ -165,6 +181,16 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
                 View the full wall
               </button>
             </div>
+          )}
+
+          {sortedOfficers.length > 0 && totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              variant="campaign"
+              className="mt-8"
+            />
           )}
         </div>
       </CampaignSection>

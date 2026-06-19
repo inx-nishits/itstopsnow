@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import SectionReveal from "@/components/home/SectionReveal";
 import type { HomepageEventPreview } from "@/lib/homepage/types";
 
@@ -31,13 +30,12 @@ export default function HomeEventsPreview({ events }: HomeEventsPreviewProps) {
                 Stand With Us <span className="text-slate-400">In Person</span>
               </h3>
             </div>
-            <Link href="/events" className="w-full sm:w-auto shrink-0">
-              <Button
-                variant="outline"
-                className="w-full sm:w-auto min-h-[48px] border-slate-300 text-[#010B19] hover:bg-[#010B19] hover:text-white font-bold px-8 rounded-full text-xs tracking-widest uppercase"
-              >
-                View All Events
-              </Button>
+            <Link
+              href="/events"
+              className="inline-flex items-center gap-1.5 shrink-0 text-[#1877F2] hover:text-[#010B19] text-xs font-bold uppercase tracking-widest transition-colors group"
+            >
+              View all events
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
 

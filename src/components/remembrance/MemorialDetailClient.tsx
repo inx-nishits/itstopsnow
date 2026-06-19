@@ -23,6 +23,7 @@ import { useCandleRitual } from "@/components/remembrance/useCandleRitual";
 import { generateBookOfCondolencePDF } from "@/components/remembrance/BookOfCondolencePDF";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
+import { validateEmail, simulateSubmit } from "@/lib/mock/utils";
 import type { Memorial } from "@/lib/memorial/types";
 
 interface MemorialDetailClientProps {
@@ -386,11 +387,14 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
           setTimeout(() => setTributeSuccess(false), 300);
         }}
         onSubmit={() => {
+          if (!tributeForm.name.trim() || !validateEmail(tributeForm.email) || tributeForm.content.trim().length < 10) {
+            return;
+          }
           setIsSubmittingTribute(true);
-          setTimeout(() => {
+          simulateSubmit().then(() => {
             setIsSubmittingTribute(false);
             setTributeSuccess(true);
-          }, 1500);
+          });
         }}
       />
     </div>
@@ -507,7 +511,7 @@ function TributeModal({
           </FormField>
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !tributeForm.name.trim() || !validateEmail(tributeForm.email) || tributeForm.content.trim().length < 10}
             className="w-full min-h-[52px] bg-[#1877F2] hover:bg-[#1877F2]/90 text-white font-semibold uppercase tracking-wider text-xs disabled:opacity-60"
           >
             {isSubmitting ? "Submitting…" : "Submit tribute"}

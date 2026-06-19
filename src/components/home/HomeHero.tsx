@@ -34,19 +34,16 @@ const EDITORIAL_LINKS = [
   { num: "03", label: "Understand the issue", href: "/the-issue" },
 ] as const;
 
-const MOBILE_QUICK_LINKS = [
-  { label: "Stories", href: "/stories" },
-  { label: "Remembrance", href: "/remembrance" },
-  { label: "The issue", href: "/the-issue" },
-] as const;
+/** Shared hero copy — desktop and mobile must match */
+const HERO_EYEBROW = "Campaign for change";
+const HERO_DESCRIPTION =
+  "Championing officers and families. Demanding dignity, accountability, and an end to a system that treats people as expendable.";
 
-/** Matches header nav + /take-action page hero */
 const HERO_PRIMARY_CTA_LABEL = "Take Action";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const HEADER_OFFSET = "pt-[max(5rem,env(safe-area-inset-top)+4rem)] lg:pt-[max(6rem,env(safe-area-inset-top)+5rem)]";
-/** Desktop — clearance for absolute bottom ticker */
 const DESKTOP_MARQUEE_OFFSET = "lg:pb-[2.75rem]";
 
 function MarqueeRow({ copyIndex }: { copyIndex: number }) {
@@ -142,25 +139,6 @@ function PrimaryCta({ className, compact }: { className?: string; compact?: bool
   );
 }
 
-function MobilePrimaryCta({ className }: { className?: string }) {
-  return (
-    <Link href="/take-action" className={cn("group block cursor-pointer", className)}>
-      <span className="relative flex items-center justify-between gap-3 w-full min-h-[46px] pl-4 pr-1.5 bg-[#1877F2] overflow-hidden transition-colors hover:bg-[#1565d8] active:scale-[0.99] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%,0_0)]">
-        <span
-          className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/12 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-          aria-hidden
-        />
-        <span className="relative font-sans text-sm font-semibold text-white tracking-[0.02em]">
-          {HERO_PRIMARY_CTA_LABEL}
-        </span>
-        <span className="relative flex items-center justify-center w-9 h-9 bg-white/15 group-hover:bg-white group-hover:text-[#1877F2] text-white transition-colors">
-          <ArrowRight className="w-4 h-4" />
-        </span>
-      </span>
-    </Link>
-  );
-}
-
 function HeroBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden bg-[#050A14]">
@@ -245,55 +223,41 @@ function MobileHero({ animate }: { animate: boolean }) {
             01
           </div>
 
-          <div className="flex gap-0">
-            <div
-              className="w-1.5 shrink-0 my-3 ml-3 rounded-full bg-gradient-to-b from-[#1877F2] via-blue-500 to-cyan-400"
-              aria-hidden
-            />
-            <div className="flex-1 min-w-0 py-3 pr-3 pl-2">
-              <p className="font-sans text-[10px] font-bold uppercase tracking-[0.26em] text-[#1877F2] mb-1.5">
-                The manifesto
-              </p>
+          <div className="py-3 px-3">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="h-px w-8 bg-[#1877F2]" aria-hidden />
+                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#1877F2]">
+                  {HERO_EYEBROW}
+                </p>
+              </div>
 
-              <h1 className="mb-1.5">
-                <span className="block font-heading text-[1.2rem] font-light italic leading-snug text-slate-300">
-                  Behind every uniform
-                </span>
-                <span className="block font-heading text-[1.7rem] font-extrabold leading-[1.05] tracking-[-0.02em] text-[#1877F2]">
-                  is a person.
+              <h1 className="text-[1.65rem] sm:text-[1.85rem] font-black uppercase tracking-tight leading-[0.98] mb-3">
+                <span className="text-white block">Behind every</span>
+                <span className="text-white block">uniform</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] via-blue-400 to-cyan-400 block">
+                  is a human being.
                 </span>
               </h1>
 
-              <p className="font-sans text-[13px] leading-[1.5] text-slate-400 mb-2.5 line-clamp-2">
-                Honour the fallen. Fight for reform. Stand with every officer treated as
-                expendable.
+              <p className="font-sans text-[13px] sm:text-sm leading-relaxed text-slate-300 mb-4">
+                {HERO_DESCRIPTION}
               </p>
 
-              <MobilePrimaryCta />
+              <div className="flex flex-col gap-2.5 mb-2">
+                <PrimaryCta className="w-full" compact />
+                <Link
+                  href="/about"
+                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
+                >
+                  Our mission
+                </Link>
+              </div>
 
-              <nav
-                aria-label="Explore the campaign"
-                className="flex gap-2 mt-2 overflow-x-auto scrollbar-none"
-              >
-                {MOBILE_QUICK_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="shrink-0 px-3 py-1.5 rounded-full border border-[#1877F2]/30 bg-[#1877F2]/[0.08] font-sans text-[11px] font-semibold text-slate-200 hover:bg-[#1877F2]/20 hover:border-[#1877F2]/50 cursor-pointer transition-colors whitespace-nowrap"
-                  >
-                    {link.label}
-                  </Link>
+              <div className="mt-4 pt-3 border-t border-white/10">
+                {EDITORIAL_LINKS.map((link) => (
+                  <EditorialLink key={link.href} {...link} compact />
                 ))}
-              </nav>
-
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-1 mt-2 font-sans text-xs font-medium text-slate-500 hover:text-[#1877F2] cursor-pointer transition-colors"
-              >
-                Read our mission
-                <ArrowRight className="w-3 h-3" />
-              </Link>
-            </div>
+              </div>
           </div>
         </M>
       </div>
@@ -334,7 +298,7 @@ function DesktopHero({ animate }: { animate: boolean }) {
             <div className="flex items-center gap-2.5 mb-4">
               <span className="h-px w-10 bg-[#1877F2]" aria-hidden />
               <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#1877F2]">
-                Campaign for change
+                {HERO_EYEBROW}
               </p>
             </div>
 
@@ -347,8 +311,7 @@ function DesktopHero({ animate }: { animate: boolean }) {
             </h1>
 
             <p className="text-sm xl:text-base text-slate-300 leading-relaxed max-w-md mb-5 line-clamp-2">
-              Championing officers and families. Demanding dignity, accountability, and an end to
-              a system that treats people as expendable.
+              {HERO_DESCRIPTION}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mb-5">
@@ -370,7 +333,7 @@ function DesktopHero({ animate }: { animate: boolean }) {
                   transition: { duration: 0.55, delay: 0.2, ease },
                 }
               : {})}
-            className="max-w-sm border-t border-white/10 pt-4 shrink-0"
+            className="max-w-sm border-t border-white/10 pt-5 mt-1 shrink-0"
           >
             {EDITORIAL_LINKS.map((link) => (
               <EditorialLink key={link.href} {...link} />

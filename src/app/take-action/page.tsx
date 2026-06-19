@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart, X, RotateCcw, Edit3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
+import { downloadTextBlob } from "@/lib/mock/utils";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
@@ -149,7 +150,6 @@ export default function TakeActionPage() {
       return;
     }
     
-    // Pass personalization data via query params or state manager. For simplicity, using query params here.
     const queryParams = new URLSearchParams({
       name: personalization.name,
       force: personalization.policeForce,
@@ -158,6 +158,19 @@ export default function TakeActionPage() {
     });
     
     router.push(`/take-action/personalize?${queryParams.toString()}`);
+  };
+
+  const handleDownloadTemplate = (template: (typeof TEMPLATES)[0], format: "pdf" | "docx") => {
+    const mime =
+      format === "pdf"
+        ? "application/pdf"
+        : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    const ext = format === "pdf" ? "pdf" : "docx";
+    downloadTextBlob(
+      template.content,
+      `${template.title.replace(/\s+/g, "_")}.${ext}`,
+      mime
+    );
   };
 
   return (
@@ -341,10 +354,10 @@ export default function TakeActionPage() {
                         <Button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} variant="outline" className={`w-full md:w-auto bg-transparent border-slate-300 hover:bg-[#010B19] hover:text-white ${hybrid.editorialHeading} text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl`}>
                           <Search className="w-3.5 h-3.5 mr-2" /> Preview
                         </Button>
-                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
+                        <Button onClick={() => handleDownloadTemplate(template, "pdf")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
                           <Download className="w-3.5 h-3.5 mr-2" /> PDF
                         </Button>
-                        <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
+                        <Button onClick={() => handleDownloadTemplate(template, "docx")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
                           <Download className="w-3.5 h-3.5 mr-2" /> DOCX
                         </Button>
                       </div>
