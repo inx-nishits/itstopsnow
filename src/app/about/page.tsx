@@ -5,6 +5,9 @@ import { motion, useInView, animate } from "framer-motion";
 import { Shield, ShieldAlert, Heart, Activity, ArrowRight, ExternalLink, Headphones, Download, Smartphone, CheckCircle, BarChart, Users, Star, Quote, HeartPulse } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
+import { PageHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
 
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isFloat = false }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string, isFloat?: boolean }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -42,77 +45,53 @@ export default function AboutPage() {
   }, [appImages.length]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
+    <div className="flex flex-col min-h-screen font-sans">
       
-      {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
-        
-        {/* Full-Screen Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=1920" 
-            alt="Protest movement" 
-            className="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity grayscale"
-          />
-          {/* Dark gradient overlay to blend image into the background and ensure text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
-        </div>
-
-        {/* Content Container (Matching Homepage full width) */}
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
-          
-          <div className="w-full lg:w-full max-w-[1200px] pt-10">
-            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
-              <Shield className="w-5 h-5" /> OUR SUPPORTER
-            </h3>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl max-sm:text-4xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
-            >
-              <span className="text-white">DRIVEN BY THOSE<br/></span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">WHO KNOW THE JOB.</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-3xl drop-shadow"
-            >
-              It Stops Now is proudly funded and supported by Pocket Sergeant – the essential app created by police, for police. We believe that officer wellbeing and reform are not optional; they are critical.
-            </motion.p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        animate
+        eyebrow={
+          <>
+            <Shield className="w-5 h-5 shrink-0" /> OUR SUPPORTER
+          </>
+        }
+        title={
+          <>
+            <span className="text-white">DRIVEN BY THOSE</span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
+              WHO KNOW THE JOB.
+            </span>
+          </>
+        }
+        description="It Stops Now is proudly funded and supported by Pocket Sergeant – the essential app created by police, for police. We believe that officer wellbeing and reform are not optional; they are critical."
+        imageSrc="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=1920"
+        imageAlt="Protest movement"
+      />
 
       {/* 2. WHO IS POCKET SERGEANT */}
-      <section className="py-12 md:py-32 relative">
+      <EditorialSection className="md:py-32">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
-              <h2 className="font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-4">WHO IS POCKET SERGEANT?</h2>
-              <p className="text-slate-400 leading-relaxed mb-4 text-lg">
+              <h2 className={`font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight mb-4 ${hybrid.editorialHeading}`}>WHO IS POCKET SERGEANT?</h2>
+              <p className={`${hybrid.editorialBody} leading-relaxed mb-4 text-lg`}>
                 Pocket Sergeant is the UK's leading app for police officers and staff. Created by former police officer Paul Cooper, it was built to solve a simple problem: officers needed quick, reliable access to the law, operational guidance, and wellbeing resources while out on the street.
               </p>
-              <p className="text-slate-400 leading-relaxed mb-6 text-lg">
+              <p className={`${hybrid.editorialBody} leading-relaxed mb-6 text-lg`}>
                 Today, it is used by thousands of officers every single day. But our mission goes beyond making the job easier. We want to make the job safer—mentally and emotionally. That's why we are funding the 'It Stops Now' campaign.
               </p>
               
               {/* Trust Indicators */}
-              <div className="flex flex-wrap gap-8 mt-6 border-t border-white/10 pt-6">
+              <div className={`flex flex-wrap gap-8 mt-6 border-t ${hybrid.editorialBorder} pt-6`}>
                 <div>
-                  <h4 className="font-bold text-white uppercase text-[10px] tracking-widest mb-1">TRUSTED BY</h4>
+                  <h4 className={`font-bold uppercase text-[10px] tracking-widest mb-1 ${hybrid.editorialHeading}`}>TRUSTED BY</h4>
                   <p className="text-xl font-bold text-[#1877F2] font-sans leading-none">50,000+</p>
-                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">Active Officers</p>
+                  <p className={`text-[10px] uppercase tracking-wider mt-1 ${hybrid.editorialMuted}`}>Active Officers</p>
                 </div>
                 <div>
-                  <h4 className="font-bold text-white uppercase text-[10px] tracking-widest mb-1">CREATED BY</h4>
-                  <p className="text-xl font-bold text-slate-200 uppercase tracking-wide leading-none">Former Police</p>
-                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">We lived the job.</p>
+                  <h4 className={`font-bold uppercase text-[10px] tracking-widest mb-1 ${hybrid.editorialHeading}`}>CREATED BY</h4>
+                  <p className={`text-xl font-bold uppercase tracking-wide leading-none ${hybrid.editorialHeading}`}>Former Police</p>
+                  <p className={`text-[10px] uppercase tracking-wider mt-1 ${hybrid.editorialMuted}`}>We lived the job.</p>
                 </div>
               </div>
             </div>
@@ -172,64 +151,64 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </EditorialSection>
 
       {/* STATISTICS SECTION */}
-      <section className="py-12 lg:py-24 bg-[#050B14] border-t border-white/5 relative overflow-hidden">
+      <EditorialSection>
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Reach</h2>
-            <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">IMPACT BY THE NUMBERS</h2>
-            <p className="text-slate-400 text-lg leading-relaxed">Pocket Sergeant's organizational achievements and the community we've built.</p>
+            <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight mb-6 ${hybrid.editorialHeading}`}>IMPACT BY THE NUMBERS</h2>
+            <p className={`${hybrid.editorialBody} text-lg leading-relaxed`}>Pocket Sergeant's organizational achievements and the community we've built.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
-              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl lg:rounded-3xl overflow-hidden border border-slate-200 bg-slate-200">
+            <div className={`${hybrid.editorialCard} p-6 md:p-10 relative overflow-hidden group hover:bg-slate-50 transition-colors`}>
+              <div className="w-14 h-14 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <Users className="w-7 h-7" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+              <h3 className={`font-bold text-5xl mb-4 font-sans tracking-tight relative z-10 ${hybrid.editorialHeading}`}>
                 <AnimatedCounter from={0} to={50} suffix="k+" duration={2} />
               </h3>
-              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Active users across UK police forces relying on Pocket Sergeant daily.</p>
+              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>Active users across UK police forces relying on Pocket Sergeant daily.</p>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
-              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+            <div className={`${hybrid.editorialCard} p-6 md:p-10 relative overflow-hidden group hover:bg-slate-50 transition-colors`}>
+              <div className="w-14 h-14 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <Download className="w-7 h-7" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+              <h3 className={`font-bold text-5xl mb-4 font-sans tracking-tight relative z-10 ${hybrid.editorialHeading}`}>
                 <AnimatedCounter from={0} to={200} suffix="k+" duration={2} />
               </h3>
-              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Total app downloads since launch, showing widespread adoption.</p>
+              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>Total app downloads since launch, showing widespread adoption.</p>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
-              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+            <div className={`${hybrid.editorialCard} p-6 md:p-10 relative overflow-hidden group hover:bg-slate-50 transition-colors`}>
+              <div className="w-14 h-14 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <Star className="w-7 h-7" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+              <h3 className={`font-bold text-5xl mb-4 font-sans tracking-tight relative z-10 ${hybrid.editorialHeading}`}>
                 <AnimatedCounter from={0} to={4.8} isFloat duration={1.5} />
               </h3>
-              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Average rating on both App Store and Google Play.</p>
+              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>Average rating on both App Store and Google Play.</p>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 p-6 md:p-10 rounded-3xl relative overflow-hidden group shadow-xl">
-              <div className="w-14 h-14 bg-white/5 border border-white/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
+            <div className={`${hybrid.editorialCard} p-6 md:p-10 relative overflow-hidden group hover:bg-slate-50 transition-colors`}>
+              <div className="w-14 h-14 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 relative z-10">
                 <BarChart className="w-7 h-7" />
               </div>
-              <h3 className="font-bold text-5xl text-white mb-4 font-sans tracking-tight relative z-10">
+              <h3 className={`font-bold text-5xl mb-4 font-sans tracking-tight relative z-10 ${hybrid.editorialHeading}`}>
                 <AnimatedCounter from={0} to={10} suffix="+" duration={1.5} />
               </h3>
-              <p className="text-slate-400 leading-relaxed text-sm relative z-10">Years of continuous service providing operational guidance.</p>
+              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>Years of continuous service providing operational guidance.</p>
             </div>
           </div>
         </div>
-      </section>
+      </EditorialSection>
 
       {/* WHY SUPPORTING THIS MOVEMENT */}
-      <section className="py-12 lg:py-32 bg-[#020611] border-t border-white/5 relative">
+      <CampaignSection className="lg:py-32 border-t border-white/5">
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Commitment</h2>
@@ -262,73 +241,73 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </CampaignSection>
 
       {/* FUNDING TRANSPARENCY */}
-      <section className="py-12 lg:py-32 bg-[#050B14] border-y border-white/5 relative">
+      <EditorialSection className="lg:py-32">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Accountability</h2>
-            <h2 className="font-sans text-3xl md:text-5xl font-bold uppercase tracking-tight mb-8">FUNDING & TRANSPARENCY</h2>
-            <p className="text-slate-400 text-lg leading-relaxed">
+            <h2 className={`font-sans text-3xl md:text-5xl font-bold uppercase tracking-tight mb-8 ${hybrid.editorialHeading}`}>FUNDING & TRANSPARENCY</h2>
+            <p className={`${hybrid.editorialBody} text-lg leading-relaxed`}>
               'It Stops Now' is fully funded by Pocket Sergeant Ltd. We do not accept government funding, police federation grants, or corporate sponsorships. 100% of our resources go directly to the cause.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-6 md:p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 group`}>
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Shield className="w-7 h-7 text-[#1877F2]" />
               </div>
-              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 text-white">Legal Counsel</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-6">Providing robust legal defense and advice for officers facing protracted investigations.</p>
+              <h3 className={`font-bold text-xl uppercase tracking-widest mb-4 ${hybrid.editorialHeading}`}>Legal Counsel</h3>
+              <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-6`}>Providing robust legal defense and advice for officers facing protracted investigations.</p>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                <li className={`flex items-start gap-3 text-sm font-medium ${hybrid.editorialBody}`}>
                   <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Initial Consultation Fees
                 </li>
-                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                <li className={`flex items-start gap-3 text-sm font-medium ${hybrid.editorialBody}`}>
                   <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Specialist Defense Lawyers
                 </li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-6 md:p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 group`}>
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Heart className="w-7 h-7 text-[#1877F2]" />
               </div>
-              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 text-white">Welfare Support</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-6">Direct mental health support for officers and families suffering through systemic delays.</p>
+              <h3 className={`font-bold text-xl uppercase tracking-widest mb-4 ${hybrid.editorialHeading}`}>Welfare Support</h3>
+              <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-6`}>Direct mental health support for officers and families suffering through systemic delays.</p>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                <li className={`flex items-start gap-3 text-sm font-medium ${hybrid.editorialBody}`}>
                   <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Psychological Evaluations
                 </li>
-                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                <li className={`flex items-start gap-3 text-sm font-medium ${hybrid.editorialBody}`}>
                   <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Crisis Counseling Sessions
                 </li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-[#020611] to-[#050B14] border border-white/10 rounded-3xl p-6 md:p-10 hover:border-[#1877F2]/50 transition-all duration-500 shadow-xl group">
+            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 group`}>
               <div className="w-14 h-14 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <Activity className="w-7 h-7 text-[#1877F2]" />
               </div>
-              <h3 className="font-bold text-xl uppercase tracking-widest mb-4 text-white">Campaign Logistics</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-6">Funding the push for systemic, legislative change and public awareness events.</p>
+              <h3 className={`font-bold text-xl uppercase tracking-widest mb-4 ${hybrid.editorialHeading}`}>Campaign Logistics</h3>
+              <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-6`}>Funding the push for systemic, legislative change and public awareness events.</p>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                <li className={`flex items-start gap-3 text-sm font-medium ${hybrid.editorialBody}`}>
                   <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Parliamentary Lobbying
                 </li>
-                <li className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                <li className={`flex items-start gap-3 text-sm font-medium ${hybrid.editorialBody}`}>
                   <CheckCircle className="w-4 h-4 text-[#1877F2] mt-0.5" /> Memorial Events & Advocacy
                 </li>
               </ul>
             </div>
           </div>
         </div>
-      </section>
+      </EditorialSection>
 
       {/* PODCAST SECTION */}
-      <section className="py-12 lg:py-32 bg-[#020611] border-b border-white/5">
+      <CampaignSection className="lg:py-32 border-b border-white/5">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
             <div className="lg:w-1/2 relative">
@@ -382,51 +361,51 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </CampaignSection>
 
       {/* LEARN MORE ABOUT POCKET SERGEANT CTA SECTION */}
-      <section className="py-12 lg:py-32 bg-gradient-to-b from-[#050B14] to-[#020611] relative overflow-hidden">
+      <EditorialSection className="lg:py-32">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Explore the App</h2>
-            <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8 text-white">LEARN MORE ABOUT POCKET SERGEANT</h2>
-            <p className="text-slate-400 mb-12 text-xl leading-relaxed">Discover how our app supports officers on the front lines every day with essential resources, legal guidance, and wellbeing tools.</p>
+            <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8 ${hybrid.editorialHeading}`}>LEARN MORE ABOUT POCKET SERGEANT</h2>
+            <p className={`${hybrid.editorialBody} mb-12 text-xl leading-relaxed`}>Discover how our app supports officers on the front lines every day with essential resources, legal guidance, and wellbeing tools.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="bg-[#020611] border border-white/10 rounded-3xl p-6 md:p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 flex flex-col items-center text-center group`}>
               <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <ShieldAlert className="w-8 h-8 text-[#1877F2]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">Operational Guidance</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">Access up-to-date legal definitions, checklists, and procedural guidance instantly.</p>
+              <h3 className={`text-xl font-bold mb-4 uppercase tracking-widest ${hybrid.editorialHeading}`}>Operational Guidance</h3>
+              <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-8 flex-grow`}>Access up-to-date legal definitions, checklists, and procedural guidance instantly.</p>
               <Link href="https://pocketsergeant.co.uk/features" target="_blank" className="w-full">
-                <Button variant="outline" className="w-full border-white/20 bg-transparent text-white hover:bg-white/10 font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors">
+                <Button variant="outline" className={`w-full border-slate-300 bg-transparent ${hybrid.editorialHeading} hover:bg-[#010B19] hover:text-white font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors`}>
                   View Features <ExternalLink className="w-3 h-3 ml-2" />
                 </Button>
               </Link>
             </div>
             
-            <div className="bg-[#020611] border border-white/10 rounded-3xl p-6 md:p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 flex flex-col items-center text-center group`}>
               <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <HeartPulse className="w-8 h-8 text-[#1877F2]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">Wellbeing Support</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">Confidential tools and resources to help manage the psychological demands of the job.</p>
+              <h3 className={`text-xl font-bold mb-4 uppercase tracking-widest ${hybrid.editorialHeading}`}>Wellbeing Support</h3>
+              <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-8 flex-grow`}>Confidential tools and resources to help manage the psychological demands of the job.</p>
               <Link href="https://pocketsergeant.co.uk/wellbeing" target="_blank" className="w-full">
-                <Button variant="outline" className="w-full border-white/20 bg-transparent text-white hover:bg-white/10 font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors">
+                <Button variant="outline" className={`w-full border-slate-300 bg-transparent ${hybrid.editorialHeading} hover:bg-[#010B19] hover:text-white font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors`}>
                   Get Support <ExternalLink className="w-3 h-3 ml-2" />
                 </Button>
               </Link>
             </div>
 
-            <div className="bg-[#020611] border border-white/10 rounded-3xl p-6 md:p-10 flex flex-col items-center text-center hover:border-[#1877F2]/50 transition-all duration-300 shadow-xl group">
+            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 flex flex-col items-center text-center group`}>
               <div className="w-16 h-16 bg-[#1877F2]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <Smartphone className="w-8 h-8 text-[#1877F2]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">Download Now</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">Available on iOS and Android devices for all serving police officers and staff.</p>
+              <h3 className={`text-xl font-bold mb-4 uppercase tracking-widest ${hybrid.editorialHeading}`}>Download Now</h3>
+              <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-8 flex-grow`}>Available on iOS and Android devices for all serving police officers and staff.</p>
               <Link href="https://pocketsergeant.co.uk/download" target="_blank" className="w-full">
                 <Button className="w-full bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-[10px] py-6 rounded-lg transition-colors">
                   Get The App
@@ -435,7 +414,7 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </EditorialSection>
 
     </div>
   );

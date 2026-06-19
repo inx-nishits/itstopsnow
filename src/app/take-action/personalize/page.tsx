@@ -6,6 +6,9 @@ import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, Loader2, 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { EditorialSection } from "@/components/layout/PageSection";
+import { PageHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
 
 const TEMPLATES = [
   { 
@@ -77,19 +80,31 @@ function PersonalizeContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pt-12 lg:pt-24 lg:pt-40 pb-10 lg:pb-20 lg:pb-32">
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1400px]">
-        
-        {/* Header */}
-        <div className="mb-12">
-          <button onClick={() => router.back()} className="flex items-center gap-2 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-colors">
+    <div className="min-h-screen font-sans flex flex-col">
+      <PageHero
+        variant="utility"
+        backLink={
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors"
+          >
             <ArrowLeft className="w-4 h-4" /> Back to Templates
           </button>
-          <h1 className="text-3xl max-sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4">
-            PERSONALIZE & <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">SEND.</span>
-          </h1>
-          <p className="text-slate-400 text-lg">Review your representative details and customize your letter before sending.</p>
-        </div>
+        }
+        title={
+          <>
+            PERSONALIZE &{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
+              SEND.
+            </span>
+          </>
+        }
+        description="Review your representative details and customize your letter before sending."
+      />
+
+      <EditorialSection className="pb-10 lg:pb-20 lg:pb-32">
+      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1400px]">
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
@@ -97,30 +112,30 @@ function PersonalizeContent() {
           <div className="lg:col-span-4 flex flex-col gap-8">
             
             {/* MP Finder Widget */}
-            <div className="bg-[#050A14] border border-white/10 rounded-[2rem] p-8 shadow-xl">
-              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-white/10">
+            <div className={`${hybrid.editorialCard} p-8`}>
+              <div className={`flex items-center gap-3 mb-6 pb-6 border-b ${hybrid.editorialBorder}`}>
                 <Building2 className="w-5 h-5 text-[#1877F2]" />
-                <h2 className="font-bold text-sm uppercase tracking-widest text-white">Your Representative</h2>
+                <h2 className={`font-bold text-sm uppercase tracking-widest ${hybrid.editorialHeading}`}>Your Representative</h2>
               </div>
               
               <div className="mb-6">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Postcode Search</label>
+                <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Postcode Search</label>
                 <div className="flex gap-2">
                   <input 
                     type="text" 
                     value={postcode}
                     onChange={(e) => setPostcode(e.target.value)}
                     placeholder="Enter Postcode"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+                    className={`w-full rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors ${hybrid.editorialInput}`}
                   />
-                  <Button variant="outline" className="w-12 h-12 bg-transparent border-white/20 hover:bg-white hover:text-black">
+                  <Button variant="outline" className="w-12 h-12 border-slate-300 hover:bg-[#010B19] hover:text-white">
                     <Search className="w-4 h-4" />
                   </Button>
                 </div>
               </div>
 
               {loading ? (
-                <div className="py-8 flex flex-col items-center justify-center text-slate-400">
+                <div className={`py-8 flex flex-col items-center justify-center ${hybrid.editorialMuted}`}>
                   <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#1877F2]" />
                   <p className="text-xs font-bold uppercase tracking-widest">Finding your MP...</p>
                 </div>
@@ -131,33 +146,33 @@ function PersonalizeContent() {
                       <User className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-white text-lg">{mpFound.name}</h3>
-                      <p className="text-sm text-slate-300">{mpFound.party}</p>
-                      <p className="text-xs text-slate-400 flex items-center gap-1 mt-1"><MapPin className="w-3 h-3" /> {mpFound.constituency}</p>
+                      <h3 className={`font-bold text-lg ${hybrid.editorialHeading}`}>{mpFound.name}</h3>
+                      <p className={`text-sm ${hybrid.editorialBody}`}>{mpFound.party}</p>
+                      <p className={`text-xs flex items-center gap-1 mt-1 ${hybrid.editorialMuted}`}><MapPin className="w-3 h-3" /> {mpFound.constituency}</p>
                     </div>
                   </div>
-                  <div className="bg-black/20 rounded-lg p-3 flex items-center justify-between">
-                    <span className="text-xs text-slate-400">{mpFound.email}</span>
+                  <div className="bg-slate-100 rounded-lg p-3 flex items-center justify-between">
+                    <span className={`text-xs ${hybrid.editorialMuted}`}>{mpFound.email}</span>
                     <CheckCircle className="w-4 h-4 text-emerald-500" />
                   </div>
                 </motion.div>
               ) : (
-                <div className="py-8 text-center border border-white/10 border-dashed rounded-xl">
-                  <p className="text-slate-500 text-sm">Enter a valid postcode to find your MP.</p>
+                <div className={`py-8 text-center border border-dashed rounded-xl ${hybrid.editorialBorder}`}>
+                  <p className={`text-sm ${hybrid.editorialMuted}`}>Enter a valid postcode to find your MP.</p>
                 </div>
               )}
             </div>
 
             {/* Template Selection */}
-            <div className="bg-[#050A14] border border-white/10 rounded-[2rem] p-8 shadow-xl">
-              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-white/10">
+            <div className={`${hybrid.editorialCard} p-8`}>
+              <div className={`flex items-center gap-3 mb-6 pb-6 border-b ${hybrid.editorialBorder}`}>
                 <FileText className="w-5 h-5 text-[#1877F2]" />
-                <h2 className="font-bold text-sm uppercase tracking-widest text-white">Choose Template</h2>
+                <h2 className={`font-bold text-sm uppercase tracking-widest ${hybrid.editorialHeading}`}>Choose Template</h2>
               </div>
               <select 
                 value={selectedTemplate}
                 onChange={(e) => setSelectedTemplate(Number(e.target.value))}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors appearance-none"
+                className={`w-full rounded-xl px-4 py-4 text-sm focus:outline-none transition-colors appearance-none ${hybrid.editorialInput}`}
               >
                 {TEMPLATES.map(t => (
                   <option key={t.id} value={t.id}>{t.title}</option>
@@ -169,32 +184,32 @@ function PersonalizeContent() {
 
           {/* Right Column: Letter Editor */}
           <div className="lg:col-span-8">
-            <div className="bg-[#050A14] border border-white/10 rounded-[2rem] overflow-hidden flex flex-col h-full shadow-2xl">
+            <div className={`${hybrid.editorialCard} overflow-hidden flex flex-col h-full`}>
               
-              <div className="bg-white/[0.02] border-b border-white/10 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <h2 className="font-bold text-sm uppercase tracking-widest text-white flex items-center gap-2">
+              <div className={`border-b ${hybrid.editorialBorder} p-6 flex flex-col sm:flex-row justify-between items-center gap-4`}>
+                <h2 className={`font-bold text-sm uppercase tracking-widest flex items-center gap-2 ${hybrid.editorialHeading}`}>
                   <Mail className="w-4 h-4 text-[#1877F2]" /> Edit Letter
                 </h2>
-                <div className="text-xs text-slate-400">
+                <div className={`text-xs ${hybrid.editorialMuted}`}>
                   <span className="text-emerald-500 font-bold">●</span> Ready to customize
                 </div>
               </div>
 
-              <div className="flex-grow p-6 md:p-10 bg-black/20">
+              <div className="flex-grow p-6 md:p-10 bg-slate-50">
                 <textarea 
                   value={letterContent}
                   onChange={(e) => setLetterContent(e.target.value)}
-                  className="w-full h-full min-h-[500px] bg-transparent text-slate-300 text-[15px] leading-relaxed font-medium focus:outline-none resize-none"
+                  className={`w-full h-full min-h-[500px] bg-transparent text-[15px] leading-relaxed font-medium focus:outline-none resize-none ${hybrid.editorialBody}`}
                   placeholder="Your letter content will appear here..."
                 />
               </div>
 
-              <div className="bg-white/[0.02] border-t border-white/10 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className={`border-t ${hybrid.editorialBorder} p-6 flex flex-col sm:flex-row justify-between items-center gap-4`}>
                 <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
-                  <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto bg-transparent border-white/10 text-slate-400 hover:bg-white/5 hover:text-white hover:border-white/20 font-bold uppercase tracking-widest text-xs py-6 px-6 rounded-xl transition-all">
+                  <Button onClick={handleReset} variant="outline" className={`w-full sm:w-auto border-slate-300 ${hybrid.editorialMuted} hover:bg-slate-100 font-bold uppercase tracking-widest text-xs py-6 px-6 rounded-xl transition-all`}>
                     <RotateCcw className="w-4 h-4 mr-2" /> Reset
                   </Button>
-                  <Button variant="outline" className="w-full sm:w-auto bg-transparent border-white/20 text-white hover:bg-white/10 hover:border-white/30 font-bold uppercase tracking-widest text-xs py-6 px-8 rounded-xl transition-all">
+                  <Button variant="outline" className={`w-full sm:w-auto border-slate-300 ${hybrid.editorialHeading} hover:bg-[#010B19] hover:text-white font-bold uppercase tracking-widest text-xs py-6 px-8 rounded-xl transition-all`}>
                     <Save className="w-4 h-4 mr-2" /> Save Draft
                   </Button>
                 </div>
@@ -208,13 +223,14 @@ function PersonalizeContent() {
 
         </div>
       </div>
+      </EditorialSection>
     </div>
   );
 }
 
 export default function PersonalizeEmailPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#030712] text-white"><Loader2 className="w-8 h-8 animate-spin text-[#1877F2]" /></div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center font-sans"><Loader2 className="w-8 h-8 animate-spin text-[#1877F2]" /></div>}>
       <PersonalizeContent />
     </Suspense>
   );

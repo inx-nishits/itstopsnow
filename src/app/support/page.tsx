@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Search, Smartphone, Book, Headphones, Star, ExternalLink, Filter } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
+import { PageHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
 
 const MOCK_APPS = [
   {
@@ -120,25 +123,25 @@ const AppsSection = () => {
   const paginated = sorted.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <section className="py-12 lg:py-24 border-b border-white/5 relative">
+    <EditorialSection>
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
               <Smartphone className="w-5 h-5" /> Digital Tools
             </h2>
-            <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Apps</h3>
+            <h3 className={`font-sans text-3xl max-sm:text-3xl md:text-5xl font-bold uppercase tracking-tight ${hybrid.editorialHeading}`}>Recommended Apps</h3>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
             <div className="relative w-full">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input 
                 type="text" 
                 placeholder="SEARCH APPS..."
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+                className={`w-full pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest focus:outline-none transition-colors rounded-xl ${hybrid.editorialInput}`}
               />
             </div>
           </div>
@@ -146,24 +149,24 @@ const AppsSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
-            {paginated.map((item, idx) => (
-              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-[#050A14] border border-white/10 rounded-2xl overflow-hidden hover:border-[#1877F2]/50 transition-colors flex flex-col group">
+            {paginated.map((item) => (
+              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} overflow-hidden flex flex-col group`}>
                 <div className="p-6 md:p-8 flex-grow flex flex-col">
                   <div className="flex justify-between items-start mb-6">
-                    <img src={item.logo} alt={item.name} className="w-16 h-16 rounded-2xl object-cover border border-white/10 group-hover:scale-110 transition-transform duration-500" />
-                    {item.badge && <span className="bg-[#1877F2]/20 text-[#1877F2] text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">{item.badge}</span>}
+                    <img src={item.logo} alt={item.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-200 group-hover:scale-110 transition-transform duration-500" />
+                    {item.badge && <span className="bg-[#1877F2]/10 text-[#1877F2] text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">{item.badge}</span>}
                   </div>
-                  <h4 className="text-xl font-bold text-white mb-2">{item.name}</h4>
+                  <h4 className={`text-xl font-bold mb-2 ${hybrid.editorialHeading}`}>{item.name}</h4>
                   <div className="flex items-center gap-2 mb-4">
                     <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                    <span className="text-sm font-bold text-white">{item.rating}</span>
-                    <span className="text-[10px] text-slate-500 uppercase tracking-widest ml-1">({item.reviews})</span>
+                    <span className={`text-sm font-bold ${hybrid.editorialHeading}`}>{item.rating}</span>
+                    <span className={`text-[10px] uppercase tracking-widest ml-1 ${hybrid.editorialMuted}`}>({item.reviews})</span>
                   </div>
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-4 inline-block">{item.category}</span>
-                  <p className="text-sm text-slate-400 leading-relaxed mb-8 flex-grow">{item.description}</p>
+                  <span className={`text-[9px] font-bold uppercase tracking-widest mb-4 inline-block ${hybrid.editorialMuted}`}>{item.category}</span>
+                  <p className={`text-sm leading-relaxed mb-8 flex-grow ${hybrid.editorialBody}`}>{item.description}</p>
                   
                   <Link href={item.link} target="_blank">
-                    <Button className="w-full bg-white/5 hover:bg-[#1877F2] hover:text-white text-slate-300 font-bold uppercase tracking-widest text-[10px] py-6 transition-all border border-white/10 group-hover:border-[#1877F2]">
+                    <Button className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] py-6 transition-all">
                       Visit App <ExternalLink className="w-3 h-3 ml-2" />
                     </Button>
                   </Link>
@@ -175,13 +178,13 @@ const AppsSection = () => {
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-12">
-            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Pg {currentPage} / {totalPages}</span>
-            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
+            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
+            <span className={`text-xs font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>Pg {currentPage} / {totalPages}</span>
+            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
           </div>
         )}
       </div>
-    </section>
+    </EditorialSection>
   );
 };
 
@@ -196,7 +199,7 @@ const BooksSection = () => {
   const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <section className="py-12 lg:py-24 border-b border-white/5 relative">
+    <CampaignSection>
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
@@ -260,7 +263,7 @@ const BooksSection = () => {
           </div>
         )}
       </div>
-    </section>
+    </CampaignSection>
   );
 };
 
@@ -275,25 +278,25 @@ const PodcastsSection = () => {
   const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <section className="py-12 lg:py-24 border-b border-white/5 relative bg-[#020611]">
+    <EditorialSection>
       <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
               <Headphones className="w-5 h-5" /> Audio Resources
             </h2>
-            <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-bold uppercase tracking-tight text-white">Recommended Podcasts</h3>
+            <h3 className={`font-sans text-3xl max-sm:text-3xl md:text-5xl font-bold uppercase tracking-tight ${hybrid.editorialHeading}`}>Recommended Podcasts</h3>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
             <div className="relative w-full">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input 
                 type="text" 
                 placeholder="SEARCH PODCASTS..."
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
+                className={`w-full pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest focus:outline-none transition-colors rounded-xl ${hybrid.editorialInput}`}
               />
             </div>
           </div>
@@ -301,17 +304,17 @@ const PodcastsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AnimatePresence mode="popLayout">
-            {paginated.map((item, idx) => (
-              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-6 hover:border-[#1877F2]/50 transition-colors flex items-center gap-6 group">
+            {paginated.map((item) => (
+              <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={item.id} className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-5 md:p-6 flex items-center gap-6 group`}>
                 <div className="shrink-0 relative">
-                  <div className="absolute inset-0 bg-[#1877F2] blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></div>
-                  <img src={item.logo} alt={item.title} className="w-24 h-24 rounded-xl object-cover border border-white/20 grayscale group-hover:grayscale-0 transition-all duration-500 relative z-10" />
+                  <div className="absolute inset-0 bg-[#1877F2] blur-xl opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                  <img src={item.logo} alt={item.title} className="w-24 h-24 rounded-xl object-cover border border-slate-200 grayscale group-hover:grayscale-0 transition-all duration-500 relative z-10" />
                 </div>
                 <div className="flex-grow">
                   <div className="text-[9px] font-bold text-[#1877F2] uppercase tracking-widest mb-2">{item.topic}</div>
-                  <h4 className="text-xl font-bold text-white mb-2 tracking-tight leading-tight">{item.title}</h4>
-                  <p className="text-sm text-slate-400 leading-relaxed mb-4 line-clamp-2">{item.description}</p>
-                  <Link href={item.link} target="_blank" className="inline-flex items-center gap-2 text-[10px] font-bold text-white uppercase tracking-widest hover:text-[#1877F2] transition-colors">
+                  <h4 className={`text-xl font-bold mb-2 tracking-tight leading-tight ${hybrid.editorialHeading}`}>{item.title}</h4>
+                  <p className={`text-sm leading-relaxed mb-4 line-clamp-2 ${hybrid.editorialBody}`}>{item.description}</p>
+                  <Link href={item.link} target="_blank" className={`inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest hover:text-[#1877F2] transition-colors ${hybrid.editorialHeading}`}>
                     Listen Now <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
@@ -322,60 +325,41 @@ const PodcastsSection = () => {
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-12">
-            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Pg {currentPage} / {totalPages}</span>
-            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
+            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
+            <span className={`text-xs font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>Pg {currentPage} / {totalPages}</span>
+            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
           </div>
         )}
       </div>
-    </section>
+    </EditorialSection>
   );
 };
 
 
 export default function SupportListing() {
   return (
-    <div className="min-h-screen bg-[#020611] text-white font-sans">
+    <div className="min-h-screen font-sans">
       
-      {/* HERO */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920" 
-            alt="Supportive community hands" 
-            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40 grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
-        </div>
-
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
-          <div className="w-full lg:w-full max-w-[1200px] pt-10">
-            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
-              <Heart className="w-5 h-5" /> ASSISTANCE & CARE
-            </h3>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
-            >
-              <span className="text-white">RECOVERY & </span><br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">SUPPORT.</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
-            >
-              You are not alone. Explore our curated directory of mental health resources, books, and podcasts tailored for police wellbeing.
-            </motion.p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        animate
+        eyebrow={
+          <>
+            <Heart className="w-5 h-5 shrink-0" /> ASSISTANCE & CARE
+          </>
+        }
+        title={
+          <>
+            <span className="text-white">RECOVERY & </span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
+              SUPPORT.
+            </span>
+          </>
+        }
+        description="You are not alone. Explore our curated directory of mental health resources, books, and podcasts tailored for police wellbeing."
+        imageSrc="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920"
+        imageAlt="Supportive community hands"
+      />
 
       {/* THREE DISTINCT SECTIONS WITH THEIR OWN LOCAL STATE */}
       <AppsSection />

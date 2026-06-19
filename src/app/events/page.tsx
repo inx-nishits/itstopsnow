@@ -4,6 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, Clock, ArrowRight, Users, CheckCircle2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { EditorialSection } from "@/components/layout/PageSection";
+import { PageHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
 
 interface CampaignEvent {
   id: string;
@@ -107,43 +110,48 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020611] text-white pb-16 lg:pb-32 font-sans pt-12 lg:pt-20 md:pt-32">
+    <div className="flex flex-col min-h-screen font-sans pb-16 lg:pb-32">
       
-      {/* HERO SECTION */}
-      <section className="relative w-full py-12 md:py-24 border-b border-white/5">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] flex flex-col items-start gap-6">
-          <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm flex items-center gap-3">
-            <Calendar className="w-5 h-5 animate-pulse" /> Campaign Calendar
-          </h3>
-          <h1 className="text-3xl max-sm:text-3xl md:text-6xl lg:text-7xl font-black leading-none tracking-tighter uppercase">
-            CAMPAIGN <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">EVENTS.</span>
-          </h1>
-          <p className="text-base md:text-lg text-slate-300 max-w-2xl leading-relaxed">
-            Attend briefings, local mobilisations, and Parliamentary lobby days. Meet the advocates, connect with peers, and help drive systemic change in officer welfare procedures.
-          </p>
-          
-          {/* TAB FILTERS */}
-          <div className="flex flex-wrap gap-3 mt-8">
-            {(["all", "upcoming", "past"] as const).map(filter => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`min-h-[48px] px-6 text-[10px] font-bold tracking-widest uppercase transition-all rounded-none ${
-                  activeFilter === filter
-                    ? "bg-[#1877F2] text-white shadow-[0_0_15px_rgba(24,119,242,0.3)]"
-                    : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
-                }`}
-              >
-                {filter === "all" ? "All Events" : `${filter} Events`}
-              </button>
-            ))}
-          </div>
+      <PageHero
+        variant="utility"
+        eyebrow={
+          <>
+            <Calendar className="w-5 h-5 shrink-0 animate-pulse" /> Campaign Calendar
+          </>
+        }
+        title={
+          <>
+            CAMPAIGN{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
+              EVENTS.
+            </span>
+          </>
+        }
+        description="Attend briefings, local mobilisations, and Parliamentary lobby days. Meet the advocates, connect with peers, and help drive systemic change in officer welfare procedures."
+        imageSrc="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=1920"
+        imageAlt="Campaign event gathering"
+      >
+        <div className="flex flex-wrap gap-3">
+          {(["all", "upcoming", "past"] as const).map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`min-h-[48px] px-6 text-[10px] font-bold tracking-widest uppercase transition-all rounded-full ${
+                activeFilter === filter
+                  ? "bg-[#1877F2] text-white shadow-[0_0_15px_rgba(24,119,242,0.3)]"
+                  : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
+              }`}
+            >
+              {filter === "all" ? "All Events" : `${filter} Events`}
+            </button>
+          ))}
         </div>
-      </section>
+      </PageHero>
 
       {/* EVENTS GRID */}
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] mt-8 lg:mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <EditorialSection variant="white">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredEvents.map((event, idx) => (
               <motion.div
@@ -153,24 +161,24 @@ export default function EventsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className={`group flex flex-col h-full bg-white/5 backdrop-blur-sm border ${
-                  event.type === "upcoming" ? "border-white/10 hover:border-[#1877F2]/50" : "border-white/5 opacity-80 hover:opacity-100"
-                } overflow-hidden transition-all duration-300 hover:-translate-y-1`}
+                className={`group flex flex-col h-full ${hybrid.editorialCard} ${hybrid.editorialCardHover} overflow-hidden ${
+                  event.type === "past" ? "opacity-80 hover:opacity-100" : ""
+                } hover:-translate-y-1`}
               >
                 <div className="p-6 md:p-8 flex flex-col h-full justify-between">
                   <div>
                     {/* Header Strip */}
                     <div className="flex justify-between items-center mb-6">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                      <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${hybrid.editorialMuted}`}>
                         {event.date}
                       </span>
                       {event.badge ? (
-                        <span className="bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/20 px-3 py-1 text-[8px] font-bold uppercase tracking-wider">
+                        <span className="bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/20 px-3 py-1 text-[8px] font-bold uppercase tracking-wider rounded-full">
                           {event.badge}
                         </span>
                       ) : (
-                        <span className={`text-[8px] font-bold uppercase tracking-widest px-2.5 py-1 ${
-                          event.type === "upcoming" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-slate-800 text-slate-400"
+                        <span className={`text-[8px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${
+                          event.type === "upcoming" ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-slate-100 text-slate-500 border border-slate-200"
                         }`}>
                           {event.type}
                         </span>
@@ -178,46 +186,47 @@ export default function EventsPage() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold uppercase text-white mb-4 group-hover:text-[#1877F2] transition-colors leading-snug">
+                    <h3 className={`text-xl font-bold uppercase ${hybrid.editorialHeading} mb-4 group-hover:text-[#1877F2] transition-colors leading-snug`}>
                       {event.title}
                     </h3>
 
                     {/* Location / Time */}
-                    <div className="space-y-2 mb-6 text-xs text-slate-400">
+                    <div className={`space-y-2 mb-6 text-xs ${hybrid.editorialMuted}`}>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        <Clock className="w-3.5 h-3.5 shrink-0" />
                         <span>{event.time}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        <MapPin className="w-3.5 h-3.5 shrink-0" />
                         <span>{event.location}</span>
                       </div>
                       {event.attendees && (
                         <div className="flex items-center gap-2">
-                          <Users className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                          <Users className="w-3.5 h-3.5 shrink-0" />
                           <span>{event.attendees} Registered</span>
                         </div>
                       )}
                     </div>
 
                     {/* Description */}
-                    <p className="text-slate-300 text-sm leading-relaxed mb-8">
+                    <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-8`}>
                       {event.description}
                     </p>
                   </div>
 
                   {/* Actions */}
-                  <div className="border-t border-white/10 pt-6 mt-auto flex items-center justify-between">
+                  <div className={`border-t ${hybrid.editorialBorder} pt-6 mt-auto flex items-center justify-between`}>
                     {event.type === "upcoming" ? (
                       <button
+                        type="button"
                         onClick={() => setSelectedEvent(event)}
-                        className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:text-blue-400 min-h-[48px] transition-colors"
+                        className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:text-blue-600 min-h-[48px] transition-colors cursor-pointer"
                       >
                         <span>Register Interest</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     ) : (
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                      <span className={`text-[10px] font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>
                         Event Concluded
                       </span>
                     )}
@@ -227,7 +236,8 @@ export default function EventsPage() {
             ))}
           </AnimatePresence>
         </div>
-      </section>
+        </div>
+      </EditorialSection>
 
       {/* REGISTRATION MODAL */}
       <AnimatePresence>

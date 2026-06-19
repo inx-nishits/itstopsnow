@@ -16,7 +16,10 @@ import { achievement } from './achievement'
 import { tribute } from './tribute'
 import { candleLog } from './candleLog'
 import { memory } from './memory'
+import { siteStatistic } from './siteStatistic'
+import { homepageVoice } from './homepageVoice'
+import { getInvolvedSubmission } from './getInvolvedSubmission'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [story, news, campaign, research, event, resource, templateCategory, letterTemplate, letterHistory, memorial, timelineEvent, achievement, tribute, candleLog, memory],
+  types: [story, news, campaign, research, event, resource, templateCategory, letterTemplate, letterHistory, memorial, timelineEvent, achievement, tribute, candleLog, memory, siteStatistic, homepageVoice, getInvolvedSubmission],
 }

@@ -102,6 +102,31 @@
   html {
     @apply font-sans;
   }
+
+  /* Actionable elements — pointer cursor site-wide */
+  a[href]:not([aria-disabled="true"]),
+  button:not(:disabled):not([disabled]),
+  [role="button"]:not([aria-disabled="true"]):not(:disabled),
+  [role="tab"]:not([aria-disabled="true"]),
+  [role="menuitem"]:not([aria-disabled="true"]),
+  [role="option"]:not([aria-disabled="true"]),
+  label[for],
+  summary,
+  select:not(:disabled),
+  input[type="button"]:not(:disabled),
+  input[type="submit"]:not(:disabled),
+  input[type="reset"]:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled),
+  [data-slot="button"]:not(:disabled):not([disabled]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [disabled],
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
 }
 
 /* Card Flip Utilities */
@@ -117,4 +142,85 @@
 }
 .rotate-y-180 {
   transform: rotateY(180deg);
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes hero-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: hero-marquee 32s linear infinite;
+}
+
+.hero-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track {
+    animation: none;
+    width: 100%;
+    justify-content: space-around;
+  }
+}
+
+/* Hybrid theme: Editorial (light reading) + Campaign (dark) + Memorial (warm dark) */
+.theme-editorial {
+  --surface-bg: #f4f5f7;
+  --surface-elevated: #ffffff;
+  --surface-text: #010b19;
+  --surface-muted: #64748b;
+  --surface-border: #e2e8f0;
+  --surface-accent: #1877f2;
+}
+
+.theme-memorial {
+  --memorial-bg: #0f0c09;
+  --memorial-surface: #14100c;
+  --memorial-warm: #1a1410;
+  --memorial-glow: rgba(217, 119, 6, 0.12);
+  --memorial-read: #f5f0eb;
+}
+
+.theme-memorial .memorial-input {
+  width: 100%;
+  background: #0f0c09;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  color: #f5f5f4;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  min-height: 48px;
+}
+.theme-memorial .memorial-input:focus {
+  outline: none;
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15);
+}
+
+/* Editorial prose for legal / policy body copy */
+.theme-editorial .prose-editorial {
+  color: #475569;
+}
+.theme-editorial .prose-editorial h2 {
+  color: #010b19;
+}
+.theme-editorial .prose-editorial a {
+  color: #1877f2;
 }

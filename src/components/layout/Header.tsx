@@ -8,7 +8,6 @@ import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "The Issue", href: "/the-issue" },
   { label: "News", href: "/news" },
   { label: "Stories", href: "/stories" },
@@ -63,7 +62,7 @@ export default function Header() {
                 <Link 
                   key={link.href} 
                   href={link.href}
-                  className={`relative whitespace-nowrap text-sm xl:text-base font-medium transition-all duration-200 hover:-translate-y-0.5 ${
+                  className={`relative whitespace-nowrap text-sm xl:text-base font-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${
                     isActive 
                       ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" 
                       : "text-slate-300 hover:text-white"
@@ -85,7 +84,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-4 shrink-0">
             <Link 
               href="/take-action" 
-              className="bg-[#1877F2] text-white hover:bg-white hover:text-black text-xs xl:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:-translate-y-0.5"
+              className="bg-[#1877F2] text-white hover:bg-white hover:text-black text-xs xl:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
             >
               Take Action
             </Link>
@@ -93,7 +92,7 @@ export default function Header() {
 
           {/* MOBILE TOGGLE */}
           <button 
-            className="lg:hidden text-white p-2 -mr-2 relative z-[60] bg-black/20 rounded-lg backdrop-blur-sm shadow-sm min-w-[48px] min-h-[48px] flex items-center justify-center"
+            className="lg:hidden text-white p-2 -mr-2 relative z-[60] bg-black/20 rounded-lg backdrop-blur-sm shadow-sm min-w-[48px] min-h-[48px] flex items-center justify-center cursor-pointer"
             onClick={() => setMobileMenuOpen(true)}
           >
             <Menu className="w-7 h-7" />
@@ -117,7 +116,7 @@ export default function Header() {
               </Link>
               <button 
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-slate-400 hover:text-white p-2 -mr-2 min-w-[48px] min-h-[48px] flex items-center justify-center"
+                className="text-slate-400 hover:text-white p-2 -mr-2 min-w-[48px] min-h-[48px] flex items-center justify-center cursor-pointer"
               >
                 <X className="w-7 h-7" />
               </button>
@@ -128,7 +127,7 @@ export default function Header() {
                 <Link 
                   key={link.href} 
                   href={link.href}
-                  className={`text-2xl font-medium tracking-tight py-2 ${
+                  className={`text-2xl font-medium tracking-tight py-2 cursor-pointer ${
                     pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
                       ? "text-white" 
                       : "text-slate-400 hover:text-white"
@@ -141,7 +140,7 @@ export default function Header() {
               <div className="mt-8 pt-8 border-t border-white/10 flex flex-col gap-4">
                 <Link 
                   href="/take-action" 
-                  className="flex justify-center bg-[#1877F2] text-white hover:bg-white hover:text-black text-sm font-bold uppercase tracking-wider px-6 py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)]"
+                  className="flex justify-center bg-[#1877F2] text-white hover:bg-white hover:text-black text-sm font-bold uppercase tracking-wider px-6 py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(24,119,242,0.3)] cursor-pointer"
                 >
                   Take Action
                 </Link>

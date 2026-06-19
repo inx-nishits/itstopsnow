@@ -1,9 +1,10 @@
 "use client";
 
 import { use } from "react";
-import { ArrowLeft, Star, ExternalLink, ShieldAlert, Heart, Info, BookOpen } from "lucide-react";
+import { ArrowLeft, Star, ExternalLink, ShieldAlert, Info, Heart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ArticleHero } from "@/components/layout/PageHero";
 
 const MOCK_DETAIL = {
   type: "org",
@@ -30,35 +31,33 @@ export default function SupportDetail({ params }: { params: Promise<{ type: stri
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-12 lg:pb-24 font-sans">
       
-      {/* HERO */}
-      <section className="relative w-full min-h-[50vh] pt-16 lg:pt-32 pb-10 lg:pb-20 bg-[#010B19] flex flex-col justify-end overflow-hidden text-white">
-        <div className="absolute inset-0 z-0">
-          <img src={MOCK_DETAIL.image} className="w-full h-full object-cover mix-blend-luminosity opacity-30 lg:opacity-40" alt="Cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#010B19] via-[#010B19]/80 to-transparent lg:bg-gradient-to-r lg:from-[#010B19] lg:via-[#010B19]/90 lg:to-transparent" />
-        </div>
-
-        <div className="container relative z-10 max-w-[1200px] mx-auto px-4 md:px-8 text-left">
-          <Link href="/support" className="inline-flex items-center text-blue-400 hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-colors">
-            <ArrowLeft className="w-3 h-3 mr-1" /> Back to Directory
+      <ArticleHero
+        backLink={
+          <Link
+            href="/support"
+            className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors"
+          >
+            <ArrowLeft className="w-3 h-3 mr-2" /> Back to Directory
           </Link>
-
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center bg-blue-600 text-white px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase mb-6 shadow-sm">
-              <ShieldAlert className="w-3 h-3 mr-2" /> {MOCK_DETAIL.category}
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight font-heading mb-6 leading-[1.1]">
-              {MOCK_DETAIL.title}
-            </h1>
-            
-            <div className="flex flex-wrap items-center gap-6 text-sm font-bold uppercase tracking-widest text-slate-300">
-              <span>{MOCK_DETAIL.author}</span>
-              <span className="text-slate-500">•</span>
-              <span className="flex items-center text-blue-400"><Star className="w-4 h-4 fill-current mr-1" /> {MOCK_DETAIL.rating}</span>
-            </div>
+        }
+        badges={
+          <span className="inline-flex items-center bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase">
+            <ShieldAlert className="w-3 h-3 mr-2" /> {MOCK_DETAIL.category}
+          </span>
+        }
+        title={MOCK_DETAIL.title}
+        meta={
+          <div className="flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <span>{MOCK_DETAIL.author}</span>
+            <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
+            <span className="flex items-center text-[#1877F2]">
+              <Star className="w-4 h-4 fill-current mr-1" /> {MOCK_DETAIL.rating}
+            </span>
           </div>
-        </div>
-      </section>
+        }
+        imageSrc={MOCK_DETAIL.image}
+        imageAlt={MOCK_DETAIL.title}
+      />
 
       {/* CONTENT */}
       <div className="container mx-auto px-4 md:px-8 mt-8 lg:mt-16 max-w-[1200px]">

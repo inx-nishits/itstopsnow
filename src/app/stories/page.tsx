@@ -4,6 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, Filter, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
+import { PageHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
+import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 
 export const STORIES = [
@@ -156,54 +160,33 @@ export default function StoriesPage() {
   }, [searchTerm, activeFilter]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
+    <div className="flex flex-col min-h-screen font-sans">
       
-      {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1920" 
-            alt="People stories" 
-            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40 grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
-        </div>
-
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
-          <div className="w-full lg:w-full max-w-[1200px] pt-10">
-            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
-              <MessageSquare className="w-5 h-5" /> LIVED EXPERIENCES
-            </h3>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
-            >
-              <span className="text-white">REAL PEOPLE.</span><br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">REAL STORIES.</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
-            >
-              Behind every statistic is a human being. Read the raw, unfiltered experiences of police officers and their families navigating a broken system.
-            </motion.p>
-
-            {/* CTA button removed to match specifications */}
-          </div>
-        </div>
-      </section>
+      <PageHero
+        animate
+        eyebrow={
+          <>
+            <MessageSquare className="w-5 h-5 shrink-0" /> LIVED EXPERIENCES
+          </>
+        }
+        title={
+          <>
+            <span className="text-white">REAL PEOPLE.</span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
+              REAL STORIES.
+            </span>
+          </>
+        }
+        description="Behind every statistic is a human being. Read the raw, unfiltered experiences of police officers and their families navigating a broken system."
+        imageSrc="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1920"
+        imageAlt="People stories"
+      />
 
       {/* Featured Story Section removed to match specifications */}
 
       {/* 3. FILTERS & SEARCH */}
-      <section className="bg-[#050B14]/90 backdrop-blur-xl border-b border-white/5 sticky top-20 md:top-24 z-40 shadow-xl py-5">
+      <EditorialStickyBar>
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             
@@ -212,11 +195,10 @@ export default function StoriesPage() {
                 <button 
                   key={f}
                   onClick={() => setActiveFilter(f)}
-                  className={`px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${
-                    activeFilter === f 
-                      ? "bg-[#1877F2] text-white shadow-[0_0_15px_rgba(24,119,242,0.4)] border border-[#1877F2]" 
-                      : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
-                  }`}
+                  className={cn(
+                    "px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors",
+                    activeFilter === f ? hybrid.editorialChipActive : hybrid.editorialChip
+                  )}
                 >
                   {f === "All" ? "All Stories" : f}
                 </button>
@@ -231,37 +213,36 @@ export default function StoriesPage() {
                   placeholder="SEARCH STORIES..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold bg-[#020611] border border-white/10 rounded-full text-white placeholder-slate-500 focus:outline-none focus:border-[#1877F2]/50 transition-colors" 
+                  className={cn("w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors", hybrid.editorialInput)} 
                 />
               </div>
-              <Button variant="outline" className="border-white/10 text-white bg-white/5 hover:bg-white/10 h-[48px] px-8 rounded-full flex items-center font-bold text-[10px] uppercase tracking-widest transition-colors">
+              <Button variant="outline" className={cn("h-[48px] px-8 rounded-full flex items-center font-bold text-[10px] uppercase tracking-widest transition-colors", hybrid.editorialChip)}>
                 <Filter className="w-4 h-4 mr-2" /> Sort
               </Button>
             </div>
           </div>
         </div>
-      </section>
+      </EditorialStickyBar>
 
       {/* 4. STORY GRID & COUNTER */}
-      <section className="py-12 lg:py-24 bg-[#020611]">
+      <EditorialSection>
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-white/10 pb-8 mb-10 sm:mb-16">
-            <h2 className="font-sans text-3xl font-bold uppercase tracking-tight text-white">LATEST STORIES</h2>
+          <div className={cn("flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b pb-8 mb-10 sm:mb-16", hybrid.editorialBorder)}>
+            <h2 className={cn("font-sans text-3xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>LATEST STORIES</h2>
             <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {filteredStories.length} stories</div>
           </div>
 
           {filteredStories.length === 0 ? (
-            <div className="text-center py-10 lg:py-20 text-slate-500">
-              <Search className="w-12 h-12 mx-auto mb-4 opacity-20" />
-              <p className="font-bold uppercase tracking-widest text-sm">No stories found matching your search.</p>
-              <button onClick={() => { setSearchTerm(""); setActiveFilter("All"); }} className="mt-4 text-[#1877F2] hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">Clear Filters</button>
+            <div className={cn("text-center py-10 lg:py-20 rounded-3xl", hybrid.editorialCard)}>
+              <Search className="w-12 h-12 mx-auto mb-4 text-slate-300" />
+              <p className={cn("font-bold uppercase tracking-widest text-sm", hybrid.editorialMuted)}>No stories found matching your search.</p>
+              <button onClick={() => { setSearchTerm(""); setActiveFilter("All"); }} className="mt-4 text-[#1877F2] hover:text-[#010B19] transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer">Clear Filters</button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {paginatedStories.map((story) => (
-                <div key={story.id} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden hover:border-[#1877F2]/50 transition-all duration-300 group hover:-translate-y-2 relative flex flex-col h-full shadow-xl">
-                  {/* Featured Image */}
-                  <div className="h-64 w-full relative overflow-hidden bg-[#02050A] border-b border-white/5">
+                <div key={story.id} className={cn(hybrid.editorialCard, hybrid.editorialCardHover, "overflow-hidden group hover:-translate-y-2 relative flex flex-col h-full")}>
+                  <div className={cn("h-64 w-full relative overflow-hidden bg-slate-100 border-b", hybrid.editorialBorder)}>
                     <img 
                       src={story.image} 
                       alt={story.title} 
@@ -274,7 +255,7 @@ export default function StoriesPage() {
                       <span className="text-[9px] font-bold text-[#1877F2] uppercase tracking-[0.2em] bg-[#1877F2]/10 px-3 py-1.5 rounded-full border border-[#1877F2]/20">
                         {story.type}
                       </span>
-                      <div className="flex items-center gap-3 text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+                      <div className={cn("flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest", hybrid.editorialMuted)}>
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3 h-3" /> {story.date}
                         </span>
@@ -284,15 +265,15 @@ export default function StoriesPage() {
                       </div>
                     </div>
                     
-                    <h3 className="font-sans font-bold text-xl text-white mb-4 leading-snug group-hover:text-[#1877F2] transition-colors uppercase tracking-tight line-clamp-2">
+                    <h3 className={cn("font-sans font-bold text-xl mb-4 leading-snug group-hover:text-[#1877F2] transition-colors uppercase tracking-tight line-clamp-2", hybrid.editorialHeading)}>
                       {story.title}
                     </h3>
                     
-                    <p className="text-slate-400 text-xs leading-relaxed mb-8 flex-grow line-clamp-3">
+                    <p className={cn("text-xs leading-relaxed mb-8 flex-grow line-clamp-3", hybrid.editorialBody)}>
                       {story.excerpt}
                     </p>
                     
-                    <Link href={`/stories/${story.id}`} className="mt-auto pt-6 border-t border-white/10 flex items-center text-white font-bold text-[10px] uppercase tracking-widest group-hover:text-[#1877F2] transition-colors">
+                    <Link href={`/stories/${story.id}`} className={cn("mt-auto pt-6 border-t flex items-center font-bold text-[10px] uppercase tracking-widest group-hover:text-[#1877F2] transition-colors", hybrid.editorialBorder, hybrid.editorialHeading)}>
                       Read Story <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
@@ -301,14 +282,13 @@ export default function StoriesPage() {
             </div>
           )}
 
-          {/* 5. PAGINATION */}
           {totalPages > 1 && (
-            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mt-8 lg:mt-16 lg:mt-24 pt-10 border-t border-white/10">
+            <div className={cn("flex flex-wrap justify-center items-center gap-2 sm:gap-3 mt-8 lg:mt-16 lg:mt-24 pt-10 border-t", hybrid.editorialBorder)}>
               <Button 
                 onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
                 variant="outline" 
-                className={`w-12 h-12 p-0 rounded-full border-white/10 ${currentPage === 1 ? 'bg-white/5 text-slate-500 opacity-50 cursor-not-allowed' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-colors'}`}
+                className={cn("w-12 h-12 p-0 rounded-full", hybrid.editorialChip, currentPage === 1 && "opacity-50 cursor-not-allowed")}
               >
                 <ArrowLeft className="w-4 h-4" />
               </Button>
@@ -317,11 +297,10 @@ export default function StoriesPage() {
                 <Button 
                   key={idx}
                   onClick={() => setCurrentPage(idx + 1)}
-                  className={`w-12 h-12 p-0 rounded-full font-bold text-sm transition-colors ${
-                    currentPage === idx + 1 
-                      ? 'bg-[#1877F2] text-white shadow-[0_0_20px_rgba(24,119,242,0.3)]' 
-                      : 'border border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20'
-                  }`}
+                  className={cn(
+                    "w-12 h-12 p-0 rounded-full font-bold text-sm transition-colors",
+                    currentPage === idx + 1 ? hybrid.editorialChipActive : hybrid.editorialChip
+                  )}
                 >
                   {idx + 1}
                 </Button>
@@ -331,17 +310,18 @@ export default function StoriesPage() {
                 onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                 disabled={currentPage === totalPages}
                 variant="outline" 
-                className={`w-12 h-12 p-0 rounded-full border-white/10 ${currentPage === totalPages ? 'bg-white/5 text-slate-500 opacity-50 cursor-not-allowed' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-colors'}`}
+                className={cn("w-12 h-12 p-0 rounded-full", hybrid.editorialChip, currentPage === totalPages && "opacity-50 cursor-not-allowed")}
               >
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
           )}
         </div>
-      </section>
+      </EditorialSection>
 
       {/* 6. CALL TO ACTION BANNER */}
-      <section className="relative w-full py-12 lg:py-32 border-t border-white/5 overflow-hidden">
+      <CampaignSection className="relative overflow-hidden" noPadding>
+        <div className="relative w-full py-12 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920" 
@@ -368,7 +348,7 @@ export default function StoriesPage() {
 
           <div className="lg:w-1/2 w-full">
             {/* Supportive Quote Block */}
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-6 md:p-10 relative overflow-hidden shadow-2xl group">
+            <div className={cn(hybrid.campaignCard, "p-6 md:p-10 relative overflow-hidden shadow-2xl group")}>
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
               <svg viewBox="0 0 24 24" className="w-10 h-10 text-[#1877F2] opacity-30 mb-6 fill-current" aria-hidden="true">
                 <path d="M11.19 10.43c0 2.2-1.29 3.44-2.53 4.41C7.4 15.82 6.5 17 6.5 19H5c0-2.42 1.34-3.88 2.5-4.79 1.05-.82 1.69-1.67 1.69-2.78H5V5h6.19v5.43zm9.81 0c0 2.2-1.29 3.44-2.53 4.41-1.26.98-2.16 2.16-2.16 4.16h-1.5c0-2.42 1.34-3.88 2.5-4.79 1.05-.82 1.69-1.67 1.69-2.78H16V5h6.19v5.43z"/>
@@ -383,7 +363,8 @@ export default function StoriesPage() {
             </div>
           </div>
         </div>
-      </section>
+        </div>
+      </CampaignSection>
 
       {/* STORY SUBMISSION MODAL */}
       <AnimatePresence>

@@ -4,6 +4,10 @@ import { use, useState } from "react";
 import Link from "next/link";
 import { ChevronRight, Share2, Calendar, Clock, ArrowLeft, Check, Link as LinkIcon, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { EditorialSection } from "@/components/layout/PageSection";
+import { ArticleHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
+import { cn } from "@/lib/utils";
 
 // Mock Data
 const MOCK_STORY = {
@@ -45,54 +49,51 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans pb-12 lg:pb-24">
+    <div className="flex flex-col min-h-screen font-sans">
       
-      {/* HERO / BANNER */}
-      <section className="relative w-full h-[60vh] min-h-[500px] flex flex-col justify-start pt-12 lg:pt-24 lg:pt-40 border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={MOCK_STORY.image} 
-            alt={MOCK_STORY.title} 
-            className="w-full h-full object-cover object-center opacity-40 grayscale mix-blend-luminosity"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-transparent" />
-        </div>
-
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1200px] pb-16">
-          <Link href="/stories" className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest mb-8 py-2 transition-colors">
+      <ArticleHero
+        backLink={
+          <Link
+            href="/stories"
+            className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest py-2 transition-colors"
+          >
             <ArrowLeft className="w-3 h-3 mr-2" /> Back to Stories
           </Link>
-          
-          <div className="flex items-center gap-4 mb-6">
-            <span className="bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
-              {MOCK_STORY.category}
-            </span>
-          </div>
-          
-          <h1 className="text-3xl max-sm:text-3xl md:text-5xl lg:text-7xl font-black text-white leading-tight mb-6 tracking-tighter uppercase max-w-4xl">
-            {MOCK_STORY.title}
-          </h1>
-          
+        }
+        badges={
+          <span className="inline-flex bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
+            {MOCK_STORY.category}
+          </span>
+        }
+        title={MOCK_STORY.title}
+        meta={
           <div className="flex flex-wrap items-center gap-4 text-slate-400 text-xs font-bold uppercase tracking-widest">
             <span className="text-[#1877F2]">{MOCK_STORY.author}</span>
             <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
-            <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5"/> {MOCK_STORY.date}</span>
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" /> {MOCK_STORY.date}
+            </span>
             <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
-            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5"/> {MOCK_STORY.readTime}</span>
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5" /> {MOCK_STORY.readTime}
+            </span>
           </div>
-        </div>
-      </section>
+        }
+        imageSrc={MOCK_STORY.image}
+        imageAlt={MOCK_STORY.title}
+      />
 
       {/* CONTENT */}
-      <section className="w-full px-6 lg:px-16 mx-auto max-w-[1200px] mt-8 lg:mt-16">
+      <EditorialSection noPadding className="pb-12 lg:pb-24">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1200px] py-8 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           
           {/* Main Article */}
           <div className="lg:col-span-8">
-            <div className="prose prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-a:text-[#1877F2] prose-p:text-slate-300 prose-p:leading-relaxed">
+            <div className="prose prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-headings:text-[#010B19] prose-a:text-[#1877F2] prose-p:text-slate-600 prose-p:leading-relaxed">
               {MOCK_STORY.content.split('\n\n').map((paragraph, idx) => {
                 if (paragraph.startsWith('###')) {
-                  return <h3 key={idx} className="text-2xl mt-12 mb-6">{paragraph.replace('### ', '')}</h3>;
+                  return <h3 key={idx} className="text-2xl mt-12 mb-6 text-[#010B19]">{paragraph.replace('### ', '')}</h3>;
                 }
                 return <p key={idx}>{paragraph}</p>;
               })}
@@ -101,30 +102,31 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
 
           {/* Sidebar */}
           <div className="lg:col-span-4 space-y-8">
-            <div className="bg-[#051024] border border-white/5 rounded-3xl p-6 sm:p-8 sticky top-32 shadow-xl">
-              <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
+            <div className={cn(hybrid.editorialCard, "p-6 sm:p-8 sticky top-32")}>
+              <h3 className={cn("text-[10px] font-bold uppercase tracking-widest mb-6 flex items-center gap-2", hybrid.editorialMuted)}>
                 <Share2 className="w-3 h-3"/> SHARE THIS STORY
               </h3>
               <div className="flex flex-col gap-3">
                 <button onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')} className="w-full bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/20 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
                   Share on Facebook
                 </button>
-                <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(MOCK_STORY.title)}`, '_blank')} className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(MOCK_STORY.title)}`, '_blank')} className={cn("w-full px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer", hybrid.editorialChip)}>
                   Share on X / Twitter
                 </button>
-                <button onClick={() => window.location.href = `mailto:?subject=${encodeURIComponent(MOCK_STORY.title)}&body=${encodeURIComponent(`I thought you might find this story interesting:\n\n`)}` + encodeURIComponent(window.location.href)} className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                <button onClick={() => window.location.href = `mailto:?subject=${encodeURIComponent(MOCK_STORY.title)}&body=${encodeURIComponent(`I thought you might find this story interesting:\n\n`)}` + encodeURIComponent(window.location.href)} className={cn("w-full px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer", hybrid.editorialChip)}>
                   <Mail className="w-4 h-4"/> Share via Email
                 </button>
-                <button onClick={handleCopyLink} className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
-                  {isCopied ? <Check className="w-4 h-4 text-green-400"/> : <LinkIcon className="w-4 h-4"/>} 
-                  {isCopied ? <span className="text-green-400">Link Copied!</span> : "Copy Share Link"}
+                <button onClick={handleCopyLink} className={cn("w-full px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer", hybrid.editorialChip)}>
+                  {isCopied ? <Check className="w-4 h-4 text-green-500"/> : <LinkIcon className="w-4 h-4"/>} 
+                  {isCopied ? <span className="text-green-600">Link Copied!</span> : "Copy Share Link"}
                 </button>
               </div>
             </div>
           </div>
 
         </div>
-      </section>
+        </div>
+      </EditorialSection>
 
     </div>
   );

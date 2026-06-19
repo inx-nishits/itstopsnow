@@ -5,6 +5,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, Newspaper, Video, Mic, Calendar, User, Search, Filter, Mail, ArrowLeft, Clock, Scale, Headphones, Database } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
+import { PageHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
+import { cn } from "@/lib/utils";
 
 export const LATEST_NEWS = [
   { 
@@ -85,50 +89,31 @@ export default function NewsPage() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#020611] text-white font-sans">
+    <div className="flex flex-col min-h-screen font-sans">
       
-      {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-40 lg:pb-40 border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920" 
-            alt="Parliament background" 
-            className="w-full h-full object-cover object-center mix-blend-luminosity opacity-40 grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
-        </div>
-
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12">
-          <div className="w-full lg:w-full max-w-[1200px] pt-10">
-            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
-              <Newspaper className="w-5 h-5" /> NEWS & UPDATES
-            </h3>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl max-sm:text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2"
-            >
-              <span className="text-white">STAY </span><br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">INFORMED.</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-base md:text-lg xl:text-xl text-slate-300 mb-10 font-normal leading-relaxed max-w-2xl drop-shadow"
-            >
-              The latest campaign updates, press releases, media appearances, and parliamentary progress.
-            </motion.p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        animate
+        eyebrow={
+          <>
+            <Newspaper className="w-5 h-5 shrink-0" /> NEWS & UPDATES
+          </>
+        }
+        title={
+          <>
+            <span className="text-white">STAY </span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
+              INFORMED.
+            </span>
+          </>
+        }
+        description="The latest campaign updates, press releases, media appearances, and parliamentary progress."
+        imageSrc="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920"
+        imageAlt="Parliament background"
+      />
 
       {/* 2. FILTERS & SEARCH */}
-      <section className="bg-[#050B14]/90 backdrop-blur-xl border-b border-white/5 sticky top-20 md:top-24 z-40 shadow-xl py-5">
+      <EditorialStickyBar>
         <div className="container mx-auto px-4 md:px-8 max-w-[1440px]">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             
@@ -137,11 +122,10 @@ export default function NewsPage() {
                 <button 
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`min-h-[48px] px-6 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer ${
-                    activeCategory === cat 
-                      ? "bg-white text-black shadow-sm" 
-                      : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
-                  }`}
+                  className={cn(
+                    "min-h-[48px] px-6 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer",
+                    activeCategory === cat ? hybrid.editorialChipActive : hybrid.editorialChip
+                  )}
                 >
                   {cat === "All" ? "All News" : cat}
                 </button>
@@ -156,37 +140,35 @@ export default function NewsPage() {
                   placeholder="SEARCH ARTICLES..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold bg-[#020611] border border-white/10 rounded-full text-white placeholder-slate-500 focus:outline-none focus:border-[#1877F2]/50 transition-colors" 
+                  className={cn("w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors", hybrid.editorialInput)} 
                 />
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </EditorialStickyBar>
 
       {/* 3. LATEST NEWS GRID */}
-      <section className="py-12 lg:py-24 bg-[#020611] relative">
-        <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-[#1877F2]/5 blur-[150px] pointer-events-none rounded-full" />
+      <EditorialSection>
         <div className="container mx-auto px-4 md:px-8 max-w-[1440px] relative z-10">
           
-          <div className="flex justify-between items-end border-b border-white/10 pb-6 mb-12">
-            <h2 className="font-sans text-3xl font-bold uppercase tracking-tight text-white">LATEST ARTICLES</h2>
+          <div className={cn("flex justify-between items-end border-b pb-6 mb-12", hybrid.editorialBorder)}>
+            <h2 className={cn("font-sans text-3xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>LATEST ARTICLES</h2>
             <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {filteredNews.length} of {LATEST_NEWS.length}</div>
           </div>
 
           {filteredNews.length === 0 ? (
-            <div className="text-center py-10 lg:py-20 text-slate-500 bg-white/5 border border-white/10 rounded-3xl">
-              <Search className="w-12 h-12 mx-auto mb-4 opacity-20" />
-              <p className="font-bold uppercase tracking-widest text-sm">No articles found matching your search.</p>
-              <button onClick={() => { setSearchTerm(""); setActiveCategory("All"); }} className="mt-4 text-[#1877F2] hover:text-white transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer">Clear Filters</button>
+            <div className={cn("text-center py-10 lg:py-20 rounded-3xl", hybrid.editorialCard)}>
+              <Search className="w-12 h-12 mx-auto mb-4 text-slate-300" />
+              <p className={cn("font-bold uppercase tracking-widest text-sm", hybrid.editorialMuted)}>No articles found matching your search.</p>
+              <button onClick={() => { setSearchTerm(""); setActiveCategory("All"); }} className="mt-4 text-[#1877F2] hover:text-[#010B19] transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer">Clear Filters</button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredNews.map((news) => (
-                <div key={news.id} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden flex flex-col hover:border-[#1877F2]/50 hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 h-full">
+                <div key={news.id} className={cn(hybrid.editorialCard, hybrid.editorialCardHover, "overflow-hidden flex flex-col group hover:-translate-y-2 h-full")}>
                   
-                  {/* Featured Image */}
-                  <div className="h-48 relative overflow-hidden bg-[#02050A] border-b border-white/5">
+                  <div className={cn("h-48 relative overflow-hidden bg-slate-100 border-b", hybrid.editorialBorder)}>
                     <img 
                       src={news.image} 
                       alt={news.title} 
@@ -199,7 +181,7 @@ export default function NewsPage() {
                       <span className="text-[9px] font-bold text-[#1877F2] uppercase tracking-[0.2em] bg-[#1877F2]/10 px-3 py-1.5 rounded-full border border-[#1877F2]/20">
                         {news.category}
                       </span>
-                      <div className="flex items-center gap-3 text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+                      <div className={cn("flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest", hybrid.editorialMuted)}>
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3 h-3" /> {news.date}
                         </span>
@@ -209,15 +191,15 @@ export default function NewsPage() {
                       </div>
                     </div>
                     
-                    <h3 className="font-sans font-bold text-xl text-white mb-4 leading-snug group-hover:text-[#1877F2] transition-colors uppercase tracking-tight line-clamp-2">
+                    <h3 className={cn("font-sans font-bold text-xl mb-4 leading-snug group-hover:text-[#1877F2] transition-colors uppercase tracking-tight line-clamp-2", hybrid.editorialHeading)}>
                       {news.title}
                     </h3>
                     
-                    <p className="text-slate-400 text-xs leading-relaxed mb-8 flex-grow line-clamp-3">
+                    <p className={cn("text-xs leading-relaxed mb-8 flex-grow line-clamp-3", hybrid.editorialBody)}>
                       {news.excerpt}
                     </p>
                     
-                    <Link href={`/news/${news.id}`} className="mt-auto pt-6 border-t border-white/10 flex items-center text-white font-bold text-[10px] uppercase tracking-widest group-hover:text-[#1877F2] transition-colors">
+                    <Link href={`/news/${news.id}`} className={cn("mt-auto pt-6 border-t flex items-center font-bold text-[10px] uppercase tracking-widest group-hover:text-[#1877F2] transition-colors", hybrid.editorialBorder, hybrid.editorialHeading)}>
                       Read Story <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
@@ -226,21 +208,20 @@ export default function NewsPage() {
             </div>
           )}
 
-          {/* Pagination */}
-          <div className="flex justify-center items-center gap-3 mt-10 lg:mt-20 pt-8 border-t border-white/10">
-            <Button variant="outline" className="w-12 h-12 p-0 rounded-full border-white/10 bg-white/5 text-slate-500 opacity-50 cursor-not-allowed"><ArrowLeft className="w-4 h-4" /></Button>
-            <Button className="w-12 h-12 p-0 rounded-full bg-[#1877F2] text-white font-bold text-sm shadow-[0_0_20px_rgba(24,119,242,0.3)]">1</Button>
-            <Button variant="outline" className="w-12 h-12 p-0 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20 font-bold text-sm transition-colors">2</Button>
-            <Button variant="outline" className="w-12 h-12 p-0 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20 font-bold text-sm transition-colors">3</Button>
-            <span className="text-slate-500 font-bold mx-2 tracking-[0.3em]">...</span>
-            <Button variant="outline" className="w-12 h-12 p-0 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20 font-bold text-sm transition-colors">8</Button>
-            <Button variant="outline" className="w-12 h-12 p-0 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-colors"><ArrowRight className="w-4 h-4" /></Button>
+          <div className={cn("flex justify-center items-center gap-3 mt-10 lg:mt-20 pt-8 border-t", hybrid.editorialBorder)}>
+            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full opacity-50 cursor-not-allowed", hybrid.editorialChip)}><ArrowLeft className="w-4 h-4" /></Button>
+            <Button className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChipActive)}>1</Button>
+            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChip)}>2</Button>
+            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChip)}>3</Button>
+            <span className={cn("font-bold mx-2 tracking-[0.3em]", hybrid.editorialMuted)}>...</span>
+            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full font-bold text-sm", hybrid.editorialChip)}>8</Button>
+            <Button variant="outline" className={cn("w-12 h-12 p-0 rounded-full", hybrid.editorialChip)}><ArrowRight className="w-4 h-4" /></Button>
           </div>
         </div>
-      </section>
+      </EditorialSection>
 
       {/* 4. WHAT WE'RE WORKING ON - INITIATIVES SECTION */}
-      <section className="bg-[#050A14] py-12 lg:py-24 border-t border-white/5 relative overflow-hidden">
+      <CampaignSection variant="deep" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="container mx-auto px-4 md:px-8 max-w-[1440px] relative z-10">
           <div className="text-center mb-16">
@@ -259,7 +240,7 @@ export default function NewsPage() {
               { icon: <Headphones className="w-6 h-6 text-[#1877F2]" />, title: "Officer Crisis Helpline", status: "LAUNCHING Q4", desc: "Partnering with leading police charities to launch a dedicated 24/7 welfare helpline for suspended officers." },
               { icon: <Database className="w-6 h-6 text-[#1877F2]" />, title: "National Investigation Database", status: "DATA INGESTION", desc: "Aggregating data from police federations to document system-wide investigation delays and showcase patterns of failure." }
             ].map((init, i) => (
-              <div key={i} className="bg-[#020611] border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#1877F2]/50 transition-colors group relative overflow-hidden">
+              <div key={i} className={cn(hybrid.campaignCard, "p-6 md:p-8 hover:border-[#1877F2]/50 transition-colors group relative overflow-hidden")}>
                 <div className="w-12 h-12 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   {init.icon}
                 </div>
@@ -270,13 +251,13 @@ export default function NewsPage() {
             ))}
           </div>
         </div>
-      </section>
+      </CampaignSection>
 
       {/* 5. NEWSLETTER SECTION */}
-      <section className="bg-[#020611] py-12 lg:py-24 border-t border-white/5 relative overflow-hidden">
+      <CampaignSection className="relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-full" />
         <div className="container mx-auto px-4 md:px-8 max-w-[800px] relative z-10 text-center">
-          <div className="bg-[#050A14] border border-white/10 rounded-[3rem] p-6 md:p-16 shadow-2xl relative overflow-hidden group">
+          <div className={cn(hybrid.campaignCard, "rounded-[3rem] p-6 md:p-16 shadow-2xl relative overflow-hidden group")}>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
             
             <h3 className="font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-4">
@@ -324,7 +305,7 @@ export default function NewsPage() {
             )}
           </div>
         </div>
-      </section>
+      </CampaignSection>
 
     </div>
   );

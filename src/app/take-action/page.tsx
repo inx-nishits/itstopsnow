@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
+import { PageHero } from "@/components/layout/PageHero";
+import { hybrid } from "@/lib/theme/hybrid";
 
 const BENEFITS = [
   {
@@ -158,63 +161,56 @@ export default function TakeActionPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#030712] text-white font-sans">
+    <div className="flex flex-col min-h-screen font-sans">
       
-      {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center bg-[#050A14] pt-12 lg:pt-20 pb-12 lg:pt-32 lg:pb-32 border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="/bannerBg.png" 
-            alt="UK Police Background" 
-            className="w-full h-full object-cover object-[70%_center] opacity-90 mix-blend-luminosity"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[30%] via-[#050A14]/40 via-[60%] to-transparent to-[90%]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
-        </div>
-
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 flex flex-col items-start gap-12 max-w-[1600px]">
-          <div className="w-full lg:w-full max-w-[1200px] pt-10">
-            <h3 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-6 flex items-center gap-3">
-              <Megaphone className="w-5 h-5" /> DRIVE THE CHANGE
-            </h3>
-            <h1 className="text-4xl max-sm:text-4xl md:text-7xl xl:text-8xl font-black leading-none mb-6 tracking-tighter uppercase drop-shadow-2xl py-2">
-              <span className="text-white">TAKE </span><br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 pr-2">ACTION.</span>
-            </h1>
-            <p className="text-base md:text-lg xl:text-xl text-slate-300 font-normal leading-relaxed max-w-3xl drop-shadow">
-              Our voice is our strongest weapon. Use the tools below to contact your representatives and force the system to change.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow={
+          <>
+            <Megaphone className="w-5 h-5 shrink-0" /> DRIVE THE CHANGE
+          </>
+        }
+        title={
+          <>
+            <span className="text-white">TAKE </span>
+            <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 pr-2">
+              ACTION.
+            </span>
+          </>
+        }
+        description="Our voice is our strongest weapon. Use the tools below to contact your representatives and force the system to change."
+        imageSrc="/bannerBg.png"
+        imageAlt="UK Police Background"
+        imageClassName="opacity-90 object-[70%_center]"
+      />
 
       {/* 2. ACTION BENEFITS STATISTICS STRIP */}
-      <section className="relative z-20 bg-[#02050A] border-b border-white/10">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-white/10 max-w-[1600px] mx-auto">
+      <EditorialSection noPadding className="relative z-20 border-b border-slate-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-slate-200 max-w-[1600px] mx-auto">
           {BENEFITS.map((benefit) => {
             const Icon = benefit.icon;
             return (
-              <div key={benefit.id} className="p-6 lg:p-14 flex flex-col justify-start group hover:bg-white/[0.02] transition-colors duration-500">
+              <div key={benefit.id} className="p-6 lg:p-14 flex flex-col justify-start group hover:bg-white transition-colors duration-500">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-[#1877F2]/10 flex items-center justify-center border border-[#1877F2]/20 group-hover:bg-[#1877F2] transition-colors duration-500">
                     <Icon className="w-5 h-5 text-[#1877F2] group-hover:text-white transition-colors duration-500" />
                   </div>
-                  <h3 className="font-bold text-lg text-white leading-tight">{benefit.title}</h3>
+                  <h3 className={`font-bold text-lg leading-tight ${hybrid.editorialHeading}`}>{benefit.title}</h3>
                 </div>
-                <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
+                <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-8 flex-grow`}>
                   {benefit.description}
                 </p>
-                <div className="text-4xl max-sm:text-3xl lg:text-5xl font-black text-white tracking-tighter">
+                <div className={`text-4xl max-sm:text-3xl lg:text-5xl font-black tracking-tighter ${hybrid.editorialHeading}`}>
                   <AnimatedCounter from={0} to={benefit.value} duration={2} />+
                 </div>
               </div>
             );
           })}
         </div>
-      </section>
+      </EditorialSection>
 
       {/* 3. FEATURED CAMPAIGNS SECTION */}
-      <section className="relative bg-[#020611] py-12 lg:py-32 border-b border-white/10">
+      <CampaignSection className="lg:py-32 border-b border-white/10">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 lg:mb-20 gap-8">
             <div>
@@ -254,10 +250,10 @@ export default function TakeActionPage() {
             })}
           </div>
         </div>
-      </section>
+      </CampaignSection>
 
       {/* 4. LIST LETTER TEMPLATES & PERSONALIZATION SIDEBAR */}
-      <section className="relative bg-[#050A14] py-12 lg:py-32 pb-10 lg:pb-20 lg:pb-48">
+      <EditorialSection className="lg:py-32 pb-10 lg:pb-20 lg:pb-48">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
@@ -266,11 +262,11 @@ export default function TakeActionPage() {
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Resources</h2>
               </div>
-              <h3 className="font-sans text-3xl max-sm:text-3xl md:text-6xl font-black uppercase tracking-tighter text-white leading-[1.1]">
-                TEMPLATE <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">LIBRARY.</span>
+              <h3 className={`font-sans text-3xl max-sm:text-3xl md:text-6xl font-black uppercase tracking-tighter leading-[1.1] ${hybrid.editorialHeading}`}>
+                TEMPLATE <span className="text-slate-400">LIBRARY.</span>
               </h3>
             </div>
-            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-xl pb-4 font-medium">
+            <p className={`${hybrid.editorialBody} text-sm md:text-base leading-relaxed max-w-xl pb-4 font-medium`}>
               Find the right template, personalize it with your details, and take immediate action.
             </p>
           </div>
@@ -281,21 +277,21 @@ export default function TakeActionPage() {
             <div className="w-full lg:w-2/3 flex flex-col gap-8">
               
               {/* Search & Filters */}
-              <div className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-5 md:p-6 flex flex-col md:flex-row gap-4 shadow-xl">
+              <div className={`${hybrid.editorialCard} p-5 md:p-6 flex flex-col md:flex-row gap-4`}>
                 <div className="relative flex-grow">
-                  <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input 
                     type="text" 
                     placeholder="Search templates by keyword..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3.5 text-xs font-bold text-white bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-500" 
+                    className={`w-full pl-12 pr-4 py-3.5 text-xs font-bold rounded-xl focus:outline-none transition-colors placeholder-slate-400 ${hybrid.editorialInput}`}
                   />
                 </div>
                 <select 
                   value={recipientFilter}
                   onChange={(e) => setRecipientFilter(e.target.value)}
-                  className="bg-white/5 border border-white/10 text-white text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px]"
+                  className={`text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px] ${hybrid.editorialInput}`}
                 >
                   <option value="All">All Recipients</option>
                   <option value="MP">MP</option>
@@ -305,7 +301,7 @@ export default function TakeActionPage() {
                 <select 
                   value={toneFilter}
                   onChange={(e) => setToneFilter(e.target.value)}
-                  className="bg-white/5 border border-white/10 text-white text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px]"
+                  className={`text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px] ${hybrid.editorialInput}`}
                 >
                   <option value="All">All Tones</option>
                   <option value="Formal">Formal</option>
@@ -315,7 +311,7 @@ export default function TakeActionPage() {
                 <select 
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-white/5 border border-white/10 text-white text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px]"
+                  className={`text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px] ${hybrid.editorialInput}`}
                 >
                   <option value="Recently Added">Recently Added</option>
                   <option value="A-Z">A to Z</option>
@@ -326,23 +322,23 @@ export default function TakeActionPage() {
               {/* Templates List */}
               <div className="flex flex-col gap-4">
                 {paginatedTemplates.length === 0 ? (
-                  <div className="p-12 text-center border border-white/10 border-dashed rounded-[1.5rem]">
-                    <SearchX className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                    <p className="text-slate-400 font-medium">No templates match your search criteria.</p>
+                  <div className={`p-12 text-center border border-dashed rounded-[1.5rem] ${hybrid.editorialBorder}`}>
+                    <SearchX className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                    <p className={`${hybrid.editorialBody} font-medium`}>No templates match your search criteria.</p>
                   </div>
                 ) : (
                   paginatedTemplates.map(template => (
-                    <div key={template.id} className="bg-[#02050A] border border-white/10 rounded-[1.5rem] p-5 md:p-6 lg:p-8 hover:border-[#1877F2]/50 transition-colors shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div key={template.id} className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-5 md:p-6 lg:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6`}>
                       <div className="flex-grow">
-                        <h4 className="text-xl font-bold text-white mb-4 leading-tight">{template.title}</h4>
-                        <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                        <h4 className={`text-xl font-bold mb-4 leading-tight ${hybrid.editorialHeading}`}>{template.title}</h4>
+                        <div className={`flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>
                           <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-[#1877F2]" /> {template.recipient}</span>
                           <span className="flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5 text-amber-500" /> {template.tone}</span>
                           <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-emerald-500" /> {template.readTime}</span>
                         </div>
                       </div>
                       <div className="flex flex-wrap md:flex-nowrap gap-3 shrink-0 w-full md:w-auto">
-                        <Button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} variant="outline" className="w-full md:w-auto bg-transparent border-white/20 hover:bg-white hover:text-black text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl">
+                        <Button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} variant="outline" className={`w-full md:w-auto bg-transparent border-slate-300 hover:bg-[#010B19] hover:text-white ${hybrid.editorialHeading} text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl`}>
                           <Search className="w-3.5 h-3.5 mr-2" /> Preview
                         </Button>
                         <Button variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
@@ -364,7 +360,7 @@ export default function TakeActionPage() {
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1}
                     variant="outline" 
-                    className={`w-12 h-12 p-0 rounded-full border-white/10 ${currentPage === 1 ? 'bg-white/5 text-slate-500 opacity-50 cursor-not-allowed' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-colors'}`}
+                    className={`w-12 h-12 p-0 rounded-full border-slate-300 ${currentPage === 1 ? 'bg-slate-100 text-slate-400 opacity-50 cursor-not-allowed' : 'bg-white text-slate-700 hover:bg-slate-50 transition-colors'}`}
                   >
                     <ArrowLeft className="w-4 h-4" />
                   </Button>
@@ -376,7 +372,7 @@ export default function TakeActionPage() {
                       className={`w-12 h-12 p-0 rounded-full font-bold text-sm transition-colors ${
                         currentPage === idx + 1 
                           ? 'bg-[#1877F2] text-white shadow-[0_0_20px_rgba(24,119,242,0.3)]' 
-                          : 'border border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20'
+                          : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
                       }`}
                     >
                       {idx + 1}
@@ -387,7 +383,7 @@ export default function TakeActionPage() {
                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                     disabled={currentPage === totalPages}
                     variant="outline" 
-                    className={`w-12 h-12 p-0 rounded-full border-white/10 ${currentPage === totalPages ? 'bg-white/5 text-slate-500 opacity-50 cursor-not-allowed' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-colors'}`}
+                    className={`w-12 h-12 p-0 rounded-full border-slate-300 ${currentPage === totalPages ? 'bg-slate-100 text-slate-400 opacity-50 cursor-not-allowed' : 'bg-white text-slate-700 hover:bg-slate-50 transition-colors'}`}
                   >
                     <ArrowRight className="w-4 h-4" />
                   </Button>
@@ -397,34 +393,34 @@ export default function TakeActionPage() {
 
             {/* Right: Personalization Sidebar */}
             <div className="w-full lg:w-1/3">
-              <div className="bg-gradient-to-b from-[#02050A] to-[#050A14] border border-[#1877F2]/20 rounded-[2rem] p-5 sm:p-8 shadow-2xl sticky top-32">
-                <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/10">
+              <div className={`${hybrid.editorialCard} border-[#1877F2]/20 p-5 sm:p-8 shadow-lg sticky top-32`}>
+                <div className={`flex items-center gap-4 mb-8 pb-6 border-b ${hybrid.editorialBorder}`}>
                   <div className="w-10 h-10 rounded-full bg-[#1877F2]/10 flex items-center justify-center">
                     <Settings className="w-5 h-5 text-[#1877F2]" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-white uppercase tracking-widest">Personalize</h4>
-                    <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Setup Your Letter</p>
+                    <h4 className={`font-bold text-sm uppercase tracking-widest ${hybrid.editorialHeading}`}>Personalize</h4>
+                    <p className={`text-[10px] uppercase tracking-widest mt-1 ${hybrid.editorialMuted}`}>Setup Your Letter</p>
                   </div>
                 </div>
 
                 <div className="space-y-6">
                   <div>
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Your Name</label>
+                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Your Name</label>
                     <input 
                       type="text" 
                       placeholder="e.g. John Doe"
                       value={personalization.name}
                       onChange={(e) => setPersonalization({...personalization, name: e.target.value})}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600"
+                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors ${hybrid.editorialInput}`}
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Police Force</label>
+                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Police Force</label>
                     <select 
                       value={personalization.policeForce}
                       onChange={(e) => setPersonalization({...personalization, policeForce: e.target.value})}
-                      className="w-full bg-[#050A14] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors appearance-none"
+                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors appearance-none ${hybrid.editorialInput}`}
                     >
                       <option value="">Select Force (Optional)...</option>
                       <option value="Metropolitan Police">Metropolitan Police</option>
@@ -434,23 +430,23 @@ export default function TakeActionPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Postcode <span className="text-red-500">*</span></label>
+                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Postcode <span className="text-red-500">*</span></label>
                     <input 
                       type="text" 
                       placeholder="e.g. SW1A 1AA"
                       value={personalization.postcode}
                       onChange={(e) => setPersonalization({...personalization, postcode: e.target.value})}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600"
+                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors ${hybrid.editorialInput}`}
                     />
-                    <p className="text-[10px] text-slate-500 mt-2">Required to find your local MP.</p>
+                    <p className={`text-[10px] mt-2 ${hybrid.editorialMuted}`}>Required to find your local MP.</p>
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Additional Details</label>
+                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Additional Details</label>
                     <textarea 
                       placeholder="Add any personal context or specific demands..."
                       value={personalization.details}
                       onChange={(e) => setPersonalization({...personalization, details: e.target.value})}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600 h-24 resize-none"
+                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors h-24 resize-none ${hybrid.editorialInput}`}
                     />
                   </div>
 
@@ -466,7 +462,7 @@ export default function TakeActionPage() {
 
           </div>
         </div>
-      </section>
+      </EditorialSection>
 
       {/* TEMPLATE PREVIEW MODAL */}
       <AnimatePresence>

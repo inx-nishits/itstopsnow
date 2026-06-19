@@ -1,11 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const cardBase =
+  "relative overflow-hidden rounded-2xl sm:rounded-[1.75rem] border border-[#1877F2]/30 shadow-[0_10px_40px_rgba(24,119,242,0.12)] flex flex-col h-full p-5 sm:p-8 lg:p-10";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#02050A] pt-16 md:pt-32 pb-12 text-white font-sans overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#02050A] pt-12 sm:pt-16 md:pt-24 pb-10 sm:pb-12 text-white font-sans overflow-hidden border-t border-white/5">
       
       {/* Massive Background Typography */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.06] translate-y-[10%]">
@@ -14,58 +19,94 @@ export default function Footer() {
         </h1>
       </div>
 
-      <div className="w-full px-6 lg:px-12 mx-auto relative z-10 max-w-[1600px]">
-        
-        {/* POCKET SERGEANT CTA */}
-        <div className="bg-gradient-to-r from-[#050b14] to-[#0a1526] border border-[#1877F2]/30 rounded-[2rem] p-6 md:p-14 mb-8 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.15)] flex flex-col lg:flex-row items-center justify-between gap-8 w-full">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#1877F2]/20 transition-colors duration-700 -translate-y-1/2 translate-x-1/3"></div>
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[80px] pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
-          
-          <div className="relative z-10 max-w-3xl">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-[2px] bg-[#1877F2]"></div>
-              <span className="text-[#1877F2] font-bold text-xs uppercase tracking-[0.3em]">Empowering Officers</span>
-            </div>
-            <h3 className="text-2xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4 leading-tight">
-              Pocket <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-cyan-400">Sergeant</span>
-            </h3>
-            <p className="text-slate-300 font-medium text-sm md:text-lg leading-relaxed">
-              Equipping our officers with the ultimate digital companion. From quick reference guides to essential support resources, Pocket Sergeant is revolutionizing how we serve on the frontline.
-            </p>
-          </div>
-          
-          <div className="relative z-10 shrink-0 w-full lg:w-auto flex justify-start lg:justify-end">
-            <Link href="/about" className="w-full sm:w-auto flex">
-              <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-black uppercase tracking-wider md:tracking-[0.15em] text-[10px] md:text-xs rounded-full px-6 md:px-10 py-5 md:py-7 shadow-[0_0_20px_rgba(24,119,242,0.4)] hover:shadow-[0_0_40px_rgba(24,119,242,0.6)] transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto whitespace-normal h-auto text-center leading-snug break-words">
-                Learn More About Pocket Sergeant
-              </Button>
-            </Link>
-          </div>
-        </div>
+      <div className="w-full px-4 sm:px-6 lg:px-12 mx-auto relative z-10 max-w-[1600px]">
 
-        {/* PRE-FOOTER NEWSLETTER */}
-        <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#050A14] border border-[#1877F2]/30 rounded-[2rem] p-6 md:p-14 mb-12 md:mb-24 relative overflow-hidden group shadow-[0_10px_40px_rgba(24,119,242,0.1)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12 w-full">
-          <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#1877F2]/30 rounded-full blur-[80px] pointer-events-none group-hover:bg-[#1877F2]/50 transition-colors duration-700"></div>
-          
-          <div className="relative z-10 w-full lg:w-1/2">
-            <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight md:tracking-tighter text-white mb-4 flex items-center gap-3">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 md:w-7 md:h-7 text-[#1877F2] shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <span className="leading-tight break-words">Stay Informed</span>
-            </h3>
-            <p className="text-slate-300 font-medium text-sm md:text-base leading-relaxed">
-              Join our newsletter to receive crucial campaign updates and urgent calls to action. We never spam.
-            </p>
+        {/* Pocket Sergeant + Newsletter — side by side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mb-10 sm:mb-12 md:mb-20">
+          {/* POCKET SERGEANT CTA */}
+          <div
+            className={cn(
+              cardBase,
+              "bg-gradient-to-br from-[#050b14] to-[#0a1526] group"
+            )}
+          >
+            <div className="absolute top-0 right-0 w-[320px] sm:w-[480px] h-[320px] sm:h-[480px] bg-[#1877F2]/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-[#1877F2]/20 transition-colors duration-700 -translate-y-1/2 translate-x-1/3" />
+            <div className="absolute bottom-0 left-0 w-[200px] sm:w-[320px] h-[200px] sm:h-[320px] bg-blue-500/5 rounded-full blur-[60px] pointer-events-none -translate-x-1/2 translate-y-1/2" />
+
+            <div className="relative z-10 flex flex-col flex-1">
+              <div className="flex items-center gap-2.5 mb-3 sm:mb-4">
+                <div className="w-6 sm:w-8 h-[2px] bg-[#1877F2]" />
+                <span className="text-[#1877F2] font-bold text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em]">
+                  Empowering Officers
+                </span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black uppercase tracking-tight text-white mb-3 sm:mb-4 leading-[1.1]">
+                Pocket{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-cyan-400">
+                  Sergeant
+                </span>
+              </h3>
+
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed flex-1 mb-5 sm:mb-6 lg:mb-8">
+                Equipping our officers with the ultimate digital companion. From quick reference guides to
+                essential support resources, Pocket Sergeant is revolutionizing how we serve on the frontline.
+              </p>
+
+              <Link href="/about" className="mt-auto w-full sm:w-auto">
+                <Button className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold sm:font-black uppercase tracking-wide sm:tracking-[0.12em] text-[11px] sm:text-xs rounded-xl sm:rounded-full px-5 sm:px-8 lg:px-10 py-4 sm:py-6 shadow-[0_0_20px_rgba(24,119,242,0.35)] hover:shadow-[0_0_32px_rgba(24,119,242,0.5)] transition-all duration-300 hover:-translate-y-0.5 whitespace-normal h-auto text-center leading-snug">
+                  Learn More About Pocket Sergeant
+                </Button>
+              </Link>
+            </div>
           </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 relative z-10 w-full lg:w-1/2 lg:justify-end">
-            <input 
-              type="email" 
-              placeholder="Enter your email address" 
-              className="w-full max-w-sm bg-[#02050A] border border-white/10 rounded-xl px-5 py-4 text-white text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] transition-all" 
-            />
-            <Button className="bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-[0.2em] text-xs rounded-xl px-8 h-[52px] shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all shrink-0 w-full sm:w-auto">
-              Join Now
-            </Button>
+
+          {/* NEWSLETTER */}
+          <div
+            className={cn(
+              cardBase,
+              "bg-gradient-to-br from-[#1877F2]/20 to-[#050A14] group"
+            )}
+          >
+            <div className="absolute -top-16 -right-16 w-48 sm:w-64 h-48 sm:h-64 bg-[#1877F2]/30 rounded-full blur-[70px] pointer-events-none group-hover:bg-[#1877F2]/45 transition-colors duration-700" />
+
+            <div className="relative z-10 flex flex-col flex-1">
+              <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                <div className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#1877F2]/15 border border-[#1877F2]/30 flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-[#1877F2]" aria-hidden />
+                </div>
+                <div className="min-w-0 pt-0.5">
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-black uppercase tracking-tight text-white leading-tight">
+                    Stay Informed
+                  </h3>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mt-2 sm:mt-3">
+                    Join our newsletter for campaign updates and urgent calls to action. We never spam.
+                  </p>
+                </div>
+              </div>
+
+              <form
+                className="mt-auto flex flex-col gap-3 sm:gap-3.5 pt-4 sm:pt-5 border-t border-white/10"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <label htmlFor="footer-newsletter-email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="footer-newsletter-email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Enter your email address"
+                  className="w-full min-h-[48px] bg-[#02050A]/80 border border-white/10 rounded-xl px-4 sm:px-5 text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-[#1877F2] focus:ring-2 focus:ring-[#1877F2]/30 transition-all"
+                />
+                <Button
+                  type="submit"
+                  className="w-full min-h-[48px] sm:min-h-[52px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold uppercase tracking-[0.15em] text-xs rounded-xl px-6 shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all"
+                >
+                  Join Now
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
 

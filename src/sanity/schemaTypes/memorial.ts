@@ -39,6 +39,30 @@ export const memorial = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'region',
+      title: 'Region',
+      type: 'string',
+      options: {
+        list: ['London', 'Midlands', 'North', 'Scotland'],
+      },
+    }),
+    defineField({
+      name: 'age',
+      title: 'Age at Passing',
+      type: 'number',
+    }),
+    defineField({
+      name: 'dateOfLoss',
+      title: 'Date of Loss (display label)',
+      type: 'string',
+      description: 'e.g. 15 AUG 2019',
+    }),
+    defineField({
+      name: 'familyQuote',
+      title: 'Family Tribute Quote',
+      type: 'text',
+    }),
+    defineField({
       name: 'biography',
       title: 'Biography / Life Story',
       type: 'array',
@@ -73,6 +97,18 @@ export const memorial = defineType({
       type: 'number',
       initialValue: 0,
       readOnly: true,
+    }),
+    defineField({
+      name: 'tributeCount',
+      title: 'Published Tribute Count',
+      type: 'number',
+      initialValue: 0,
+    }),
+    defineField({
+      name: 'rememberedCount',
+      title: 'Times Remembered / Visits',
+      type: 'number',
+      initialValue: 0,
     }),
   ],
 })
