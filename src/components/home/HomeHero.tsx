@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * Panoramic candle memorial at Westminster — fills full banner width;
  * officer, candles, and Parliament directly support remembrance + campaign.
  */
-const HERO_IMAGE = "/bannerBg.png";
+const HERO_IMAGE = "/Banner-Image.png";
 const HERO_IMAGE_ALT =
   "Police officer standing before a candle memorial outside the Palace of Westminster";
 
@@ -205,10 +205,10 @@ function MobileHero({ animate }: { animate: boolean }) {
         <M
           {...(animate
             ? {
-                initial: { opacity: 0, y: 28 },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 0.6, delay: 0.15, ease },
-              }
+              initial: { opacity: 0, y: 28 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.6, delay: 0.15, ease },
+            }
             : {})}
           className="relative overflow-hidden rounded-t-[1.75rem] rounded-b-lg border border-[#1877F2]/20 bg-[#050A14] shadow-[0_-20px_50px_rgba(0,0,0,0.65)]"
         >
@@ -224,40 +224,40 @@ function MobileHero({ animate }: { animate: boolean }) {
           </div>
 
           <div className="py-3 px-3">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="h-px w-8 bg-[#1877F2]" aria-hidden />
-                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#1877F2]">
-                  {HERO_EYEBROW}
-                </p>
-              </div>
-
-              <h1 className="text-[1.65rem] sm:text-[1.85rem] font-black uppercase tracking-tight leading-[0.98] mb-3">
-                <span className="text-white block">Behind every</span>
-                <span className="text-white block">uniform</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] via-blue-400 to-cyan-400 block">
-                  is a human being.
-                </span>
-              </h1>
-
-              <p className="font-sans text-[13px] sm:text-sm leading-relaxed text-slate-300 mb-4">
-                {HERO_DESCRIPTION}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="h-px w-8 bg-[#1877F2]" aria-hidden />
+              <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#1877F2]">
+                {HERO_EYEBROW}
               </p>
+            </div>
 
-              <div className="flex flex-col gap-2.5 mb-2">
-                <PrimaryCta className="w-full" compact />
-                <Link
-                  href="/about"
-                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
-                >
-                  Our mission
-                </Link>
-              </div>
+            <h1 className="text-[1.65rem] sm:text-[1.85rem] font-black uppercase tracking-tight leading-[0.98] mb-3">
+              <span className="text-white block">Behind every</span>
+              <span className="text-white block">uniform</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] via-blue-400 to-cyan-400 block">
+                is a human being.
+              </span>
+            </h1>
 
-              <div className="mt-4 pt-3 border-t border-white/10">
-                {EDITORIAL_LINKS.map((link) => (
-                  <EditorialLink key={link.href} {...link} compact />
-                ))}
-              </div>
+            <p className="font-sans text-[13px] sm:text-sm leading-relaxed text-slate-300 mb-4">
+              {HERO_DESCRIPTION}
+            </p>
+
+            <div className="flex flex-col gap-2.5 mb-2">
+              <PrimaryCta className="w-full" compact />
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
+              >
+                Our mission
+              </Link>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-white/10">
+              {EDITORIAL_LINKS.map((link) => (
+                <EditorialLink key={link.href} {...link} compact />
+              ))}
+            </div>
           </div>
         </M>
       </div>
@@ -289,10 +289,10 @@ function DesktopHero({ animate }: { animate: boolean }) {
           <M
             {...(animate
               ? {
-                  initial: { opacity: 0, x: -20 },
-                  animate: { opacity: 1, x: 0 },
-                  transition: { duration: 0.65, ease },
-                }
+                initial: { opacity: 0, x: -20 },
+                animate: { opacity: 1, x: 0 },
+                transition: { duration: 0.65, ease },
+              }
               : {})}
           >
             <div className="flex items-center gap-2.5 mb-4">
@@ -328,12 +328,12 @@ function DesktopHero({ animate }: { animate: boolean }) {
           <M
             {...(animate
               ? {
-                  initial: { opacity: 0, y: 12 },
-                  animate: { opacity: 1, y: 0 },
-                  transition: { duration: 0.55, delay: 0.2, ease },
-                }
+                initial: { opacity: 0, y: 12 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.55, delay: 0.2, ease },
+              }
               : {})}
-            className="max-w-sm border-t border-white/10 pt-5 mt-1 shrink-0"
+            className="max-w-sm pt-2 mt-0 shrink-0"
           >
             {EDITORIAL_LINKS.map((link) => (
               <EditorialLink key={link.href} {...link} />
