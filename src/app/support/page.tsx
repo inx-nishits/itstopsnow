@@ -134,7 +134,7 @@ const AppsSection = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
-            <div className="relative w-full">
+            <div className="relative w-full sm:w-[60%]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input 
                 type="text" 
@@ -143,6 +143,17 @@ const AppsSection = () => {
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                 className={`w-full pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest focus:outline-none transition-colors rounded-xl ${hybrid.editorialInput}`}
               />
+            </div>
+            <div className="relative w-full sm:w-[40%]">
+              <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <select 
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
+                className={`w-full pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest focus:outline-none transition-colors rounded-xl appearance-none cursor-pointer ${hybrid.editorialInput}`}
+              >
+                <option value="Rating">Rating</option>
+                <option value="Title">Title (A-Z)</option>
+              </select>
             </div>
           </div>
         </div>
@@ -191,12 +202,18 @@ const AppsSection = () => {
 
 const BooksSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("Title");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
   const filtered = MOCK_BOOKS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
-  const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === "Author") return a.author.localeCompare(b.author);
+    return a.title.localeCompare(b.title);
+  });
+  
+  const totalPages = Math.ceil(sorted.length / itemsPerPage);
+  const paginated = sorted.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <CampaignSection>
@@ -210,7 +227,7 @@ const BooksSection = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
-            <div className="relative w-full">
+            <div className="relative w-full sm:w-[60%]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input 
                 type="text" 
@@ -219,6 +236,17 @@ const BooksSection = () => {
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                 className="w-full bg-white/5 border border-white/10 pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors"
               />
+            </div>
+            <div className="relative w-full sm:w-[40%]">
+              <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <select 
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
+                className="w-full bg-white/5 border border-white/10 pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2] transition-colors appearance-none cursor-pointer"
+              >
+                <option value="Title" className="bg-[#050A14] text-white">Title (A-Z)</option>
+                <option value="Author" className="bg-[#050A14] text-white">Author (A-Z)</option>
+              </select>
             </div>
           </div>
         </div>
@@ -270,12 +298,17 @@ const BooksSection = () => {
 
 const PodcastsSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("Title");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
   const filtered = MOCK_PODCASTS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
-  const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === "Topic") return a.topic.localeCompare(b.topic);
+    return a.title.localeCompare(b.title);
+  });
+  const totalPages = Math.ceil(sorted.length / itemsPerPage);
+  const paginated = sorted.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <EditorialSection>
@@ -289,7 +322,7 @@ const PodcastsSection = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-md shrink-0">
-            <div className="relative w-full">
+            <div className="relative w-full sm:w-[60%]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input 
                 type="text" 
@@ -298,6 +331,17 @@ const PodcastsSection = () => {
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                 className={`w-full pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest focus:outline-none transition-colors rounded-xl ${hybrid.editorialInput}`}
               />
+            </div>
+            <div className="relative w-full sm:w-[40%]">
+              <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <select 
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
+                className={`w-full pl-12 pr-4 min-h-[48px] text-[10px] font-bold uppercase tracking-widest focus:outline-none transition-colors rounded-xl appearance-none cursor-pointer ${hybrid.editorialInput}`}
+              >
+                <option value="Title">Title (A-Z)</option>
+                <option value="Topic">Topic (A-Z)</option>
+              </select>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { use, useMemo } from "react";
 import Link from "next/link";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { Calendar, ArrowLeft, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EditorialSection } from "@/components/layout/PageSection";
 import { ArticleHero } from "@/components/layout/PageHero";
@@ -49,6 +49,9 @@ If you haven't already, please use our Take Action page to contact your MP and u
               {article.category}
             </span>
             <span className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+              <User className="w-3.5 h-3.5" /> {article.author}
+            </span>
+            <span className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
               <Calendar className="w-3.5 h-3.5" /> {article.date}
             </span>
             <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">{article.readTime}</span>
@@ -63,7 +66,17 @@ If you haven't already, please use our Take Action page to contact your MP and u
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1000px] py-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-8">
-              <p className={cn("text-sm mb-8 leading-relaxed", hybrid.editorialBody)}>{article.excerpt}</p>
+              
+              {/* Featured Image inside content area */}
+              <div className="w-full h-64 md:h-80 mb-8 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                <img 
+                  src={article.image} 
+                  alt={article.title} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <p className={cn("text-sm mb-8 leading-relaxed font-medium text-[#1877F2]", hybrid.editorialBody)}>{article.excerpt}</p>
               <div className="prose prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-headings:text-[#010B19] prose-a:text-[#1877F2] prose-p:text-slate-600 prose-p:leading-relaxed">
                 {content.split("\n\n").map((paragraph, idx) => {
                   if (paragraph.startsWith("###")) {

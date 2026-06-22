@@ -140,7 +140,7 @@ function StoriesPageContent() {
   const [submitError, setSubmitError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", title: "", story: "" });
   const [hasConsent, setHasConsent] = useState(false);
-  const itemsPerPage = 6;
+  const itemsPerPage = 4;
 
   useEffect(() => {
     if (searchParams.get("submit") === "1") {

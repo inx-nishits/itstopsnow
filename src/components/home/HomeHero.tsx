@@ -28,18 +28,13 @@ const MARQUEE_ITEMS = [
   "IT STOPS NOW",
 ] as const;
 
-const EDITORIAL_LINKS = [
-  { num: "01", label: "Read their stories", href: "/stories" },
-  { num: "02", label: "Wall of Remembrance", href: "/remembrance" },
-  { num: "03", label: "Understand the issue", href: "/the-issue" },
-] as const;
+const HERO_PRIMARY_CTA_LABEL = "Get Involved";
 
 /** Shared hero copy — desktop and mobile must match */
 const HERO_EYEBROW = "Campaign for change";
 const HERO_DESCRIPTION =
   "Championing officers and families. Demanding dignity, accountability, and an end to a system that treats people as expendable.";
 
-const HERO_PRIMARY_CTA_LABEL = "Take Action";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -83,59 +78,31 @@ function CampaignMarquee({ className }: { className?: string }) {
   );
 }
 
-function EditorialLink({
-  num,
-  label,
-  href,
-  compact,
-}: {
-  num: string;
-  label: string;
-  href: string;
-  compact?: boolean;
-}) {
-  return (
-    <Link
-      href={href}
+function PrimaryCta({ className, compact, onClick }: { className?: string; compact?: boolean; onClick?: () => void }) {
+  const content = (
+    <span
       className={cn(
-        "group flex items-center justify-between gap-3 border-b border-white/10 last:border-b-0 cursor-pointer",
-        compact ? "py-2" : "py-2.5 lg:py-3"
+        "relative flex items-center justify-between gap-3 w-full bg-[#1877F2] text-white font-bold uppercase tracking-[0.14em] overflow-hidden group transition-colors hover:bg-[#1565d8] active:scale-[0.99]",
+        compact
+          ? "min-h-[48px] px-4 text-xs tracking-[0.12em]"
+          : "min-h-[50px] lg:min-h-[52px] px-5 text-xs"
       )}
     >
-      <span className="flex items-center gap-2.5 min-w-0">
-        <span className="text-[9px] font-black text-[#1877F2] tabular-nums tracking-widest shrink-0">
-          {num}
-        </span>
-        <span className="text-[11px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors truncate">
-          {label}
-        </span>
-      </span>
-      <ArrowRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-[#1877F2] group-hover:translate-x-0.5 transition-all shrink-0" />
-    </Link>
-  );
-}
-
-function PrimaryCta({ className, compact }: { className?: string; compact?: boolean }) {
-  return (
-    <Link href="/take-action" className={cn("block cursor-pointer", className)}>
       <span
-        className={cn(
-          "relative flex items-center justify-between gap-3 w-full bg-[#1877F2] text-white font-bold uppercase tracking-[0.14em] overflow-hidden group transition-colors hover:bg-[#1565d8] active:scale-[0.99]",
-          compact
-            ? "min-h-[48px] px-4 text-xs tracking-[0.12em]"
-            : "min-h-[50px] lg:min-h-[52px] px-5 text-xs"
-        )}
-      >
-        <span
-          className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-          aria-hidden
-        />
-        <span className="relative">{HERO_PRIMARY_CTA_LABEL}</span>
-        <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/15 group-hover:bg-white group-hover:text-[#1877F2] transition-colors">
-          <ArrowRight className="w-3.5 h-3.5" />
-        </span>
+        className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+        aria-hidden
+      />
+      <span className="relative">{HERO_PRIMARY_CTA_LABEL}</span>
+      <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/15 group-hover:bg-white group-hover:text-[#1877F2] transition-colors">
+        <ArrowRight className="w-3.5 h-3.5" />
       </span>
-    </Link>
+    </span>
+  );
+
+  return (
+    <button type="button" onClick={onClick} className={cn("block cursor-pointer", className)}>
+      {content}
+    </button>
   );
 }
 
@@ -158,7 +125,7 @@ function HeroBackground() {
 }
 
 /** Mobile — vigil poster: diagonal photo + floating manifesto card */
-function MobileHero({ animate }: { animate: boolean }) {
+function MobileHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetInvolvedClick?: () => void }) {
   const M = animate ? motion.div : "div";
 
   return (
@@ -244,19 +211,19 @@ function MobileHero({ animate }: { animate: boolean }) {
             </p>
 
             <div className="flex flex-col gap-2.5 mb-2">
-              <PrimaryCta className="w-full" compact />
+              <PrimaryCta className="w-full" compact onClick={onGetInvolvedClick} />
               <Link
-                href="/about"
+                href="/stories"
                 className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
               >
-                Our mission
+                Read Stories
               </Link>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-white/10">
-              {EDITORIAL_LINKS.map((link) => (
-                <EditorialLink key={link.href} {...link} compact />
-              ))}
+              <Link
+                href="/remembrance"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
+              >
+                View Roll of Honour
+              </Link>
             </div>
           </div>
         </M>
@@ -266,7 +233,7 @@ function MobileHero({ animate }: { animate: boolean }) {
 }
 
 /** Desktop — copy column over full-bleed memorial photograph */
-function DesktopHero({ animate }: { animate: boolean }) {
+function DesktopHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetInvolvedClick?: () => void }) {
   const M = animate ? motion.div : "div";
 
   return (
@@ -315,29 +282,20 @@ function DesktopHero({ animate }: { animate: boolean }) {
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mb-5">
-              <PrimaryCta className="w-auto min-w-[220px]" />
+              <PrimaryCta className="w-auto min-w-[220px]" onClick={onGetInvolvedClick} />
               <Link
-                href="/about"
-                className="inline-flex items-center gap-2 min-h-[50px] px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
+                href="/stories"
+                className="inline-flex items-center justify-center gap-2 min-h-[50px] px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
               >
-                Our mission
+                Read Stories
+              </Link>
+              <Link
+                href="/remembrance"
+                className="inline-flex items-center justify-center gap-2 min-h-[50px] px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
+              >
+                View Roll of Honour
               </Link>
             </div>
-          </M>
-
-          <M
-            {...(animate
-              ? {
-                initial: { opacity: 0, y: 12 },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 0.55, delay: 0.2, ease },
-              }
-              : {})}
-            className="max-w-sm pt-2 mt-0 shrink-0"
-          >
-            {EDITORIAL_LINKS.map((link) => (
-              <EditorialLink key={link.href} {...link} />
-            ))}
           </M>
         </div>
       </div>
@@ -348,7 +306,7 @@ function DesktopHero({ animate }: { animate: boolean }) {
   );
 }
 
-export default function HomeHero() {
+export default function HomeHero({ onGetInvolvedClick }: { onGetInvolvedClick?: () => void }) {
   const prefersReducedMotion = useReducedMotion();
   const animate = !prefersReducedMotion;
 
@@ -359,7 +317,7 @@ export default function HomeHero() {
         className="relative overflow-hidden bg-[#050A14] lg:hidden"
         aria-label="Campaign hero"
       >
-        <MobileHero animate={animate} />
+        <MobileHero animate={animate} onGetInvolvedClick={onGetInvolvedClick} />
         <CampaignMarquee className="relative z-30 w-full max-w-none" />
       </section>
 
@@ -369,7 +327,7 @@ export default function HomeHero() {
         aria-label="Campaign hero"
       >
         <HeroBackground />
-        <DesktopHero animate={animate} />
+        <DesktopHero animate={animate} onGetInvolvedClick={onGetInvolvedClick} />
         <CampaignMarquee className="absolute bottom-0 left-0 right-0 z-30 w-full max-w-none" />
       </section>
     </>

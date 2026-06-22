@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
+import FounderShowcase from "@/components/shared/FounderShowcase";
 
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isFloat = false }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string, isFloat?: boolean }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -419,6 +420,8 @@ export default function AboutPage() {
           </div>
         </div>
       </EditorialSection>
+
+      <FounderShowcase />
 
     </div>
   );

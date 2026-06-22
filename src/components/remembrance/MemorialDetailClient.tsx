@@ -243,7 +243,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
         >
           <SectionLabel>Photos</SectionLabel>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
-            {galleryPhotos.map((photo, index) => (
+            {galleryPhotos.slice(0, 5).map((photo, index) => (
               <button
                 key={photo + index}
                 type="button"
@@ -258,6 +258,16 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                 />
               </button>
             ))}
+            {galleryPhotos.length > 5 && (
+              <button
+                type="button"
+                onClick={() => setActivePhotoIndex(0)}
+                className="relative aspect-[3/4] flex flex-col items-center justify-center gap-1.5 overflow-hidden rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition-colors active:scale-[0.98]"
+              >
+                <span className="text-xl sm:text-2xl font-bold">+{galleryPhotos.length - 5}</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500">View All Photos</span>
+              </button>
+            )}
           </div>
         </section>
 
@@ -287,13 +297,13 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                 onClick={() => setIsTimelineExpanded(!isTimelineExpanded)}
                 className="mt-4 text-xs font-semibold text-[#1877F2] hover:underline min-h-[40px]"
               >
-                {isTimelineExpanded ? "Show less" : `All ${timeline.length} milestones`}
+                {isTimelineExpanded ? "Show less" : "View Full Timeline"}
               </button>
             )}
           </section>
         )}
 
-        {/* Tributes */}
+        {/* Remembered By */}
         <section
           id="tributes"
           ref={(el) => {
@@ -301,38 +311,40 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
           }}
           className="scroll-mt-36"
         >
-          <div className="flex items-center justify-between gap-3 mb-4">
-            <SectionLabel className="mb-0">Tributes</SectionLabel>
+          <div className="flex items-center justify-between gap-3 mb-6">
+            <SectionLabel className="mb-0">Remembered By</SectionLabel>
             <button
               type="button"
               onClick={() => setIsTributeFormOpen(true)}
-              className="shrink-0 min-h-[36px] px-3.5 rounded-lg bg-[#1877F2] hover:bg-[#1877F2]/90 text-white text-[11px] font-semibold"
+              className="shrink-0 min-h-[36px] px-3.5 rounded-lg bg-[#1877F2] hover:bg-[#1877F2]/90 text-white text-[11px] font-semibold transition-colors"
             >
-              + Add
+              + Add Tribute
             </button>
           </div>
 
           {tributes.length > 0 ? (
-            <ul className="space-y-3">
-              {tributes.map((tribute, i) => (
-                <li key={`${tribute.name}-${i}`}>
-                  <article className="p-4 rounded-xl bg-[#f4f5f7] border border-slate-100">
-                    <p className="text-[15px] text-slate-600 leading-relaxed mb-3">&ldquo;{tribute.text}&rdquo;</p>
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full bg-[#1877F2]/10 flex items-center justify-center text-xs font-bold text-[#1877F2]">
-                        {tribute.name.charAt(0)}
+            <div className="relative -mx-6 px-6 lg:mx-0 lg:px-0">
+              <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                {tributes.map((tribute, i) => (
+                  <div key={`${tribute.name}-${i}`} className="snap-start shrink-0 w-[85vw] sm:w-[340px]">
+                    <article className="p-5 h-full flex flex-col rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                      <p className="text-[15px] text-slate-600 leading-relaxed mb-6 flex-1">&ldquo;{tribute.text}&rdquo;</p>
+                      <div className="flex items-center gap-3 mt-auto pt-4 border-t border-slate-100">
+                        <div className="w-10 h-10 shrink-0 rounded-full bg-[#1877F2]/10 flex items-center justify-center text-sm font-bold text-[#1877F2]">
+                          {tribute.name.charAt(0)}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-[#010B19] truncate">{tribute.name}</p>
+                          <p className="text-[11px] text-slate-500 truncate">
+                            {tribute.relationship ? `${tribute.relationship} · ` : ""}{tribute.timeAgo}
+                          </p>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-xs font-semibold text-[#010B19] truncate">{tribute.name}</p>
-                        <p className="text-[10px] text-slate-400 truncate">
-                          {tribute.relationship} · {tribute.timeAgo}
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ul>
+                    </article>
+                  </div>
+                ))}
+              </div>
+            </div>
           ) : (
             <div className="text-center py-10 px-4 rounded-xl bg-[#f4f5f7] border border-dashed border-slate-200">
               <p className="text-sm text-slate-500 mb-4">No tributes yet.</p>

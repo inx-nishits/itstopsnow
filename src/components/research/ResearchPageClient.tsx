@@ -5,9 +5,7 @@ import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ResearchHero from "@/components/research/ResearchHero";
 import ResearchToolbar from "@/components/research/ResearchToolbar";
-import ResearchFeaturedPublication from "@/components/research/ResearchFeaturedPublication";
 import ResearchEvidenceList from "@/components/research/ResearchEvidenceList";
-import ResearchViewerModal from "@/components/research/ResearchViewerModal";
 import { RESEARCH_ITEMS } from "@/lib/research/data";
 import type { ResearchItem } from "@/lib/research/types";
 
@@ -18,7 +16,6 @@ export default function ResearchPageClient() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState("Date");
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeReport, setActiveReport] = useState<ResearchItem | null>(null);
 
   const filteredResearch = useMemo(() => {
     return RESEARCH_ITEMS.filter((item) => {
@@ -38,18 +35,8 @@ export default function ResearchPageClient() {
     return list.sort((a, b) => b.id.localeCompare(a.id));
   }, [filteredResearch, sortBy]);
 
-  const featuredPublication = useMemo(
-    () => sortedResearch.find((item) => item.featured) ?? null,
-    [sortedResearch]
-  );
-
-  const catalogItems = useMemo(
-    () => sortedResearch.filter((item) => item.id !== featuredPublication?.id),
-    [sortedResearch, featuredPublication]
-  );
-
-  const totalPages = Math.ceil(catalogItems.length / ITEMS_PER_PAGE) || 1;
-  const paginatedCatalog = catalogItems.slice(
+  const totalPages = Math.ceil(sortedResearch.length / ITEMS_PER_PAGE) || 1;
+  const paginatedCatalog = sortedResearch.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -97,14 +84,7 @@ export default function ResearchPageClient() {
             </div>
           ) : (
             <>
-              {featuredPublication && (
-                <ResearchFeaturedPublication
-                  publication={featuredPublication}
-                  onViewReport={setActiveReport}
-                />
-              )}
-
-              <ResearchEvidenceList items={paginatedCatalog} onViewReport={setActiveReport} />
+              <ResearchEvidenceList items={paginatedCatalog} />
 
               {totalPages > 1 && (
                 <nav
@@ -138,8 +118,6 @@ export default function ResearchPageClient() {
           )}
         </div>
       </section>
-
-      <ResearchViewerModal report={activeReport} onClose={() => setActiveReport(null)} />
     </div>
   );
 }

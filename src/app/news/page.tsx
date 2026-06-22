@@ -19,6 +19,7 @@ export const LATEST_NEWS = [
     category: "PARLIAMENT", 
     date: "OCT 20, 2024", 
     readTime: "4 min read", 
+    author: "Jane Smith",
     title: "Meeting with the Home Secretary to discuss 12-month investigation limit.", 
     excerpt: "Our founding team presented the latest research data on the devastating impact of prolonged IOPC investigations to the Home Office today.",
     image: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=600"
@@ -29,6 +30,7 @@ export const LATEST_NEWS = [
     category: "CAMPAIGN", 
     date: "OCT 15, 2024", 
     readTime: "3 min read", 
+    author: "News Desk",
     title: "New independent report exposes systemic delays in misconduct cases.", 
     excerpt: "A devastating new independent report has confirmed what the police family has known for years: the system is fundamentally broken.",
     image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600"
@@ -39,6 +41,7 @@ export const LATEST_NEWS = [
     category: "MEDIA", 
     date: "OCT 12, 2024", 
     readTime: "8 min read", 
+    author: "Media Team",
     title: "Paul Cooper on Good Morning Britain discussing officer welfare.", 
     excerpt: "Watch the full segment where Paul explains why 'It Stops Now' is demanding immediate reform to protect those who protect us.",
     image: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&q=80&w=600"
@@ -49,6 +52,7 @@ export const LATEST_NEWS = [
     category: "COMMUNITY", 
     date: "OCT 05, 2024", 
     readTime: "2 min read", 
+    author: "Campaign Updates",
     title: "Over 5,000 letters sent to MPs using our new Take Action tool.", 
     excerpt: "The response has been overwhelming. In just one week, thousands of you have downloaded the template and contacted your local representatives.",
     image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=600"
@@ -59,6 +63,7 @@ export const LATEST_NEWS = [
     category: "RESEARCH", 
     date: "SEP 28, 2024", 
     readTime: "5 min read", 
+    author: "Dr. Sarah Jenkins",
     title: "The hidden toll: Undiagnosed PTSD rates soar among response officers.", 
     excerpt: "A new study highlights the severe lack of immediate psychological first aid following traumatic operational incidents.",
     image: "https://images.unsplash.com/photo-1527137341206-1aa25844a04d?auto=format&fit=crop&q=80&w=600"
@@ -69,6 +74,7 @@ export const LATEST_NEWS = [
     category: "CAMPAIGN", 
     date: "SEP 15, 2024", 
     readTime: "3 min read", 
+    author: "Press Office",
     title: "Pocket Sergeant pledges additional £50,000 to fund mental health support.", 
     excerpt: "The developers behind the popular policing app have doubled their commitment to providing tangible support for officers in crisis.",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600"
@@ -80,7 +86,7 @@ export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const newsletter = useNewsletterSubscribe();
-  const itemsPerPage = 6;
+  const itemsPerPage = 4;
 
   const filteredNews = LATEST_NEWS.filter((news) => {
     const matchesSearch = news.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
