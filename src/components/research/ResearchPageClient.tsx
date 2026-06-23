@@ -1,42 +1,55 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
 import ResearchHero from "@/components/research/ResearchHero";
 import ResearchToolbar from "@/components/research/ResearchToolbar";
+import ResearchFeaturedPublication from "@/components/research/ResearchFeaturedPublication";
 import ResearchEvidenceList from "@/components/research/ResearchEvidenceList";
-import { RESEARCH_ITEMS } from "@/lib/research/data";
+import ResearchViewerModal from "@/components/research/ResearchViewerModal";
+import { EditorialSection, EditorialStickyBar } from "@/components/layout/PageSection";
+import ResearchPagination from "@/components/research/ResearchPagination";
+import { getEnabledResearchCategories, RESEARCH_ITEMS } from "@/lib/research/data";
 import type { ResearchItem } from "@/lib/research/types";
+import { matchesResearchSearch, sortResearchItems } from "@/lib/research/utils";
+import { hybrid } from "@/lib/theme/hybrid";
+import { cn } from "@/lib/utils";
 
 const ITEMS_PER_PAGE = 4;
 
 export default function ResearchPageClient() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [sortBy, setSortBy] = useState("Date");
+  const [sortBy, setSortBy] = useState<"date" | "title">("date");
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeReport, setActiveReport] = useState<ResearchItem | null>(null);
+
+  const categories = useMemo(() => getEnabledResearchCategories(), []);
 
   const filteredResearch = useMemo(() => {
     return RESEARCH_ITEMS.filter((item) => {
-      const matchesSearch =
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.author.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = activeCategory === "All" || item.category === activeCategory;
-      return matchesSearch && matchesCategory;
+      return matchesCategory && matchesResearchSearch(item, searchQuery);
     });
   }, [searchQuery, activeCategory]);
 
-  const sortedResearch = useMemo(() => {
-    const list = [...filteredResearch];
-    if (sortBy === "Title") {
-      return list.sort((a, b) => a.title.localeCompare(b.title));
-    }
-    return list.sort((a, b) => b.id.localeCompare(a.id));
-  }, [filteredResearch, sortBy]);
+  const sortedResearch = useMemo(
+    () => sortResearchItems(filteredResearch, sortBy),
+    [filteredResearch, sortBy]
+  );
 
-  const totalPages = Math.ceil(sortedResearch.length / ITEMS_PER_PAGE) || 1;
-  const paginatedCatalog = sortedResearch.slice(
+  const featuredPublication = useMemo(
+    () => sortedResearch.find((item) => item.featured) ?? null,
+    [sortedResearch]
+  );
+
+  const catalogItems = useMemo(
+    () => sortedResearch.filter((item) => item.id !== featuredPublication?.id),
+    [sortedResearch, featuredPublication]
+  );
+
+  const totalPages = Math.ceil(catalogItems.length / ITEMS_PER_PAGE) || 1;
+  const paginatedCatalog = catalogItems.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -55,69 +68,71 @@ export default function ResearchPageClient() {
     <div className="min-h-screen flex flex-col">
       <ResearchHero />
 
-      {/* Light reading / publication area */}
-      <section className="theme-editorial flex-1 bg-[#f4f5f7] text-[#010B19]">
-        <div className="w-full px-5 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16 max-w-[900px] mx-auto">
-          <ResearchToolbar
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-            resultCount={sortedResearch.length}
-          />
+      <EditorialStickyBar>
+        <ResearchToolbar
+          categories={categories}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          activeCategory={activeCategory}
+          onCategoryChange={setActiveCategory}
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+        />
+      </EditorialStickyBar>
+
+      <EditorialSection noPadding className="flex-1">
+        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1200px] py-8 sm:py-10 lg:py-14">
+          <div
+            className={cn(
+              "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-5 mb-6 sm:mb-8",
+              hybrid.editorialBorder
+            )}
+          >
+            <h2 className={cn("font-sans text-xl sm:text-2xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>
+              Research & Evidence
+            </h2>
+            <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">
+              Showing {sortedResearch.length} {sortedResearch.length === 1 ? "report" : "reports"}
+            </div>
+          </div>
 
           {sortedResearch.length === 0 ? (
-            <div className="text-center py-16 sm:py-24 bg-white rounded-xl border border-slate-200 px-6">
-              <FileText className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-              <h2 className="text-lg font-semibold text-[#010B19] mb-2">No reports found</h2>
-              <p className="text-sm text-slate-500 mb-6">Try adjusting your search or category.</p>
-              <Button
+            <div className={cn("text-center py-10 lg:py-20 rounded-3xl", hybrid.editorialCard)}>
+              <Search className="w-12 h-12 mx-auto mb-4 text-slate-300" />
+              <p className={cn("font-bold uppercase tracking-widest text-sm", hybrid.editorialMuted)}>
+                No reports found matching your search.
+              </p>
+              <button
                 type="button"
-                variant="outline"
                 onClick={clearFilters}
-                className="border-slate-300 text-slate-700 hover:bg-slate-50"
+                className="mt-4 text-[#1877F2] hover:text-[#010B19] transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer"
               >
                 Clear filters
-              </Button>
+              </button>
             </div>
           ) : (
             <>
-              <ResearchEvidenceList items={paginatedCatalog} />
+              {featuredPublication ? (
+                <ResearchFeaturedPublication
+                  publication={featuredPublication}
+                  onViewReport={setActiveReport}
+                />
+              ) : null}
 
-              {totalPages > 1 && (
-                <nav
-                  className="flex flex-wrap items-center justify-center gap-3 mt-10 pt-8 border-t border-slate-200"
-                  aria-label="Publication pagination"
-                >
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    disabled={currentPage === 1}
-                    className="border-slate-300 text-slate-700 disabled:opacity-40 min-h-[44px]"
-                  >
-                    Previous
-                  </Button>
-                  <span className="text-xs text-slate-500 tabular-nums">
-                    Page {currentPage} of {totalPages}
-                  </span>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    disabled={currentPage === totalPages}
-                    className="border-slate-300 text-slate-700 disabled:opacity-40 min-h-[44px]"
-                  >
-                    Next
-                  </Button>
-                </nav>
-              )}
+              <ResearchEvidenceList items={paginatedCatalog} onViewReport={setActiveReport} />
+
+              <ResearchPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                className={cn("mt-10 lg:mt-16 pt-10 border-t", hybrid.editorialBorder)}
+              />
             </>
           )}
         </div>
-      </section>
+      </EditorialSection>
+
+      <ResearchViewerModal report={activeReport} onClose={() => setActiveReport(null)} />
     </div>
   );
 }

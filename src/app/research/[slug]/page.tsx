@@ -1,16 +1,19 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Download, FileText, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PAGE_HERO_CONTAINER, PAGE_HERO_SECTION_PT } from "@/components/layout/PageHero";
-import { getResearchBySlug, downloadResearchReport } from "@/lib/research/data";
+import ResearchViewerModal from "@/components/research/ResearchViewerModal";
+import { getResearchBySlug } from "@/lib/research/data";
+import { downloadResearchPdf } from "@/lib/research/utils";
 import { notFound } from "next/navigation";
 
 export default function ResearchDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const report = getResearchBySlug(slug);
+  const [viewerOpen, setViewerOpen] = useState(false);
 
   if (!report) {
     notFound();
@@ -18,9 +21,15 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Dark header band */}
-      <section className={`relative bg-[#050A14] text-white border-b border-white/5 ${PAGE_HERO_SECTION_PT} pb-8 sm:pb-10`}>
-        <div className={PAGE_HERO_CONTAINER}>
+      <section
+        className={`relative bg-[#050A14] text-white border-b border-white/5 ${PAGE_HERO_SECTION_PT} pb-8 sm:pb-10 overflow-hidden`}
+      >
+        <div className="absolute inset-0 z-0" aria-hidden>
+          <img src={report.image} alt="" className="w-full h-full object-cover opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/90 to-[#050A14]/75" />
+        </div>
+
+        <div className={`${PAGE_HERO_CONTAINER} relative z-10`}>
           <Link
             href="/research"
             className="inline-flex items-center text-slate-400 hover:text-white text-xs font-medium mb-6 transition-colors min-h-[44px]"
@@ -29,32 +38,73 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
             Back to evidence base
           </Link>
 
-          <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-[#1877F2] bg-[#1877F2]/15 px-2.5 py-1 rounded mb-4">
-            {report.category}
-          </span>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {report.featured ? (
+              <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-white bg-[#1877F2] px-2.5 py-1 rounded">
+                Featured
+              </span>
+            ) : null}
+            <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-[#1877F2] bg-[#1877F2]/15 px-2.5 py-1 rounded">
+              {report.category}
+            </span>
+          </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-[1.15] mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-[1.15] mb-4 max-w-4xl">
             {report.title}
           </h1>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-400 mb-4">
             {report.author} · {report.institution} · {report.date}
           </p>
+
+          {report.tags.length ? (
+            <div className="flex flex-wrap gap-2">
+              {report.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[10px] font-medium uppercase tracking-wider text-slate-300 bg-white/10 px-2.5 py-1 rounded"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
 
-      {/* Light reading column */}
       <article className="flex-1 bg-[#f4f5f7] text-[#010B19]">
-        <div className="w-full px-5 sm:px-6 lg:px-16 py-8 sm:py-12 max-w-[720px] mx-auto">
-          <div className="flex flex-col sm:flex-row gap-3 mb-10 pb-8 border-b border-slate-200">
-            <Button
-              type="button"
-              onClick={() => downloadResearchReport(report)}
-              className="min-h-[48px] bg-[#010B19] hover:bg-[#1877F2] text-white font-semibold"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download report
-            </Button>
+        <div className="w-full px-5 sm:px-6 lg:px-16 py-8 sm:py-12 max-w-[760px] mx-auto">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-10 pb-8 border-b border-slate-200">
+            {report.hasPdf ? (
+              <>
+                <Button
+                  type="button"
+                  onClick={() => setViewerOpen(true)}
+                  className="min-h-[48px] bg-[#010B19] hover:bg-[#1877F2] text-white font-semibold"
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  View PDF
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => downloadResearchPdf(report)}
+                  className="min-h-[48px] border-slate-300 text-slate-700 hover:bg-white"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download PDF
+                </Button>
+              </>
+            ) : (
+              <Button
+                type="button"
+                onClick={() => setViewerOpen(true)}
+                className="min-h-[48px] bg-[#010B19] hover:bg-[#1877F2] text-white font-semibold"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Read Research Story
+              </Button>
+            )}
             <Button
               type="button"
               variant="outline"
@@ -79,16 +129,27 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
             <p className="text-base sm:text-lg text-slate-700 leading-[1.75]">{report.summary}</p>
           </section>
 
+          {report.articleContent ? (
+            <section className="mb-10">
+              <h2 className="text-lg font-bold text-[#010B19] mb-4">Full article</h2>
+              <div className="bg-white border border-slate-200 rounded-xl p-5 sm:p-6">
+                <p className="text-base text-slate-700 leading-[1.8] whitespace-pre-line">
+                  {report.articleContent}
+                </p>
+              </div>
+            </section>
+          ) : null}
+
           <section className="mb-10">
             <h2 className="text-lg font-bold text-[#010B19] mb-5">Key findings</h2>
             <ol className="space-y-4">
-              {report.keyFindings.map((finding, i) => (
+              {report.keyFindings.map((finding, index) => (
                 <li
-                  key={i}
+                  key={finding}
                   className="flex gap-4 bg-white border border-slate-200 border-l-[3px] border-l-[#1877F2] px-4 py-4 rounded-r-lg"
                 >
                   <span className="text-sm font-bold text-[#1877F2] tabular-nums shrink-0">
-                    {String(i + 1).padStart(2, "0")}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <p className="text-sm sm:text-base text-slate-800 leading-relaxed">{finding}</p>
                 </li>
@@ -96,17 +157,31 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
             </ol>
           </section>
 
-          {report.methodology && (
+          {report.methodology ? (
             <section className="mb-10">
               <h2 className="text-lg font-bold text-[#010B19] mb-4">Methodology</h2>
               <p className="text-base text-slate-700 leading-[1.75]">{report.methodology}</p>
             </section>
-          )}
+          ) : null}
+
+          {report.recommendations?.length ? (
+            <section className="mb-10">
+              <h2 className="text-lg font-bold text-[#010B19] mb-4">Recommendations</h2>
+              <ul className="space-y-3 bg-white border border-slate-200 rounded-xl p-5 sm:p-6 list-decimal list-inside text-slate-700 leading-relaxed">
+                {report.recommendations.map((item) => (
+                  <li key={item.text} className="text-sm sm:text-base">
+                    {item.text}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           <section className="bg-[#010B19] text-white rounded-xl p-6 sm:p-8 text-center">
             <h3 className="text-lg font-semibold mb-2">Use this evidence</h3>
             <p className="text-sm text-slate-400 mb-6 leading-relaxed max-w-md mx-auto">
-              Share these findings with your Member of Parliament and demand a 12-month investigation limit.
+              Share these findings with your Member of Parliament and demand a 12-month investigation
+              limit.
             </p>
             <Link href="/take-action">
               <Button className="min-h-[48px] bg-[#1877F2] hover:bg-blue-500 text-white font-semibold px-8">
@@ -116,6 +191,11 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
           </section>
         </div>
       </article>
+
+      <ResearchViewerModal
+        report={viewerOpen ? report : null}
+        onClose={() => setViewerOpen(false)}
+      />
     </div>
   );
 }
