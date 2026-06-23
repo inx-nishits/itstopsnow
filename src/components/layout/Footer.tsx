@@ -197,13 +197,17 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM ROW: Copyright & Legal */}
-        <div className="pt-10 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-white font-medium">
-          <p className="flex items-center gap-2">
+        <div className="relative z-10 pt-10 flex flex-col items-center text-center md:flex-row md:items-center md:justify-between md:text-left gap-5 sm:gap-6 text-xs text-white font-medium">
+          <p className="text-slate-400 md:text-white">
             © {new Date().getFullYear()} It Stops Now. All rights reserved.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mt-4 md:mt-0">
-            <Link href="/privacy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-slate-300 transition-colors">Terms & Conditions</Link>
+          <div className="flex flex-col items-center sm:flex-row sm:justify-center gap-3 sm:gap-8">
+            <Link href="/privacy" className="hover:text-slate-300 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-slate-300 transition-colors">
+              Terms & Conditions
+            </Link>
           </div>
         </div>
 

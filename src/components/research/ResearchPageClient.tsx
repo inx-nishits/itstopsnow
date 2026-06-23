@@ -8,6 +8,7 @@ import ResearchFeaturedPublication from "@/components/research/ResearchFeaturedP
 import ResearchEvidenceList from "@/components/research/ResearchEvidenceList";
 import ResearchViewerModal from "@/components/research/ResearchViewerModal";
 import { EditorialSection, EditorialStickyBar } from "@/components/layout/PageSection";
+import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import ResearchPagination from "@/components/research/ResearchPagination";
 import { getEnabledResearchCategories, RESEARCH_ITEMS } from "@/lib/research/data";
 import type { ResearchItem } from "@/lib/research/types";
@@ -81,7 +82,7 @@ export default function ResearchPageClient() {
       </EditorialStickyBar>
 
       <EditorialSection noPadding className="flex-1">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1200px] py-8 sm:py-10 lg:py-14">
+        <div className={`${PAGE_CONTENT_CONTAINER} py-8 sm:py-10 lg:py-14`}>
           <div
             className={cn(
               "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-5 mb-6 sm:mb-8",

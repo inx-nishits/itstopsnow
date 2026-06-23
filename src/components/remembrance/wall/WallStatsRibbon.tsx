@@ -1,6 +1,7 @@
 "use client";
 
 import { Flame, Shield, Users, Heart } from "lucide-react";
+import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 
 interface WallStatsRibbonProps {
@@ -50,7 +51,7 @@ export default function WallStatsRibbon({
         aria-hidden
       />
 
-      <div className="relative w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16 py-6 sm:py-8 lg:py-10">
+      <div className={`${PAGE_CONTENT_CONTAINER} py-6 sm:py-8 lg:py-10`}>
         <p className="text-center lg:text-left text-[10px] sm:text-xs font-bold uppercase tracking-[0.28em] text-slate-500 mb-4 sm:mb-6">
           A living record of remembrance
         </p>

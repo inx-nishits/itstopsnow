@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { simulateSubmit } from "@/lib/mock/utils";
 import { motion } from "framer-motion";
 import { EditorialSection } from "@/components/layout/PageSection";
-import { PageHero } from "@/components/layout/PageHero";
+import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 
 const TEMPLATES = [
@@ -107,7 +107,7 @@ function PersonalizeContent() {
       />
 
       <EditorialSection className="pb-10 lg:pb-20 lg:pb-32">
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1400px]">
+      <div className={PAGE_CONTENT_CONTAINER}>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import posthog from 'posthog-js';
 import { generatePDF, generateDOCX } from "@/lib/documentGenerator";
 import { EditorialSection } from "@/components/layout/PageSection";
-import { PageHero } from "@/components/layout/PageHero";
+import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 
 export default function ContactMpWizard() {
@@ -193,8 +193,8 @@ I urge you to support the "It Stops Now" campaign and raise this with the Home S
 
       {/* FORM WIZARD CONTAINER */}
       <EditorialSection noPadding className="pb-12 lg:pb-24">
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-4xl -mt-16 relative z-10">
-        <div className={`${hybrid.editorialCard} shadow-2xl overflow-hidden`}>
+      <div className={`${PAGE_CONTENT_CONTAINER} -mt-16 relative z-10`}>
+        <div className={`${hybrid.editorialCard} shadow-2xl overflow-hidden max-w-4xl`}>
           
           <div className="flex h-2 bg-slate-100">
             <div className="bg-blue-600 transition-all duration-500" style={{ width: `${(step / 6) * 100}%` }}></div>

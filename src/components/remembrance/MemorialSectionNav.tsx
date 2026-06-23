@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Flame, MessageCircle, Share2, Download } from "lucide-react";
+import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 
 export type MemorialSectionId = "story" | "gallery" | "timeline" | "tributes";
@@ -35,7 +36,7 @@ export function MemorialActionBar({
 }: MemorialActionBarProps) {
   return (
     <div className="sticky top-20 md:top-24 z-40 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
-      <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-16 py-3 sm:py-4">
+      <div className={`${PAGE_CONTENT_CONTAINER} py-3 sm:py-4`}>
         <div className={cn("grid gap-2 sm:gap-2.5", onDownloadPdf ? "grid-cols-4" : "grid-cols-3")}>
           <ActionButton
             variant={isLit ? "candle-lit" : "candle-unlit"}

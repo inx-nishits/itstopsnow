@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, Flame } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { colourRestorationLabel } from "@/lib/candleGrayscale";
+import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 
 function formatName(name: string): string {
@@ -55,7 +56,7 @@ export default function MemorialProfileHeader({
 
   return (
     <header className="w-full bg-[#050A14] text-white pt-[max(4.5rem,env(safe-area-inset-top)+3.25rem)] pb-8 sm:pb-10 border-b border-white/10">
-      <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-16">
+      <div className={PAGE_CONTENT_CONTAINER}>
         <Link
           href="/remembrance"
           className="inline-flex items-center gap-1.5 min-h-[40px] text-slate-400 hover:text-white text-xs font-semibold uppercase tracking-wider mb-5 sm:mb-6 transition-colors cursor-pointer"

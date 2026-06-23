@@ -6,7 +6,7 @@ import { ArrowRight, Newspaper, Video, Mic, Calendar, User, Search, Filter, Mail
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
-import { PageHero } from "@/components/layout/PageHero";
+import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
 import { Pagination } from "@/components/ui/Pagination";
@@ -130,7 +130,7 @@ export default function NewsPage() {
 
       {/* 2. FILTERS & SEARCH */}
       <EditorialStickyBar>
-        <div className="container mx-auto px-4 md:px-8 max-w-[1440px]">
+        <div className={PAGE_CONTENT_CONTAINER}>
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             
             <div className="flex items-center gap-3 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
@@ -166,7 +166,7 @@ export default function NewsPage() {
 
       {/* 3. LATEST NEWS GRID */}
       <EditorialSection>
-        <div className="container mx-auto px-4 md:px-8 max-w-[1440px] relative z-10">
+        <div className={`${PAGE_CONTENT_CONTAINER} relative z-10`}>
           
           <div className={cn("flex justify-between items-end border-b pb-6 mb-12", hybrid.editorialBorder)}>
             <h2 className={cn("font-sans text-3xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>LATEST ARTICLES</h2>
@@ -236,7 +236,7 @@ export default function NewsPage() {
       {/* 4. WHAT WE'RE WORKING ON - INITIATIVES SECTION */}
       <CampaignSection variant="deep" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
-        <div className="container mx-auto px-4 md:px-8 max-w-[1440px] relative z-10">
+        <div className={`${PAGE_CONTENT_CONTAINER} relative z-10`}>
           <div className="text-center mb-16">
             <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
               <span className="w-8 h-px bg-[#1877F2]"></span>
@@ -269,7 +269,7 @@ export default function NewsPage() {
       {/* 5. NEWSLETTER SECTION */}
       <CampaignSection className="relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-full" />
-        <div className="container mx-auto px-4 md:px-8 max-w-[800px] relative z-10 text-center">
+        <div className={`${PAGE_CONTENT_CONTAINER} relative z-10 text-center max-w-3xl`}>
           <div className={cn(hybrid.campaignCard, "rounded-[3rem] p-6 md:p-16 shadow-2xl relative overflow-hidden group")}>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
             

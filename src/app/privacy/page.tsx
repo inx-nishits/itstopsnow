@@ -3,7 +3,7 @@
 import { Shield } from "lucide-react";
 import Link from "next/link";
 import { EditorialSection } from "@/components/layout/PageSection";
-import { PageHero } from "@/components/layout/PageHero";
+import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 
 export default function PrivacyPolicy() {
   return (
@@ -31,8 +31,8 @@ export default function PrivacyPolicy() {
       />
 
       <EditorialSection>
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-4xl">
-        <div className="prose prose-lg prose-editorial max-w-none">
+        <div className={PAGE_CONTENT_CONTAINER}>
+        <div className="prose prose-lg prose-editorial max-w-4xl">
           <h2 className="font-bold uppercase tracking-widest text-xl mb-4 mt-12">1. Introduction</h2>
           <p>
             At It Stops Now, we take your privacy and the security of your data extremely seriously, especially given the sensitive nature of the information we handle. This Privacy Policy outlines how we collect, use, and protect your personal information.

@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import ResearchSortMenu from "@/components/research/ResearchSortMenu";
+import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
 import type { ResearchCategory } from "@/lib/research/types";
@@ -26,7 +27,7 @@ export default function ResearchToolbar({
   onSortChange,
 }: ResearchToolbarProps) {
   return (
-    <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+    <div className={PAGE_CONTENT_CONTAINER}>
       <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
         <div className="flex items-center gap-3 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
           {categories.map((category) => (

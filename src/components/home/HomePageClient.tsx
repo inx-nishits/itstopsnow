@@ -66,7 +66,7 @@ function StatCounter({
       : "text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2]";
 
   return (
-    <div ref={ref} className={`text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter transition-all duration-500 flex items-center gap-2 ${toneClass}`}>
+    <div ref={ref} className={`text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter transition-all duration-500 flex items-center gap-2 ${toneClass}`}>
       {prefix}
       <span className={isPulsing ? 'animate-[pulse_3s_infinite] text-[#1877F2]' : ''}>
         {count.toLocaleString(undefined, {
@@ -119,29 +119,29 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       </div>
 
       {/* AWARENESS STATISTICS — light editorial */}
-      <section className="theme-editorial relative z-20 bg-[#f4f5f7] text-[#010B19] py-14 sm:py-16 lg:py-28 overflow-hidden">
+      <section className="theme-editorial relative z-20 bg-[#f4f5f7] text-[#010B19] py-16 sm:py-20 lg:py-28 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#1877F2]/20 to-transparent pointer-events-none" />
 
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
           <SectionReveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl lg:rounded-3xl overflow-hidden border border-slate-200 bg-slate-200">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
             {stats.map((stat) => {
               const IconComponent = statIcon(stat);
               return (
                 <div 
                   key={stat.id} 
-                  className="group relative bg-white p-6 sm:p-7 md:p-8 transition-colors duration-300 hover:bg-slate-50 flex flex-col h-full"
+                  className="group relative bg-white/90 rounded-2xl border border-slate-200/90 p-4 sm:p-5 lg:p-6 transition-all duration-300 hover:border-[#1877F2]/25 hover:shadow-sm flex flex-col h-full"
                 >
-                  <div className="flex items-center gap-3 mb-5 sm:mb-6">
-                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#1877F2]/10 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-colors duration-300">
-                      <IconComponent className={`w-5 h-5 ${stat.isPulsing ? 'animate-[pulse_1.5s_infinite]' : ''}`} />
+                  <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1877F2]/10 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-colors duration-300 shrink-0">
+                      <IconComponent className={`w-4 h-4 sm:w-[1.125rem] sm:h-[1.125rem] ${stat.isPulsing ? 'animate-[pulse_1.5s_infinite]' : ''}`} />
                     </div>
-                    <span className="text-[11px] sm:text-xs font-semibold text-slate-500 group-hover:text-slate-700 transition-colors uppercase tracking-[0.15em] leading-snug">
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 group-hover:text-slate-700 transition-colors uppercase tracking-[0.14em] leading-snug">
                       {stat.label}
                     </span>
                   </div>
 
-                  <div className="flex items-baseline gap-1 mb-3 sm:mb-4">
+                  <div className="flex items-baseline gap-1 mb-2 sm:mb-3">
                     <StatCounter 
                       end={stat.endValue} 
                       prefix={stat.prefix} 
@@ -157,7 +157,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                     )}
                   </div>
 
-                  <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-normal group-hover:text-slate-800 transition-colors">
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal group-hover:text-slate-800 transition-colors line-clamp-4">
                     {stat.description}
                   </p>
                 </div>
@@ -166,15 +166,16 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             </div>
           </SectionReveal>
 
-          <p className="mt-8 sm:mt-10 text-center text-slate-500 text-sm sm:text-base italic max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-10 sm:mt-12 text-center text-slate-500 text-sm italic max-w-2xl mx-auto leading-relaxed">
             Behind every number is a person who served, sacrificed, and deserved better.
           </p>
         </div>
       </section>
 
+      <VoicesRollSection voices={data.voices} rollPreview={data.rollPreview} />
 
       {/* WHY IT STOPS NOW — light editorial */}
-      <section className="theme-editorial relative bg-white text-[#010B19] py-16 sm:py-20 lg:py-36 overflow-hidden">
+      <section className="theme-editorial relative bg-white text-[#010B19] py-16 sm:py-20 lg:py-32 overflow-hidden">
         <div className="absolute top-0 right-0 w-[min(800px,90vw)] h-[min(800px,90vw)] bg-[#1877F2]/[0.03] rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
         <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
@@ -185,11 +186,11 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Why It Stops Now</h2>
               </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#010B19] tracking-tight leading-[1.15] mb-5 sm:mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#010B19] tracking-tight leading-[1.12] mb-5 sm:mb-6 text-balance">
                 EVERY NUMBER IS <br className="hidden lg:block" />
                 <span className="text-slate-500">A LIFE LEFT BEHIND.</span>
               </h3>
-              <p className="text-slate-600 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 sm:mb-10 max-w-xl font-medium">
+              <p className="text-slate-600 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-xl font-medium">
                 Every number represents a parent, a child, a partner and a friend left behind. Every story reminds us that officers' lives matter too.
               </p>
               <div>
@@ -204,7 +205,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             <SectionReveal delay={0.08} className="lg:col-span-7">
             <div className="relative overflow-hidden rounded-2xl md:rounded-[2rem] lg:rounded-[2.5rem] group shadow-xl border border-slate-200">
               {/* Mobile-first: photography above quote */}
-              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-auto md:min-h-[280px] lg:min-h-[320px]">
+              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-auto md:min-h-[240px] lg:min-h-[280px]">
                 <Image
                   src="/images/quote-bg.png"
                   alt="Supportive holding background"
@@ -212,23 +213,27 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#010B19]/90 via-[#010B19]/30 to-transparent md:bg-gradient-to-r md:from-transparent md:via-[#010B19]/40 md:to-[#010B19]/85" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#010B19] via-[#010B19]/40 to-transparent md:bg-gradient-to-r md:from-transparent md:via-[#010B19]/40 md:to-[#010B19]/85" />
               </div>
 
-              <div className="relative md:absolute md:inset-0 flex flex-col justify-end md:justify-center p-6 sm:p-8 md:p-10 lg:p-12">
-                <Quote className="w-10 h-10 text-[#1877F2]/50 mb-4 hidden md:block" />
-                <p className="text-xl sm:text-2xl md:text-3xl text-white font-medium leading-[1.35] tracking-tight mb-6 md:mb-8 max-w-2xl">
-                  "To protect and serve others, they gave everything. Now, <span className="text-[#1877F2]">it's our turn to protect them.</span>"
+              <div className="relative md:absolute md:inset-0 flex flex-col justify-end md:justify-center p-6 sm:p-8 md:p-10 lg:p-12 bg-[#010B19] md:bg-transparent">
+                <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-[#1877F2]/60 mb-3 sm:mb-4 md:text-[#1877F2]/50 shrink-0" />
+                <p className="text-base sm:text-xl md:text-2xl text-white font-medium leading-[1.45] tracking-tight mb-5 sm:mb-6 md:mb-8 max-w-2xl text-balance">
+                  &ldquo;To protect and serve others, they gave everything. Now,{" "}
+                  <span className="text-[#1877F2]">it&apos;s our turn to protect them.</span>&rdquo;
                 </p>
-                
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-[2px] bg-white/25"></div>
-                    <span className="text-slate-300 text-xs font-bold tracking-[0.2em] uppercase">The Mission</span>
+
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-8 sm:w-10 h-[2px] bg-[#1877F2]/50 md:bg-white/25 shrink-0" />
+                    <span className="text-slate-300 text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase">
+                      The Mission
+                    </span>
                   </div>
-                  <button 
+                  <button
+                    type="button"
                     onClick={() => setIsGetInvolvedOpen(true)}
-                    className="bg-[#1877F2] text-white hover:bg-white hover:text-[#010B19] text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
+                    className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-white hover:text-[#010B19] text-xs font-bold uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 cursor-pointer shadow-[0_8px_24px_rgba(24,119,242,0.35)] ring-2 ring-[#1877F2]/20 min-h-[48px]"
                   >
                     Get Involved
                   </button>
@@ -240,27 +245,27 @@ export default function HomePageClient({ data }: HomePageClientProps) {
           </div>
 
           {/* Issue areas — editorial list on light surface */}
-          <SectionReveal delay={0.12} className="mt-14 sm:mt-16 lg:mt-24 pt-12 sm:pt-14 border-t border-slate-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-10 lg:gap-14">
+          <SectionReveal delay={0.12} className="mt-12 sm:mt-16 lg:mt-20 pt-10 sm:pt-12 border-t border-slate-200">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
             
-            <div className="py-8 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/30 md:pl-8 first:md:border-l-0 first:md:pl-0 group">
-              <div className="w-12 h-12 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-5">
+            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 first:md:border-l-0 first:md:pl-0 group">
+              <div className="w-10 h-10 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-4">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-[#010B19] tracking-wide mb-3">Systemic Failures</h3>
               <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">The current investigative bodies act without accountability, leaving officers suspended in limbo for years for simply doing their duty.</p>
             </div>
 
-            <div className="py-8 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/30 md:pl-8 group">
-              <div className="w-12 h-12 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-5">
+            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group">
+              <div className="w-10 h-10 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-4">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-[#010B19] tracking-wide mb-3">Mental Health Toll</h3>
               <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">Prolonged investigations are destroying families and lives. We demand a 12-month time limit to prevent further psychological damage.</p>
             </div>
 
-            <div className="py-8 md:py-0 md:border-l-2 md:border-[#1877F2]/30 md:pl-8 group">
-              <div className="w-12 h-12 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-5">
+            <div className="py-5 md:py-0 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group">
+              <div className="w-10 h-10 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-4">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-[#010B19] tracking-wide mb-3">Legal Protection</h3>
@@ -274,7 +279,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       </section>
 
       {/* OUR MISSION — dark campaign */}
-      <section className="relative bg-[#030712] text-white py-16 sm:py-20 lg:py-32 overflow-hidden">
+      <section className="relative bg-[#030712] text-white py-16 sm:py-20 lg:py-28 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
@@ -286,7 +291,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
                 <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Our Mission</h2>
               </div>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter uppercase leading-[1.08] text-balance">
                 A Future Where <br className="hidden md:block"/> No Officer <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">Stands Alone.</span>
               </h3>
             </div>
@@ -296,21 +301,21 @@ export default function HomePageClient({ data }: HomePageClientProps) {
           </div>
           </SectionReveal>
           
-          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:overflow-visible md:pb-0 scrollbar-none">
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:overflow-visible md:pb-0 scrollbar-none">
             
             {/* Pillar 1 */}
-            <SectionReveal delay={0} className="min-w-[82vw] sm:min-w-[300px] md:min-w-0 snap-center">
-            <div className="group relative p-6 md:p-8 lg:p-10 h-full bg-gradient-to-br from-[#1877F2]/[0.08] to-transparent border border-[#1877F2]/20 rounded-2xl md:rounded-[2rem] hover:border-[#1877F2]/40 transition-colors duration-300 overflow-hidden min-h-[280px] sm:min-h-[300px]">
-              <div className="absolute top-0 right-0 text-[120px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">1</div>
+            <SectionReveal delay={0} className="min-w-[78vw] sm:min-w-[280px] md:min-w-0 snap-center">
+            <div className="group relative p-5 md:p-6 lg:p-8 h-full bg-gradient-to-br from-[#1877F2]/[0.08] to-transparent border border-[#1877F2]/20 rounded-2xl hover:border-[#1877F2]/40 transition-colors duration-300 overflow-hidden min-h-[220px] sm:min-h-[240px]">
+              <div className="absolute top-0 right-0 text-[96px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">1</div>
               <div className="relative z-10 h-full flex flex-col justify-between">
                 <div className="flex justify-between items-center">
-                  <div className="w-14 h-14 rounded-full bg-[#1877F2]/15 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                  <div className="w-12 h-12 rounded-full bg-[#1877F2]/15 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                   </div>
                   <span className="text-slate-500 font-black tracking-widest text-[10px] uppercase">Pillar 01</span>
                 </div>
-                <div className="pt-12">
-                  <h3 className="font-black text-xl sm:text-2xl text-white mb-3 uppercase tracking-tighter leading-none">Raise Awareness</h3>
+                <div className="pt-8">
+                  <h3 className="font-black text-lg sm:text-xl text-white mb-2 uppercase tracking-tighter leading-none">Raise Awareness</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">Start conversations that create lasting, systemic change in public perception.</p>
                 </div>
               </div>
@@ -318,18 +323,18 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             </SectionReveal>
 
             {/* Pillar 2 */}
-            <SectionReveal delay={0.05} className="min-w-[82vw] sm:min-w-[300px] md:min-w-0 snap-center">
-            <div className="group relative p-6 md:p-8 lg:p-10 h-full bg-[#050A14] border border-white/10 rounded-2xl md:rounded-[2rem] hover:border-white/20 transition-colors duration-300 overflow-hidden min-h-[280px] sm:min-h-[300px]">
-              <div className="absolute top-0 right-0 text-[120px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">2</div>
+            <SectionReveal delay={0.05} className="min-w-[78vw] sm:min-w-[280px] md:min-w-0 snap-center">
+            <div className="group relative p-5 md:p-6 lg:p-8 h-full bg-[#050A14] border border-white/10 rounded-2xl hover:border-white/20 transition-colors duration-300 overflow-hidden min-h-[220px] sm:min-h-[240px]">
+              <div className="absolute top-0 right-0 text-[96px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">2</div>
               <div className="relative z-10 h-full flex flex-col justify-between">
                 <div className="flex justify-between items-center">
-                  <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                  <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
                   </div>
                   <span className="text-slate-500 font-black tracking-widest text-[10px] uppercase">Pillar 02</span>
                 </div>
-                <div className="pt-12">
-                  <h3 className="font-black text-xl sm:text-2xl text-white mb-3 uppercase tracking-tighter leading-none">Support Families</h3>
+                <div className="pt-8">
+                  <h3 className="font-black text-lg sm:text-xl text-white mb-2 uppercase tracking-tighter leading-none">Support Families</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">Stand beside families in their darkest times, providing stability and care.</p>
                 </div>
               </div>
@@ -337,18 +342,18 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             </SectionReveal>
 
             {/* Pillar 3 */}
-            <SectionReveal delay={0.1} className="min-w-[82vw] sm:min-w-[300px] md:min-w-0 snap-center">
-            <div className="group relative p-6 md:p-8 lg:p-10 h-full bg-[#050A14] border border-white/10 rounded-2xl md:rounded-[2rem] hover:border-white/20 transition-colors duration-300 overflow-hidden min-h-[280px] sm:min-h-[300px]">
-              <div className="absolute top-0 right-0 text-[120px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">3</div>
+            <SectionReveal delay={0.1} className="min-w-[78vw] sm:min-w-[280px] md:min-w-0 snap-center">
+            <div className="group relative p-5 md:p-6 lg:p-8 h-full bg-[#050A14] border border-white/10 rounded-2xl hover:border-white/20 transition-colors duration-300 overflow-hidden min-h-[220px] sm:min-h-[240px]">
+              <div className="absolute top-0 right-0 text-[96px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">3</div>
               <div className="relative z-10 h-full flex flex-col justify-between">
                 <div className="flex justify-between items-center">
-                  <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                  <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
                   </div>
                   <span className="text-slate-500 font-black tracking-widest text-[10px] uppercase">Pillar 03</span>
                 </div>
-                <div className="pt-12">
-                  <h3 className="font-black text-xl sm:text-2xl text-white mb-3 uppercase tracking-tighter leading-none">Drive Change</h3>
+                <div className="pt-8">
+                  <h3 className="font-black text-lg sm:text-xl text-white mb-2 uppercase tracking-tighter leading-none">Drive Change</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">Push for systemic legislative change that saves lives and demands accountability.</p>
                 </div>
               </div>
@@ -356,18 +361,18 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             </SectionReveal>
 
             {/* Pillar 4 */}
-            <SectionReveal delay={0.15} className="min-w-[82vw] sm:min-w-[300px] md:min-w-0 snap-center">
-            <div className="group relative p-6 md:p-8 lg:p-10 h-full bg-gradient-to-br from-[#1877F2]/[0.08] to-transparent border border-[#1877F2]/20 rounded-2xl md:rounded-[2rem] hover:border-[#1877F2]/40 transition-colors duration-300 overflow-hidden min-h-[280px] sm:min-h-[300px]">
-              <div className="absolute top-0 right-0 text-[120px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">4</div>
+            <SectionReveal delay={0.15} className="min-w-[78vw] sm:min-w-[280px] md:min-w-0 snap-center">
+            <div className="group relative p-5 md:p-6 lg:p-8 h-full bg-gradient-to-br from-[#1877F2]/[0.08] to-transparent border border-[#1877F2]/20 rounded-2xl hover:border-[#1877F2]/40 transition-colors duration-300 overflow-hidden min-h-[220px] sm:min-h-[240px]">
+              <div className="absolute top-0 right-0 text-[96px] font-black text-white/[0.04] pointer-events-none leading-none tracking-tighter">4</div>
               <div className="relative z-10 h-full flex flex-col justify-between">
                 <div className="flex justify-between items-center">
-                  <div className="w-14 h-14 rounded-full bg-[#1877F2]/15 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+                  <div className="w-12 h-12 rounded-full bg-[#1877F2]/15 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
                   </div>
                   <span className="text-slate-500 font-black tracking-widest text-[10px] uppercase">Pillar 04</span>
                 </div>
-                <div className="pt-12">
-                  <h3 className="font-black text-xl sm:text-2xl text-white mb-3 uppercase tracking-tighter leading-none">Build Community</h3>
+                <div className="pt-8">
+                  <h3 className="font-black text-lg sm:text-xl text-white mb-2 uppercase tracking-tighter leading-none">Build Community</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">Ensure no one in blue ever stands alone through peer-to-peer support networks.</p>
                 </div>
               </div>
@@ -378,7 +383,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
         </div>
       </section>
       {/* MISSION STATEMENT BANNER — light editorial */}
-      <section className="theme-editorial relative w-full py-16 sm:py-24 lg:py-36 bg-[#f4f5f7] text-[#010B19] overflow-hidden">
+      <section className="theme-editorial relative w-full py-16 sm:py-20 lg:py-28 bg-[#f4f5f7] text-[#010B19] overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent pointer-events-none" />
         
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
@@ -386,7 +391,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             
             <SectionReveal className="w-full lg:w-1/2">
             <div className="relative">
-              <div className="relative rounded-2xl sm:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:h-[min(680px,85vh)] shadow-xl border border-slate-200 group">
+              <div className="relative rounded-2xl sm:rounded-[2rem] overflow-hidden aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:h-[min(560px,72vh)] shadow-xl border border-slate-200 group">
                 <Image
                   src="/images/mission-support.png"
                   alt="Officers Standing Shoulder to Shoulder"
@@ -424,7 +429,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 <span className="text-[#1877F2] text-xs font-bold tracking-[0.3em] uppercase">Why We Stand</span>
               </div>
               
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-tighter text-[#010B19] mb-6 sm:mb-8 leading-[1.05]">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-6 sm:mb-8 leading-[1.06] text-balance">
                 Our Mission <br/>
                 <span className="text-[#1877F2]">Is Clear.</span>
               </h3>
@@ -456,6 +461,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       {/* FOUNDING MEMBERS — dark campaign */}
       <FounderShowcase />
 
+      <HomeEventsPreview events={data.events} />
 
       {/* GET INVOLVED MODAL */}
       <AnimatePresence>

@@ -4,7 +4,7 @@ import { use } from "react";
 import { ArrowLeft, Star, ExternalLink, ShieldAlert, Info, Heart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArticleHero } from "@/components/layout/PageHero";
+import { ArticleHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 
 const MOCK_DETAIL = {
   type: "org",
@@ -60,7 +60,7 @@ export default function SupportDetail({ params }: { params: Promise<{ type: stri
       />
 
       {/* CONTENT */}
-      <div className="container mx-auto px-4 md:px-8 mt-8 lg:mt-16 max-w-[1200px]">
+      <div className={`${PAGE_CONTENT_CONTAINER} mt-8 lg:mt-16`}>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-8 space-y-16">
             <section>

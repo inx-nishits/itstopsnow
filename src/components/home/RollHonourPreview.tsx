@@ -20,7 +20,7 @@ export default function RollHonourPreviewSection({ officers }: RollHonourPreview
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
-      <div className="relative w-full max-w-[1600px] mx-auto px-6 lg:px-16 py-14 sm:py-16 lg:py-20">
+      <div className="relative w-full max-w-[1600px] mx-auto px-6 lg:px-16 py-12 sm:py-14 lg:py-20">
         <SectionReveal delay={0.06}>
           <div className="lg:grid lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-x-10 xl:gap-x-14 lg:items-end mb-6 sm:mb-8">
             <header className="mb-8 lg:mb-0">

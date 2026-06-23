@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Calendar, ArrowLeft, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EditorialSection } from "@/components/layout/PageSection";
-import { ArticleHero } from "@/components/layout/PageHero";
+import { ArticleHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
 import { ShareButtons } from "@/components/ui/ShareButtons";
@@ -63,7 +63,7 @@ If you haven't already, please use our Take Action page to contact your MP and u
       />
 
       <EditorialSection noPadding className="pb-12 lg:pb-24">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1000px] py-8">
+        <div className={`${PAGE_CONTENT_CONTAINER} py-8`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-8">
               

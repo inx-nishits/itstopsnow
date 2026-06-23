@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import MemorialProfileHeader from "@/components/remembrance/MemorialProfileHeader";
+import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import {
   MemorialActionBar,
   MemorialSectionTabs,
@@ -199,7 +200,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
         candleLoading={candleLoading}
       />
 
-      <main className="w-full max-w-[1200px] mx-auto px-6 lg:px-16 pb-16 pt-6 sm:pt-8">
+      <main className={`${PAGE_CONTENT_CONTAINER} pb-16 pt-6 sm:pt-8`}>
         <div className="sticky top-[9.25rem] md:top-[10.25rem] z-30 -mx-6 px-6 lg:-mx-16 lg:px-16 py-3 mb-8 sm:mb-10 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200">
           <MemorialSectionTabs
             activeSection={activeSection}

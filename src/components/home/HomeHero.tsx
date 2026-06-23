@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -82,10 +82,10 @@ function PrimaryCta({ className, compact, onClick }: { className?: string; compa
   const content = (
     <span
       className={cn(
-        "relative flex items-center justify-between gap-3 w-full bg-[#1877F2] text-white font-bold uppercase tracking-[0.14em] overflow-hidden group transition-colors hover:bg-[#1565d8] active:scale-[0.99]",
+        "relative flex items-center justify-between gap-3 w-full rounded-full bg-[#1877F2] text-white font-bold uppercase tracking-[0.14em] overflow-hidden group transition-all hover:bg-[#1565d8] active:scale-[0.99] shadow-[0_10px_32px_rgba(24,119,242,0.38)] ring-2 ring-[#1877F2]/30",
         compact
-          ? "min-h-[48px] px-4 text-xs tracking-[0.12em]"
-          : "min-h-[50px] lg:min-h-[52px] px-5 text-xs"
+          ? "min-h-[52px] px-5 text-[11px] tracking-[0.12em]"
+          : "min-h-[52px] lg:min-h-[54px] px-6 text-xs"
       )}
     >
       <span
@@ -137,7 +137,7 @@ function MobileHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetIn
     >
       {/* Photo stage — diagonal cut, faces unobstructed */}
       <div
-        className="relative flex-none h-[26dvh] w-full overflow-hidden"
+        className="relative flex-none h-[22dvh] min-h-[148px] max-h-[200px] w-full overflow-hidden"
         style={{ clipPath: "polygon(0 0, 100% 0, 100% 86%, 0 100%)" }}
       >
         <Image
@@ -168,7 +168,7 @@ function MobileHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetIn
       </div>
 
       {/* Floating manifesto card — overlaps photo, typography off-image */}
-      <div className="relative z-20 -mt-6 mx-3 shrink-0">
+      <div className="relative z-20 -mt-6 mx-3 mb-5 shrink-0">
         <M
           {...(animate
             ? {
@@ -183,47 +183,47 @@ function MobileHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetIn
             className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#1877F2]/70 to-transparent"
             aria-hidden
           />
-          <div
-            className="pointer-events-none absolute -right-1 -top-1 text-[4.25rem] font-black font-heading leading-none text-[#1877F2]/[0.07] select-none"
-            aria-hidden
-          >
-            01
-          </div>
 
-          <div className="py-3 px-3">
-            <div className="flex items-center gap-2 mb-3">
+          <div className="py-3.5 px-3.5 sm:px-4">
+            <div className="flex items-center gap-2 mb-2.5">
               <span className="h-px w-8 bg-[#1877F2]" aria-hidden />
               <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#1877F2]">
                 {HERO_EYEBROW}
               </p>
             </div>
 
-            <h1 className="text-[1.65rem] sm:text-[1.85rem] font-black uppercase tracking-tight leading-[0.98] mb-3">
-              <span className="text-white block">Behind every</span>
-              <span className="text-white block">uniform</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] via-blue-400 to-cyan-400 block">
+            <h1 className="text-[clamp(1.45rem,4.8vw,1.85rem)] font-black uppercase tracking-tight leading-[1.02] mb-2.5 text-balance max-w-[18ch]">
+              <span className="text-white">Behind every uniform </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] via-blue-400 to-cyan-400">
                 is a human being.
               </span>
             </h1>
 
-            <p className="font-sans text-[13px] sm:text-sm leading-relaxed text-slate-300 mb-4">
+            <p className="font-sans text-[13px] sm:text-sm leading-relaxed text-slate-300 mb-3.5 line-clamp-3">
               {HERO_DESCRIPTION}
             </p>
 
-            <div className="flex flex-col gap-2.5 mb-2">
+            <div className="flex flex-col gap-2.5 pb-1">
               <PrimaryCta className="w-full" compact onClick={onGetInvolvedClick} />
-              <Link
-                href="/stories"
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
-              >
-                Read Stories
-              </Link>
-              <Link
-                href="/remembrance"
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
-              >
-                View Roll of Honour
-              </Link>
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 pt-1 text-center">
+                <Link
+                  href="/stories"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 hover:text-[#1877F2] transition-colors underline-offset-[3px] hover:underline group"
+                >
+                  Read Stories
+                  <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+                </Link>
+                <span className="text-white/20 select-none" aria-hidden>
+                  ·
+                </span>
+                <Link
+                  href="/remembrance"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 hover:text-[#1877F2] transition-colors underline-offset-[3px] hover:underline group"
+                >
+                  View Roll of Honour
+                  <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+                </Link>
+              </div>
             </div>
           </div>
         </M>
@@ -269,20 +269,19 @@ function DesktopHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetI
               </p>
             </div>
 
-            <h1 className="text-[2.65rem] xl:text-[3.35rem] 2xl:text-[3.75rem] font-black uppercase tracking-tight leading-[0.98] mb-4">
-              <span className="text-white block">Behind every</span>
-              <span className="text-white block">uniform</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] via-blue-400 to-cyan-400 block">
+            <h1 className="text-[clamp(2.15rem,3.6vw,3.35rem)] font-black uppercase tracking-tight leading-[1.02] mb-4 text-balance max-w-[14ch]">
+              <span className="text-white">Behind every uniform </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] via-blue-400 to-cyan-400">
                 is a human being.
               </span>
             </h1>
 
-            <p className="text-sm xl:text-base text-slate-300 leading-relaxed max-w-md mb-5 line-clamp-2">
+            <p className="text-sm xl:text-base text-slate-300 leading-relaxed max-w-md mb-5 line-clamp-3">
               {HERO_DESCRIPTION}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mb-5">
-              <PrimaryCta className="w-auto min-w-[220px]" onClick={onGetInvolvedClick} />
+              <PrimaryCta className="w-auto min-w-[240px] shrink-0" onClick={onGetInvolvedClick} />
               <Link
                 href="/stories"
                 className="inline-flex items-center justify-center gap-2 min-h-[50px] px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
@@ -314,11 +313,11 @@ export default function HomeHero({ onGetInvolvedClick }: { onGetInvolvedClick?: 
     <>
       {/* Mobile — content height only; no forced viewport fill */}
       <section
-        className="relative overflow-hidden bg-[#050A14] lg:hidden"
+        className="relative overflow-hidden bg-[#050A14] lg:hidden pb-4"
         aria-label="Campaign hero"
       >
         <MobileHero animate={animate} onGetInvolvedClick={onGetInvolvedClick} />
-        <CampaignMarquee className="relative z-30 w-full max-w-none" />
+        <CampaignMarquee className="relative z-30 w-full max-w-none mt-1" />
       </section>
 
       {/* Desktop — full viewport with pinned marquee */}

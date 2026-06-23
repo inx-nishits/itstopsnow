@@ -4,7 +4,7 @@ import { use, useMemo } from "react";
 import Link from "next/link";
 import { ChevronRight, Calendar, Clock, ArrowLeft } from "lucide-react";
 import { EditorialSection } from "@/components/layout/PageSection";
-import { ArticleHero } from "@/components/layout/PageHero";
+import { ArticleHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { ShareButtons } from "@/components/ui/ShareButtons";
 import { STORIES } from "../page";
@@ -55,7 +55,7 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
       />
 
       <EditorialSection noPadding className="pb-12 lg:pb-24">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1200px] py-8 lg:py-16">
+        <div className={`${PAGE_CONTENT_CONTAINER} py-8 lg:py-16`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             <div className="lg:col-span-8">
               <div className="prose prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-headings:text-[#010B19] prose-a:text-[#1877F2] prose-p:text-slate-600 prose-p:leading-relaxed">

@@ -8,7 +8,7 @@ import { downloadTextBlob } from "@/lib/mock/utils";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
-import { PageHero } from "@/components/layout/PageHero";
+import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 
 const BENEFITS = [
@@ -199,7 +199,7 @@ export default function TakeActionPage() {
 
       {/* 2. ACTION BENEFITS STATISTICS STRIP */}
       <EditorialSection noPadding className="relative z-20 border-b border-slate-200">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-slate-200 max-w-[1600px] mx-auto">
+        <div className={`${PAGE_CONTENT_CONTAINER} grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-slate-200`}>
           {BENEFITS.map((benefit) => {
             const Icon = benefit.icon;
             return (

@@ -2,7 +2,7 @@
 
 import { Shield } from "lucide-react";
 import { EditorialSection } from "@/components/layout/PageSection";
-import { PageHero } from "@/components/layout/PageHero";
+import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 
 export default function TermsAndConditions() {
   return (
@@ -30,8 +30,8 @@ export default function TermsAndConditions() {
       />
 
       <EditorialSection>
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-4xl">
-        <div className="prose prose-lg prose-editorial max-w-none">
+        <div className={PAGE_CONTENT_CONTAINER}>
+        <div className="prose prose-lg prose-editorial max-w-4xl">
           <h2 className="font-bold uppercase tracking-widest text-xl mb-4 mt-12">1. Acceptance of Terms</h2>
           <p>
             By accessing and using the It Stops Now website, you agree to be bound by these Terms & Conditions. If you do not agree with any part of these terms, please do not use our services.

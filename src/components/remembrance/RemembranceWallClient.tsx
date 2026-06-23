@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { Flame } from "lucide-react";
 import type { MemorialSummary } from "@/lib/memorial/types";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
+import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import WallMemorialHero from "@/components/remembrance/wall/WallMemorialHero";
 import WallStatsRibbon from "@/components/remembrance/wall/WallStatsRibbon";
@@ -130,7 +131,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
       />
 
       <CampaignSection variant="deep" noPadding className="pb-10 sm:pb-14 lg:pb-20">
-        <div className="w-full max-w-[1600px] mx-auto px-6 lg:px-16 pt-8 sm:pt-10 lg:pt-14">
+        <div className={`${PAGE_CONTENT_CONTAINER} pt-8 sm:pt-10 lg:pt-14`}>
           <header className="mb-5 sm:mb-6">
             <div className="flex items-center gap-3 mb-3 sm:mb-4">
               <div className="w-10 h-[2px] bg-[#1877F2]" aria-hidden />

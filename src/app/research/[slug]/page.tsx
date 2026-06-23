@@ -4,7 +4,7 @@ import { use, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Download, FileText, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PAGE_HERO_CONTAINER, PAGE_HERO_SECTION_PT } from "@/components/layout/PageHero";
+import { PAGE_HERO_CONTAINER, PAGE_HERO_SECTION_PT, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import ResearchViewerModal from "@/components/research/ResearchViewerModal";
 import { getResearchBySlug } from "@/lib/research/data";
 import { downloadResearchPdf } from "@/lib/research/utils";
@@ -73,7 +73,8 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
       </section>
 
       <article className="flex-1 bg-[#f4f5f7] text-[#010B19]">
-        <div className="w-full px-5 sm:px-6 lg:px-16 py-8 sm:py-12 max-w-[760px] mx-auto">
+        <div className={`${PAGE_CONTENT_CONTAINER} py-8 sm:py-12`}>
+          <div className="max-w-[760px]">
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-10 pb-8 border-b border-slate-200">
             {report.hasPdf ? (
               <>
@@ -189,6 +190,7 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
               </Button>
             </Link>
           </section>
+          </div>
         </div>
       </article>
 
