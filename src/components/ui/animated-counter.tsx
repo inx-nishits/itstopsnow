@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useInView, animate } from "framer-motion";
+import { useInView, animate, useReducedMotion } from "framer-motion";
 
 interface AnimatedCounterProps {
   /** Animate from this value (default: 0) */
@@ -31,14 +31,26 @@ export function AnimatedCounter({
 }: AnimatedCounterProps) {
   const nodeRef = useRef<HTMLSpanElement>(null);
   const isInView = useInView(nodeRef, { once: true, margin: "-100px" });
+  const prefersReducedMotion = useReducedMotion();
 
   const target = to ?? value ?? 0;
 
   useEffect(() => {
-    if (isInView) {
-      const node = nodeRef.current;
-      if (node) {
-        const controls = animate(from, target, {
+    if (!isInView) return;
+    const node = nodeRef.current;
+    if (!node) return;
+
+    const formattedStatic = () => {
+      const formatted = isFloat ? target.toFixed(1) : Math.round(target).toLocaleString();
+      node.textContent = `${prefix}${formatted}${suffix}`;
+    };
+
+    if (prefersReducedMotion) {
+      formattedStatic();
+      return;
+    }
+
+    const controls = animate(from, target, {
           duration,
           ease: "easeOut",
           onUpdate(v) {
@@ -47,9 +59,7 @@ export function AnimatedCounter({
           },
         });
         return () => controls.stop();
-      }
-    }
-  }, [isInView, from, target, duration, prefix, suffix, isFloat]);
+  }, [isInView, from, target, duration, prefix, suffix, isFloat, prefersReducedMotion]);
 
   return (
     <span ref={nodeRef}>

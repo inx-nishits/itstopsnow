@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-label="It Stops Now">
+  <rect width="180" height="180" rx="40" fill="#010B19"/>
+  <rect x="50" y="44" width="22" height="92" rx="4" fill="white"/>
+  <rect x="108" y="44" width="22" height="92" rx="4" fill="white"/>
+  <rect x="34" y="134" width="112" height="16" rx="8" fill="#1877F2"/>
+</svg>

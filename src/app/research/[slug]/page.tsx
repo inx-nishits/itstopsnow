@@ -2,7 +2,7 @@
 
 import { use, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Download, FileText, Share2 } from "lucide-react";
+import { ArrowLeft, Download, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PAGE_HERO_CONTAINER, PAGE_HERO_SECTION_PT, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import ResearchViewerModal from "@/components/research/ResearchViewerModal";
@@ -106,20 +106,6 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
                 Read Research Story
               </Button>
             )}
-            <Button
-              type="button"
-              variant="outline"
-              className="min-h-[48px] border-slate-300 text-slate-700 hover:bg-white"
-              onClick={() =>
-                window.open(
-                  `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
-                  "_blank"
-                )
-              }
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              Share
-            </Button>
           </div>
 
           <section className="mb-10">

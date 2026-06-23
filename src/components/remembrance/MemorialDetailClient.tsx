@@ -19,9 +19,10 @@ import {
   type MemorialSectionId,
 } from "@/components/remembrance/MemorialSectionNav";
 import MemorialModal from "@/components/remembrance/MemorialModal";
+import MemorialMobileDock from "@/components/remembrance/MemorialMobileDock";
+import TributeCarousel from "@/components/remembrance/TributeCarousel";
 import { MemorialShareActions } from "@/components/remembrance/MemorialShareActions";
 import { useCandleRitual } from "@/components/remembrance/useCandleRitual";
-import { generateBookOfCondolencePDF } from "@/components/remembrance/BookOfCondolencePDF";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
 import { validateEmail, simulateSubmit } from "@/lib/mock/utils";
@@ -57,7 +58,6 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
   const [isCopied, setIsCopied] = useState(false);
   const [isSubmittingTribute, setIsSubmittingTribute] = useState(false);
   const [tributeSuccess, setTributeSuccess] = useState(false);
-  const [pdfLoading, setPdfLoading] = useState(false);
   const [activeSection, setActiveSection] = useState<MemorialSectionId>("story");
 
   const sectionRefs = useRef<Record<MemorialSectionId, HTMLElement | null>>({
@@ -142,39 +142,6 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const handleDownloadPdf = useCallback(async () => {
-    setPdfLoading(true);
-    try {
-      const pdfTributes = tributes.map((t) => ({
-        message: t.text,
-        authorName: t.name,
-        relationship: t.relationship,
-      }));
-      const blob = await generateBookOfCondolencePDF(
-        {
-          name: memorial.name,
-          rank: memorial.rank,
-          force: memorial.force,
-          yearsServed: memorial.yearsServed,
-          biography: memorial.biography,
-          quote: memorial.quote,
-          candleCount,
-        },
-        pdfTributes
-      );
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `book-of-condolence-${memorial.name.replace(/\s+/g, "-").toLowerCase()}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      console.error("PDF generation failed", e);
-    } finally {
-      setPdfLoading(false);
-    }
-  }, [memorial, tributes, candleCount]);
-
   return (
     <div className="flex flex-col min-h-screen font-sans bg-[#f4f5f7]">
       <MemorialProfileHeader
@@ -194,13 +161,11 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
         onLightCandle={lightCandle}
         onLeaveTribute={() => setIsTributeFormOpen(true)}
         onShare={() => setIsShareOpen(true)}
-        onDownloadPdf={handleDownloadPdf}
-        pdfLoading={pdfLoading}
         isLit={isLit}
         candleLoading={candleLoading}
       />
 
-      <main className={`${PAGE_CONTENT_CONTAINER} pb-16 pt-6 sm:pt-8`}>
+      <main className={`${PAGE_CONTENT_CONTAINER} pb-28 lg:pb-16 pt-6 sm:pt-8`}>
         <div className="sticky top-[9.25rem] md:top-[10.25rem] z-30 -mx-6 px-6 lg:-mx-16 lg:px-16 py-3 mb-8 sm:mb-10 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200">
           <MemorialSectionTabs
             activeSection={activeSection}
@@ -324,28 +289,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
           </div>
 
           {tributes.length > 0 ? (
-            <div className="relative -mx-6 px-6 lg:mx-0 lg:px-0">
-              <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                {tributes.map((tribute, i) => (
-                  <div key={`${tribute.name}-${i}`} className="snap-start shrink-0 w-[85vw] sm:w-[340px]">
-                    <article className="p-5 h-full flex flex-col rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                      <p className="text-[15px] text-slate-600 leading-relaxed mb-6 flex-1">&ldquo;{tribute.text}&rdquo;</p>
-                      <div className="flex items-center gap-3 mt-auto pt-4 border-t border-slate-100">
-                        <div className="w-10 h-10 shrink-0 rounded-full bg-[#1877F2]/10 flex items-center justify-center text-sm font-bold text-[#1877F2]">
-                          {tribute.name.charAt(0)}
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold text-[#010B19] truncate">{tribute.name}</p>
-                          <p className="text-[11px] text-slate-500 truncate">
-                            {tribute.relationship ? `${tribute.relationship} · ` : ""}{tribute.timeAgo}
-                          </p>
-                        </div>
-                      </div>
-                    </article>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <TributeCarousel tributes={tributes} />
           ) : (
             <div className="text-center py-10 px-4 rounded-xl bg-[#f4f5f7] border border-dashed border-slate-200">
               <p className="text-sm text-slate-500 mb-4">No tributes yet.</p>
@@ -371,11 +315,6 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
           memorialName={memorial.name}
           isCopied={isCopied}
           onCopy={handleCopyLink}
-          onDownloadPdf={() => {
-            handleDownloadPdf();
-            setIsShareOpen(false);
-          }}
-          pdfLoading={pdfLoading}
         />
       </MemorialModal>
 
@@ -409,6 +348,14 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
             setTributeSuccess(true);
           });
         }}
+      />
+
+      <MemorialMobileDock
+        isLit={isLit}
+        loading={candleLoading}
+        onLightCandle={lightCandle}
+        onLeaveTribute={() => setIsTributeFormOpen(true)}
+        onShare={() => setIsShareOpen(true)}
       />
     </div>
   );

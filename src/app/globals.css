@@ -50,6 +50,10 @@
 :root {
   --background: #ffffff;
   --foreground: #020817;
+  --motion-duration-fast: 200ms;
+  --motion-duration-base: 550ms;
+  --motion-duration-slow: 700ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card: #f8fafc;
   --card-foreground: #0f172a;
   --popover: #ffffff;
@@ -181,11 +185,57 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
   .hero-marquee-track {
     animation: none;
     width: 100%;
     justify-content: space-around;
   }
+}
+
+.skip-link {
+  position: absolute;
+  left: max(1rem, env(safe-area-inset-left));
+  top: max(1rem, env(safe-area-inset-top));
+  z-index: 200;
+  transform: translateY(-200%);
+  border-radius: 9999px;
+  background: #1877f2;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.75rem 1.25rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(24, 119, 242, 0.35);
+  transition: transform 150ms var(--motion-ease);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.safe-area-modal {
+  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-left: max(1rem, env(safe-area-inset-left));
+}
+
+.text-on-dark-muted {
+  color: #cbd5e1;
 }
 
 /* Hybrid theme: Editorial (light reading) + Campaign (dark) + Memorial (warm dark) */

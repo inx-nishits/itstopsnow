@@ -9,7 +9,6 @@ import { hybrid } from "@/lib/theme/hybrid";
 import WallMemorialHero from "@/components/remembrance/wall/WallMemorialHero";
 import WallStatsRibbon from "@/components/remembrance/wall/WallStatsRibbon";
 import WallSearchControls from "@/components/remembrance/wall/WallSearchControls";
-import WallFilterBottomSheet from "@/components/remembrance/wall/WallFilterBottomSheet";
 import MemorialWallTile from "@/components/remembrance/wall/MemorialWallTile";
 import { Pagination } from "@/components/ui/Pagination";
 
@@ -28,53 +27,22 @@ interface RemembranceWallClientProps {
 
 export default function RemembranceWallClient({ memorials, wallStats }: RemembranceWallClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedForce, setSelectedForce] = useState("All");
-  const [selectedRole, setSelectedRole] = useState("All");
-  const [selectedRegion, setSelectedRegion] = useState("All");
-  const [selectedYear, setSelectedYear] = useState("All");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 24;
 
-  const forceOptions = useMemo(
-    () => [...new Set(memorials.map((m) => m.force))].sort(),
-    [memorials]
-  );
+  const hasActiveSort = sortBy !== "All";
 
-  const hasActiveFilters =
-    selectedForce !== "All" ||
-    selectedRole !== "All" ||
-    selectedRegion !== "All" ||
-    selectedYear !== "All" ||
-    sortBy !== "All";
-
-  const clearFilters = () => {
-    setSelectedForce("All");
-    setSelectedRole("All");
-    setSelectedRegion("All");
-    setSelectedYear("All");
-    setSortBy("All");
-  };
+  const clearSort = () => setSortBy("All");
 
   const filteredOfficers = useMemo(() => {
     return memorials.filter((officer) => {
       const matchesSearch =
         officer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         officer.force.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesForce = selectedForce === "All" || officer.force === selectedForce;
-      const matchesRole =
-        selectedRole === "All" ||
-        (selectedRole === "PC" && officer.rank.includes("(PC)")) ||
-        (selectedRole === "PCSO" && officer.rank === "PCSO") ||
-        (selectedRole === "DC" && officer.rank.includes("(DC)"));
-      const matchesRegion = selectedRegion === "All" || officer.region === selectedRegion;
-      const endYear = officer.yearsServed.split("–")[1]?.trim() || "";
-      const matchesYear = selectedYear === "All" || endYear === selectedYear;
-      return matchesSearch && matchesForce && matchesRole && matchesRegion && matchesYear;
+      return matchesSearch;
     });
-  }, [memorials, searchQuery, selectedForce, selectedRole, selectedRegion, selectedYear]);
+  }, [memorials, searchQuery]);
 
   const sortedOfficers = useMemo(() => {
     const list = [...filteredOfficers];
@@ -91,29 +59,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, selectedForce, selectedRole, selectedRegion, selectedYear, sortBy]);
-
-  const searchProps = {
-    searchQuery,
-    onSearchChange: setSearchQuery,
-    isFilterOpen,
-    onToggleFilters: () => setIsFilterOpen((o) => !o),
-    onOpenMobileFilters: () => setIsMobileFilterOpen(true),
-    selectedForce,
-    onForceChange: setSelectedForce,
-    selectedRole,
-    onRoleChange: setSelectedRole,
-    selectedRegion,
-    onRegionChange: setSelectedRegion,
-    selectedYear,
-    onYearChange: setSelectedYear,
-    sortBy,
-    onSortChange: setSortBy,
-    forceOptions,
-    resultCount: sortedOfficers.length,
-    hasActiveFilters,
-    onClearFilters: clearFilters,
-  };
+  }, [searchQuery, sortBy]);
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
@@ -146,12 +92,21 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
           </header>
 
           <div className="sticky top-20 md:top-24 z-40 -mx-6 px-6 lg:-mx-16 lg:px-16 py-3 mb-5 sm:mb-6 bg-[#050A14]/95 backdrop-blur-xl">
-            <WallSearchControls {...searchProps} variant="campaign" />
+            <WallSearchControls
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              resultCount={sortedOfficers.length}
+              hasActiveSort={hasActiveSort}
+              onClearSort={clearSort}
+              variant="campaign"
+            />
           </div>
 
           {sortedOfficers.length > 0 ? (
             <div
-              className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-[2px] rounded-sm overflow-hidden border border-white/10"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-[2px] rounded-sm overflow-hidden border border-white/10"
               role="list"
               aria-label="Memorial portraits"
             >
@@ -175,7 +130,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
                 type="button"
                 onClick={() => {
                   setSearchQuery("");
-                  clearFilters();
+                  clearSort();
                 }}
                 className="inline-flex min-h-[48px] items-center px-8 rounded-full bg-[#1877F2] hover:bg-[#1877F2]/90 text-white text-sm font-semibold transition-colors"
               >
@@ -207,25 +162,6 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
           </p>
         </div>
       </EditorialSection>
-
-      <WallFilterBottomSheet
-        open={isMobileFilterOpen}
-        onClose={() => setIsMobileFilterOpen(false)}
-        selectedForce={selectedForce}
-        onForceChange={setSelectedForce}
-        selectedRole={selectedRole}
-        onRoleChange={setSelectedRole}
-        selectedRegion={selectedRegion}
-        onRegionChange={setSelectedRegion}
-        selectedYear={selectedYear}
-        onYearChange={setSelectedYear}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        forceOptions={forceOptions}
-        hasActiveFilters={hasActiveFilters}
-        onClearFilters={clearFilters}
-        onApply={() => undefined}
-      />
     </div>
   );
 }

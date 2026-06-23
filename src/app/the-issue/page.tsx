@@ -2,12 +2,12 @@
 
 import { motion, useInView, animate } from "framer-motion";
 import { ShieldAlert, HeartPulse, Clock, SearchX, Briefcase, CheckCircle, ArrowRight, AlertTriangle, Scale, Activity } from "lucide-react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import GetInvolvedModal from "@/components/global/GetInvolvedModal";
 
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isFloat = false }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string, isFloat?: boolean }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -34,6 +34,8 @@ function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isF
 }
 
 export default function TheIssuePage() {
+  const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen font-sans pb-12 lg:pb-24">
 
@@ -251,15 +253,22 @@ export default function TheIssuePage() {
               </ul>
             </div>
             <div className="shrink-0 w-full md:w-auto">
-              <Link href="/take-action" className="block">
-                <Button className="w-full md:w-auto bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-[0.2em] text-xs px-12 py-8 rounded-full shadow-xl transition-all">
-                  Get Involved Now
-                </Button>
-              </Link>
+              <Button
+                type="button"
+                onClick={() => setIsGetInvolvedOpen(true)}
+                className="w-full md:w-auto bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-[0.2em] text-xs px-12 py-8 rounded-full shadow-xl transition-all"
+              >
+                Get Involved Now
+              </Button>
             </div>
           </div>
         </div>
       </CampaignSection>
+
+      <GetInvolvedModal
+        isOpen={isGetInvolvedOpen}
+        onClose={() => setIsGetInvolvedOpen(false)}
+      />
 
     </div>
   );

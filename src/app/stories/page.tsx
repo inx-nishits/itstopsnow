@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Filter, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check } from "lucide-react";
+import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
@@ -128,10 +128,18 @@ We spent two years in financial terror, wondering if we would lose our home. She
   }
 ];
 
+type StorySort = "newest" | "oldest" | "title-az";
+
+function parseStoryDate(dateStr: string): number {
+  const parsed = Date.parse(dateStr);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
 function StoriesPageContent() {
   const searchParams = useSearchParams();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<StorySort>("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -164,13 +172,22 @@ function StoriesPageContent() {
     return matchesSearch && matchesType;
   });
 
-  const totalPages = Math.ceil(filteredStories.length / itemsPerPage);
-  const paginatedStories = filteredStories.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const sortedStories = [...filteredStories].sort((a, b) => {
+    if (sortBy === "title-az") {
+      return a.title.localeCompare(b.title);
+    }
+    const dateA = parseStoryDate(a.date);
+    const dateB = parseStoryDate(b.date);
+    return sortBy === "newest" ? dateB - dateA : dateA - dateB;
+  });
 
-  // Reset to page 1 when search or filter changes
+  const totalPages = Math.ceil(sortedStories.length / itemsPerPage);
+  const paginatedStories = sortedStories.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  // Reset to page 1 when search, filter, or sort changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, activeFilter]);
+  }, [searchTerm, activeFilter, sortBy]);
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
@@ -229,9 +246,18 @@ function StoriesPageContent() {
                   className={cn("w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors", hybrid.editorialInput)} 
                 />
               </div>
-              <Button variant="outline" className={cn("h-[48px] px-8 rounded-full flex items-center font-bold text-[10px] uppercase tracking-widest transition-colors", hybrid.editorialChip)}>
-                <Filter className="w-4 h-4 mr-2" /> Sort
-              </Button>
+              <label className="sr-only" htmlFor="stories-sort">Sort stories</label>
+              <select
+                id="stories-sort"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as StorySort)}
+                className={cn("h-[48px] px-4 pr-10 rounded-full font-bold text-[10px] uppercase tracking-widest transition-colors appearance-none cursor-pointer", hybrid.editorialChip)}
+                aria-label="Sort stories"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="title-az">Title A–Z</option>
+              </select>
             </div>
           </div>
         </div>
@@ -242,10 +268,10 @@ function StoriesPageContent() {
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className={cn("flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b pb-8 mb-10 sm:mb-16", hybrid.editorialBorder)}>
             <h2 className={cn("font-sans text-3xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>LATEST STORIES</h2>
-            <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {filteredStories.length} stories</div>
+            <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {sortedStories.length} stories</div>
           </div>
 
-          {filteredStories.length === 0 ? (
+          {sortedStories.length === 0 ? (
             <div className={cn("text-center py-10 lg:py-20 rounded-3xl", hybrid.editorialCard)}>
               <Search className="w-12 h-12 mx-auto mb-4 text-slate-300" />
               <p className={cn("font-bold uppercase tracking-widest text-sm", hybrid.editorialMuted)}>No stories found matching your search.</p>
@@ -295,40 +321,12 @@ function StoriesPageContent() {
             </div>
           )}
 
-          {totalPages > 1 && (
-            <div className={cn("flex flex-wrap justify-center items-center gap-2 sm:gap-3 mt-8 lg:mt-16 lg:mt-24 pt-10 border-t", hybrid.editorialBorder)}>
-              <Button 
-                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                disabled={currentPage === 1}
-                variant="outline" 
-                className={cn("w-12 h-12 p-0 rounded-full", hybrid.editorialChip, currentPage === 1 && "opacity-50 cursor-not-allowed")}
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </Button>
-              
-              {Array.from({ length: totalPages }).map((_, idx) => (
-                <Button 
-                  key={idx}
-                  onClick={() => setCurrentPage(idx + 1)}
-                  className={cn(
-                    "w-12 h-12 p-0 rounded-full font-bold text-sm transition-colors",
-                    currentPage === idx + 1 ? hybrid.editorialChipActive : hybrid.editorialChip
-                  )}
-                >
-                  {idx + 1}
-                </Button>
-              ))}
-
-              <Button 
-                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                disabled={currentPage === totalPages}
-                variant="outline" 
-                className={cn("w-12 h-12 p-0 rounded-full", hybrid.editorialChip, currentPage === totalPages && "opacity-50 cursor-not-allowed")}
-              >
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-          )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.max(1, totalPages)}
+            onPageChange={setCurrentPage}
+            className={cn("mt-8 lg:mt-16 pt-10 border-t", hybrid.editorialBorder)}
+          />
         </div>
       </EditorialSection>
 

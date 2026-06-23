@@ -5,8 +5,9 @@ import Link from "next/link";
 import { ChevronRight, Calendar, Clock, ArrowLeft } from "lucide-react";
 import { EditorialSection } from "@/components/layout/PageSection";
 import { ArticleHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
-import { hybrid } from "@/lib/theme/hybrid";
 import { ShareButtons } from "@/components/ui/ShareButtons";
+import RichArticleBody from "@/components/editorial/RichArticleBody";
+import { buildStoryRichBlocks } from "@/lib/editorial/demoRichContent";
 import { STORIES } from "../page";
 
 export default function StoryDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -16,6 +17,11 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
   const story = useMemo(
     () => STORIES.find((s) => s.id === storyId) ?? STORIES[0],
     [storyId]
+  );
+
+  const richBlocks = useMemo(
+    () => buildStoryRichBlocks(story.fullContent.split("\n\n"), story.id),
+    [story.fullContent, story.id]
   );
 
   return (
@@ -58,15 +64,11 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
         <div className={`${PAGE_CONTENT_CONTAINER} py-8 lg:py-16`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             <div className="lg:col-span-8">
-              <div className="prose prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-headings:text-[#010B19] prose-a:text-[#1877F2] prose-p:text-slate-600 prose-p:leading-relaxed">
-                {story.fullContent.split("\n\n").map((paragraph, idx) => (
-                  <p key={idx}>{paragraph}</p>
-                ))}
-              </div>
+              <RichArticleBody blocks={richBlocks} />
 
               <div className="mt-12 p-6 rounded-2xl bg-[#f4f5f7] border border-slate-200">
                 <p className="text-sm text-slate-600 mb-4">
-                  This story is part of our lived-experience archive. Rich media embeds (YouTube, linked images) will appear here when connected to the CMS.
+                  Your story could save a life. Share your lived experience with the campaign.
                 </p>
                 <Link
                   href="/stories?submit=1"
@@ -78,7 +80,7 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
             </div>
 
             <div className="lg:col-span-4">
-              <div className={`${hybrid.editorialCard} p-6 sm:p-8 sticky top-32`}>
+              <div className="sticky top-32 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
                 <ShareButtons title={story.title} variant="editorial" />
               </div>
             </div>

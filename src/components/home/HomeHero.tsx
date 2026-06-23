@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -14,9 +14,8 @@ const HERO_IMAGE = "/Banner-Image.png";
 const HERO_IMAGE_ALT =
   "Police officer standing before a candle memorial outside the Palace of Westminster";
 
-/** Mobile — officers facing camera; clear human presence for narrow screens */
-const MOBILE_HERO_IMAGE = "/images/mission-support.png";
-const MOBILE_HERO_IMAGE_ALT = "UK police officers standing together in service";
+/** Mobile crop — same memorial asset; officer, candles, and Westminster skyline */
+const MOBILE_HERO_OBJECT_POSITION = "object-[58%_76%]";
 
 const MARQUEE_ITEMS = [
   "DIGNITY",
@@ -78,6 +77,9 @@ function CampaignMarquee({ className }: { className?: string }) {
   );
 }
 
+const HERO_SECONDARY_CTA =
+  "inline-flex items-center justify-center gap-2 w-full min-h-[52px] lg:min-h-[54px] px-6 rounded-full text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer";
+
 function PrimaryCta({ className, compact, onClick }: { className?: string; compact?: boolean; onClick?: () => void }) {
   const content = (
     <span
@@ -135,20 +137,25 @@ function MobileHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetIn
         HEADER_OFFSET
       )}
     >
-      {/* Photo stage — diagonal cut, faces unobstructed */}
+      {/* Photo stage — diagonal cut; memorial crop (officer + candles + Westminster) */}
       <div
-        className="relative flex-none h-[22dvh] min-h-[148px] max-h-[200px] w-full overflow-hidden"
+        className="relative flex-none h-[26dvh] min-h-[160px] max-h-[220px] w-full overflow-hidden"
         style={{ clipPath: "polygon(0 0, 100% 0, 100% 86%, 0 100%)" }}
       >
         <Image
-          src={MOBILE_HERO_IMAGE}
-          alt={MOBILE_HERO_IMAGE_ALT}
+          src={HERO_IMAGE}
+          alt={HERO_IMAGE_ALT}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[50%_8%] scale-[1.1] brightness-[1.08] contrast-[1.06]"
+          className={cn(
+            "object-cover min-w-full min-h-full scale-[1.22] brightness-[1.06] contrast-[1.06]",
+            MOBILE_HERO_OBJECT_POSITION
+          )}
         />
-        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#050A14]/75 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#050A14]/80 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#050A14]/90 via-[#050A14]/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050A14]/55 via-transparent to-[#050A14]/25 pointer-events-none" />
 
         {/* Campaign poster accents */}
         <div
@@ -205,23 +212,12 @@ function MobileHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetIn
 
             <div className="flex flex-col gap-2.5 pb-1">
               <PrimaryCta className="w-full" compact onClick={onGetInvolvedClick} />
-              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 pt-1 text-center">
-                <Link
-                  href="/stories"
-                  className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 hover:text-[#1877F2] transition-colors underline-offset-[3px] hover:underline group"
-                >
+              <div className="grid grid-cols-1 gap-2.5">
+                <Link href="/stories" className={HERO_SECONDARY_CTA}>
                   Read Stories
-                  <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
                 </Link>
-                <span className="text-white/20 select-none" aria-hidden>
-                  ·
-                </span>
-                <Link
-                  href="/remembrance"
-                  className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 hover:text-[#1877F2] transition-colors underline-offset-[3px] hover:underline group"
-                >
+                <Link href="/remembrance" className={HERO_SECONDARY_CTA}>
                   View Roll of Honour
-                  <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
                 </Link>
               </div>
             </div>
@@ -282,16 +278,10 @@ function DesktopHero({ animate, onGetInvolvedClick }: { animate: boolean; onGetI
 
             <div className="flex flex-wrap items-center gap-3 mb-5">
               <PrimaryCta className="w-auto min-w-[240px] shrink-0" onClick={onGetInvolvedClick} />
-              <Link
-                href="/stories"
-                className="inline-flex items-center justify-center gap-2 min-h-[50px] px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
-              >
+              <Link href="/stories" className={cn(HERO_SECONDARY_CTA, "w-auto shrink-0")}>
                 Read Stories
               </Link>
-              <Link
-                href="/remembrance"
-                className="inline-flex items-center justify-center gap-2 min-h-[50px] px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 border border-white/15 hover:border-white/30 hover:text-white transition-colors cursor-pointer"
-              >
+              <Link href="/remembrance" className={cn(HERO_SECONDARY_CTA, "w-auto shrink-0")}>
                 View Roll of Honour
               </Link>
             </div>

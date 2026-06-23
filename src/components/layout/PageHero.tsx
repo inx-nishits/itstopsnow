@@ -18,6 +18,10 @@ export const PAGE_HERO_DESCRIPTION =
   "text-base md:text-lg xl:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl drop-shadow";
 export const PAGE_HERO_SECTION_PT = "pt-28 md:pt-32";
 
+/** Clears fixed site header (h-20 / h-24) plus safe-area — subpages without full PageHero */
+export const PAGE_BELOW_HEADER_PT =
+  "pt-[max(7rem,calc(env(safe-area-inset-top)+5rem))] md:pt-[max(8rem,calc(env(safe-area-inset-top)+6rem))]";
+
 export type PageHeroVariant = "campaign" | "utility";
 
 const variantLayout: Record<PageHeroVariant, string> = {

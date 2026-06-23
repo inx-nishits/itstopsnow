@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionReveal from "@/components/home/SectionReveal";
@@ -32,13 +32,14 @@ const FOUNDERS = [
 
 export function FounderCard({ member }: { member: (typeof FOUNDERS)[number] }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <div className="relative w-full max-w-[340px] mx-auto lg:max-w-none aspect-[4/5] sm:aspect-[3/4] min-h-0 sm:min-h-[400px] lg:min-h-[500px] [perspective:1000px] group lg:w-full">
       <motion.div
         className="w-full h-full relative [transform-style:preserve-3d] transition-all duration-700"
         animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
+        transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
       >
         {/* Front */}
         <div

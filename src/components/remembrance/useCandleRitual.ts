@@ -102,7 +102,11 @@ export function useCandleRitual({ memorialId, storageKey, initialCount }: UseCan
   );
 
   const lightCandle = useCallback(async () => {
-    if (isLit || loading || isAnimating) return;
+    if (loading || isAnimating) return;
+    if (isLit) {
+      setMessage("You have already lit a candle here.");
+      return;
+    }
     setLoading(true);
     setMessage("");
 

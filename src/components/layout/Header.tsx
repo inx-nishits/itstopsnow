@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { useModalA11y } from "@/hooks/useModalA11y";
+import { modalBackdropMotion, modalPanelMotion } from "@/lib/theme/motion";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -20,6 +22,8 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const prefersReducedMotion = useReducedMotion();
+  const setMobileMenuRef = useModalA11y(mobileMenuOpen, () => setMobileMenuOpen(false));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +41,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-[env(safe-area-inset-top)] ${isScrolled
             ? "bg-[#030712]/80 backdrop-blur-2xl border-b border-white/10 shadow-2xl"
             : "bg-transparent border-b border-transparent"
           }`}
@@ -54,7 +58,7 @@ export default function Header() {
           </Link>
 
           {/* DESKTOP NAV (Centered) */}
-          <nav className="hidden lg:flex items-center gap-3 xl:gap-4 absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-4 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
               return (
@@ -90,10 +94,14 @@ export default function Header() {
 
           {/* MOBILE TOGGLE */}
           <button
-            className="lg:hidden text-white p-2 -mr-2 relative z-[60] bg-black/20 rounded-lg backdrop-blur-sm shadow-sm min-w-[48px] min-h-[48px] flex items-center justify-center cursor-pointer"
+            type="button"
+            className="lg:hidden text-white p-2 -mr-2 relative z-[60] bg-black/20 rounded-lg backdrop-blur-sm shadow-sm min-w-[48px] min-h-[48px] flex items-center justify-center cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
             onClick={() => setMobileMenuOpen(true)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label="Open menu"
           >
-            <Menu className="w-7 h-7" />
+            <Menu className="w-7 h-7" aria-hidden />
           </button>
         </div>
       </header>
@@ -102,21 +110,25 @@ export default function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] bg-[#030712]/95 backdrop-blur-3xl flex flex-col"
+            ref={setMobileMenuRef}
+            id="mobile-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            {...modalPanelMotion(prefersReducedMotion)}
+            className="fixed inset-0 z-[60] bg-[#030712]/95 backdrop-blur-3xl flex flex-col safe-area-modal"
           >
             <div className="flex items-center justify-between px-6 h-20 md:h-24 border-b border-white/10">
               <Link href="/" className="flex items-center">
                 <img src="/ISN-Logo.svg" alt="It Stops Now Logo" className="h-8 w-auto" />
               </Link>
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-slate-400 hover:text-white p-2 -mr-2 min-w-[48px] min-h-[48px] flex items-center justify-center cursor-pointer"
+                className="text-slate-400 hover:text-white p-2 -mr-2 min-w-[48px] min-h-[48px] flex items-center justify-center cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
+                aria-label="Close menu"
               >
-                <X className="w-7 h-7" />
+                <X className="w-7 h-7" aria-hidden />
               </button>
             </div>
 

@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Flame } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { colourRestorationLabel } from "@/lib/candleGrayscale";
-import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
+import { Button } from "@/components/ui/button";
+import CandleOverlay from "@/components/remembrance/CandleOverlay";
+import { PAGE_BELOW_HEADER_PT, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 
 function formatName(name: string): string {
@@ -51,19 +52,33 @@ export default function MemorialProfileHeader({
   warmGlowOpacity,
   onLightCandle,
 }: MemorialProfileHeaderProps) {
+  const router = useRouter();
   const displayName = formatName(officer.name);
-  const restorationHint = colourRestorationLabel(candleCount);
+
+  const handleBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+      return;
+    }
+    router.push("/remembrance");
+  };
 
   return (
-    <header className="w-full bg-[#050A14] text-white pt-[max(4.5rem,env(safe-area-inset-top)+3.25rem)] pb-8 sm:pb-10 border-b border-white/10">
+    <header
+      className={cn(
+        "relative z-20 w-full bg-[#050A14] text-white pb-8 sm:pb-10 border-b border-white/10",
+        PAGE_BELOW_HEADER_PT
+      )}
+    >
       <div className={PAGE_CONTENT_CONTAINER}>
-        <Link
-          href="/remembrance"
-          className="inline-flex items-center gap-1.5 min-h-[40px] text-slate-400 hover:text-white text-xs font-semibold uppercase tracking-wider mb-5 sm:mb-6 transition-colors cursor-pointer"
+        <button
+          type="button"
+          onClick={handleBack}
+          className="relative z-20 inline-flex items-center gap-2 min-h-[44px] py-2 -ml-1 pl-1 pr-3 text-slate-400 hover:text-white text-xs font-semibold uppercase tracking-wider mb-5 sm:mb-6 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1877F2]"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
+          <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden />
           Wall of Remembrance
-        </Link>
+        </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,420px)_1fr] xl:grid-cols-[minmax(0,460px)_1fr] gap-8 lg:gap-12 xl:gap-16 items-end">
           {/* Portrait — full frame inside card */}
@@ -91,27 +106,21 @@ export default function MemorialProfileHeader({
 
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#050A14]/95 pointer-events-none" />
 
-            <span className="absolute top-3 left-3 z-10 text-[9px] font-semibold uppercase tracking-wider text-white/90 bg-black/45 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/10">
-              {restorationHint}
-            </span>
-
-            <button
-              type="button"
-              onClick={onLightCandle}
-              disabled={isLit || loading}
-              aria-label={isLit ? "Candle lit" : "Light a candle"}
-              className={cn(
-                "absolute top-3 right-3 z-10 flex items-center gap-1.5 min-h-[36px] px-3 rounded-full backdrop-blur-md border text-[10px] font-bold uppercase tracking-wider transition-all active:scale-95",
-                isLit
-                  ? "bg-amber-500/25 border-amber-400 text-amber-100 shadow-[0_0_20px_rgba(245,158,11,0.35)]"
-                  : "bg-[#1877F2] border-[#1877F2] text-white shadow-[0_4px_16px_rgba(24,119,242,0.45)] hover:bg-[#1565d8]"
+            <div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 flex flex-col items-center gap-1.5">
+              <CandleOverlay
+                isLit={isLit}
+                isLoading={loading}
+                onLight={onLightCandle}
+                disabled={isLit || loading}
+              />
+              {!isLit && !loading && (
+                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/80 pointer-events-none">
+                  Tap to light
+                </p>
               )}
-            >
-              <Flame className={cn("w-3.5 h-3.5", isLit ? "text-amber-300" : "text-amber-200")} />
-              {loading ? "…" : isLit ? "Lit" : "Light"}
-            </button>
+            </div>
 
-            <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-14 bg-gradient-to-t from-[#050A14] via-[#050A14]/88 to-transparent lg:hidden">
+            <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-20 bg-gradient-to-t from-[#050A14] via-[#050A14]/88 to-transparent lg:hidden">
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1877F2] mb-1">{officer.role}</p>
               <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-tight mb-0.5">{displayName}</h1>
               <p className="text-[11px] text-slate-400 uppercase tracking-wide truncate">{officer.force}</p>
@@ -155,6 +164,25 @@ export default function MemorialProfileHeader({
                   <span className="text-lg font-bold text-white tabular-nums">{tributeCount.toLocaleString()}</span>
                   tributes
                 </div>
+              )}
+            </div>
+
+            <div className="mt-4 sm:mt-5">
+              {isLit ? (
+                <div className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-amber-400/40 bg-amber-500/15 px-5 text-[10px] font-bold uppercase tracking-[0.12em] text-amber-100">
+                  <Flame className="h-4 w-4 text-amber-400" aria-hidden />
+                  You lit a candle
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={onLightCandle}
+                  disabled={loading}
+                  className="w-full sm:w-auto min-h-[48px] rounded-full bg-[#1877F2] px-8 text-[10px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_0_24px_rgba(24,119,242,0.35)] hover:bg-[#1565d8] disabled:opacity-60"
+                >
+                  <Flame className="mr-2 h-4 w-4" aria-hidden />
+                  {loading ? "Lighting…" : "Light a candle"}
+                </Button>
               )}
             </div>
 

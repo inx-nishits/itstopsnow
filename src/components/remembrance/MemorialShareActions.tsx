@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Mail, Link as LinkIcon, Download } from "lucide-react";
+import { Mail, Link as LinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { hybrid } from "@/lib/theme/hybrid";
 
@@ -9,16 +9,12 @@ interface MemorialShareActionsProps {
   memorialName: string;
   isCopied: boolean;
   onCopy: () => void;
-  onDownloadPdf: () => void;
-  pdfLoading: boolean;
 }
 
 export function MemorialShareActions({
   memorialName,
   isCopied,
   onCopy,
-  onDownloadPdf,
-  pdfLoading,
 }: MemorialShareActionsProps) {
   const url = typeof window !== "undefined" ? window.location.href : "";
 
@@ -50,13 +46,6 @@ export function MemorialShareActions({
         icon={<LinkIcon className="w-4 h-4" />}
         onClick={onCopy}
         success={isCopied}
-      />
-      <ShareOption
-        label={pdfLoading ? "Generating PDF…" : "Book of condolence PDF"}
-        icon={<Download className="w-4 h-4" />}
-        onClick={onDownloadPdf}
-        disabled={pdfLoading}
-        className="sm:col-span-2"
       />
     </div>
   );

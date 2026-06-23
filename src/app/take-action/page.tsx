@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart, X, RotateCcw, Edit3 } from "lucide-react";
+import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
-import { downloadTextBlob } from "@/lib/mock/utils";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
+import TakeActionStepper from "@/components/take-action/TakeActionStepper";
+import TemplatePreviewModal, { type LetterTemplate } from "@/components/take-action/TemplatePreviewModal";
+import { generatePDF, generateDOCX } from "@/lib/documentGenerator";
+import { downloadBlob } from "@/lib/downloadBlob";
 
 const BENEFITS = [
   {
@@ -106,7 +108,7 @@ export default function TakeActionPage() {
   const [toneFilter, setToneFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Recently Added");
   const [currentPage, setCurrentPage] = useState(1);
-  const [previewTemplate, setPreviewTemplate] = useState<any>(null);
+  const [previewTemplate, setPreviewTemplate] = useState<LetterTemplate | null>(null);
   const [editableContent, setEditableContent] = useState("");
   const itemsPerPage = 3;
 
@@ -160,17 +162,16 @@ export default function TakeActionPage() {
     router.push(`/take-action/personalize?${queryParams.toString()}`);
   };
 
-  const handleDownloadTemplate = (template: (typeof TEMPLATES)[0], format: "pdf" | "docx") => {
-    const mime =
-      format === "pdf"
-        ? "application/pdf"
-        : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+  const handleDownloadTemplate = async (template: LetterTemplate, format: "pdf" | "docx") => {
+    const data = {
+      content: template.content,
+      mpName: "[MP Name]",
+      senderName: "[Your Name]",
+      senderAddress: "[Your Postcode]",
+    };
+    const blob = format === "pdf" ? await generatePDF(data) : await generateDOCX(data);
     const ext = format === "pdf" ? "pdf" : "docx";
-    downloadTextBlob(
-      template.content,
-      `${template.title.replace(/\s+/g, "_")}.${ext}`,
-      mime
-    );
+    downloadBlob(blob, `${template.title.replace(/\s+/g, "_")}.${ext}`);
   };
 
   return (
@@ -268,6 +269,8 @@ export default function TakeActionPage() {
       {/* 4. LIST LETTER TEMPLATES & PERSONALIZATION SIDEBAR */}
       <EditorialSection className="lg:py-32 pb-10 lg:pb-20 lg:pb-48">
         <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+
+          <TakeActionStepper currentStep={1} className="mb-10 lg:mb-14" />
           
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div>
@@ -354,10 +357,10 @@ export default function TakeActionPage() {
                         <Button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} variant="outline" className={`w-full md:w-auto bg-transparent border-slate-300 hover:bg-[#010B19] hover:text-white ${hybrid.editorialHeading} text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl`}>
                           <Search className="w-3.5 h-3.5 mr-2" /> Preview
                         </Button>
-                        <Button onClick={() => handleDownloadTemplate(template, "pdf")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
+                        <Button onClick={() => void handleDownloadTemplate(template, "pdf")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
                           <Download className="w-3.5 h-3.5 mr-2" /> PDF
                         </Button>
-                        <Button onClick={() => handleDownloadTemplate(template, "docx")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
+                        <Button onClick={() => void handleDownloadTemplate(template, "docx")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
                           <Download className="w-3.5 h-3.5 mr-2" /> DOCX
                         </Button>
                       </div>
@@ -477,61 +480,13 @@ export default function TakeActionPage() {
         </div>
       </EditorialSection>
 
-      {/* TEMPLATE PREVIEW MODAL */}
-      <AnimatePresence>
-        {previewTemplate && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }} 
-              onClick={() => setPreviewTemplate(null)} 
-              className="absolute inset-0 bg-[#020611]/95 backdrop-blur-md" 
-            />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }} 
-              animate={{ opacity: 1, scale: 1, y: 0 }} 
-              exit={{ opacity: 0, scale: 0.95, y: 20 }} 
-              className="relative w-full max-w-4xl h-[90vh] bg-[#051024] border border-white/10 rounded-3xl overflow-hidden flex flex-col z-10 shadow-2xl"
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#02050A]">
-                <div>
-                  <h3 className="text-white font-bold tracking-widest uppercase text-sm">Template Preview</h3>
-                  <p className="text-slate-400 text-xs">{previewTemplate.title}</p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  {editableContent !== previewTemplate.content && (
-                    <Button onClick={() => setEditableContent(previewTemplate.content)} variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/10 max-sm:min-h-[48px] px-4 text-[10px] font-bold uppercase tracking-widest transition-all">
-                      <RotateCcw className="w-3.5 h-3.5 mr-2" /> Reset
-                    </Button>
-                  )}
-                  <Button variant="outline" className="bg-transparent border-[#1877F2]/30 text-[#1877F2] hover:bg-[#1877F2] hover:text-white max-sm:min-h-[48px] px-4 text-[10px] font-bold uppercase tracking-widest transition-all">
-                    <Download className="w-3.5 h-3.5 mr-2" /> Download PDF
-                  </Button>
-                  <button onClick={() => setPreviewTemplate(null)} className="min-w-[48px] min-h-[48px] flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors ml-2">
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-              
-              {/* PDF Viewer Area */}
-              <div className="flex-1 overflow-y-auto bg-[#02050A] p-4 md:p-12 flex justify-center items-start border-t border-[#1877F2]/10 shadow-[inset_0_20px_50px_rgba(0,0,0,0.5)]">
-                <div className="bg-white text-slate-900 w-full max-w-[700px] min-h-[900px] p-12 md:p-20 shadow-2xl rounded-sm flex flex-col relative group">
-                  <div className="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                    <Edit3 className="w-3 h-3"/> Editable Template
-                  </div>
-                  <textarea 
-                    value={editableContent}
-                    onChange={(e) => setEditableContent(e.target.value)}
-                    className="font-serif text-sm md:text-base leading-relaxed whitespace-pre-wrap text-justify w-full flex-1 resize-none bg-transparent focus:outline-none focus:ring-2 focus:ring-[#1877F2]/20 rounded-md p-4 -m-4 transition-shadow"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <TemplatePreviewModal
+        template={previewTemplate}
+        content={editableContent}
+        onContentChange={setEditableContent}
+        onClose={() => setPreviewTemplate(null)}
+        onReset={() => previewTemplate && setEditableContent(previewTemplate.content)}
+      />
 
     </div>
   );

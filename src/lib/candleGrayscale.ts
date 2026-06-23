@@ -22,12 +22,3 @@ export function cumulativeGrayscale(candleCount: number): number {
   }
   return 0;
 }
-
-export function colourRestorationLabel(candleCount: number): string {
-  const gray = cumulativeGrayscale(candleCount);
-  if (gray >= 90) return "Portrait awaiting light";
-  if (gray >= 65) return "Colour returning";
-  if (gray >= 35) return "Half remembered in colour";
-  if (gray > 0) return "Almost fully restored";
-  return "Portrait fully restored";
-}

@@ -8,103 +8,12 @@ import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
+import { MOCK_APPS, MOCK_BOOKS, MOCK_PODCASTS } from "@/lib/support/mockData";
+import { Pagination } from "@/components/ui/Pagination";
 
-const MOCK_APPS = [
-  {
-    id: "app1",
-    name: "Headspace for Responders",
-    description: "Guided meditation and mindfulness specifically tailored for the high-stress environment of first responders.",
-    category: "Mental Health",
-    badge: "Most Popular",
-    rating: 4.8,
-    reviews: 1240,
-    logo: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=400&auto=format&fit=crop",
-    link: "https://www.headspace.com"
-  },
-  {
-    id: "app2",
-    name: "Pocket Sergeant",
-    description: "The essential app created by police, for police. Includes wellbeing resources alongside operational guidance.",
-    category: "Wellbeing & Operational",
-    badge: "Official Supporter",
-    rating: 4.9,
-    reviews: 50000,
-    logo: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=400&auto=format&fit=crop",
-    link: "https://pocketsergeant.co.uk"
-  },
-  {
-    id: "app3",
-    name: "Calm",
-    description: "Helps you manage stress, sleep better, and live a happier, healthier life with guided meditations and sleep stories.",
-    category: "Sleep & Anxiety",
-    badge: "Staff Pick",
-    rating: 4.7,
-    reviews: 3200,
-    logo: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=400&auto=format&fit=crop",
-    link: "https://www.calm.com"
-  }
-];
-
-const MOCK_BOOKS = [
-  {
-    id: "book1",
-    title: "Emotional Survival for Law Enforcement",
-    author: "Dr. Kevin M. Gilmartin",
-    description: "The definitive guide on the psychological toll of police work and how to protect your personal life and mental health.",
-    category: "Psychology",
-    recommendedBy: "Police Federation Wellbeing Lead",
-    cover: "https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=800&auto=format&fit=crop",
-    link: "https://www.amazon.com/dp/0971725403"
-  },
-  {
-    id: "book2",
-    title: "Trauma Stewardship",
-    author: "Laura van Dernoot Lipsky",
-    description: "An everyday guide to caring for self while caring for others, perfect for front-line public service workers.",
-    category: "Self-Care",
-    recommendedBy: "Mental Health Specialists",
-    cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop",
-    link: "https://www.amazon.com"
-  },
-  {
-    id: "book3",
-    title: "The Body Keeps the Score",
-    author: "Bessel van der Kolk",
-    description: "Brain, mind, and body in the healing of trauma. A fundamental read for understanding PTSD.",
-    category: "Medical & Trauma",
-    recommendedBy: "IOPC Reform Coalition",
-    cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
-    link: "https://www.amazon.com"
-  }
-];
-
-const MOCK_PODCASTS = [
-  {
-    id: "pod1",
-    title: "The Pocket Sergeant Podcast",
-    description: "Real conversations with serving and retired officers about trauma, investigations, and finding a path forward.",
-    topic: "Wellbeing & Law",
-    logo: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop",
-    link: "https://spotify.com"
-  },
-  {
-    id: "pod2",
-    title: "Police Care UK Wellbeing Cast",
-    description: "Advice, resources, and shared experiences from the national charity dedicated to police welfare.",
-    topic: "Welfare Support",
-    logo: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop",
-    link: "https://spotify.com"
-  },
-  {
-    id: "pod3",
-    title: "First Responder Wellness",
-    description: "Experts discuss mental health strategies tailored for the extreme stress of frontline emergency work.",
-    topic: "Mental Health",
-    logo: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=800&auto=format&fit=crop",
-    link: "https://spotify.com"
-  }
-];
-
+const MOCK_APPS_REF = MOCK_APPS;
+const MOCK_BOOKS_REF = MOCK_BOOKS;
+const MOCK_PODCASTS_REF = MOCK_PODCASTS;
 
 // Section components with local state
 const AppsSection = () => {
@@ -113,7 +22,7 @@ const AppsSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
-  const filtered = MOCK_APPS.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filtered = MOCK_APPS_REF.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === "Title") return a.name.localeCompare(b.name);
     return b.rating - a.rating;
@@ -174,9 +83,9 @@ const AppsSection = () => {
                     <span className={`text-[10px] uppercase tracking-widest ml-1 ${hybrid.editorialMuted}`}>({item.reviews})</span>
                   </div>
                   <span className={`text-[9px] font-bold uppercase tracking-widest mb-4 inline-block ${hybrid.editorialMuted}`}>{item.category}</span>
-                  <p className={`text-sm leading-relaxed mb-8 flex-grow ${hybrid.editorialBody}`}>{item.description}</p>
-                  
-                  <Link href={item.link} target="_blank">
+                  <p className={`text-sm leading-relaxed mb-6 flex-grow ${hybrid.editorialBody}`}>{item.description}</p>
+
+                  <Link href={item.link} target="_blank" rel="noopener noreferrer" className="mt-auto">
                     <Button className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] py-6 transition-all">
                       Visit App <ExternalLink className="w-3 h-3 ml-2" />
                     </Button>
@@ -187,13 +96,12 @@ const AppsSection = () => {
           </AnimatePresence>
         </div>
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-4 mt-12">
-            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
-            <span className={`text-xs font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>Pg {currentPage} / {totalPages}</span>
-            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          className="mt-12"
+        />
       </div>
     </EditorialSection>
   );
@@ -206,7 +114,7 @@ const BooksSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
-  const filtered = MOCK_BOOKS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filtered = MOCK_BOOKS_REF.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === "Author") return a.author.localeCompare(b.author);
     return a.title.localeCompare(b.title);
@@ -270,9 +178,9 @@ const BooksSection = () => {
                     <p className="text-xs font-bold text-slate-300">{item.recommendedBy}</p>
                   </div>
                   
-                  <p className="text-sm text-slate-400 leading-relaxed mb-8 flex-grow">{item.description}</p>
-                  
-                  <Link href={item.link} target="_blank">
+                  <p className="text-sm text-slate-400 leading-relaxed mb-6 flex-grow">{item.description}</p>
+
+                  <Link href={item.link} target="_blank" rel="noopener noreferrer" className="mt-auto block">
                     <Button className="w-full bg-transparent text-[#1877F2] hover:bg-[#1877F2] hover:text-white border border-[#1877F2]/30 font-bold uppercase tracking-widest text-[10px] py-6 transition-all rounded-none">
                       Buy / View Book <ExternalLink className="w-3 h-3 ml-2" />
                     </Button>
@@ -283,13 +191,13 @@ const BooksSection = () => {
           </AnimatePresence>
         </div>
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-4 mt-12">
-            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Pg {currentPage} / {totalPages}</span>
-            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-white/10 text-white bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          variant="campaign"
+          className="mt-12"
+        />
       </div>
     </CampaignSection>
   );
@@ -302,7 +210,7 @@ const PodcastsSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  const filtered = MOCK_PODCASTS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filtered = MOCK_PODCASTS_REF.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === "Topic") return a.topic.localeCompare(b.topic);
     return a.title.localeCompare(b.title);
@@ -358,7 +266,7 @@ const PodcastsSection = () => {
                   <div className="text-[9px] font-bold text-[#1877F2] uppercase tracking-widest mb-2">{item.topic}</div>
                   <h4 className={`text-xl font-bold mb-2 tracking-tight leading-tight ${hybrid.editorialHeading}`}>{item.title}</h4>
                   <p className={`text-sm leading-relaxed mb-4 line-clamp-2 ${hybrid.editorialBody}`}>{item.description}</p>
-                  <Link href={item.link} target="_blank" className={`inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest hover:text-[#1877F2] transition-colors ${hybrid.editorialHeading}`}>
+                  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest hover:text-[#1877F2] transition-colors ${hybrid.editorialHeading}`}>
                     Listen Now <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
@@ -367,13 +275,12 @@ const PodcastsSection = () => {
           </AnimatePresence>
         </div>
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-4 mt-12">
-            <Button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Prev</Button>
-            <span className={`text-xs font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>Pg {currentPage} / {totalPages}</span>
-            <Button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="border-slate-300 text-slate-700 bg-transparent rounded-none px-6 py-4 text-[10px] uppercase font-bold tracking-widest">Next</Button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          className="mt-12"
+        />
       </div>
     </EditorialSection>
   );

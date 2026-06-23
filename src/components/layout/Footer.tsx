@@ -13,10 +13,10 @@ export default function Footer() {
   const newsletter = useNewsletterSubscribe();
 
   return (
-    <footer className="relative bg-[#02050A] pt-12 sm:pt-16 md:pt-24 pb-10 sm:pb-12 text-white font-sans overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#02050A] pt-12 sm:pt-16 md:pt-24 pb-[max(2.5rem,env(safe-area-inset-bottom))] text-white font-sans overflow-hidden border-t border-white/5">
       
       {/* Massive Background Typography */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.06] translate-y-[10%]">
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.04] translate-y-[18%]">
         <h1 className="text-[15vw] font-black text-white whitespace-nowrap leading-[0.8] tracking-tighter">
           IT STOPS NOW
         </h1>
@@ -89,7 +89,7 @@ export default function Footer() {
               </div>
 
               {newsletter.isSubscribed ? (
-                <div className="mt-auto pt-4 sm:pt-5 border-t border-white/10 flex flex-col items-center text-center py-4">
+                <div className="mt-auto pt-4 sm:pt-5 border-t border-white/10 flex flex-col items-center text-center py-4" role="status" aria-live="polite">
                   <div className="w-12 h-12 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-3">
                     <Check className="w-6 h-6" />
                   </div>
@@ -111,11 +111,18 @@ export default function Footer() {
                   value={newsletter.email}
                   onChange={(e) => newsletter.setEmail(e.target.value)}
                   disabled={newsletter.isSubscribing}
+                  aria-invalid={newsletter.error ? true : undefined}
+                  aria-describedby={newsletter.error ? "footer-newsletter-error" : undefined}
                   placeholder="Enter your email address"
-                  className="w-full min-h-[48px] bg-[#02050A]/80 border border-white/10 rounded-xl px-4 sm:px-5 text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-[#1877F2] focus:ring-2 focus:ring-[#1877F2]/30 transition-all"
+                  className={cn(
+                    "w-full min-h-[48px] bg-[#02050A]/80 border rounded-xl px-4 sm:px-5 text-white text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 transition-all",
+                    newsletter.error
+                      ? "border-red-500/60 focus:border-red-500 focus:ring-red-500/30"
+                      : "border-white/10 focus:border-[#1877F2] focus:ring-[#1877F2]/30"
+                  )}
                 />
                 {newsletter.error && (
-                  <p className="text-red-400 text-xs" role="alert">{newsletter.error}</p>
+                  <p id="footer-newsletter-error" className="text-red-400 text-xs" role="alert">{newsletter.error}</p>
                 )}
                 <Button
                   type="submit"
@@ -130,7 +137,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-16 lg:gap-8 mb-16 md:mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-16 lg:gap-8 mb-12 md:mb-20">
           
           {/* Brand Col */}
           <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left pr-0 lg:pr-8">
@@ -138,12 +145,9 @@ export default function Footer() {
               <img src="/ISN-Logo.svg" alt="It Stops Now Logo" className="h-14 w-auto opacity-90 hover:opacity-100 transition-opacity" />
             </Link>
             <div className="w-12 h-[2px] bg-[#1877F2] mb-6"></div>
-            <p className="text-slate-400 text-sm md:text-base leading-relaxed font-medium mb-10 max-w-sm">
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium mb-10 max-w-sm">
               We are building a future where every officer is supported, valued, and never faces their struggles alone. Together, we can end police suicide.
             </p>
-            <Button className="bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/30 hover:bg-[#1877F2] hover:text-white font-bold px-10 py-7 rounded-full text-xs tracking-widest uppercase transition-all duration-500 hover:shadow-[0_10px_30px_rgba(24,119,242,0.3)] hover:-translate-y-1">
-              SUPPORT THE MISSION
-            </Button>
           </div>
 
           {/* Links 1 */}
@@ -167,7 +171,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-5 text-sm font-medium text-slate-400">
               <li><Link href="/take-action" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">How to Help</Link></li>
-              <li><Link href="/take-action/contact-mp" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Contact Your MP</Link></li>
+              <li><Link href="/take-action/personalize" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Personalise Your Letter</Link></li>
               <li><Link href="/stories?submit=1" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Share Your Story</Link></li>
               <li><Link href="/support" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Get Support Now</Link></li>
             </ul>
@@ -198,7 +202,7 @@ export default function Footer() {
 
         {/* BOTTOM ROW: Copyright & Legal */}
         <div className="relative z-10 pt-10 flex flex-col items-center text-center md:flex-row md:items-center md:justify-between md:text-left gap-5 sm:gap-6 text-xs text-white font-medium">
-          <p className="text-slate-400 md:text-white">
+          <p className="text-slate-300 md:text-white">
             © {new Date().getFullYear()} It Stops Now. All rights reserved.
           </p>
           <div className="flex flex-col items-center sm:flex-row sm:justify-center gap-3 sm:gap-8">

@@ -57,12 +57,21 @@ export default function ResearchCard({ item, onViewReport }: ResearchCardProps) 
 
         <p className={cn("text-sm leading-relaxed line-clamp-3 mb-4 flex-1", hybrid.editorialBody)}>{item.summary}</p>
 
-        {item.keyFindings[0] ? (
-          <div className="border-l-2 border-[#1877F2] pl-3 mb-4">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
-              Key finding
+        {item.keyFindings.length > 0 ? (
+          <div className="mb-4 space-y-2">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              Key findings
             </p>
-            <p className="text-sm text-slate-800 leading-snug line-clamp-2">{item.keyFindings[0]}</p>
+            <ul className="space-y-2">
+              {item.keyFindings.slice(0, 2).map((finding) => (
+                <li
+                  key={finding}
+                  className="border-l-2 border-[#1877F2] pl-3 text-sm text-slate-800 leading-snug line-clamp-2"
+                >
+                  {finding}
+                </li>
+              ))}
+            </ul>
           </div>
         ) : null}
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Newspaper, Video, Mic, Calendar, User, Search, Filter, Mail, ArrowLeft, Clock, Scale, Headphones, Database } from "lucide-react";
+import { ArrowRight, Newspaper, Calendar, Search, Mail, Clock } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
@@ -216,7 +216,7 @@ export default function NewsPage() {
                     </p>
                     
                     <Link href={`/news/${news.id}`} className={cn("mt-auto pt-6 border-t flex items-center font-bold text-[10px] uppercase tracking-widest group-hover:text-[#1877F2] transition-colors", hybrid.editorialBorder, hybrid.editorialHeading)}>
-                      Read Story <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                      Read News <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
@@ -233,40 +233,7 @@ export default function NewsPage() {
         </div>
       </EditorialSection>
 
-      {/* 4. WHAT WE'RE WORKING ON - INITIATIVES SECTION */}
-      <CampaignSection variant="deep" className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
-        <div className={`${PAGE_CONTENT_CONTAINER} relative z-10`}>
-          <div className="text-center mb-16">
-            <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-              Our Roadmap
-              <span className="w-8 h-px bg-[#1877F2]"></span>
-            </h2>
-            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">
-              What We're Working On
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: <Scale className="w-6 h-6 text-[#1877F2]" />, title: "Misconduct Timelimit Bill", status: "DRAFTING STAGE", desc: "Coordinating with MPs and legal advisors to draft the 12-month misconduct investigation limit bill for Parliament." },
-              { icon: <Headphones className="w-6 h-6 text-[#1877F2]" />, title: "Officer Crisis Helpline", status: "LAUNCHING Q4", desc: "Partnering with leading police charities to launch a dedicated 24/7 welfare helpline for suspended officers." },
-              { icon: <Database className="w-6 h-6 text-[#1877F2]" />, title: "National Investigation Database", status: "DATA INGESTION", desc: "Aggregating data from police federations to document system-wide investigation delays and showcase patterns of failure." }
-            ].map((init, i) => (
-              <div key={i} className={cn(hybrid.campaignCard, "p-6 md:p-8 hover:border-[#1877F2]/50 transition-colors group relative overflow-hidden")}>
-                <div className="w-12 h-12 bg-[#1877F2]/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  {init.icon}
-                </div>
-                <span className="text-[9px] font-bold text-[#1877F2] bg-[#1877F2]/10 border border-[#1877F2]/20 px-3 py-1 rounded-full">{init.status}</span>
-                <h4 className="font-bold text-lg text-white mt-4 mb-2 group-hover:text-[#1877F2] transition-colors">{init.title}</h4>
-                <p className="text-slate-400 text-xs leading-relaxed">{init.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </CampaignSection>
-
-      {/* 5. NEWSLETTER SECTION */}
+      {/* 4. NEWSLETTER SECTION */}
       <CampaignSection className="relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-full" />
         <div className={`${PAGE_CONTENT_CONTAINER} relative z-10 text-center max-w-3xl`}>
@@ -296,18 +263,23 @@ export default function NewsPage() {
               <input 
                 type="email" 
                 required
+                aria-invalid={newsletter.error ? true : undefined}
+                aria-describedby={newsletter.error ? "news-page-newsletter-error" : undefined}
                 value={newsletter.email}
                 onChange={(e) => newsletter.setEmail(e.target.value)}
                 disabled={newsletter.isSubscribing}
                 placeholder="YOUR EMAIL ADDRESS" 
-                className="flex-grow bg-[#020611] border border-white/10 rounded-xl px-5 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#1877F2]/50 transition-colors" 
+                className={cn(
+                  "flex-grow bg-[#020611] border rounded-xl px-5 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none transition-colors",
+                  newsletter.error ? "border-red-500/60 focus:border-red-500" : "border-white/10 focus:border-[#1877F2]/50"
+                )} 
               />
               <Button type="submit" disabled={newsletter.isSubscribing} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
                 {newsletter.isSubscribing ? "Subscribing..." : "Subscribe"}
               </Button>
             </form>
             {newsletter.error && (
-              <p className="text-red-400 text-xs mt-3" role="alert">{newsletter.error}</p>
+              <p id="news-page-newsletter-error" className="text-red-400 text-xs mt-3" role="alert">{newsletter.error}</p>
             )}
             <div className="text-[9px] uppercase tracking-widest text-slate-500 mt-6">
               We respect your privacy. No spam.

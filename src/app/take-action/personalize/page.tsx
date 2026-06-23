@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { EditorialSection } from "@/components/layout/PageSection";
 import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
+import TakeActionStepper, { type TakeActionStep } from "@/components/take-action/TakeActionStepper";
 
 const TEMPLATES = [
   { 
@@ -40,6 +41,7 @@ function PersonalizeContent() {
   const [isSending, setIsSending] = useState(false);
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState("");
+  const [simulateNoMpEmail, setSimulateNoMpEmail] = useState(false);
 
   // Mock API Call to find MP
   useEffect(() => {
@@ -82,6 +84,8 @@ function PersonalizeContent() {
     updateLetterContent();
   };
 
+  const currentStep: TakeActionStep = loading ? 2 : mpFound ? 3 : 2;
+
   return (
     <div className="min-h-screen font-sans flex flex-col">
       <PageHero
@@ -108,6 +112,8 @@ function PersonalizeContent() {
 
       <EditorialSection className="pb-10 lg:pb-20 lg:pb-32">
       <div className={PAGE_CONTENT_CONTAINER}>
+
+        <TakeActionStepper currentStep={currentStep} className="mb-10" />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
@@ -154,10 +160,21 @@ function PersonalizeContent() {
                       <p className={`text-xs flex items-center gap-1 mt-1 ${hybrid.editorialMuted}`}><MapPin className="w-3 h-3" /> {mpFound.constituency}</p>
                     </div>
                   </div>
-                  <div className="bg-slate-100 rounded-lg p-3 flex items-center justify-between">
-                    <span className={`text-xs ${hybrid.editorialMuted}`}>{mpFound.email}</span>
-                    <CheckCircle className="w-4 h-4 text-emerald-500" />
+                  <div className="bg-slate-100 rounded-lg p-3 flex items-center justify-between gap-2">
+                    <span className={`text-xs truncate ${hybrid.editorialMuted}`}>
+                      {simulateNoMpEmail ? "Email not publicly available" : mpFound.email}
+                    </span>
+                    {!simulateNoMpEmail && <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />}
                   </div>
+                  <label className="mt-4 flex items-center gap-2 text-[10px] text-slate-500 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={simulateNoMpEmail}
+                      onChange={(e) => setSimulateNoMpEmail(e.target.checked)}
+                      className="rounded border-slate-300"
+                    />
+                    Prototype: simulate MP with no email on file
+                  </label>
                 </motion.div>
               ) : (
                 <div className={`py-8 text-center border border-dashed rounded-xl ${hybrid.editorialBorder}`}>
@@ -222,6 +239,12 @@ function PersonalizeContent() {
                   onClick={async () => {
                     if (!mpFound) return;
                     setSendError("");
+                    if (simulateNoMpEmail || !mpFound.email) {
+                      setSendError(
+                        "No email address is available for this MP. Your letter was not sent — please download a copy and post it instead."
+                      );
+                      return;
+                    }
                     setIsSending(true);
                     await simulateSubmit(2000);
                     setIsSending(false);

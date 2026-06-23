@@ -87,7 +87,7 @@ function MemorialCard({ officer }: { officer: MemorialSummary }) {
 
         <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t border-amber-900/15">
           <span className="text-xs font-medium text-amber-500/85 group-hover:text-amber-400 transition-colors">
-            View memorial →
+            View Tribute →
           </span>
           <div className="flex items-center gap-1.5 text-amber-500/90 shrink-0">
             <Flame className="w-3.5 h-3.5" aria-hidden />

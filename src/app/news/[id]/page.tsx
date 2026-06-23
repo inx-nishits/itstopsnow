@@ -9,6 +9,8 @@ import { ArticleHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHer
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
 import { ShareButtons } from "@/components/ui/ShareButtons";
+import RichArticleBody from "@/components/editorial/RichArticleBody";
+import { NEWS_RICH_BLOCKS } from "@/lib/editorial/demoRichContent";
 import { LATEST_NEWS } from "../page";
 
 export default function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -19,18 +21,6 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
     () => LATEST_NEWS.find((n) => n.id === newsId) ?? LATEST_NEWS[0],
     [newsId]
   );
-
-  const content = `In a major breakthrough for the 'It Stops Now' campaign, a cross-party coalition of MPs has secured a parliamentary debate to discuss the implementation of a statutory 12-month limit on police misconduct investigations.
-
-This milestone comes after months of tireless campaigning by former and serving officers, their families, and our legal advocacy teams. Over 10,000 constituents have written to their MPs using our template letter system, ensuring this issue could no longer be ignored by the Home Office.
-
-### What the Debate Will Cover
-
-The debate will focus on the severe mental health impact of multi-year investigations, the financial cost to taxpayers, and the proposed legislative framework for a strict 12-month limit.
-
-### How You Can Help
-
-If you haven't already, please use our Take Action page to contact your MP and urge them to attend.`;
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
@@ -77,18 +67,7 @@ If you haven't already, please use our Take Action page to contact your MP and u
               </div>
 
               <p className={cn("text-sm mb-8 leading-relaxed font-medium text-[#1877F2]", hybrid.editorialBody)}>{article.excerpt}</p>
-              <div className="prose prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-headings:text-[#010B19] prose-a:text-[#1877F2] prose-p:text-slate-600 prose-p:leading-relaxed">
-                {content.split("\n\n").map((paragraph, idx) => {
-                  if (paragraph.startsWith("###")) {
-                    return (
-                      <h3 key={idx} className="text-2xl mt-12 mb-6 text-[#010B19]">
-                        {paragraph.replace("### ", "")}
-                      </h3>
-                    );
-                  }
-                  return <p key={idx}>{paragraph}</p>;
-                })}
-              </div>
+              <RichArticleBody blocks={NEWS_RICH_BLOCKS} />
             </div>
 
             <div className="lg:col-span-4 space-y-6">

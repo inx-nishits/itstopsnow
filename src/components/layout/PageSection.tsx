@@ -76,11 +76,11 @@ export function EditorialStickyBar({ children, className }: { children: React.Re
   return (
     <div
       className={cn(
-        "theme-editorial sticky top-20 md:top-24 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm py-4 sm:py-5",
+        "theme-editorial sticky top-20 md:top-24 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm py-4 sm:py-5 overflow-x-hidden",
         className
       )}
     >
-      {children}
+      <div className="scrollbar-hide overflow-x-auto">{children}</div>
     </div>
   );
 }

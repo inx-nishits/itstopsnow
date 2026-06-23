@@ -1,6 +1,6 @@
 "use client";
 
-import { Flame, MessageCircle, Share2, Download } from "lucide-react";
+import { Flame, MessageCircle, Share2 } from "lucide-react";
 
 interface MemorialMobileDockProps {
   isLit: boolean;
@@ -8,8 +8,6 @@ interface MemorialMobileDockProps {
   onLightCandle: () => void;
   onLeaveTribute: () => void;
   onShare: () => void;
-  onDownloadPdf?: () => void;
-  pdfLoading?: boolean;
 }
 
 export default function MemorialMobileDock({
@@ -18,8 +16,6 @@ export default function MemorialMobileDock({
   onLightCandle,
   onLeaveTribute,
   onShare,
-  onDownloadPdf,
-  pdfLoading,
 }: MemorialMobileDockProps) {
   return (
     <div
@@ -59,18 +55,6 @@ export default function MemorialMobileDock({
           <Share2 className="w-5 h-5 text-slate-400" />
           Share
         </button>
-
-        {onDownloadPdf && (
-          <button
-            type="button"
-            onClick={onDownloadPdf}
-            disabled={pdfLoading}
-            className="flex flex-col items-center justify-center gap-1 min-w-[64px] min-h-[56px] rounded-2xl bg-white/5 border border-white/10 text-slate-200 text-[11px] font-semibold disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
-          >
-            <Download className="w-5 h-5 text-slate-400" />
-            PDF
-          </button>
-        )}
       </div>
     </div>
   );
