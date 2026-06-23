@@ -207,7 +207,16 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
           }}
           className="scroll-mt-36"
         >
-          <SectionLabel>Photos</SectionLabel>
+          <div className="flex items-end justify-between gap-4 mb-4">
+            <SectionLabel className="mb-0">Photos</SectionLabel>
+            <button
+              type="button"
+              onClick={() => setActivePhotoIndex(0)}
+              className="shrink-0 min-h-[44px] text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#1877F2] hover:text-[#1565d8] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1877F2]"
+            >
+              View all photos →
+            </button>
+          </div>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
             {galleryPhotos.slice(0, 5).map((photo, index) => (
               <button

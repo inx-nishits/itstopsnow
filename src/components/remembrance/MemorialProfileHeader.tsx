@@ -106,7 +106,7 @@ export default function MemorialProfileHeader({
 
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#050A14]/95 pointer-events-none" />
 
-            <div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 flex flex-col items-center gap-1.5">
+            <div className="absolute bottom-[5.25rem] right-3 sm:right-4 z-20 flex flex-col items-center gap-1.5 lg:bottom-5 lg:left-1/2 lg:right-auto lg:-translate-x-1/2">
               <CandleOverlay
                 isLit={isLit}
                 isLoading={loading}
@@ -114,13 +114,13 @@ export default function MemorialProfileHeader({
                 disabled={isLit || loading}
               />
               {!isLit && !loading && (
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/80 pointer-events-none">
+                <p className="hidden lg:block text-[9px] font-semibold uppercase tracking-[0.2em] text-white/80 pointer-events-none">
                   Tap to light
                 </p>
               )}
             </div>
 
-            <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-20 bg-gradient-to-t from-[#050A14] via-[#050A14]/88 to-transparent lg:hidden">
+            <div className="absolute inset-x-0 bottom-0 z-10 pl-4 pr-[4.75rem] sm:pr-20 pb-4 pt-20 bg-gradient-to-t from-[#050A14] via-[#050A14]/88 to-transparent lg:hidden">
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1877F2] mb-1">{officer.role}</p>
               <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-tight mb-0.5">{displayName}</h1>
               <p className="text-[11px] text-slate-400 uppercase tracking-wide truncate">{officer.force}</p>
