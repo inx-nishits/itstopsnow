@@ -42,7 +42,7 @@ export default function TributeCarousel({ tributes }: TributeCarouselProps) {
   }, [prefersReducedMotion, tributes.length, scrollToIndex]);
 
   return (
-    <div className="relative -mx-6 px-6 lg:mx-0 lg:px-0">
+    <div className="relative -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
       <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
         {tributes.length} tributes
       </p>
@@ -111,3 +111,4 @@ export default function TributeCarousel({ tributes }: TributeCarouselProps) {
     </div>
   );
 }
+

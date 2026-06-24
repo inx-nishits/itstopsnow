@@ -9,7 +9,7 @@ export const siteStatistic = defineType({
       name: "key",
       title: "Key",
       type: "string",
-      description: "Unique identifier e.g. officers, lives, victories, funds",
+      description: "Unique identifier e.g. officers, forces, victories, funds",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

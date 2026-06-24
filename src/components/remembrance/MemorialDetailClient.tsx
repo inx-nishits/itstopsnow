@@ -166,7 +166,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
       />
 
       <main className={`${PAGE_CONTENT_CONTAINER} pb-28 lg:pb-16 pt-6 sm:pt-8`}>
-        <div className="sticky top-[9.25rem] md:top-[10.25rem] z-30 -mx-6 px-6 lg:-mx-16 lg:px-16 py-3 mb-8 sm:mb-10 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200">
+        <div className="sticky top-[9.25rem] md:top-[10.25rem] z-30 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 py-3 mb-8 sm:mb-10 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200">
           <MemorialSectionTabs
             activeSection={activeSection}
             onNavigate={scrollToSection}
@@ -581,3 +581,4 @@ function FormField({ label, children }: { label: string; children: ReactNode }) 
     </label>
   );
 }
+

@@ -71,7 +71,7 @@ export default function AboutPage() {
 
       {/* 2. WHO IS POCKET SERGEANT */}
       <EditorialSection className="md:py-32">
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <h2 className={`font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight mb-4 ${hybrid.editorialHeading}`}>WHO IS POCKET SERGEANT?</h2>
@@ -157,7 +157,7 @@ export default function AboutPage() {
       {/* STATISTICS SECTION */}
       <EditorialSection>
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#1877F2]/5 rounded-full blur-[150px] pointer-events-none" />
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Reach</h2>
             <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight mb-6 ${hybrid.editorialHeading}`}>IMPACT BY THE NUMBERS</h2>
@@ -210,7 +210,7 @@ export default function AboutPage() {
 
       {/* WHY SUPPORTING THIS MOVEMENT */}
       <CampaignSection className="lg:py-32 border-t border-white/5">
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Our Commitment</h2>
             <h2 className="font-sans text-3xl md:text-5xl font-bold uppercase tracking-tight mb-8">WHY WE SUPPORT THIS MOVEMENT</h2>
@@ -246,7 +246,7 @@ export default function AboutPage() {
 
       {/* FUNDING TRANSPARENCY */}
       <EditorialSection className="lg:py-32">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Accountability</h2>
             <h2 className={`font-sans text-3xl md:text-5xl font-bold uppercase tracking-tight mb-8 ${hybrid.editorialHeading}`}>FUNDING & TRANSPARENCY</h2>
@@ -309,7 +309,7 @@ export default function AboutPage() {
 
       {/* PODCAST SECTION */}
       <CampaignSection className="lg:py-32 border-b border-white/5">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
             <div className="lg:w-1/2 relative">
               <div className="absolute inset-0 bg-[#1877F2]/20 rounded-full blur-[100px] pointer-events-none"></div>
@@ -371,7 +371,7 @@ export default function AboutPage() {
       {/* LEARN MORE ABOUT POCKET SERGEANT CTA SECTION */}
       <EditorialSection className="lg:py-32">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Explore the App</h2>
             <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8 ${hybrid.editorialHeading}`}>LEARN MORE ABOUT POCKET SERGEANT</h2>
@@ -426,3 +426,4 @@ export default function AboutPage() {
     </div>
   );
 }
+

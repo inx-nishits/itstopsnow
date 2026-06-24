@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /** Shared layout tokens for inner-page heroes and section bodies */
 export const PAGE_CONTENT_CONTAINER =
-  "w-full max-w-[1600px] mx-auto px-6 lg:px-16";
+  "w-full max-w-[1600px] mx-auto px-4 sm:px-4 sm:px-6 lg:px-16";
 export const PAGE_HERO_CONTAINER = `${PAGE_CONTENT_CONTAINER} relative z-10`;
 export const PAGE_HERO_EYEBROW =
   "text-[#1877F2] font-bold uppercase tracking-[0.28em] text-xs sm:text-sm mb-4 sm:mb-5 flex items-center gap-2.5 sm:gap-3";
@@ -227,3 +227,4 @@ export function CompactPageHero({
     </section>
   );
 }
+

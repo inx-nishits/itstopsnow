@@ -20,7 +20,7 @@ export default function RollHonourPreviewSection({ officers }: RollHonourPreview
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
-      <div className="relative w-full max-w-[1600px] mx-auto px-6 lg:px-16 py-12 sm:py-14 lg:py-20">
+      <div className="relative w-full max-w-[1600px] mx-auto px-4 sm:px-4 sm:px-6 lg:px-16 py-12 sm:py-14 lg:py-20">
         <SectionReveal delay={0.06}>
           <div className="lg:grid lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-x-10 xl:gap-x-14 lg:items-end mb-6 sm:mb-8">
             <header className="mb-8 lg:mb-0">
@@ -42,7 +42,7 @@ export default function RollHonourPreviewSection({ officers }: RollHonourPreview
                 let our fallen officers be forgotten.
               </p>
               <Link
-                href="/remembrance"
+                href="/wall-of-remembrance"
                 className="hidden lg:inline-flex items-center gap-2 text-sm font-semibold text-[#1877F2] hover:text-white transition-colors min-h-[44px]"
               >
                 View Wall of Remembrance
@@ -51,7 +51,7 @@ export default function RollHonourPreviewSection({ officers }: RollHonourPreview
             </header>
 
             <div
-              className="-mx-6 sm:mx-0 grid grid-cols-3 sm:grid-cols-6 gap-[2px] overflow-hidden"
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
               role="list"
               aria-label="Officers on the Roll of Honour"
             >
@@ -71,7 +71,7 @@ export default function RollHonourPreviewSection({ officers }: RollHonourPreview
           </div>
 
           <Link
-            href="/remembrance"
+            href="/wall-of-remembrance"
             className="lg:hidden flex items-center justify-center gap-2 w-full min-h-[52px] mt-6 rounded-2xl bg-[#1877F2] hover:bg-[#1877F2]/90 text-white text-sm font-semibold transition-colors"
           >
             View Wall of Remembrance
@@ -82,3 +82,4 @@ export default function RollHonourPreviewSection({ officers }: RollHonourPreview
     </section>
   );
 }
+

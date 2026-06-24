@@ -91,7 +91,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
             </p>
           </header>
 
-          <div className="sticky top-20 md:top-24 z-40 -mx-6 px-6 lg:-mx-16 lg:px-16 py-3 mb-5 sm:mb-6 bg-[#050A14]/95 backdrop-blur-xl">
+          <div className="sticky top-20 md:top-24 z-40 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 py-3 mb-5 sm:mb-6 bg-[#050A14]/95 backdrop-blur-xl">
             <WallSearchControls
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
@@ -106,7 +106,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
 
           {sortedOfficers.length > 0 ? (
             <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-[2px] rounded-sm overflow-hidden border border-white/10"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8"
               role="list"
               aria-label="Memorial portraits"
             >
@@ -152,7 +152,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
       </CampaignSection>
 
       <EditorialSection variant="white" className="py-10 sm:py-14">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[720px] text-center">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[720px] text-center">
           <Flame className="w-8 h-8 text-amber-500 mx-auto mb-4" aria-hidden />
           <h3 className={`text-lg font-bold ${hybrid.editorialHeading} mb-3`}>Light a candle</h3>
           <p className={`${hybrid.editorialBody} text-sm sm:text-base leading-relaxed`}>
@@ -165,3 +165,4 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
     </div>
   );
 }
+

@@ -5,12 +5,14 @@ import { HOMEPAGE_FALLBACK } from "./fallback";
 import { normalizeVoices } from "./normalize";
 import {
   homepageEventsQuery,
+  homepageInformationAlertQuery,
   homepageStatsQuery,
   homepageVoicesQuery,
 } from "./queries";
 import type {
   HomepageData,
   HomepageEventPreview,
+  HomepageInformationAlert,
   HomepageStat,
 } from "./types";
 
@@ -20,6 +22,12 @@ function isSanityConfigured() {
 
 function hasValidStats(stats: HomepageStat[] | null | undefined): stats is HomepageStat[] {
   return Array.isArray(stats) && stats.length > 0 && stats.every((s) => s.endValue > 0);
+}
+
+function hasValidAlert(
+  alert: HomepageInformationAlert | null | undefined
+): alert is HomepageInformationAlert {
+  return Boolean(alert?.badgeLabel && alert.messageAfter);
 }
 
 async function buildRollPreview() {
@@ -35,16 +43,18 @@ export async function getHomepageData(): Promise<HomepageData> {
   }
 
   try {
-    const [stats, voicesRaw, events] = await Promise.all([
+    const [stats, voicesRaw, events, informationAlert] = await Promise.all([
       client.fetch<HomepageStat[]>(homepageStatsQuery),
       client.fetch(homepageVoicesQuery),
       client.fetch<HomepageEventPreview[]>(homepageEventsQuery),
+      client.fetch<HomepageInformationAlert | null>(homepageInformationAlertQuery),
     ]);
 
     const voices = normalizeVoices(voicesRaw);
 
     const hasLiveData =
       hasValidStats(stats) ||
+      hasValidAlert(informationAlert) ||
       (voices?.length ?? 0) > 0 ||
       (events?.length ?? 0) > 0;
 
@@ -52,9 +62,14 @@ export async function getHomepageData(): Promise<HomepageData> {
       return { ...HOMEPAGE_FALLBACK, rollPreview };
     }
 
+    const fallbackAlert = HOMEPAGE_FALLBACK.informationAlert;
+
     return {
       fromSanity: true,
       stats: hasValidStats(stats) ? stats : HOMEPAGE_FALLBACK.stats,
+      informationAlert: hasValidAlert(informationAlert)
+        ? { ...fallbackAlert, ...informationAlert }
+        : fallbackAlert,
       voices,
       rollPreview,
       events: events?.length ? events : HOMEPAGE_FALLBACK.events,

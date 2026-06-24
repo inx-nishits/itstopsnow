@@ -33,45 +33,58 @@ export default function MemorialWallTile({
 
   return (
     <Link
-      href={`/remembrance/${id}`}
+      href={`/wall-of-remembrance/${id}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
-      className={`group relative block w-full aspect-[3/4] overflow-hidden bg-[#050A14] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#1877F2] ${className}`}
+      className={`group relative flex flex-col w-full h-full overflow-hidden bg-white rounded-xl shadow-sm hover:shadow-xl border border-slate-200/60 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1877F2] hover:-translate-y-1 ${className}`}
       aria-label={`Remember ${name}`}
     >
-      <Image
-        src={imageUrl}
-        alt=""
-        fill
-        sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 12vw"
-        className="object-cover object-top transition-all duration-700 ease-out group-hover:scale-[1.04] group-active:scale-[1.04]"
-        style={{ filter: `grayscale(${displayGray}%)` }}
-      />
-
-      {/* Candle warmth on hover — ritual hint */}
-      <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_100%,rgba(251,191,36,0.18),transparent_65%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-        aria-hidden
-      />
-      <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-[#050A14]/95 via-[#050A14]/45 to-transparent pointer-events-none" />
-
-      <div className="absolute top-2 right-2 z-10 flex items-center gap-1 rounded-full bg-black/50 backdrop-blur-sm px-2 py-0.5 border border-white/10">
-        <Flame className="w-3 h-3 text-amber-400" aria-hidden />
-        <span className="text-[10px] font-semibold text-amber-200/95 tabular-nums">
-          {candleCount.toLocaleString()}
-        </span>
+      <div className="relative w-full aspect-square sm:aspect-[4/5] overflow-hidden bg-slate-100 shrink-0">
+        <Image
+          src={imageUrl}
+          alt=""
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          style={{ filter: `grayscale(${displayGray}%)` }}
+        />
+        <div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_100%,rgba(251,191,36,0.18),transparent_65%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          aria-hidden
+        />
+        
+        <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 flex items-center gap-1 sm:gap-1.5 rounded-full bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-2.5 sm:py-1 shadow-sm border border-black/5">
+          <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-500" aria-hidden />
+          <span className="text-[10px] sm:text-[11px] font-bold text-slate-700 tabular-nums">
+            {candleCount.toLocaleString()}
+          </span>
+        </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-10 px-2.5 pb-2.5 sm:px-3 sm:pb-3">
-        <p className="text-[11px] sm:text-xs font-bold text-white leading-tight line-clamp-2">{name}</p>
+      <div className="flex flex-col flex-1 p-3 sm:p-4 text-left bg-white z-20">
+        <h3 className="text-[13px] sm:text-[15px] font-black text-[#010B19] leading-tight line-clamp-1 mb-1 group-hover:text-[#1877F2] transition-colors">
+          {name}
+        </h3>
+        
         {force && (
-          <p className="text-[9px] sm:text-[10px] text-slate-400 uppercase tracking-wide truncate mt-0.5 hidden sm:block">
+          <p className="text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate mb-1">
             {force}
           </p>
         )}
-        {years && <p className="text-[9px] text-slate-500 mt-0.5 tabular-nums">{years}</p>}
+        
+        {years && (
+          <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium mt-auto mb-3 sm:mb-4">
+            {years}
+          </p>
+        )}
+        
+        <div className="mt-auto pt-2.5 sm:pt-3 border-t border-slate-100/80 flex items-center justify-between">
+          <span className="text-[10px] sm:text-[11px] font-bold text-[#1877F2] uppercase tracking-[0.1em] flex items-center gap-1 group-hover:gap-1.5 transition-all">
+            View Tribute <span className="text-[14px] leading-none">&rarr;</span>
+          </span>
+        </div>
       </div>
     </Link>
   );

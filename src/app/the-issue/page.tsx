@@ -62,7 +62,7 @@ export default function TheIssuePage() {
 
       {/* THE FACTS STATISTICS SECTION */}
       <EditorialSection>
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-12 lg:mb-24 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Facts</h2>
             <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight ${hybrid.editorialHeading} mb-6`}>THE HARD TRUTH</h2>
@@ -119,7 +119,7 @@ export default function TheIssuePage() {
 
       {/* WHAT'S GOING WRONG AWARENESS CARDS */}
       <CampaignSection variant="deep">
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-10 lg:mb-20 max-w-3xl mx-auto">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Flaws</h2>
             <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">WHAT IS GOING WRONG?</h2>
@@ -162,7 +162,7 @@ export default function TheIssuePage() {
 
       {/* THE IMPACT INFORMATIONAL SECTION */}
       <EditorialSection>
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-16">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Collateral Damage</h2>
             <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight ${hybrid.editorialHeading} mb-6`}>THE IMPACT</h2>
@@ -232,7 +232,7 @@ export default function TheIssuePage() {
       {/* CHANGE IS POSSIBLE CTA PANEL */}
       <CampaignSection variant="deep" className="overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#020611] border border-[#1877F2]/30 rounded-3xl p-6 sm:p-12 lg:p-20 shadow-[0_0_50px_rgba(24,119,242,0.15)] flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1">
               <AlertTriangle className="w-16 h-16 text-[#1877F2] mb-8" />
@@ -273,3 +273,4 @@ export default function TheIssuePage() {
     </div>
   );
 }
+

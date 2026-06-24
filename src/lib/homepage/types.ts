@@ -1,3 +1,14 @@
+export interface HomepageInformationAlert {
+  enabled: boolean;
+  badgeLabel: string;
+  messageBefore?: string;
+  highlightPhrase?: string;
+  messageAfter: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  footnote?: string;
+}
+
 export interface HomepageStat {
   id: string;
   label: string;
@@ -44,6 +55,7 @@ export interface HomepageEventPreview {
 
 export interface HomepageData {
   stats: HomepageStat[];
+  informationAlert: HomepageInformationAlert;
   voices: HomepageVoice[];
   rollPreview: RollHonourPreview[];
   events: HomepageEventPreview[];

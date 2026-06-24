@@ -33,7 +33,7 @@ const AppsSection = () => {
 
   return (
     <EditorialSection>
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+      <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
@@ -125,7 +125,7 @@ const BooksSection = () => {
 
   return (
     <CampaignSection>
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+      <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
@@ -220,7 +220,7 @@ const PodcastsSection = () => {
 
   return (
     <EditorialSection>
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+      <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <h2 className="text-[#1877F2] font-bold uppercase tracking-[0.3em] text-sm mb-4 flex items-center gap-3">
@@ -320,3 +320,4 @@ export default function SupportListing() {
     </div>
   );
 }
+

@@ -225,7 +225,7 @@ export default function TakeActionPage() {
 
       {/* 3. FEATURED CAMPAIGNS SECTION */}
       <CampaignSection className="lg:py-32 border-b border-white/10">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 lg:mb-20 gap-8">
             <div>
               <div className="flex items-center gap-4 mb-6">
@@ -268,7 +268,7 @@ export default function TakeActionPage() {
 
       {/* 4. LIST LETTER TEMPLATES & PERSONALIZATION SIDEBAR */}
       <EditorialSection className="lg:py-32 pb-10 lg:pb-20 lg:pb-48">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
 
           <TakeActionStepper currentStep={1} className="mb-10 lg:mb-14" />
           
@@ -491,3 +491,4 @@ export default function TakeActionPage() {
     </div>
   );
 }
+

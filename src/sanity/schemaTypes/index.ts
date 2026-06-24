@@ -18,8 +18,9 @@ import { candleLog } from './candleLog'
 import { memory } from './memory'
 import { siteStatistic } from './siteStatistic'
 import { homepageVoice } from './homepageVoice'
+import { homepageInformationAlert } from './homepageInformationAlert'
 import { getInvolvedSubmission } from './getInvolvedSubmission'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [story, news, campaign, research, event, resource, templateCategory, letterTemplate, letterHistory, memorial, timelineEvent, achievement, tribute, candleLog, memory, siteStatistic, homepageVoice, getInvolvedSubmission],
+  types: [story, news, campaign, research, event, resource, templateCategory, letterTemplate, letterHistory, memorial, timelineEvent, achievement, tribute, candleLog, memory, siteStatistic, homepageVoice, homepageInformationAlert, getInvolvedSubmission],
 }

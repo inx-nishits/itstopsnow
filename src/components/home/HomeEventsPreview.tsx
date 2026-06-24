@@ -16,7 +16,7 @@ export default function HomeEventsPreview({ events }: HomeEventsPreviewProps) {
     <section className="theme-editorial relative bg-[#f4f5f7] text-[#010B19] py-16 sm:py-20 lg:py-24 overflow-hidden border-t border-slate-200/80">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#1877F2]/15 to-transparent pointer-events-none" />
 
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+      <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
         <SectionReveal>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
             <div>
@@ -90,3 +90,4 @@ export default function HomeEventsPreview({ events }: HomeEventsPreviewProps) {
     </section>
   );
 }
+

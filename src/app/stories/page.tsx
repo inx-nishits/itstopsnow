@@ -217,7 +217,7 @@ function StoriesPageContent() {
 
       {/* 3. FILTERS & SEARCH */}
       <EditorialStickyBar>
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             
             <div className="flex items-center gap-3 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
@@ -265,7 +265,7 @@ function StoriesPageContent() {
 
       {/* 4. STORY GRID & COUNTER */}
       <EditorialSection>
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className={cn("flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b pb-8 mb-10 sm:mb-16", hybrid.editorialBorder)}>
             <h2 className={cn("font-sans text-3xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>LATEST STORIES</h2>
             <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {sortedStories.length} stories</div>
@@ -343,7 +343,7 @@ function StoriesPageContent() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-transparent to-[#020611]" />
         </div>
 
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
           <div className="lg:w-1/2 flex flex-col items-start gap-6 text-left">
             <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2]">YOU ARE NOT ALONE</h2>
             <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">YOUR VOICE COULD SAVE A LIFE</h3>
@@ -558,3 +558,4 @@ export default function StoriesPage() {
     </Suspense>
   );
 }
+

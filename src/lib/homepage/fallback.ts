@@ -3,6 +3,17 @@ import type { HomepageData } from "./types";
 /** Static fallback — used until Sanity documents are published or when CMS is unavailable */
 export const HOMEPAGE_FALLBACK: HomepageData = {
   fromSanity: false,
+  informationAlert: {
+    enabled: true,
+    badgeLabel: "Important",
+    messageBefore: "In ",
+    highlightPhrase: "12 of 13",
+    messageAfter:
+      " forces, misconduct investigations exceed 12 months. Officers deserve timely justice — join the campaign for reform.",
+    ctaLabel: "Learn the facts",
+    ctaHref: "/the-issue",
+    footnote: "Behind every number is a person who served, sacrificed, and deserved better.",
+  },
   stats: [
     {
       id: "officers",
@@ -11,17 +22,17 @@ export const HOMEPAGE_FALLBACK: HomepageData = {
       suffix: "+",
       duration: 2.0,
       description:
-        "Policing professionals and first responders supported nationwide through our mental health and welfare advocacy networks.",
+        "Policing professionals supported through mental health and welfare advocacy networks.",
     },
     {
-      id: "lives",
-      label: "Lives Saved",
+      id: "forces",
+      label: "Forces Over 12 Months",
       endValue: 12,
       suffixText: " of 13",
       duration: 4.5,
       isPulsing: true,
       description:
-        "Active interventions preventing officer suicide during traumatic multi-year misconduct investigations.",
+        "Police forces where misconduct investigations routinely exceed the 12-month threshold.",
     },
     {
       id: "victories",

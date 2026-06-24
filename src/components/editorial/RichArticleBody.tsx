@@ -54,31 +54,47 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
                 )}
               </figure>
             );
-          case "linkedImage":
+          case "linkedImage": {
+            const isExternal = block.href.startsWith("http");
+            const linkClassName =
+              "group block overflow-hidden rounded-2xl border border-slate-200 shadow-md transition-shadow hover:shadow-xl";
+            const imageContent = (
+              <>
+                <img
+                  src={block.src}
+                  alt={block.alt}
+                  className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+                <span className="flex items-center justify-center gap-2 bg-[#010B19] px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white">
+                  <ExternalLink className="h-3.5 w-3.5 text-[#1877F2]" />
+                  Tap to visit linked source
+                </span>
+              </>
+            );
             return (
               <figure key={index} className="not-prose my-10">
-                <a
-                  href={block.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block overflow-hidden rounded-2xl border border-slate-200 shadow-md transition-shadow hover:shadow-xl"
-                >
-                  <img
-                    src={block.src}
-                    alt={block.alt}
-                    className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
-                  <span className="flex items-center justify-center gap-2 bg-[#010B19] px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white">
-                    <ExternalLink className="h-3.5 w-3.5 text-[#1877F2]" />
-                    Tap to visit linked source
-                  </span>
-                </a>
+                {isExternal ? (
+                  <a
+                    href={block.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClassName}
+                  >
+                    {imageContent}
+                  </a>
+                ) : (
+                  <Link href={block.href} className={linkClassName}>
+                    {imageContent}
+                  </Link>
+                )}
                 {block.caption && (
                   <figcaption className="mt-2 text-sm text-slate-500">{block.caption}</figcaption>
                 )}
               </figure>
             );
-          case "externalLink":
+          }
+          case "externalLink": {
+            const isExternal = block.href.startsWith("http");
             return (
               <div
                 key={index}
@@ -89,8 +105,7 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
                 </p>
                 <Link
                   href={block.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="inline-flex items-center gap-2 font-bold text-[#010B19] hover:text-[#1877F2] transition-colors"
                 >
                   {block.label}
@@ -101,6 +116,7 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
                 )}
               </div>
             );
+          }
           default:
             return null;
         }

@@ -60,7 +60,7 @@ export default function MemorialProfileHeader({
       router.back();
       return;
     }
-    router.push("/remembrance");
+    router.push("/wall-of-remembrance");
   };
 
   return (

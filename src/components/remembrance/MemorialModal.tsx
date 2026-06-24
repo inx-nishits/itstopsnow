@@ -92,7 +92,7 @@ export default function MemorialModal({
               <span className="block w-10 h-1 rounded-full bg-slate-200" />
             </div>
 
-            <div className="flex items-center justify-between gap-4 px-5 md:px-6 py-4 md:py-5 border-b border-slate-100 shrink-0">
+            <div className="flex items-center justify-between gap-4 px-4 sm:px-4 sm:px-5 md:px-6 py-4 md:py-5 border-b border-slate-100 shrink-0">
               <h2 className="text-base md:text-lg font-bold text-[#010B19] tracking-tight">{title}</h2>
               <button
                 type="button"
@@ -104,10 +104,11 @@ export default function MemorialModal({
               </button>
             </div>
 
-            <div className="overflow-y-auto px-5 md:px-6 py-5 md:py-6">{children}</div>
+            <div className="overflow-y-auto px-4 sm:px-4 sm:px-5 md:px-6 py-5 md:py-6">{children}</div>
           </motion.div>
         </div>
       )}
     </AnimatePresence>
   );
 }
+

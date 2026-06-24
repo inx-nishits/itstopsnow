@@ -2,177 +2,47 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Quote, Heart, Users, Scale, ShieldCheck, LucideIcon } from "lucide-react";
+import { Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, animate, useInView } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import HomeHero from "@/components/home/HomeHero";
 import SectionReveal from "@/components/home/SectionReveal";
-import VoicesRollSection from "@/components/home/VoicesRollSection";
 import HomeEventsPreview from "@/components/home/HomeEventsPreview";
-import type { HomepageData, HomepageStat } from "@/lib/homepage/types";
+import InformationAlertBox from "@/components/home/InformationAlertBox";
+import AwarenessStatisticsSection from "@/components/home/AwarenessStatisticsSection";
+import type { HomepageData } from "@/lib/homepage/types";
 import GetInvolvedModal from "@/components/global/GetInvolvedModal";
-
-const STAT_ICONS: Record<string, LucideIcon> = {
-  officers: Users,
-  lives: Heart,
-  victories: Scale,
-  funds: ShieldCheck,
-};
+import FounderShowcase from "@/components/shared/FounderShowcase";
 
 interface HomePageClientProps {
   data: HomepageData;
 }
 
-function StatCounter({
-  end,
-  suffix = "",
-  prefix = "",
-  isPulsing = false,
-  decimals,
-  duration = 2.5,
-  tone = "dark",
-}: {
-  end: number;
-  suffix?: string;
-  prefix?: string;
-  isPulsing?: boolean;
-  decimals?: number;
-  duration?: number;
-  tone?: "dark" | "light";
-}) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "0px" });
-
-  const resolvedDecimals = decimals ?? (end % 1 !== 0 ? 1 : 0);
-
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(0, end, {
-        duration: duration,
-        ease: "easeOut",
-        onUpdate(value) {
-          setCount(value);
-        }
-      });
-      return () => controls.stop();
-    }
-  }, [end, isInView, duration]);
-
-  const toneClass =
-    tone === "light"
-      ? "text-[#010B19] group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#010B19] group-hover:to-[#1877F2]"
-      : "text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#1877F2]";
-
-  return (
-    <div ref={ref} className={`text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter transition-all duration-500 flex items-center gap-2 ${toneClass}`}>
-      {prefix}
-      <span className={isPulsing ? 'animate-[pulse_3s_infinite] text-[#1877F2]' : ''}>
-        {count.toLocaleString(undefined, {
-          minimumFractionDigits: resolvedDecimals,
-          maximumFractionDigits: resolvedDecimals
-        })}
-      </span>
-      {suffix}
-    </div>
-  );
-}
-
-function statIcon(stat: HomepageStat): LucideIcon {
-  return STAT_ICONS[stat.id] ?? Users;
-}
-
-import FounderShowcase from "@/components/shared/FounderShowcase";
-
 export default function HomePageClient({ data }: HomePageClientProps) {
   const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
-  const stats = data.stats;
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
-      
-      <HomeHero onGetInvolvedClick={() => setIsGetInvolvedOpen(true)} />
-
-      {/* INFORMATION ALERT */}
-      <div className="relative z-20 bg-[#050A14] border-y border-[#1877F2]/25">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] py-4 sm:py-5">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-            <span className="shrink-0 inline-flex items-center justify-center w-fit px-3 py-1 rounded-full bg-[#1877F2] text-white text-[10px] font-bold uppercase tracking-widest">
-              Important
-            </span>
-            <p className="text-sm sm:text-base text-white font-medium leading-relaxed">
-              In <strong className="text-[#1877F2]">12 of 13</strong> forces, misconduct investigations exceed 12 months.
-              Officers deserve timely justice — join the campaign for reform.
-            </p>
-            <Link href="/the-issue" className="shrink-0 text-[#1877F2] text-xs font-bold uppercase tracking-widest hover:text-white hover:underline whitespace-nowrap transition-colors">
-              Learn the facts →
-            </Link>
-          </div>
+      <div className="flex flex-col">
+        <div className="order-3 md:order-1 w-full">
+          <InformationAlertBox alert={data.informationAlert} />
+        </div>
+        <div className="order-1 md:order-2 w-full">
+          <HomeHero onGetInvolvedClick={() => setIsGetInvolvedOpen(true)} />
+        </div>
+        <div className="order-2 md:order-3 w-full">
+          <AwarenessStatisticsSection
+            stats={data.stats}
+            footnote={data.informationAlert.footnote}
+          />
         </div>
       </div>
-
-      {/* AWARENESS STATISTICS — light editorial */}
-      <section className="theme-editorial relative z-20 bg-[#f4f5f7] text-[#010B19] py-16 sm:py-20 lg:py-28 overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#1877F2]/20 to-transparent pointer-events-none" />
-
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
-          <SectionReveal>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-            {stats.map((stat) => {
-              const IconComponent = statIcon(stat);
-              return (
-                <div 
-                  key={stat.id} 
-                  className="group relative bg-white/90 rounded-2xl border border-slate-200/90 p-4 sm:p-5 lg:p-6 transition-all duration-300 hover:border-[#1877F2]/25 hover:shadow-sm flex flex-col h-full"
-                >
-                  <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1877F2]/10 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-colors duration-300 shrink-0">
-                      <IconComponent className={`w-4 h-4 sm:w-[1.125rem] sm:h-[1.125rem] ${stat.isPulsing ? 'animate-[pulse_1.5s_infinite]' : ''}`} />
-                    </div>
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 group-hover:text-slate-700 transition-colors uppercase tracking-[0.14em] leading-snug">
-                      {stat.label}
-                    </span>
-                  </div>
-
-                  <div className="flex items-baseline gap-1 mb-2 sm:mb-3">
-                    <StatCounter 
-                      end={stat.endValue} 
-                      prefix={stat.prefix} 
-                      suffix={stat.suffix} 
-                      duration={stat.duration ?? 2.5} 
-                      isPulsing={stat.isPulsing}
-                      tone="light"
-                    />
-                    {stat.suffixText && (
-                      <span className="text-xl sm:text-2xl font-black text-slate-400 tracking-tight pb-1">
-                        {stat.suffixText}
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal group-hover:text-slate-800 transition-colors line-clamp-4">
-                    {stat.description}
-                  </p>
-                </div>
-              );
-            })}
-            </div>
-          </SectionReveal>
-
-          <p className="mt-10 sm:mt-12 text-center text-slate-500 text-sm italic max-w-2xl mx-auto leading-relaxed">
-            Behind every number is a person who served, sacrificed, and deserved better.
-          </p>
-        </div>
-      </section>
-
-      <VoicesRollSection voices={data.voices} rollPreview={data.rollPreview} />
 
       {/* WHY IT STOPS NOW — light editorial */}
       <section className="theme-editorial relative bg-white text-[#010B19] py-16 sm:py-20 lg:py-32 overflow-hidden">
         <div className="absolute top-0 right-0 w-[min(800px,90vw)] h-[min(800px,90vw)] bg-[#1877F2]/[0.03] rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
-        <div className="w-full px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start lg:items-center">
             
             <SectionReveal className="flex flex-col justify-center lg:col-span-5">
@@ -276,7 +146,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       <section className="relative bg-[#030712] text-white py-16 sm:py-20 lg:py-28 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           
           <SectionReveal>
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-16 gap-6 md:gap-8">
@@ -295,7 +165,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
           </div>
           </SectionReveal>
           
-          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:overflow-visible md:pb-0 scrollbar-none">
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 md:overflow-visible md:pb-0 scrollbar-none">
             
             {/* Pillar 1 */}
             <SectionReveal delay={0} className="min-w-[78vw] sm:min-w-[280px] md:min-w-0 snap-center">
@@ -380,7 +250,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       <section className="theme-editorial relative w-full py-16 sm:py-20 lg:py-28 bg-[#f4f5f7] text-[#010B19] overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent pointer-events-none" />
         
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
             
             <SectionReveal className="w-full lg:w-1/2">
@@ -465,3 +335,4 @@ export default function HomePageClient({ data }: HomePageClientProps) {
     </div>
   );
 }
+

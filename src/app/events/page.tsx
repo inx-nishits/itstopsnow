@@ -56,12 +56,12 @@ const EVENTS: CampaignEvent[] = [
   },
   {
     id: "e4",
-    title: "Campaign Inception & SOW Release Press Event",
+    title: "It Stops Now Campaign Launch",
     date: "April 12, 2026",
     time: "9:30 AM",
     location: "National Press Club, London",
     type: "past",
-    description: "Official launch event of the It Stops Now campaign. Attended by major press outlets, legal representatives, and Police Federation delegates."
+    description: "Official public launch of the It Stops Now campaign. Attended by major press outlets, legal representatives, and Police Federation delegates."
   },
   {
     id: "e5",
@@ -150,7 +150,7 @@ export default function EventsPage() {
 
       {/* EVENTS GRID */}
       <EditorialSection variant="white">
-        <div className="w-full px-6 lg:px-16 mx-auto max-w-[1600px]">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredEvents.map((event, idx) => (
@@ -356,3 +356,4 @@ export default function EventsPage() {
     </div>
   );
 }
+

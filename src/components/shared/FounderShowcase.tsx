@@ -128,7 +128,7 @@ export default function FounderShowcase() {
     <section className="bg-[#030712] text-white py-14 sm:py-16 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
-      <SectionReveal className="w-full px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 mb-8 sm:mb-12 lg:mb-16 text-center">
+      <SectionReveal className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 mb-8 sm:mb-12 lg:mb-16 text-center">
         <h2 className="text-[#1877F2] text-xs font-bold tracking-[0.4em] uppercase mb-4 flex items-center justify-center gap-4">
           <span className="w-8 h-px bg-[#1877F2]" />
           The Architects
@@ -139,7 +139,7 @@ export default function FounderShowcase() {
         </h3>
       </SectionReveal>
 
-      <div className="w-full px-6 lg:px-16 mx-auto max-w-[1400px]">
+      <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1400px]">
         <div className="flex flex-col items-center gap-6 sm:gap-8 lg:grid lg:grid-cols-3 lg:gap-8 lg:items-stretch">
           {FOUNDERS.map((member) => (
             <FounderCard key={member.name} member={member} />
@@ -149,3 +149,4 @@ export default function FounderShowcase() {
     </section>
   );
 }
+

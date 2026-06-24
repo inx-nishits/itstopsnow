@@ -1,3 +1,14 @@
+export const homepageInformationAlertQuery = `*[_type == "homepageInformationAlert"][0] {
+  enabled,
+  badgeLabel,
+  messageBefore,
+  highlightPhrase,
+  messageAfter,
+  ctaLabel,
+  ctaHref,
+  footnote
+}`;
+
 export const homepageStatsQuery = `*[_type == "siteStatistic"] | order(order asc) {
   "id": key,
   label,

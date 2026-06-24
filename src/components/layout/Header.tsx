@@ -13,7 +13,7 @@ const NAV_LINKS = [
   { label: "The Issue", href: "/the-issue" },
   { label: "News", href: "/news" },
   { label: "Stories", href: "/stories" },
-  { label: "Wall of Remembrance", href: "/remembrance" },
+  { label: "Wall of Remembrance", href: "/wall-of-remembrance" },
   { label: "Research and Evidence", href: "/research" },
   { label: "Recover and Support", href: "/support" },
 ];
@@ -41,12 +41,13 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-[env(safe-area-inset-top)] ${isScrolled
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 pt-[env(safe-area-inset-top)] ${isScrolled
             ? "bg-[#030712]/80 backdrop-blur-2xl border-b border-white/10 shadow-2xl"
             : "bg-transparent border-b border-transparent"
           }`}
+        style={{ top: isScrolled ? '0px' : 'var(--alert-height, 0px)' }}
       >
-        <div className="w-full px-6 lg:px-12 mx-auto flex items-center justify-between h-20 md:h-24 transition-all duration-300">
+        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-12 mx-auto flex items-center justify-between h-20 md:h-24 transition-all duration-300">
 
           {/* LOGO */}
           <Link href="/" className="flex items-center shrink-0">
@@ -118,7 +119,7 @@ export default function Header() {
             {...modalPanelMotion(prefersReducedMotion)}
             className="fixed inset-0 z-[60] bg-[#030712]/95 backdrop-blur-3xl flex flex-col safe-area-modal"
           >
-            <div className="flex items-center justify-between px-6 h-20 md:h-24 border-b border-white/10">
+            <div className="flex items-center justify-between px-4 sm:px-4 sm:px-6 h-20 md:h-24 border-b border-white/10">
               <Link href="/" className="flex items-center">
                 <img src="/ISN-Logo.svg" alt="It Stops Now Logo" className="h-8 w-auto" />
               </Link>
@@ -132,12 +133,12 @@ export default function Header() {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto py-8 px-8 flex flex-col gap-6">
+            <div className="flex-1 overflow-y-auto py-6 px-6 flex flex-col gap-2 sm:gap-3">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-2xl font-medium tracking-tight py-2 cursor-pointer ${pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
+                  className={`text-lg sm:text-xl font-medium tracking-wide py-1.5 cursor-pointer ${pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
                       ? "text-white"
                       : "text-slate-400 hover:text-white"
                     }`}
@@ -161,3 +162,4 @@ export default function Header() {
     </>
   );
 }
+

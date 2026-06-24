@@ -22,7 +22,7 @@ export default function MemorialTributeCard({ officer, layout = "tile" }: Memori
 function MemorialTile({ officer }: { officer: MemorialSummary }) {
   return (
     <Link
-      href={`/remembrance/${officer.id}`}
+      href={`/wall-of-remembrance/${officer.id}`}
       className="group relative block aspect-[3/4] overflow-hidden rounded-xl bg-[#14100c] border border-amber-900/25 active:scale-[0.98] transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500/70"
       aria-label={`Remember ${officer.name}, ${officer.rank}`}
     >
@@ -56,7 +56,7 @@ function MemorialTile({ officer }: { officer: MemorialSummary }) {
 function MemorialCard({ officer }: { officer: MemorialSummary }) {
   return (
     <Link
-      href={`/remembrance/${officer.id}`}
+      href={`/wall-of-remembrance/${officer.id}`}
       className="group flex flex-col overflow-hidden rounded-2xl bg-[#14100c] border border-amber-900/30 shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-amber-700/45 hover:shadow-[0_16px_48px_rgba(0,0,0,0.5),0_0_32px_rgba(217,119,6,0.06)] transition-all duration-500 h-[min(520px,88vh)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500/70"
       aria-label={`Remember ${officer.name}`}
     >
