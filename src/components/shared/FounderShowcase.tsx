@@ -107,9 +107,9 @@ export function FounderCard({ member }: { member: (typeof FOUNDERS)[number] }) {
               <Button
                 type="button"
                 onClick={() => setIsFlipped(true)}
-                className="w-full border border-white/20 text-white bg-transparent hover:bg-white hover:text-black font-bold py-4 rounded-xl text-xs tracking-widest uppercase transition-all shadow-lg hover:-translate-y-1 cursor-pointer"
+                className="w-full border border-white/20 text-white bg-transparent hover:bg-white hover:text-black font-bold py-4 rounded-full text-xs tracking-widest uppercase transition-all shadow-lg hover:-translate-y-1 cursor-pointer flex items-center justify-center gap-1"
               >
-                View Bio &gt;
+                VIEW BIO <ChevronRight className="w-4 h-4 shrink-0" />
               </Button>
             </div>
           </div>
@@ -143,7 +143,7 @@ export function FounderCard({ member }: { member: (typeof FOUNDERS)[number] }) {
                 e.stopPropagation();
                 setIsFlipped(false);
               }}
-              className="mt-4 shrink-0 w-full bg-white text-[#1877F2] hover:bg-slate-100 font-bold py-4 rounded-xl text-xs tracking-widest uppercase transition-all shadow-lg hover:-translate-y-1 cursor-pointer"
+              className="mt-4 shrink-0 w-full bg-white text-[#1877F2] hover:bg-slate-100 font-bold py-4 rounded-full text-xs tracking-widest uppercase transition-all shadow-lg hover:-translate-y-1 cursor-pointer"
             >
               Back
             </Button>
@@ -171,20 +171,20 @@ function FoundersCarousel() {
 
   return (
     <div className="relative w-full max-w-[1200px] mx-auto mt-8 md:mt-12 group">
-      {/* Desktop Scroll Buttons (Absolute) */}
+      {/* Scroll Buttons */}
       <button 
         onClick={scrollLeft}
-        className="hidden md:flex absolute -left-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-[#050A14] border border-white/10 rounded-full items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
+        className="absolute left-2 md:-left-12 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 bg-[#050A14]/90 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
         aria-label="Scroll left"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
       </button>
       <button 
         onClick={scrollRight}
-        className="hidden md:flex absolute -right-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-[#050A14] border border-white/10 rounded-full items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
+        className="absolute right-2 md:-right-12 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 bg-[#050A14]/90 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
         aria-label="Scroll right"
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
       </button>
 
       <div 
@@ -196,24 +196,6 @@ function FoundersCarousel() {
             <FounderCard member={member} />
           </div>
         ))}
-      </div>
-      
-      {/* Mobile Scroll Buttons (Below Carousel) */}
-      <div className="flex md:hidden justify-center gap-4 mt-2">
-        <button 
-          onClick={scrollLeft}
-          className="flex w-12 h-12 bg-[#050A14] border border-white/10 rounded-full items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-lg active:scale-95"
-          aria-label="Scroll left"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <button 
-          onClick={scrollRight}
-          className="flex w-12 h-12 bg-[#050A14] border border-white/10 rounded-full items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-lg active:scale-95"
-          aria-label="Scroll right"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
       </div>
     </div>
   );
