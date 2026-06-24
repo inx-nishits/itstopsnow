@@ -7,7 +7,6 @@ import { EditorialSection, CampaignSection } from "@/components/layout/PageSecti
 import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import WallMemorialHero from "@/components/remembrance/wall/WallMemorialHero";
-import WallStatsRibbon from "@/components/remembrance/wall/WallStatsRibbon";
 import WallSearchControls from "@/components/remembrance/wall/WallSearchControls";
 import MemorialWallTile from "@/components/remembrance/wall/MemorialWallTile";
 import { Pagination } from "@/components/ui/Pagination";
@@ -66,17 +65,15 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
       <WallMemorialHero
         totalCandles={wallStats.totalCandles}
         officersRemembered={wallStats.officersRemembered}
-      />
-
-      <WallStatsRibbon
-        officersRemembered={wallStats.officersRemembered}
-        totalCandles={wallStats.totalCandles}
         forcesRepresented={wallStats.forcesRepresented}
-        monthlyRemembranceAvg={wallStats.monthlyRemembranceAvg}
-        notForgottenPercent={wallStats.notForgottenPercent}
+        monthlyAverage={wallStats.monthlyRemembranceAvg || 124}
+        notForgottenPercentage={wallStats.notForgottenPercent || 92}
+        onLightCandleClick={() => {
+          document.getElementById('wall-grid-section')?.scrollIntoView({ behavior: 'smooth' });
+        }}
       />
-
-      <CampaignSection variant="deep" noPadding className="pb-10 sm:pb-14 lg:pb-20">
+      
+      <CampaignSection id="wall-grid-section" variant="deep" noPadding className="pb-10 sm:pb-14 lg:pb-20">
         <div className={`${PAGE_CONTENT_CONTAINER} pt-8 sm:pt-10 lg:pt-14`}>
           <header className="mb-5 sm:mb-6">
             <div className="flex items-center gap-3 mb-3 sm:mb-4">
@@ -95,18 +92,14 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
             <WallSearchControls
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
-              sortBy={sortBy}
-              onSortChange={setSortBy}
               resultCount={sortedOfficers.length}
-              hasActiveSort={hasActiveSort}
-              onClearSort={clearSort}
               variant="campaign"
             />
           </div>
 
           {sortedOfficers.length > 0 ? (
             <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6"
               role="list"
               aria-label="Memorial portraits"
             >
@@ -119,6 +112,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
                     candleCount={officer.candleCount}
                     force={officer.force}
                     years={officer.yearsServed}
+                    rank={officer.rank}
                   />
                 </div>
               ))}

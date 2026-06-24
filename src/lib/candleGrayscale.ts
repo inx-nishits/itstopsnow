@@ -12,13 +12,13 @@ export function cumulativeGrayscale(candleCount: number): number {
 
   if (count <= 100) return 95;
   if (count <= 500) {
-    return lerp(95, 85, (count - 100) / (500 - 100));
+    return lerp(95, 70, (count - 100) / (500 - 100));
   }
   if (count <= 2000) {
-    return lerp(85, 50, (count - 500) / (2000 - 500));
+    return lerp(70, 50, (count - 500) / (2000 - 500));
   }
   if (count <= 10000) {
-    return lerp(50, 0, (count - 2000) / (10000 - 2000));
+    return lerp(50, 20, (count - 2000) / (10000 - 2000));
   }
   return 0;
 }

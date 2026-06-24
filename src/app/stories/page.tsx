@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check } from "lucide-react";
+import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
@@ -141,6 +141,7 @@ function StoriesPageContent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState<StorySort>("newest");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -246,18 +247,38 @@ function StoriesPageContent() {
                   className={cn("w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors", hybrid.editorialInput)} 
                 />
               </div>
-              <label className="sr-only" htmlFor="stories-sort">Sort stories</label>
-              <select
-                id="stories-sort"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as StorySort)}
-                className={cn("h-[48px] px-4 pr-10 rounded-full font-bold text-[10px] uppercase tracking-widest transition-colors appearance-none cursor-pointer", hybrid.editorialChip)}
-                aria-label="Sort stories"
-              >
-                <option value="newest">Newest First</option>
-                <option value="oldest">Oldest First</option>
-                <option value="title-az">Title A–Z</option>
-              </select>
+              <div className="relative">
+                <button 
+                  type="button"
+                  onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+                  className={cn("h-[48px] pl-5 pr-4 rounded-full font-bold text-[10px] uppercase tracking-widest transition-colors flex items-center justify-between min-w-[140px]", hybrid.editorialChip)}
+                  aria-label="Sort stories"
+                >
+                  {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title A–Z"}
+                  <ChevronDown className={`w-4 h-4 ml-2 transition-transform ${sortDropdownOpen ? "rotate-180" : ""}`} />
+                </button>
+                {sortDropdownOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setSortDropdownOpen(false)} />
+                    <div className="absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-lg border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2 w-48">
+                      {[
+                        { value: "newest", label: "Newest First" },
+                        { value: "oldest", label: "Oldest First" },
+                        { value: "title-az", label: "Title A–Z" }
+                      ].map(opt => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => { setSortBy(opt.value as StorySort); setSortDropdownOpen(false); }}
+                          className={`w-full text-left px-5 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors ${sortBy === opt.value ? "bg-[#1877F2]/10 text-[#1877F2]" : "hover:bg-slate-50 text-slate-600"}`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

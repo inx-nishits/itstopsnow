@@ -53,20 +53,10 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
       />
 
       <EditorialSection noPadding className="pb-12 lg:pb-24">
-        <div className={`${PAGE_CONTENT_CONTAINER} py-8`}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className={`${PAGE_CONTENT_CONTAINER} py-8 sm:py-12`}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             <div className="lg:col-span-8">
-              
-              {/* Featured Image inside content area */}
-              <div className="w-full h-64 md:h-80 mb-8 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-                <img 
-                  src={article.image} 
-                  alt={article.title} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <p className={cn("text-sm mb-8 leading-relaxed font-medium text-[#1877F2]", hybrid.editorialBody)}>{article.excerpt}</p>
+              <p className={cn("text-lg sm:text-xl mb-8 leading-relaxed font-semibold text-[#1877F2]", hybrid.editorialBody)}>{article.excerpt}</p>
               <RichArticleBody blocks={NEWS_RICH_BLOCKS} />
             </div>
 

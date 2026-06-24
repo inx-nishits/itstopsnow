@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Flame } from "lucide-react";
+import { Users, CalendarDays, Shield, Heart } from "lucide-react";
+import CandleOverlay from "@/components/remembrance/CandleOverlay";
 import {
   PAGE_HERO_CONTAINER,
   PAGE_HERO_EYEBROW,
@@ -12,65 +13,125 @@ import {
 interface WallMemorialHeroProps {
   totalCandles: number;
   officersRemembered: number;
+  forcesRepresented?: number;
+  monthlyAverage?: number;
+  notForgottenPercentage?: number;
+  onLightCandleClick?: () => void;
 }
 
 /** Cinematic dark hero — aligned with site-wide inner page hero tokens */
-export default function WallMemorialHero({ totalCandles, officersRemembered }: WallMemorialHeroProps) {
+export default function WallMemorialHero({
+  totalCandles,
+  officersRemembered,
+  forcesRepresented,
+  monthlyAverage,
+  notForgottenPercentage,
+  onLightCandleClick
+}: WallMemorialHeroProps) {
   return (
     <section
-      className={`relative w-full min-h-[min(52dvh,420px)] sm:min-h-[58dvh] lg:min-h-[65vh] flex flex-col justify-end bg-[#050A14] overflow-hidden border-b border-white/5 ${PAGE_HERO_SECTION_PT}`}
+      className={`relative w-full flex flex-col justify-end bg-[#050A14] overflow-hidden border-b border-white/5 ${PAGE_HERO_SECTION_PT}`}
     >
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/uk_police_memorial_bg.png"
-          alt=""
+          src="/images/wall_memorial_bg_v6.png"
+          alt="Wall of Remembrance Background"
           aria-hidden
-          className="w-full h-full object-cover object-center opacity-35 mix-blend-luminosity grayscale"
+          className="w-full h-full object-cover object-[85%_center] md:object-[right_15%] opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[15%] via-[#050A14]/75 via-[55%] to-[#050A14]/30 to-[90%]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050A14]/95 sm:from-[#050A14]/80 via-[#050A14]/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/40 to-transparent" />
       </div>
 
-      <div className={`${PAGE_HERO_CONTAINER} pb-10 sm:pb-14 lg:pb-20`}>
+      <div className={`${PAGE_HERO_CONTAINER} pt-4 pb-6 sm:pb-8 lg:pb-10 relative z-10`}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="max-w-3xl"
+          className="max-w-2xl"
         >
-          <h2 className={PAGE_HERO_EYEBROW}>
-            <Flame className="w-4 h-4 shrink-0" aria-hidden />
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-1">
             Wall of Remembrance
-          </h2>
-
-          <h1
-            id="wall-heading"
-            className={`${PAGE_HERO_TITLE_CAMPAIGN} mb-4 sm:mb-6`}
-          >
-            <span className="text-white block">Every name</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400 block">
-              mattered.
-            </span>
           </h1>
 
-          <p className="text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mb-8">
-            Honour those we lost. Light a candle on their memorial and watch their portrait return to
-            colour — one light at a time.
+          <h2 className="text-xs sm:text-sm lg:text-base font-bold text-[#1877F2] uppercase tracking-wide mb-3 sm:mb-4">
+            Behind every name was a life, a family and a story.
+          </h2>
+
+          <p className="text-slate-300 text-xs sm:text-sm lg:text-base leading-relaxed mb-6 sm:mb-8 max-w-xl">
+            We remember police officers and staff who have died by suicide. We honour their service, their sacrifice and their commitment. We will not forget.
           </p>
 
-          <div className="flex flex-wrap gap-3 sm:gap-4">
-            <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm px-5 py-3 min-w-[120px]">
-              <p className="text-2xl sm:text-3xl font-black text-white tabular-nums">{officersRemembered}</p>
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Lives remembered</p>
+          <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <div className="shrink-0 -mt-2">
+              <CandleOverlay isLit={true} onLight={() => {}} disabled={true} />
             </div>
-            <div className="rounded-2xl bg-[#1877F2]/10 border border-[#1877F2]/25 backdrop-blur-sm px-5 py-3 min-w-[120px]">
-              <p className="text-2xl sm:text-3xl font-black text-[#1877F2] tabular-nums">
-                {totalCandles.toLocaleString()}
-              </p>
-              <p className="text-[10px] uppercase tracking-widest text-slate-400 mt-1 flex items-center gap-1">
-                <Flame className="w-3 h-3 text-amber-400" aria-hidden />
-                Candles lit
-              </p>
+            <div>
+              <div className="flex items-baseline gap-2 sm:gap-3 mb-0.5">
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight">
+                  {totalCandles.toLocaleString()}
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  Candles lit in remembrance
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={onLightCandleClick}
+                className="text-xs sm:text-sm font-semibold text-[#1877F2] hover:text-blue-400 flex items-center gap-1.5 group transition-colors"
+              >
+                Light a candle <span className="group-hover:translate-x-1 transition-transform">-&gt;</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2 mt-2">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <Users className="w-6 h-6 sm:w-8 sm:h-8 text-[#1877F2]" />
+              <div className="flex flex-col">
+                <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
+                  {officersRemembered.toLocaleString()}
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                  Officers
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <CalendarDays className="w-6 h-6 sm:w-8 sm:h-8 text-[#1877F2]" />
+              <div className="flex flex-col">
+                <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
+                  {monthlyAverage?.toLocaleString() || 124}
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                  Monthly Avg
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-[#1877F2]" />
+              <div className="flex flex-col">
+                <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
+                  {forcesRepresented?.toLocaleString() || 12}
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                  Forces
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-[#1877F2]" />
+              <div className="flex flex-col">
+                <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
+                  {notForgottenPercentage || 92}%
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                  Not Forgotten
+                </span>
+              </div>
             </div>
           </div>
         </motion.div>

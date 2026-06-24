@@ -1,294 +1,309 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Newspaper, Calendar, Search, Mail, Clock } from "lucide-react";
+import { ArrowRight, Calendar, Clock, Shield, HeartPulse, Database, AlertTriangle, Mail, Search, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
-import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
-import { hybrid } from "@/lib/theme/hybrid";
+import { PAGE_CONTENT_CONTAINER, PageHero } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
-import { Pagination } from "@/components/ui/Pagination";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
+import { Pagination } from "@/components/ui/Pagination";
 
 export const LATEST_NEWS = [
   { 
     id: 1, 
-    type: "ARTICLE", 
     category: "PARLIAMENT", 
-    date: "OCT 20, 2024", 
-    readTime: "4 min read", 
-    author: "Jane Smith",
-    title: "Meeting with the Home Secretary to discuss 12-month investigation limit.", 
-    excerpt: "Our founding team presented the latest research data on the devastating impact of prolonged IOPC investigations to the Home Office today.",
-    image: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=600"
+    date: "May 9, 2024", 
+    readTime: "5 min read", 
+    title: "MPs call for urgent reform after meeting campaign representatives", 
+    excerpt: "Cross-party MPs raise concerns over officer welfare and prolonged investigations.",
+    image: "/images/mission-support.png",
+    author: "Jane Smith"
   },
   { 
     id: 2, 
-    type: "PRESS RELEASE", 
-    category: "CAMPAIGN", 
-    date: "OCT 15, 2024", 
-    readTime: "3 min read", 
-    author: "News Desk",
-    title: "New independent report exposes systemic delays in misconduct cases.", 
-    excerpt: "A devastating new independent report has confirmed what the police family has known for years: the system is fundamentally broken.",
-    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600"
+    category: "CAMPAIGN NEWS", 
+    date: "May 7, 2024", 
+    readTime: "4 min read", 
+    title: "Productive meeting with Home Office to discuss welfare reform", 
+    excerpt: "We outlined key proposals for improving mental health support and accountability.",
+    image: "/images/uk_police_memorial_bg.png",
+    author: "News Desk"
   },
   { 
     id: 3, 
-    type: "INTERVIEW", 
-    category: "MEDIA", 
-    date: "OCT 12, 2024", 
-    readTime: "8 min read", 
-    author: "Media Team",
-    title: "Paul Cooper on Good Morning Britain discussing officer welfare.", 
-    excerpt: "Watch the full segment where Paul explains why 'It Stops Now' is demanding immediate reform to protect those who protect us.",
-    image: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&q=80&w=600"
+    category: "EXPERT VOICES", 
+    date: "May 5, 2024", 
+    readTime: "6 min read", 
+    title: "Why prolonged investigations cause deeper psychological harm", 
+    excerpt: "Psychologist Dr. Emma Williams explains the impact of uncertainty and lack of support.",
+    image: "/images/wall_memorial_bg.png",
+    author: "Dr. Jenkins"
   },
   { 
     id: 4, 
-    type: "UPDATE", 
-    category: "COMMUNITY", 
-    date: "OCT 05, 2024", 
-    readTime: "2 min read", 
-    author: "Campaign Updates",
-    title: "Over 5,000 letters sent to MPs using our new Take Action tool.", 
-    excerpt: "The response has been overwhelming. In just one week, thousands of you have downloaded the template and contacted your local representatives.",
-    image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=600"
+    category: "MEDIA", 
+    date: "May 3, 2024", 
+    readTime: "7 min read", 
+    title: "Listen: Our founder on BBC Tonight discussing policing culture", 
+    excerpt: "A powerful conversation about silence, stigma and the need for meaningful change.",
+    image: "/images/take-action-hero.png",
+    author: "Media Team"
+  }
+];
+
+const WORKING_ON = [
+  {
+    icon: <Shield className="w-6 h-6 text-[#1877F2]" />,
+    title: "INVESTIGATIONS REFORM",
+    description: "Pushing for fair, proportionate and time-limited investigations."
   },
-  { 
-    id: 5, 
-    type: "ARTICLE", 
-    category: "RESEARCH", 
-    date: "SEP 28, 2024", 
-    readTime: "5 min read", 
-    author: "Dr. Sarah Jenkins",
-    title: "The hidden toll: Undiagnosed PTSD rates soar among response officers.", 
-    excerpt: "A new study highlights the severe lack of immediate psychological first aid following traumatic operational incidents.",
-    image: "https://images.unsplash.com/photo-1527137341206-1aa25844a04d?auto=format&fit=crop&q=80&w=600"
+  {
+    icon: <HeartPulse className="w-6 h-6 text-[#1877F2]" />,
+    title: "MENTAL HEALTH SUPPORT",
+    description: "Campaigning for trauma-informed care and 24/7 support access."
   },
-  { 
-    id: 6, 
-    type: "PRESS RELEASE", 
-    category: "CAMPAIGN", 
-    date: "SEP 15, 2024", 
-    readTime: "3 min read", 
-    author: "Press Office",
-    title: "Pocket Sergeant pledges additional £50,000 to fund mental health support.", 
-    excerpt: "The developers behind the popular policing app have doubled their commitment to providing tangible support for officers in crisis.",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600"
+  {
+    icon: <Database className="w-6 h-6 text-[#1877F2]" />,
+    title: "DATA TRANSPARENCY",
+    description: "Securing accurate data on officer suicides and misconduct."
+  },
+  {
+    icon: <AlertTriangle className="w-6 h-6 text-[#1877F2]" />,
+    title: "CULTURE CHANGE",
+    description: "Challenging silence, stigma and failure to protect our own."
   }
 ];
 
 export default function NewsPage() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
   const newsletter = useNewsletterSubscribe();
-  const itemsPerPage = 4;
 
-  const filteredNews = LATEST_NEWS.filter((news) => {
-    const matchesSearch = news.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          news.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-                          
+  const categories = ["All", "Campaign News", "Parliament", "Expert Voices", "Research", "Media"];
+
+  const filteredNews = LATEST_NEWS.filter(news => {
     const matchesCategory = activeCategory === "All" || news.category.toUpperCase() === activeCategory.toUpperCase();
-    
-    return matchesSearch && matchesCategory;
+    const matchesSearch = news.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          news.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
   });
 
   const totalPages = Math.max(1, Math.ceil(filteredNews.length / itemsPerPage));
   const paginatedNews = filteredNews.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, activeCategory]);
 
   return (
-    <div className="flex flex-col min-h-screen font-sans">
+    <div className="flex flex-col min-h-screen font-sans bg-white">
       
       <PageHero
         animate
         eyebrow={
           <>
-            <Newspaper className="w-5 h-5 shrink-0" /> NEWS & UPDATES
+            <Newspaper className="w-5 h-5 shrink-0" /> NEWS & MEDIA
           </>
         }
         title={
           <>
-            <span className="text-white">STAY </span>
+            <span className="text-white">LATEST </span>
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
-              INFORMED.
+              UPDATES.
             </span>
           </>
         }
-        description="The latest campaign updates, press releases, media appearances, and parliamentary progress."
-        imageSrc="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920"
-        imageAlt="Parliament background"
+        description="Stay informed on our campaign progress, expert voices, and the latest developments in our fight for systemic reform."
+        imageSrc="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&q=80&w=1920"
+        imageAlt="Newspaper headlines"
       />
 
-      {/* 2. FILTERS & SEARCH */}
-      <EditorialStickyBar>
+      {/* 2. MAIN CONTENT (News Grid + Newsletter) */}
+      <section id="latest-news" className="py-12 md:py-20">
         <div className={PAGE_CONTENT_CONTAINER}>
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-start">
             
-            <div className="flex items-center gap-3 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
-              {["All", "Parliament", "Campaign", "Media", "Research"].map((cat) => (
-                <button 
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={cn(
-                    "min-h-[48px] px-6 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer",
-                    activeCategory === cat ? hybrid.editorialChipActive : hybrid.editorialChip
-                  )}
-                >
-                  {cat === "All" ? "All News" : cat}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-4 w-full lg:w-auto">
-              <div className="relative flex-grow lg:w-80">
-                <Search className="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input 
-                  type="text" 
-                  placeholder="SEARCH ARTICLES..." 
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn("w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors", hybrid.editorialInput)} 
-                />
+            {/* LEFT COLUMN (News Grid & Filters) */}
+            <div className="lg:col-span-8 xl:col-span-9">
+              
+              <div className="mb-4 sm:mb-6 pb-4 border-b border-slate-200">
+                <h2 className="font-black text-lg sm:text-2xl uppercase tracking-tight text-slate-900">LATEST NEWS</h2>
               </div>
-            </div>
-          </div>
-        </div>
-      </EditorialStickyBar>
 
-      {/* 3. LATEST NEWS GRID */}
-      <EditorialSection>
-        <div className={`${PAGE_CONTENT_CONTAINER} relative z-10`}>
-          
-          <div className={cn("flex justify-between items-end border-b pb-6 mb-12", hybrid.editorialBorder)}>
-            <h2 className={cn("font-sans text-3xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>LATEST ARTICLES</h2>
-            <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {filteredNews.length} of {LATEST_NEWS.length}</div>
-          </div>
+              {/* Strict: Search Bar & Category Filters */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 mb-8">
+                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide flex-grow pr-4">
+                  {categories.map((cat) => (
+                    <button 
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={cn(
+                        "px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-[10px] sm:text-[11px] font-bold tracking-wide whitespace-nowrap transition-colors border",
+                        activeCategory === cat 
+                          ? "bg-[#1877F2] text-white border-[#1877F2]" 
+                          : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                      )}
+                    >
+                      {cat === "All" ? "All News" : cat}
+                    </button>
+                  ))}
+                </div>
+                
+                {/* Search Functionality */}
+                <div className="relative w-full md:w-64 shrink-0">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input 
+                    type="text" 
+                    placeholder="Search news..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 h-10 border border-slate-200 rounded-md text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white"
+                  />
+                </div>
+              </div>
 
-          {filteredNews.length === 0 ? (
-            <div className={cn("text-center py-10 lg:py-20 rounded-3xl", hybrid.editorialCard)}>
-              <Search className="w-12 h-12 mx-auto mb-4 text-slate-300" />
-              <p className={cn("font-bold uppercase tracking-widest text-sm", hybrid.editorialMuted)}>No articles found matching your search.</p>
-              <button onClick={() => { setSearchTerm(""); setActiveCategory("All"); }} className="mt-4 text-[#1877F2] hover:text-[#010B19] transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer">Clear Filters</button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {paginatedNews.map((news) => (
-                <div key={news.id} className={cn(hybrid.editorialCard, hybrid.editorialCardHover, "overflow-hidden flex flex-col group hover:-translate-y-2 h-full")}>
-                  
-                  <div className={cn("h-48 relative overflow-hidden bg-slate-100 border-b", hybrid.editorialBorder)}>
-                    <img 
-                      src={news.image} 
-                      alt={news.title} 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                    />
-                  </div>
-
-                  <div className="p-6 md:p-8 flex flex-col flex-grow">
-                    <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
-                      <span className="text-[9px] font-bold text-[#1877F2] uppercase tracking-[0.2em] bg-[#1877F2]/10 px-3 py-1.5 rounded-full border border-[#1877F2]/20">
-                        {news.category}
-                      </span>
-                      <div className={cn("flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest", hybrid.editorialMuted)}>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" /> {news.date}
+              {/* News Cards Grid */}
+              {paginatedNews.length === 0 ? (
+                <div className="text-center py-20 bg-slate-50 rounded-xl border border-slate-200">
+                  <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">No news articles found.</p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 xl:grid-cols-3 sm:gap-6">
+                  {paginatedNews.map((news) => (
+                    <div key={news.id} className="flex flex-row sm:flex-col group border border-slate-200 hover:border-slate-300 rounded-xl transition-all hover:shadow-lg bg-white overflow-hidden">
+                      <div className="w-[110px] shrink-0 sm:w-full sm:h-48 relative overflow-hidden bg-slate-100">
+                        <img 
+                          src={news.image} 
+                          alt={news.title} 
+                          onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400/e2e8f0/475569?text=Image+Unavailable"; }}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="p-3 sm:p-5 flex flex-col flex-grow">
+                        <span className="text-[8px] sm:text-[9px] font-black text-[#1877F2] bg-[#1877F2]/10 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded self-start mb-2 sm:mb-3 uppercase tracking-widest">
+                          {news.category}
                         </span>
-                        <span className="flex items-center gap-1 text-[#1877F2]">
-                          <Clock className="w-3 h-3" /> {news.readTime}
-                        </span>
+                        <h3 className="font-bold text-xs sm:text-sm md:text-base mb-2 sm:mb-3 leading-snug text-slate-900 group-hover:text-[#1877F2] transition-colors line-clamp-3 sm:line-clamp-2">
+                          {news.title}
+                        </h3>
+                        <p className="hidden sm:block text-xs text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-3">
+                          {news.excerpt}
+                        </p>
+                        <div className="flex items-center gap-2 sm:gap-4 text-[9px] sm:text-[10px] font-medium text-slate-500 mt-auto">
+                          <span className="flex items-center gap-1 sm:gap-1.5"><Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {news.date}</span>
+                          <span className="flex items-center gap-1 sm:gap-1.5"><Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {news.readTime}</span>
+                        </div>
+                        
+                        {/* Strict: Read Story CTA Link */}
+                        <div className="hidden sm:block pt-4 border-t border-slate-100 mt-4">
+                          <Link href={`/news/${news.id}`} className="text-[10px] font-bold text-[#1877F2] uppercase tracking-widest hover:underline flex items-center">
+                            Read Story <ArrowRight className="w-3 h-3 ml-1" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                    
-                    <h3 className={cn("font-sans font-bold text-xl mb-4 leading-snug group-hover:text-[#1877F2] transition-colors uppercase tracking-tight line-clamp-2", hybrid.editorialHeading)}>
-                      {news.title}
-                    </h3>
-                    
-                    <p className={cn("text-xs leading-relaxed mb-8 flex-grow line-clamp-3", hybrid.editorialBody)}>
-                      {news.excerpt}
-                    </p>
-                    
-                    <Link href={`/news/${news.id}`} className={cn("mt-auto pt-6 border-t flex items-center font-bold text-[10px] uppercase tracking-widest group-hover:text-[#1877F2] transition-colors", hybrid.editorialBorder, hybrid.editorialHeading)}>
-                      Read News <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            className={cn("mt-10 lg:mt-20 pt-8 border-t", hybrid.editorialBorder)}
-          />
-        </div>
-      </EditorialSection>
-
-      {/* 4. NEWSLETTER SECTION */}
-      <CampaignSection className="relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-[#1877F2]/5 blur-[120px] pointer-events-none rounded-full" />
-        <div className={`${PAGE_CONTENT_CONTAINER} relative z-10 text-center max-w-3xl`}>
-          <div className={cn(hybrid.campaignCard, "rounded-[3rem] p-6 md:p-16 shadow-2xl relative overflow-hidden group")}>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
-            
-            <h3 className="font-sans text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-4">
-              SUBSCRIBE TO OUR NEWSLETTER
-            </h3>
-            <p className="text-slate-400 text-sm md:text-base mb-8 max-w-lg mx-auto leading-relaxed">
-              Stay updated with the latest campaign news, media releases, and parliamentary bill progress.
-            </p>
-            
-            {newsletter.isSubscribed ? (
-              <div className="flex flex-col items-center justify-center p-8">
-                <div className="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <h4 className="text-xl font-bold uppercase tracking-tight text-white mb-2">Subscribed!</h4>
-                <p className="text-slate-400 text-sm max-w-sm">
-                  Thank you for subscribing. You&apos;ll receive campaign updates in your inbox.
-                </p>
+              {/* View All Link (Bottom) */}
+              <div className="flex justify-end mt-6">
+                <Link href="#" className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-wide hover:underline flex items-center">
+                  View all <ArrowRight className="w-4 h-4 ml-1" />
+                </Link>
               </div>
-            ) : (
-            <>
-            <form onSubmit={newsletter.subscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                required
-                aria-invalid={newsletter.error ? true : undefined}
-                aria-describedby={newsletter.error ? "news-page-newsletter-error" : undefined}
-                value={newsletter.email}
-                onChange={(e) => newsletter.setEmail(e.target.value)}
-                disabled={newsletter.isSubscribing}
-                placeholder="YOUR EMAIL ADDRESS" 
-                className={cn(
-                  "flex-grow bg-[#020611] border rounded-xl px-5 min-h-[48px] text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none transition-colors",
-                  newsletter.error ? "border-red-500/60 focus:border-red-500" : "border-white/10 focus:border-[#1877F2]/50"
-                )} 
-              />
-              <Button type="submit" disabled={newsletter.isSubscribing} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all">
-                {newsletter.isSubscribing ? "Subscribing..." : "Subscribe"}
-              </Button>
-            </form>
-            {newsletter.error && (
-              <p id="news-page-newsletter-error" className="text-red-400 text-xs mt-3" role="alert">{newsletter.error}</p>
-            )}
-            <div className="text-[9px] uppercase tracking-widest text-slate-500 mt-6">
-              We respect your privacy. No spam.
+
+              {/* Strict: Pagination / Infinite Scroll */}
+              {totalPages > 1 && (
+                <div className="mt-10 flex justify-center border-t border-slate-200 pt-8">
+                  <Pagination 
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>
+              )}
+
             </div>
-            </>
-            )}
+
+            {/* RIGHT SIDEBAR (Newsletter Only) */}
+            <div className="lg:col-span-4 xl:col-span-3">
+              
+              {/* Newsletter Section */}
+              <div className="bg-[#020611] rounded-xl p-6 text-white border border-slate-800 shadow-xl relative overflow-hidden sticky top-24">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
+                
+                <h3 className="font-black text-[13px] uppercase tracking-widest mb-4">NEWSLETTER</h3>
+                
+                <div className="flex gap-4 mb-6 relative z-10">
+                  <Mail className="w-8 h-8 text-slate-400 shrink-0 stroke-[1.5]" />
+                  <p className="text-[11px] text-slate-300 leading-relaxed font-medium">
+                    Subscribe to receive the latest news, updates, and organizational initiatives directly to your inbox.
+                  </p>
+                </div>
+                
+                <form onSubmit={newsletter.subscribe} className="space-y-3 relative z-10">
+                  <input 
+                    type="email" 
+                    required
+                    value={newsletter.email}
+                    onChange={(e) => newsletter.setEmail(e.target.value)}
+                    placeholder="Your email address" 
+                    className="w-full h-11 px-4 bg-white text-slate-900 text-[11px] font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#1877F2] transition-shadow" 
+                  />
+                  <Button type="submit" disabled={newsletter.isSubscribing} className="w-full h-11 bg-[#1877F2] hover:bg-blue-600 font-bold text-[11px] uppercase tracking-widest rounded-md transition-colors">
+                    {newsletter.isSubscribing ? "SUBSCRIBING..." : "SUBSCRIBE"}
+                  </Button>
+                </form>
+                {newsletter.error && (
+                  <p className="text-red-400 text-[10px] mt-2">{newsletter.error}</p>
+                )}
+                {newsletter.isSubscribed && (
+                  <p className="text-green-400 text-[10px] mt-2 font-bold">Thank you for subscribing!</p>
+                )}
+              </div>
+
+            </div>
           </div>
         </div>
-      </CampaignSection>
+      </section>
+
+      {/* 5. WHAT WE'RE WORKING ON SECTION */}
+      <section className="py-12 sm:py-24 bg-[#050A14] border-t border-white/5">
+        <div className={PAGE_CONTENT_CONTAINER}>
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight mb-3 sm:mb-4">
+              WHAT WE&apos;RE WORKING ON
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Our core initiatives designed to bring accountability, support, and cultural change to policing.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {WORKING_ON.map((item, idx) => (
+              <div key={idx} className="group relative bg-[#010B19] rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-white/5 hover:border-[#1877F2]/30 transition-all duration-500 hover:shadow-[0_0_30px_-5px_rgba(24,119,242,0.15)] flex flex-col h-full">
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-[#1877F2]/10 border border-[#1877F2]/20 flex items-center justify-center shrink-0 mb-4 sm:mb-6 group-hover:scale-110 group-hover:bg-[#1877F2]/20 transition-all duration-500">
+                    {item.icon}
+                  </div>
+                  <h3 className="font-bold text-sm md:text-base text-white leading-snug mb-2 sm:mb-4 group-hover:text-[#1877F2] transition-colors tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed font-medium flex-grow mb-2 group-hover:text-slate-300 transition-colors">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
     </div>
   );

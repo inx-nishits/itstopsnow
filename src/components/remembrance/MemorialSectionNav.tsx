@@ -1,17 +1,18 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Flame, MessageCircle, Share2 } from "lucide-react";
+import { Flame, MessageCircle, Share2, User, Star, MessageSquare, Heart } from "lucide-react";
 import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 
-export type MemorialSectionId = "story" | "gallery" | "timeline" | "tributes";
+export type MemorialSectionId = "story" | "timeline" | "tributes" | "candle" | "support";
 
-const SECTIONS: { id: MemorialSectionId; label: string }[] = [
-  { id: "story", label: "Story" },
-  { id: "gallery", label: "Photos" },
-  { id: "timeline", label: "Timeline" },
-  { id: "tributes", label: "Tributes" },
+const SECTIONS: { id: MemorialSectionId; label: string; icon: React.ElementType }[] = [
+  { id: "story", label: "Their Story", icon: User },
+  { id: "timeline", label: "Service & Career", icon: Star },
+  { id: "tributes", label: "Remembered By", icon: MessageSquare },
+  { id: "candle", label: "Light a Candle", icon: Flame },
+  { id: "support", label: "Support & Help", icon: Heart },
 ];
 
 interface MemorialActionBarProps {
@@ -33,22 +34,7 @@ export function MemorialActionBar({
   return (
     <div className="hidden lg:block sticky top-20 md:top-24 z-40 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
       <div className={`${PAGE_CONTENT_CONTAINER} py-3 sm:py-4`}>
-        <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
-          <ActionButton
-            variant={isLit ? "candle-lit" : "candle-unlit"}
-            icon={
-              <Flame
-                className={cn(
-                  "w-[18px] h-[18px]",
-                  isLit ? "text-amber-500" : "text-white",
-                  candleLoading && "animate-pulse"
-                )}
-              />
-            }
-            label={candleLoading ? "Lighting…" : isLit ? "Candle lit" : "Light candle"}
-            onClick={onLightCandle}
-            disabled={isLit || candleLoading}
-          />
+        <div className="grid grid-cols-2 gap-2 sm:gap-2.5 max-w-md">
           <ActionButton
             variant="default"
             icon={<MessageCircle className="w-[18px] h-[18px] text-[#1877F2]" />}
@@ -87,7 +73,7 @@ export function MemorialSectionTabs({
       role="tablist"
       aria-label="Memorial sections"
     >
-      {sections.map(({ id, label }) => {
+      {sections.map(({ id, label, icon: Icon }) => {
         const isActive = activeSection === id;
         return (
           <button
@@ -98,12 +84,13 @@ export function MemorialSectionTabs({
             aria-controls={id}
             onClick={() => onNavigate(id)}
             className={cn(
-              "shrink-0 min-h-[40px] px-4 sm:px-5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer",
+              "shrink-0 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 min-w-[56px] sm:min-w-0 min-h-[48px] sm:min-h-[44px] px-1 sm:px-5 rounded-none sm:rounded-full text-[9px] sm:text-[13px] font-semibold transition-all duration-200 cursor-pointer border-b-2 sm:border-b-0",
               isActive
-                ? "bg-[#1877F2] text-white shadow-[0_2px_8px_rgba(24,119,242,0.35)]"
-                : "bg-white text-slate-600 border border-slate-200 hover:border-[#1877F2]/40 hover:text-[#1877F2] shadow-sm"
+                ? "text-[#1877F2] border-[#1877F2] sm:bg-white sm:text-[#010B19] sm:shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                : "text-slate-500 border-transparent hover:text-slate-800 sm:hover:bg-white/60"
             )}
           >
+            <Icon className={cn("w-[18px] h-[18px] sm:w-4 sm:h-4", isActive ? "text-[#1877F2]" : "text-slate-400")} />
             {label}
           </button>
         );
@@ -133,22 +120,21 @@ function ActionButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex flex-col items-center justify-center gap-1 min-h-[58px] sm:min-h-[62px] px-2 rounded-xl text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all cursor-pointer",
+        "flex flex-col items-center justify-center gap-1.5 min-h-[58px] sm:min-h-[64px] px-2 rounded-xl text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1877F2]",
         disabled && "cursor-not-allowed",
         variant === "candle-unlit" && [
           "bg-[#1877F2] text-white border border-[#1877F2]",
-          "shadow-[0_4px_16px_rgba(24,119,242,0.4)]",
+          "shadow-sm",
           "hover:bg-[#1565d8] active:scale-[0.98]",
         ],
         variant === "candle-lit" && [
-          "bg-amber-50 text-amber-800 border-2 border-amber-400/70",
-          "shadow-[0_4px_16px_rgba(245,158,11,0.25)]",
+          "bg-[#FFFDF5] text-[#D97706] border border-[#FCD34D]",
           "cursor-default",
         ],
         variant === "default" && [
           "bg-white text-[#010B19] border border-slate-200",
-          "shadow-sm hover:shadow-md hover:border-[#1877F2]/35 active:scale-[0.98]",
+          "hover:border-[#1877F2]/35 active:scale-[0.98]",
           "disabled:opacity-60 disabled:cursor-wait",
         ]
       )}

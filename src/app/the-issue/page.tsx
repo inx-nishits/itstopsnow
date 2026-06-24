@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
-import { useEffect, useRef, useState } from "react";
-import GetInvolvedModal from "@/components/global/GetInvolvedModal";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isFloat = false }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string, isFloat?: boolean }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -34,10 +34,8 @@ function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isF
 }
 
 export default function TheIssuePage() {
-  const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
-
   return (
-    <div className="flex flex-col min-h-screen font-sans pb-12 lg:pb-24">
+    <div className="flex flex-col min-h-screen font-sans bg-white">
 
       <PageHero
         animate
@@ -61,214 +59,208 @@ export default function TheIssuePage() {
       />
 
       {/* THE FACTS STATISTICS SECTION */}
-      <EditorialSection>
-        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="text-center mb-12 lg:mb-24 max-w-3xl mx-auto">
-            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Facts</h2>
-            <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight ${hybrid.editorialHeading} mb-6`}>THE HARD TRUTH</h2>
-            <p className={`${hybrid.editorialBody} text-lg leading-relaxed`}>The data reveals a devastating pattern of systemic failure in how police officers are treated during misconduct and post-incident investigations.</p>
+      {/* THE FACTS STATISTICS SECTION */}
+      <section className="bg-white py-12 md:py-20 border-b border-slate-100">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+          <div className="text-left mb-6 md:mb-10 max-w-3xl">
+            <h2 className="font-sans text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900 mb-3 sm:mb-4">THE FACTS</h2>
+            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed font-medium">The numbers don't lie. Our policing family is in crisis.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 relative overflow-hidden group`}>
-              <div className="w-16 h-16 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10">
-                <Clock className="w-8 h-8" />
-              </div>
-              <h3 className={`font-bold text-5xl max-sm:text-4xl ${hybrid.editorialHeading} mb-4 font-sans tracking-tight relative z-10`}>
+          <div className="grid grid-cols-2 md:grid-cols-4 border-t border-b border-slate-100">
+            
+            <div className="flex flex-col items-center text-center p-4 sm:p-8 lg:p-10 border-b md:border-b-0 border-r border-slate-100 group">
+              <Clock className="w-7 h-7 sm:w-8 sm:h-8 text-[#1877F2] mb-4 sm:mb-6" strokeWidth={1.5} />
+              <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight">
                 <AnimatedCounter from={0} to={68} suffix="%" duration={2} />
               </h3>
-              <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">PROLONGED INVESTIGATIONS</p>
-              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>Over two-thirds of gross misconduct investigations take longer than 12 months to resolve, leaving officers in career paralysis.</p>
+              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Over two-thirds of gross misconduct investigations take longer than 12 months to resolve.</p>
+              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">PROLONGED INVESTIGATIONS</p>
             </div>
             
-            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 relative overflow-hidden group`}>
-              <div className="w-16 h-16 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10">
-                <SearchX className="w-8 h-8" />
-              </div>
-              <h3 className={`font-bold text-5xl max-sm:text-4xl ${hybrid.editorialHeading} mb-4 font-sans tracking-tight relative z-10`}>
+            <div className="flex flex-col items-center text-center p-4 sm:p-8 lg:p-10 border-b md:border-b-0 md:border-r border-slate-100 group">
+              <SearchX className="w-7 h-7 sm:w-8 sm:h-8 text-[#1877F2] mb-4 sm:mb-6" strokeWidth={1.5} />
+              <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight">
                 <AnimatedCounter from={0} to={8.2} isFloat suffix="%" duration={2} />
               </h3>
-              <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">IOPC CONVICTION RATE</p>
-              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>Despite years of scrutiny and millions in public funding, only a tiny fraction of investigations result in convictions.</p>
+              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Only a tiny fraction of investigations result in convictions, despite millions in funding.</p>
+              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">IOPC CONVICTION RATE</p>
             </div>
             
-            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 relative overflow-hidden group`}>
-              <div className="w-16 h-16 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10">
-                <HeartPulse className="w-8 h-8" />
-              </div>
-              <h3 className={`font-bold text-5xl max-sm:text-4xl ${hybrid.editorialHeading} mb-4 font-sans tracking-tight relative z-10 flex items-baseline`}>
-                <AnimatedCounter from={0} to={1} duration={1} /> <span className="text-2xl ml-2">in 5</span>
+            <div className="flex flex-col items-center text-center p-4 sm:p-8 lg:p-10 border-r border-slate-100 md:border-r group">
+              <HeartPulse className="w-7 h-7 sm:w-8 sm:h-8 text-[#1877F2] mb-4 sm:mb-6" strokeWidth={1.5} />
+              <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight flex items-baseline justify-center">
+                <AnimatedCounter from={0} to={1} duration={1} /> <span className="text-base sm:text-xl ml-1.5 sm:ml-2">in 3</span>
               </h3>
-              <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">CLINICAL PTSD</p>
-              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>One in five serving officers suffer from PTSD, exacerbated directly by the stress of investigation processes.</p>
+              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Serving officers suffer from PTSD, exacerbated by the stress of investigations.</p>
+              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">CLINICAL PTSD</p>
             </div>
             
-            <div className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-6 md:p-10 relative overflow-hidden group`}>
-              <div className="w-16 h-16 bg-[#1877F2]/10 text-[#1877F2] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1877F2] group-hover:text-white transition-colors relative z-10">
-                <Briefcase className="w-8 h-8" />
-              </div>
-              <h3 className={`font-bold text-5xl max-sm:text-4xl ${hybrid.editorialHeading} mb-4 font-sans tracking-tight relative z-10`}>
+            <div className="flex flex-col items-center text-center p-4 sm:p-8 lg:p-10 group">
+              <Briefcase className="w-7 h-7 sm:w-8 sm:h-8 text-[#1877F2] mb-4 sm:mb-6" strokeWidth={1.5} />
+              <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight">
                 <AnimatedCounter from={0} to={9000} suffix="+" duration={2} />
               </h3>
-              <p className="font-bold text-xs uppercase tracking-[0.2em] text-[#1877F2] mb-4 relative z-10">OFFICERS RESIGNING</p>
-              <p className={`${hybrid.editorialBody} leading-relaxed text-sm relative z-10`}>Record numbers of highly trained officers are resigning voluntarily, citing a toxic culture of blame and lack of protection.</p>
+              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Record numbers are resigning voluntarily, citing a culture of blame.</p>
+              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">OFFICERS RESIGNING</p>
             </div>
+            
+          </div>
+          
+          <div className="text-center mt-6 sm:mt-8">
+             <p className="text-[10px] sm:text-xs text-slate-400 font-medium">Sources: NPCC, Mind Blue Light Survey, Police Federation, IOPC Data</p>
           </div>
         </div>
-      </EditorialSection>
+      </section>
 
       {/* WHAT'S GOING WRONG AWARENESS CARDS */}
-      <CampaignSection variant="deep">
-        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="text-center mb-10 lg:mb-20 max-w-3xl mx-auto">
-            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">The Flaws</h2>
-            <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6">WHAT IS GOING WRONG?</h2>
-            <p className="text-slate-400 text-lg leading-relaxed">The current framework is designed to find fault, not facts, leaving officers isolated and criminalized for doing their jobs.</p>
+      <section className="bg-white py-12 md:py-20">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+          <div className="text-left mb-6 md:mb-10 max-w-3xl">
+            <h2 className="font-sans text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900 mb-3 sm:mb-4">WHAT'S GOING WRONG?</h2>
+            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed font-medium">The problems run deep—and they are costing lives.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="relative rounded-3xl overflow-hidden group min-h-[350px] sm:min-h-[400px] border border-white/10">
-              <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Prolonged Investigations" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-transparent"></div>
-              <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
-                <Clock className="w-10 h-10 text-[#1877F2] mb-6 shadow-xl drop-shadow-[0_0_15px_rgba(24,119,242,0.5)]" />
-                <h3 className="font-bold text-2xl uppercase tracking-widest text-white mb-4">PROLONGED INVESTIGATIONS</h3>
-                <p className="text-slate-300 text-sm leading-relaxed">Officers are routinely placed under investigation for years, suspended or placed on restricted duties, effectively freezing their careers and lives.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+            <div className="relative bg-[#050A14] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-row md:flex-col items-center md:items-start text-left gap-5 sm:gap-6 group overflow-hidden border border-slate-800">
+              <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Prolonged Investigations" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-[#020611]/40" />
+              <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#002868] border border-[#1877F2]/40 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(24,119,242,0.2)]">
+                <Clock className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#1877F2]" />
+              </div>
+              <div className="relative z-10 flex-1">
+                <h3 className="text-white font-black text-sm sm:text-base md:text-lg uppercase tracking-wider mb-2">PROLONGED INVESTIGATIONS</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">Officers are routinely placed under investigation for years, suspended or placed on restricted duties.</p>
+              </div>
+              <div className="relative z-10 md:hidden shrink-0">
+                 <ArrowRight className="w-5 h-5 text-slate-500" />
               </div>
             </div>
 
-            <div className="relative rounded-3xl overflow-hidden group min-h-[350px] sm:min-h-[400px] border border-white/10">
-              <img src="https://images.unsplash.com/photo-1584483766114-2cea6facdf57?auto=format&fit=crop&q=80&w=800" alt="Lack of Trauma Care" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-transparent"></div>
-              <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
-                <Activity className="w-10 h-10 text-[#1877F2] mb-6 shadow-xl drop-shadow-[0_0_15px_rgba(24,119,242,0.5)]" />
-                <h3 className="font-bold text-2xl uppercase tracking-widest text-white mb-4">LACK OF TRAUMA CARE</h3>
-                <p className="text-slate-300 text-sm leading-relaxed">Post-incident procedures prioritize gathering evidence against the officer over providing psychological first aid after traumatic, life-altering events.</p>
+            <div className="relative bg-[#050A14] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-row md:flex-col items-center md:items-start text-left gap-5 sm:gap-6 group overflow-hidden border border-slate-800">
+              <img src="https://images.unsplash.com/photo-1584483766114-2cea6facdf57?auto=format&fit=crop&q=80&w=800" alt="Lack of Trauma Care" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-[#020611]/40" />
+              <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#002868] border border-[#1877F2]/40 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(24,119,242,0.2)]">
+                <Activity className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#1877F2]" />
+              </div>
+              <div className="relative z-10 flex-1">
+                <h3 className="text-white font-black text-sm sm:text-base md:text-lg uppercase tracking-wider mb-2">LACK OF TRAUMA CARE</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">Post-incident procedures prioritize gathering evidence against the officer over providing psychological first aid.</p>
+              </div>
+              <div className="relative z-10 md:hidden shrink-0">
+                 <ArrowRight className="w-5 h-5 text-slate-500" />
               </div>
             </div>
 
-            <div className="relative rounded-3xl overflow-hidden group min-h-[350px] sm:min-h-[400px] border border-white/10">
-              <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=800" alt="Guilty Until Proven Innocent" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-transparent"></div>
-              <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
-                <Scale className="w-10 h-10 text-[#1877F2] mb-6 shadow-xl drop-shadow-[0_0_15px_rgba(24,119,242,0.5)]" />
-                <h3 className="font-bold text-2xl uppercase tracking-widest text-white mb-4">GUILTY UNTIL PROVEN INNOCENT</h3>
-                <p className="text-slate-300 text-sm leading-relaxed">Officers face trial by media and anonymous malicious complaints with no consequences for members of the public who make fabricated allegations.</p>
+            <div className="relative bg-[#050A14] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-row md:flex-col items-center md:items-start text-left gap-5 sm:gap-6 group overflow-hidden border border-slate-800">
+              <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=800" alt="Guilty Until Proven Innocent" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-[#020611]/40" />
+              <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#002868] border border-[#1877F2]/40 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(24,119,242,0.2)]">
+                <Scale className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#1877F2]" />
               </div>
-            </div>
-          </div>
-        </div>
-      </CampaignSection>
-
-      {/* THE IMPACT INFORMATIONAL SECTION */}
-      <EditorialSection>
-        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="text-center mb-16">
-            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-4">Collateral Damage</h2>
-            <h2 className={`font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight ${hybrid.editorialHeading} mb-6`}>THE IMPACT</h2>
-            <p className={`${hybrid.editorialBody} text-lg leading-relaxed max-w-3xl mx-auto`}>A broken misconduct system doesn't just damage the individual officer. The collateral damage spans across families, colleagues, and the public they serve.</p>
-          </div>
-
-          <div className={`${hybrid.editorialCard} p-5 sm:p-10 md:p-16 shadow-sm`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div>
-                <h3 className={`font-bold text-2xl ${hybrid.editorialHeading} mb-8 border-b ${hybrid.editorialBorder} pb-4`}>On the Individual</h3>
-                <ul className="space-y-6">
-                  <li className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-[#1877F2] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className={`block ${hybrid.editorialHeading} mb-1 uppercase tracking-wider text-sm`}>Severe Mental Health Decline</strong>
-                      <span className={`${hybrid.editorialBody} text-sm leading-relaxed`}>Officers experience clinical depression, severe anxiety, and PTSD leading to tragic increases in suicide rates.</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-[#1877F2] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className={`block ${hybrid.editorialHeading} mb-1 uppercase tracking-wider text-sm`}>Financial Ruin</strong>
-                      <span className={`${hybrid.editorialBody} text-sm leading-relaxed`}>Loss of overtime, suspension of pay progression, and massive legal fees to defend against false claims.</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-[#1877F2] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className={`block ${hybrid.editorialHeading} mb-1 uppercase tracking-wider text-sm`}>Family Breakdown</strong>
-                      <span className={`${hybrid.editorialBody} text-sm leading-relaxed`}>Spouses and children carry the burden, leading to higher divorce rates and secondary trauma from intense media intrusion.</span>
-                    </div>
-                  </li>
-                </ul>
+              <div className="relative z-10 flex-1">
+                <h3 className="text-white font-black text-sm sm:text-base md:text-lg uppercase tracking-wider mb-2">GUILTY UNTIL PROVEN</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">Officers face trial by media and anonymous malicious complaints with no consequences for false allegations.</p>
               </div>
-
-              <div>
-                <h3 className={`font-bold text-2xl ${hybrid.editorialHeading} mb-8 border-b ${hybrid.editorialBorder} pb-4`}>On the Community</h3>
-                <ul className="space-y-6">
-                  <li className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className={`block ${hybrid.editorialHeading} mb-1 uppercase tracking-wider text-sm`}>De-Policing</strong>
-                      <span className={`${hybrid.editorialBody} text-sm leading-relaxed`}>Fear of career-ending investigations causes risk-aversion, leading to fewer proactive stops and necessary interventions.</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className={`block ${hybrid.editorialHeading} mb-1 uppercase tracking-wider text-sm`}>Loss of Experience</strong>
-                      <span className={`${hybrid.editorialBody} text-sm leading-relaxed`}>The mass exodus of highly trained, experienced officers leaves forces under-resourced and communities vulnerable.</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className={`block ${hybrid.editorialHeading} mb-1 uppercase tracking-wider text-sm`}>Public Safety Risk</strong>
-                      <span className={`${hybrid.editorialBody} text-sm leading-relaxed`}>When officers cannot perform their duties with confidence, criminals are emboldened and the public is left less safe.</span>
-                    </div>
-                  </li>
-                </ul>
+              <div className="relative z-10 md:hidden shrink-0">
+                 <ArrowRight className="w-5 h-5 text-slate-500" />
               </div>
             </div>
           </div>
         </div>
-      </EditorialSection>
+      </section>
 
-      {/* CHANGE IS POSSIBLE CTA PANEL */}
-      <CampaignSection variant="deep" className="overflow-hidden">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
-          <div className="bg-gradient-to-br from-[#1877F2]/20 to-[#020611] border border-[#1877F2]/30 rounded-3xl p-6 sm:p-12 lg:p-20 shadow-[0_0_50px_rgba(24,119,242,0.15)] flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1">
-              <AlertTriangle className="w-16 h-16 text-[#1877F2] mb-8" />
-              <h2 className="text-3xl max-sm:text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">CHANGE IS POSSIBLE</h2>
-              <p className="text-slate-300 text-lg leading-relaxed mb-8">
-                The time for performative sympathy is over. We demand concrete legislative changes to protect the officers who protect us.
-              </p>
-              <ul className="space-y-4 mb-10">
-                <li className="flex items-center gap-3 text-white font-medium uppercase tracking-widest text-sm">
-                  <ArrowRight className="w-5 h-5 text-[#1877F2]" /> Time limits on IOPC investigations
+      {/* THE IMPACT & CHANGE IS POSSIBLE SECTION */}
+      <section className="bg-white py-12 md:py-20 border-t border-slate-200">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+            
+            {/* THE IMPACT (Left Column) */}
+            <div className="flex flex-col justify-center">
+              <div className="mb-6">
+                <h2 className="font-sans text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-900 mb-2">THE IMPACT</h2>
+                <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">This isn't just a policing issue. It's a human issue.</p>
+              </div>
+
+              <ul className="space-y-4">
+                <li className="flex items-start gap-4">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
+                    <HeartPulse className="w-5 h-5" strokeWidth={2} />
+                  </div>
+                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Officers experience clinical depression, severe anxiety, and PTSD leading to tragic increases in suicide rates.</span>
                 </li>
-                <li className="flex items-center gap-3 text-white font-medium uppercase tracking-widest text-sm">
-                  <ArrowRight className="w-5 h-5 text-[#1877F2]" /> Accountability for malicious false complaints
+                <li className="flex items-start gap-4">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
+                    <Briefcase className="w-5 h-5" strokeWidth={2} />
+                  </div>
+                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Loss of overtime, suspension of pay progression, and massive legal fees to defend against false claims.</span>
                 </li>
-                <li className="flex items-center gap-3 text-white font-medium uppercase tracking-widest text-sm">
-                  <ArrowRight className="w-5 h-5 text-[#1877F2]" /> Mandatory trauma support protocols
+                <li className="flex items-start gap-4">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
+                    <ShieldAlert className="w-5 h-5" strokeWidth={2} />
+                  </div>
+                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Spouses and children carry the burden, leading to higher divorce rates and secondary trauma.</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
+                    <SearchX className="w-5 h-5" strokeWidth={2} />
+                  </div>
+                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Fear of career-ending investigations causes risk-aversion, leading to fewer proactive stops.</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
+                    <Activity className="w-5 h-5" strokeWidth={2} />
+                  </div>
+                  <span className="text-sm font-medium text-slate-700 leading-relaxed">The mass exodus of highly trained officers leaves forces under-resourced and communities vulnerable.</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
+                    <Scale className="w-5 h-5" strokeWidth={2} />
+                  </div>
+                  <span className="text-sm font-medium text-slate-700 leading-relaxed">When officers cannot perform their duties with confidence, criminals are emboldened and the public is left less safe.</span>
                 </li>
               </ul>
+              <p className="text-[#1877F2] font-bold text-sm mt-8">We cannot protect the public if we don't protect those who protect the public.</p>
             </div>
-            <div className="shrink-0 w-full md:w-auto">
-              <Button
-                type="button"
-                onClick={() => setIsGetInvolvedOpen(true)}
-                className="w-full md:w-auto bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-[0.2em] text-xs px-12 py-8 rounded-full shadow-xl transition-all"
-              >
-                Get Involved Now
-              </Button>
+
+            {/* CHANGE IS POSSIBLE (Right Column) */}
+            <div className="bg-[#020611] rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+              <div className="relative z-10">
+                <h2 className="text-2xl md:text-3xl font-black text-white mb-2 uppercase tracking-tight">CHANGE IS POSSIBLE.</h2>
+                <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 font-medium">
+                  But it starts with facing the truth. We need real action, real accountability and real support systems that truly work.
+                </p>
+                <ul className="space-y-3 mb-10">
+                  <li className="flex items-start gap-3 text-white font-medium text-sm">
+                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Better mental health and trauma support
+                  </li>
+                  <li className="flex items-start gap-3 text-white font-medium text-sm">
+                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Fair, transparent misconduct processes
+                  </li>
+                  <li className="flex items-start gap-3 text-white font-medium text-sm">
+                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> A culture of openness, respect and accountability
+                  </li>
+                  <li className="flex items-start gap-3 text-white font-medium text-sm">
+                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Stronger welfare for officers and their families
+                  </li>
+                  <li className="flex items-start gap-3 text-white font-medium text-sm">
+                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Leadership that puts people before politics
+                  </li>
+                </ul>
+                <div className="flex flex-col sm:flex-row items-center gap-6 mt-auto">
+                  <Link href="/take-action" className="w-full sm:w-auto">
+                    <Button type="button" className="w-full bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-8 py-5 rounded shadow-lg transition-all">
+                      TAKE ACTION NOW <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                  <span className="text-slate-400 text-sm font-medium">Be part of the change.</span>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
-      </CampaignSection>
-
-      <GetInvolvedModal
-        isOpen={isGetInvolvedOpen}
-        onClose={() => setIsGetInvolvedOpen(false)}
-      />
+      </section>
 
     </div>
   );

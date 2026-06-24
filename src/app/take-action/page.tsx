@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart } from "lucide-react";
+import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart, MapPin, Edit3, Eye, Copy, Lock, Navigation, Building2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { useRouter } from "next/navigation";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
-import TakeActionStepper from "@/components/take-action/TakeActionStepper";
 import TemplatePreviewModal, { type LetterTemplate } from "@/components/take-action/TemplatePreviewModal";
 import { generatePDF, generateDOCX } from "@/lib/documentGenerator";
 import { downloadBlob } from "@/lib/downloadBlob";
@@ -123,6 +122,14 @@ export default function TakeActionPage() {
     postcode: "",
     details: ""
   });
+  const [postcodeError, setPostcodeError] = useState(false);
+
+  const [activeCampaignIdx, setActiveCampaignIdx] = useState(0);
+
+  const [recipientDropdownOpen, setRecipientDropdownOpen] = useState(false);
+  const [toneDropdownOpen, setToneDropdownOpen] = useState(false);
+  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
+  const [policeForceDropdownOpen, setPoliceForceDropdownOpen] = useState(false);
 
   // Filter logic
   const filteredTemplates = TEMPLATES.filter(template => {
@@ -144,13 +151,14 @@ export default function TakeActionPage() {
   });
 
   const totalPages = Math.ceil(sortedTemplates.length / itemsPerPage);
-  const paginatedTemplates = sortedTemplates.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedTemplates = sortedTemplates.slice(0, currentPage * itemsPerPage);
 
   const handlePersonalize = () => {
     if (!personalization.postcode) {
-      alert("Please enter a postcode to find your MP.");
+      setPostcodeError(true);
       return;
     }
+    setPostcodeError(false);
     
     const queryParams = new URLSearchParams({
       name: personalization.name,
@@ -160,6 +168,24 @@ export default function TakeActionPage() {
     });
     
     router.push(`/take-action/personalize?${queryParams.toString()}`);
+  };
+
+  const handleCampaignClick = (campaignTitle: string) => {
+    let keyword = "";
+    if (campaignTitle.includes("12-Month")) keyword = "12-Month";
+    if (campaignTitle.includes("Trauma")) keyword = "Trauma";
+    if (campaignTitle.includes("Anonymity")) keyword = "Anonymity";
+    
+    setSearchQuery(keyword);
+    setRecipientFilter("All");
+    setToneFilter("All");
+    setSortBy("Recently Added");
+    setCurrentPage(1);
+    
+    const templatesSection = document.getElementById("letter-templates");
+    if (templatesSection) {
+      templatesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   const handleDownloadTemplate = async (template: LetterTemplate, format: "pdf" | "docx") => {
@@ -176,8 +202,8 @@ export default function TakeActionPage() {
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
-      
       <PageHero
+        className="!min-h-0 pb-8 md:pb-12 lg:pb-16"
         eyebrow={
           <>
             <Megaphone className="w-5 h-5 shrink-0" /> DRIVE THE CHANGE
@@ -192,34 +218,44 @@ export default function TakeActionPage() {
             </span>
           </>
         }
-        description="Our voice is our strongest weapon. Use the tools below to contact your representatives and force the system to change."
-        imageSrc="/bannerBg.png"
-        imageAlt="UK Police Background"
-        imageClassName="opacity-90 object-[70%_center]"
-      />
+        description="Download ready-to-use templates to contact MPs, PCCs, police leaders and decision makers. It takes minutes. It can make a lifetime of difference."
+        imageSrc="/images/take-action-hero.png"
+        imageAlt="Person writing a formal letter"
+        imageClassName="opacity-40 object-center scale-105"
+      >
+      </PageHero>
 
       {/* 2. ACTION BENEFITS STATISTICS STRIP */}
-      <EditorialSection noPadding className="relative z-20 border-b border-slate-200">
-        <div className={`${PAGE_CONTENT_CONTAINER} grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x lg:divide-x divide-slate-200`}>
-          {BENEFITS.map((benefit) => {
-            const Icon = benefit.icon;
-            return (
-              <div key={benefit.id} className="p-6 lg:p-14 flex flex-col justify-start group hover:bg-white transition-colors duration-500">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-[#1877F2]/10 flex items-center justify-center border border-[#1877F2]/20 group-hover:bg-[#1877F2] transition-colors duration-500">
-                    <Icon className="w-5 h-5 text-[#1877F2] group-hover:text-white transition-colors duration-500" />
-                  </div>
-                  <h3 className={`font-bold text-lg leading-tight ${hybrid.editorialHeading}`}>{benefit.title}</h3>
-                </div>
-                <p className={`${hybrid.editorialBody} text-sm leading-relaxed mb-8 flex-grow`}>
-                  {benefit.description}
-                </p>
-                <div className={`text-4xl max-sm:text-3xl lg:text-5xl font-black tracking-tighter ${hybrid.editorialHeading}`}>
-                  <AnimatedCounter from={0} to={benefit.value} duration={2} />+
-                </div>
-              </div>
-            );
-          })}
+      <EditorialSection noPadding className="relative z-20 border-b border-slate-200 bg-white">
+        <div className={`${PAGE_CONTENT_CONTAINER} grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100`}>
+          <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col md:flex-row items-center md:items-center justify-center gap-3 hover:bg-slate-50 transition-colors duration-500 text-center md:text-left h-full">
+            <FileText className="w-7 h-7 md:w-8 md:h-8 text-[#1877F2] shrink-0" strokeWidth={1.5} />
+            <div className="max-w-[200px]">
+              <h3 className="font-bold text-[10px] md:text-[11px] uppercase tracking-widest mb-1 text-slate-900 leading-tight">READY TEMPLATES</h3>
+              <p className="text-slate-500 text-[10px] md:text-[11px] leading-tight">Professional &<br className="hidden md:block"/>effective letters.</p>
+            </div>
+          </div>
+          <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col md:flex-row items-center md:items-center justify-center gap-3 hover:bg-slate-50 transition-colors duration-500 border-l border-slate-100 md:border-l-0 text-center md:text-left h-full">
+            <Clock className="w-7 h-7 md:w-8 md:h-8 text-[#1877F2] shrink-0" strokeWidth={1.5} />
+            <div className="max-w-[200px]">
+              <h3 className="font-bold text-[10px] md:text-[11px] uppercase tracking-widest mb-1 text-slate-900 leading-tight">SAVE TIME</h3>
+              <p className="text-slate-500 text-[10px] md:text-[11px] leading-tight">Skip the blank page.<br className="hidden md:block"/>Make impact fast.</p>
+            </div>
+          </div>
+          <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col md:flex-row items-center md:items-center justify-center gap-3 hover:bg-slate-50 transition-colors duration-500 text-center md:text-left h-full">
+            <Shield className="w-7 h-7 md:w-8 md:h-8 text-[#1877F2] shrink-0" strokeWidth={1.5} />
+            <div className="max-w-[200px]">
+              <h3 className="font-bold text-[10px] md:text-[11px] uppercase tracking-widest mb-1 text-slate-900 leading-tight">DRIVE CHANGE</h3>
+              <p className="text-slate-500 text-[10px] md:text-[11px] leading-tight">Demand accountability<br className="hidden md:block"/>and reform.</p>
+            </div>
+          </div>
+          <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col justify-center items-center hover:bg-slate-50 transition-colors duration-500 border-l border-slate-100 md:border-l-0">
+            <div className={`text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-[#1877F2] leading-none mb-1 ${hybrid.editorialHeading}`}>
+              <AnimatedCounter from={0} to={4281} duration={2} />
+            </div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-slate-900 mt-1">LETTERS SENT</div>
+            <div className="text-[9px] text-slate-500">and counting.</div>
+          </div>
         </div>
       </EditorialSection>
 
@@ -238,11 +274,16 @@ export default function TakeActionPage() {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8">
             {CAMPAIGNS.map((campaign) => {
               const CampaignIcon = campaign.icon;
               return (
-                <div key={campaign.id} className="group relative rounded-[2rem] border border-white/10 overflow-hidden min-h-[350px] sm:min-h-[400px] flex flex-col justify-end p-6 md:p-8 hover:border-[#1877F2]/50 transition-colors duration-500 shadow-xl">
+                <div 
+                  key={campaign.id} 
+                  onClick={() => handleCampaignClick(campaign.title)}
+                  className="group relative rounded-[2rem] border border-white/10 overflow-hidden min-h-[350px] sm:min-h-[400px] flex flex-col justify-end p-6 md:p-8 hover:border-[#1877F2]/50 transition-colors duration-500 shadow-xl cursor-pointer"
+                >
                   {/* Background Image Overlay */}
                   <div className="absolute inset-0 z-0">
                     <img src={campaign.bgImage} alt={campaign.title} className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 group-hover:grayscale-0 transition-transform duration-700" />
@@ -263,106 +304,257 @@ export default function TakeActionPage() {
               );
             })}
           </div>
+
+          {/* Mobile Slider */}
+          <div className="block md:hidden relative">
+            {(() => {
+              const campaign = CAMPAIGNS[activeCampaignIdx];
+              const CampaignIcon = campaign.icon;
+              return (
+                <div 
+                  key={campaign.id} 
+                  onClick={() => handleCampaignClick(campaign.title)}
+                  className="group relative rounded-2xl border border-white/10 overflow-hidden min-h-[220px] flex flex-col justify-center p-6 shadow-xl cursor-pointer"
+                >
+                  {/* Background Image Overlay */}
+                  <div className="absolute inset-0 z-0">
+                    <img src={campaign.bgImage} alt={campaign.title} className="w-full h-full object-cover grayscale opacity-40 transition-transform duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] via-[#050A14]/90 to-[#050A14]/80" />
+                  </div>
+                  
+                  <div className="relative z-10 flex items-center gap-6 px-4">
+                    <CampaignIcon className="w-16 h-16 text-[#1877F2] shrink-0 drop-shadow-lg" />
+                    <div className="flex flex-col gap-2">
+                      <h4 className="font-bold text-lg text-white leading-tight">{campaign.title}</h4>
+                      <p className="text-slate-300 text-[11px] leading-snug">{campaign.description}</p>
+                      <div className="inline-flex items-center gap-1.5 text-white font-medium text-[10px] mt-1">
+                        {campaign.templatesAvailable} Templates Available <ArrowRight className="w-3 h-3 text-slate-400" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Navigation Arrows */}
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); setActiveCampaignIdx((prev) => (prev - 1 + CAMPAIGNS.length) % CAMPAIGNS.length); }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white text-[#1877F2] flex items-center justify-center z-20 shadow-lg"
+                  >
+                    <ArrowLeft className="w-3 h-3" />
+                  </button>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); setActiveCampaignIdx((prev) => (prev + 1) % CAMPAIGNS.length); }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white text-[#1877F2] flex items-center justify-center z-20 shadow-lg"
+                  >
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+
+                  {/* Dots */}
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1 z-20">
+                    {CAMPAIGNS.map((_, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`w-1.5 h-1.5 rounded-full ${idx === activeCampaignIdx ? 'bg-[#1877F2]' : 'bg-white/30'}`} 
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
         </div>
       </CampaignSection>
 
       {/* 4. LIST LETTER TEMPLATES & PERSONALIZATION SIDEBAR */}
-      <EditorialSection className="lg:py-32 pb-10 lg:pb-20 lg:pb-48">
+      <EditorialSection id="letter-templates" className="lg:py-24 pb-10 lg:pb-20 scroll-mt-20">
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
 
-          <TakeActionStepper currentStep={1} className="mb-10 lg:mb-14" />
-          
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-row justify-between items-center md:items-end mb-6 md:mb-10 gap-4">
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-[2px] bg-[#1877F2]"></div>
-                <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Resources</h2>
-              </div>
-              <h3 className={`font-sans text-3xl max-sm:text-3xl md:text-6xl font-black uppercase tracking-tighter leading-[1.1] ${hybrid.editorialHeading}`}>
-                TEMPLATE <span className="text-slate-400">LIBRARY.</span>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight text-slate-900 mb-1 md:mb-2">
+                LETTER TEMPLATES
               </h3>
+              <p className="hidden md:block text-slate-500 text-sm font-medium">
+                Choose a template, personalise it and send in minutes.
+              </p>
             </div>
-            <p className={`${hybrid.editorialBody} text-sm md:text-base leading-relaxed max-w-xl pb-4 font-medium`}>
-              Find the right template, personalize it with your details, and take immediate action.
-            </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-12 items-start">
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
             
             {/* Left: Templates List with Search & Sort */}
-            <div className="w-full lg:w-2/3 flex flex-col gap-8">
+            <div className="w-full lg:w-2/3 flex flex-col">
               
               {/* Search & Filters */}
-              <div className={`${hybrid.editorialCard} p-5 md:p-6 flex flex-col md:flex-row gap-4`}>
-                <div className="relative flex-grow">
-                  <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+              <div className="bg-transparent md:bg-white md:rounded-2xl md:border md:border-slate-200 flex flex-col md:flex-row items-stretch md:items-center md:p-2 mb-8 md:shadow-sm gap-3 md:gap-0">
+                <div className="bg-white rounded-xl md:rounded-none border border-slate-200 md:border-0 shadow-sm md:shadow-none relative w-full md:flex-1 p-1 md:p-0 z-20">
+                  <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input 
                     type="text" 
-                    placeholder="Search templates by keyword..." 
+                    placeholder="Search templates..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className={`w-full pl-12 pr-4 py-3.5 text-xs font-bold rounded-xl focus:outline-none transition-colors placeholder-slate-400 ${hybrid.editorialInput}`}
+                    className="w-full pl-12 pr-4 py-3 text-sm bg-transparent focus:outline-none text-slate-900 placeholder:text-slate-400 font-medium" 
                   />
                 </div>
-                <select 
-                  value={recipientFilter}
-                  onChange={(e) => setRecipientFilter(e.target.value)}
-                  className={`text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px] ${hybrid.editorialInput}`}
-                >
-                  <option value="All">All Recipients</option>
-                  <option value="MP">MP</option>
-                  <option value="PCC">PCC</option>
-                  <option value="Chief Constable">Chief Constable</option>
-                </select>
-                <select 
-                  value={toneFilter}
-                  onChange={(e) => setToneFilter(e.target.value)}
-                  className={`text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px] ${hybrid.editorialInput}`}
-                >
-                  <option value="All">All Tones</option>
-                  <option value="Formal">Formal</option>
-                  <option value="Evidence-led">Evidence-led</option>
-                  <option value="Personal">Personal</option>
-                </select>
-                <select 
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className={`text-xs font-bold px-4 py-3.5 rounded-xl focus:outline-none appearance-none min-w-[160px] ${hybrid.editorialInput}`}
-                >
-                  <option value="Recently Added">Recently Added</option>
-                  <option value="A-Z">A to Z</option>
-                  <option value="Z-A">Z to A</option>
-                </select>
+                
+                <div className="flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-0">
+                  <div className="h-8 w-px bg-slate-200 hidden md:block" />
+                  <div className="bg-white md:bg-transparent rounded-full md:rounded-none border border-slate-200 md:border-0 shadow-sm md:shadow-none flex items-center gap-2 px-4 py-2 flex-grow sm:flex-grow-0 relative group z-30">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">For:</span>
+                    <div className="relative flex-1 md:flex-none">
+                      <button 
+                        onClick={() => { setRecipientDropdownOpen(!recipientDropdownOpen); setToneDropdownOpen(false); setSortDropdownOpen(false); }}
+                        className="w-full md:w-auto text-sm font-bold text-slate-900 bg-transparent focus:outline-none flex items-center justify-between gap-1 md:min-w-[120px] py-1"
+                      >
+                        {recipientFilter === "All" ? "All" : recipientFilter}
+                        <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${recipientDropdownOpen ? "rotate-180" : ""}`} />
+                      </button>
+                      {recipientDropdownOpen && (
+                        <>
+                          <div className="fixed inset-0 z-40" onClick={() => setRecipientDropdownOpen(false)} />
+                          <div className="absolute top-full left-0 md:right-0 md:left-auto mt-3 w-48 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left md:origin-top-right">
+                            {["All", "MP", "PCC", "Chief Constable"].map(val => (
+                              <button
+                                key={val}
+                                onClick={() => { setRecipientFilter(val); setRecipientDropdownOpen(false); }}
+                                className={`w-full text-left px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 transition-colors ${recipientFilter === val ? "text-[#1877F2] bg-blue-50/50" : "text-slate-600"}`}
+                              >
+                                {val === "All" ? "All Recipients" : val}
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="h-8 w-px bg-slate-200 hidden md:block" />
+                  <div className="bg-white md:bg-transparent rounded-full md:rounded-none border border-slate-200 md:border-0 shadow-sm md:shadow-none flex items-center gap-2 px-4 py-2 flex-grow sm:flex-grow-0 relative group z-20">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Voice:</span>
+                    <div className="relative flex-1 md:flex-none">
+                      <button 
+                        onClick={() => { setToneDropdownOpen(!toneDropdownOpen); setRecipientDropdownOpen(false); setSortDropdownOpen(false); }}
+                        className="w-full md:w-auto text-sm font-bold text-slate-900 bg-transparent focus:outline-none flex items-center justify-between gap-1 md:min-w-[100px] py-1"
+                      >
+                        {toneFilter === "All" ? "All" : toneFilter}
+                        <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${toneDropdownOpen ? "rotate-180" : ""}`} />
+                      </button>
+                      {toneDropdownOpen && (
+                        <>
+                          <div className="fixed inset-0 z-40" onClick={() => setToneDropdownOpen(false)} />
+                          <div className="absolute top-full left-0 md:right-0 md:left-auto mt-3 w-40 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left md:origin-top-right">
+                            {["All", "Formal", "Evidence-led", "Personal"].map(val => (
+                              <button
+                                key={val}
+                                onClick={() => { setToneFilter(val); setToneDropdownOpen(false); }}
+                                className={`w-full text-left px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 transition-colors ${toneFilter === val ? "text-[#1877F2] bg-blue-50/50" : "text-slate-600"}`}
+                              >
+                                {val === "All" ? "All Tones" : val}
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="h-8 w-px bg-slate-200 hidden md:block" />
+                  <div className="bg-white md:bg-transparent rounded-full md:rounded-none border border-slate-200 md:border-0 shadow-sm md:shadow-none flex items-center gap-2 px-4 py-2 flex-grow sm:flex-grow-0 relative group z-10">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Sort:</span>
+                    <div className="relative flex-1 md:flex-none">
+                      <button 
+                        onClick={() => { setSortDropdownOpen(!sortDropdownOpen); setToneDropdownOpen(false); setRecipientDropdownOpen(false); }}
+                        className="w-full md:w-auto text-sm font-bold text-slate-900 bg-transparent focus:outline-none flex items-center justify-between gap-1 md:min-w-[70px] py-1"
+                      >
+                        {sortBy === "Recently Added" ? "Recent" : sortBy}
+                        <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${sortDropdownOpen ? "rotate-180" : ""}`} />
+                      </button>
+                      {sortDropdownOpen && (
+                        <>
+                          <div className="fixed inset-0 z-40" onClick={() => setSortDropdownOpen(false)} />
+                          <div className="absolute top-full left-0 md:right-0 md:left-auto mt-3 w-40 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left md:origin-top-right">
+                            {["A-Z", "Z-A", "Recently Added"].map(val => (
+                              <button
+                                key={val}
+                                onClick={() => { setSortBy(val as any); setSortDropdownOpen(false); }}
+                                className={`w-full text-left px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 transition-colors ${sortBy === val ? "text-[#1877F2] bg-blue-50/50" : "text-slate-600"}`}
+                              >
+                                {val}
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Templates List */}
               <div className="flex flex-col gap-4">
                 {paginatedTemplates.length === 0 ? (
-                  <div className={`p-12 text-center border border-dashed rounded-[1.5rem] ${hybrid.editorialBorder}`}>
-                    <SearchX className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                    <p className={`${hybrid.editorialBody} font-medium`}>No templates match your search criteria.</p>
+                  <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
+                    <SearchX className="w-10 h-10 text-slate-300 mx-auto mb-4" />
+                    <h3 className="text-base font-bold text-slate-900 mb-1">No templates found</h3>
+                    <p className="text-sm text-slate-500">Try adjusting your filters or search query.</p>
                   </div>
                 ) : (
                   paginatedTemplates.map(template => (
-                    <div key={template.id} className={`${hybrid.editorialCard} ${hybrid.editorialCardHover} p-5 md:p-6 lg:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6`}>
-                      <div className="flex-grow">
-                        <h4 className={`text-xl font-bold mb-4 leading-tight ${hybrid.editorialHeading}`}>{template.title}</h4>
-                        <div className={`flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>
-                          <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-[#1877F2]" /> {template.recipient}</span>
-                          <span className="flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5 text-amber-500" /> {template.tone}</span>
-                          <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-emerald-500" /> {template.readTime}</span>
+                    <div key={template.id} className="bg-[#F8FAFC] md:bg-white rounded-2xl border border-slate-200 hover:border-[#1877F2]/40 hover:shadow-lg transition-all duration-300 p-4 md:p-6 flex flex-col xl:flex-row gap-4 md:gap-6 items-start xl:items-center group">
+                      {/* Icon & Details */}
+                      <div className="flex items-start gap-3 md:gap-5 flex-1 w-full">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-white md:bg-[#1877F2]/5 flex items-center justify-center shrink-0 border border-[#1877F2]/20 group-hover:scale-110 group-hover:bg-[#1877F2]/10 transition-transform duration-300 shadow-sm md:shadow-none">
+                          <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#1877F2] stroke-[1.5]" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-base font-bold text-slate-900 mb-1.5">{template.title}</h4>
+                          <p className="text-sm text-slate-500 line-clamp-2 xl:line-clamp-1 mb-3">Ask your {template.recipient} to support better data collection, prevention and officer mental health support.</p>
+                          <div className="flex flex-wrap items-center gap-2 lg:gap-3">
+                            <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
+                              <Building2 className="w-3.5 h-3.5 text-slate-500" /> {template.recipient}
+                            </span>
+                            <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1877F2] bg-blue-50 px-3 py-1.5 rounded-md border border-blue-100">
+                              {template.tone}
+                            </span>
+                            <span className="flex items-center gap-1.5 text-xs font-medium text-slate-500 ml-auto xl:ml-0">
+                              <Clock className="w-3.5 h-3.5" /> {template.readTime}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex flex-wrap md:flex-nowrap gap-3 shrink-0 w-full md:w-auto">
-                        <Button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} variant="outline" className={`w-full md:w-auto bg-transparent border-slate-300 hover:bg-[#010B19] hover:text-white ${hybrid.editorialHeading} text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl`}>
-                          <Search className="w-3.5 h-3.5 mr-2" /> Preview
-                        </Button>
-                        <Button onClick={() => void handleDownloadTemplate(template, "pdf")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
-                          <Download className="w-3.5 h-3.5 mr-2" /> PDF
-                        </Button>
-                        <Button onClick={() => void handleDownloadTemplate(template, "docx")} variant="outline" className="w-full md:w-auto bg-transparent border-[#1877F2]/30 hover:bg-[#1877F2] text-[#1877F2] hover:text-white text-[10px] font-bold uppercase tracking-widest min-h-[48px] px-5 rounded-xl transition-all">
-                          <Download className="w-3.5 h-3.5 mr-2" /> DOCX
-                        </Button>
+                      
+                      {/* Actions */}
+                      <div className="grid grid-cols-4 md:flex divide-x divide-slate-200 md:divide-x-0 items-center md:gap-4 shrink-0 w-full xl:w-auto border-t border-slate-200 xl:border-t-0 pt-3 xl:pt-0 mt-2 xl:mt-0">
+                        <button 
+                          onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} 
+                          className="flex flex-col xl:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 xl:py-2.5 xl:px-5 transition-colors"
+                        >
+                          <Eye className="w-5 h-5" strokeWidth={1.5} /> 
+                          <span className="text-[10px] xl:text-xs font-semibold">Preview</span>
+                        </button>
+                        <button 
+                          onClick={() => void handleDownloadTemplate(template, "pdf")} 
+                          className="flex flex-col xl:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 xl:py-2.5 xl:px-5 transition-colors"
+                        >
+                          <Download className="w-5 h-5" strokeWidth={1.5} /> 
+                          <span className="text-[10px] xl:text-xs font-semibold">PDF</span>
+                        </button>
+                        <button 
+                          onClick={() => void handleDownloadTemplate(template, "docx")} 
+                          className="flex flex-col xl:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 xl:py-2.5 xl:px-5 transition-colors"
+                        >
+                          <FileText className="w-5 h-5" strokeWidth={1.5} /> 
+                          <span className="text-[10px] xl:text-xs font-semibold">Word</span>
+                        </button>
+                        <button 
+                          onClick={() => {
+                            navigator.clipboard.writeText(template.content);
+                            alert("Template copied to clipboard!");
+                          }} 
+                          className="flex flex-col xl:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 xl:py-2.5 xl:px-5 transition-colors"
+                        >
+                          <Copy className="w-5 h-5" strokeWidth={1.5} /> 
+                          <span className="text-[10px] xl:text-xs font-semibold">Copy</span>
+                        </button>
                       </div>
                     </div>
                   ))
@@ -370,110 +562,155 @@ export default function TakeActionPage() {
               </div>
 
               {/* PAGINATION */}
-              {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-3 pt-6">
-                  <Button 
-                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                    disabled={currentPage === 1}
-                    variant="outline" 
-                    className={`w-12 h-12 p-0 rounded-full border-slate-300 ${currentPage === 1 ? 'bg-slate-100 text-slate-400 opacity-50 cursor-not-allowed' : 'bg-white text-slate-700 hover:bg-slate-50 transition-colors'}`}
+              {currentPage < totalPages && (
+                <div className="flex justify-center pt-6 md:pt-10">
+                  <button 
+                    onClick={() => setCurrentPage(p => p + 1)}
+                    className="flex items-center justify-center w-full md:w-auto text-[#1877F2] md:text-slate-700 font-bold uppercase tracking-widest text-[11px] bg-transparent md:bg-white rounded-lg md:rounded-full border border-[#1877F2]/40 md:border-slate-200 hover:border-[#1877F2] hover:bg-blue-50 md:hover:bg-white md:hover:text-[#1877F2] hover:shadow-sm md:shadow-sm px-8 py-3.5 transition-all"
                   >
-                    <ArrowLeft className="w-4 h-4" />
-                  </Button>
-                  
-                  {Array.from({ length: totalPages }).map((_, idx) => (
-                    <Button 
-                      key={idx}
-                      onClick={() => setCurrentPage(idx + 1)}
-                      className={`w-12 h-12 p-0 rounded-full font-bold text-sm transition-colors ${
-                        currentPage === idx + 1 
-                          ? 'bg-[#1877F2] text-white shadow-[0_0_20px_rgba(24,119,242,0.3)]' 
-                          : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      {idx + 1}
-                    </Button>
-                  ))}
-
-                  <Button 
-                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                    disabled={currentPage === totalPages}
-                    variant="outline" 
-                    className={`w-12 h-12 p-0 rounded-full border-slate-300 ${currentPage === totalPages ? 'bg-slate-100 text-slate-400 opacity-50 cursor-not-allowed' : 'bg-white text-slate-700 hover:bg-slate-50 transition-colors'}`}
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
+                    LOAD MORE TEMPLATES <ChevronDown className="hidden md:block w-4 h-4 ml-2" />
+                  </button>
                 </div>
               )}
             </div>
 
-            {/* Right: Personalization Sidebar */}
-            <div className="w-full lg:w-1/3">
-              <div className={`${hybrid.editorialCard} border-[#1877F2]/20 p-5 sm:p-8 shadow-lg sticky top-32`}>
-                <div className={`flex items-center gap-4 mb-8 pb-6 border-b ${hybrid.editorialBorder}`}>
-                  <div className="w-10 h-10 rounded-full bg-[#1877F2]/10 flex items-center justify-center">
-                    <Settings className="w-5 h-5 text-[#1877F2]" />
-                  </div>
-                  <div>
-                    <h4 className={`font-bold text-sm uppercase tracking-widest ${hybrid.editorialHeading}`}>Personalize</h4>
-                    <p className={`text-[10px] uppercase tracking-widest mt-1 ${hybrid.editorialMuted}`}>Setup Your Letter</p>
-                  </div>
-                </div>
+            {/* Right: Personalization & Impact Sidebar */}
+            <div className="w-full lg:w-1/3 flex flex-col gap-6">
+              
+              {/* Personalise Box */}
+              <div className="bg-[#050A14] text-white rounded-xl p-6 shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 blur-3xl rounded-full" />
+                <h4 className="font-black text-xl uppercase tracking-tight mb-2 relative z-10">PERSONALISE YOUR LETTER</h4>
+                <p className="text-slate-400 text-xs mb-6 relative z-10">Answer a few questions and we'll personalise the template for you.</p>
 
-                <div className="space-y-6">
+                <div className="space-y-4 relative z-10">
                   <div>
-                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Your Name</label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest mb-1.5 block text-slate-400">Your Name</label>
                     <input 
                       type="text" 
-                      placeholder="e.g. John Doe"
+                      placeholder="e.g. John Smith"
                       value={personalization.name}
                       onChange={(e) => setPersonalization({...personalization, name: e.target.value})}
-                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors ${hybrid.editorialInput}`}
+                      className="w-full bg-white/5 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600"
                     />
                   </div>
                   <div>
-                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Police Force</label>
-                    <select 
-                      value={personalization.policeForce}
-                      onChange={(e) => setPersonalization({...personalization, policeForce: e.target.value})}
-                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors appearance-none ${hybrid.editorialInput}`}
-                    >
-                      <option value="">Select Force (Optional)...</option>
-                      <option value="Metropolitan Police">Metropolitan Police</option>
-                      <option value="Greater Manchester Police">Greater Manchester Police</option>
-                      <option value="West Midlands Police">West Midlands Police</option>
-                      <option value="Other">Other</option>
-                    </select>
+                    <label className="text-[10px] font-bold uppercase tracking-widest mb-1.5 block text-slate-400">Your Police Force (optional)</label>
+                    <div className="relative">
+                      <button 
+                        type="button"
+                        onClick={() => setPoliceForceDropdownOpen(!policeForceDropdownOpen)}
+                        className="w-full bg-white/5 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[#1877F2] text-left flex items-center justify-between text-slate-300"
+                      >
+                        {personalization.policeForce || "e.g. Greater Manchester Police"}
+                        <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${policeForceDropdownOpen ? "rotate-180" : ""}`} />
+                      </button>
+                      {policeForceDropdownOpen && (
+                        <>
+                          <div className="fixed inset-0 z-40" onClick={() => setPoliceForceDropdownOpen(false)} />
+                          <div className="absolute top-full left-0 right-0 mt-1 bg-[#1A2332] rounded-md shadow-xl border border-white/10 py-1 z-50 animate-in fade-in slide-in-from-top-2 max-h-60 overflow-y-auto">
+                            {["Metropolitan Police", "West Midlands Police", "Greater Manchester Police", "Police Scotland", "Other"].map(opt => (
+                              <button
+                                key={opt}
+                                type="button"
+                                onClick={() => { setPersonalization({...personalization, policeForce: opt}); setPoliceForceDropdownOpen(false); }}
+                                className={`w-full text-left px-3 py-2 text-sm transition-colors ${personalization.policeForce === opt ? "bg-white/10 text-white font-semibold" : "hover:bg-white/5 text-slate-300"}`}
+                              >
+                                {opt}
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
                   <div>
-                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Postcode <span className="text-red-500">*</span></label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest mb-1.5 block text-slate-400">Your Postcode <span className="text-red-500">*</span></label>
                     <input 
                       type="text" 
-                      placeholder="e.g. SW1A 1AA"
+                      placeholder="e.g. M1 1AA"
                       value={personalization.postcode}
-                      onChange={(e) => setPersonalization({...personalization, postcode: e.target.value})}
-                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors ${hybrid.editorialInput}`}
+                      onChange={(e) => {
+                        setPersonalization({...personalization, postcode: e.target.value});
+                        if (e.target.value) setPostcodeError(false);
+                      }}
+                      className={`w-full bg-white/5 border rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600 ${postcodeError ? 'border-red-500' : 'border-white/10'}`}
                     />
-                    <p className={`text-[10px] mt-2 ${hybrid.editorialMuted}`}>Required to find your local MP.</p>
+                    {postcodeError && <p className="text-red-500 text-[10px] mt-1.5">Please enter a postcode to find your MP.</p>}
                   </div>
                   <div>
-                    <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Additional Details</label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest mb-1.5 block text-slate-400">Additional Optional Details</label>
                     <textarea 
-                      placeholder="Add any personal context or specific demands..."
+                      placeholder="Any specific context you want to add..."
                       value={personalization.details}
                       onChange={(e) => setPersonalization({...personalization, details: e.target.value})}
-                      className={`w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors h-24 resize-none ${hybrid.editorialInput}`}
+                      className="w-full bg-white/5 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[#1877F2] transition-colors placeholder-slate-600 min-h-[80px]"
                     />
                   </div>
 
                   <Button 
                     onClick={handlePersonalize}
-                    className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold tracking-widest uppercase text-xs py-7 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all mt-4"
+                    className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold tracking-widest uppercase text-xs py-5 rounded-md mt-2 transition-colors"
                   >
-                    Personalize & Find MP <ArrowRight className="w-4 h-4 ml-2" />
+                    FIND YOUR MP & PERSONALISE
+                  </Button>
+                  
+                  <p className="flex items-center justify-center gap-1.5 text-[10px] text-slate-500 mt-4">
+                    <Lock className="w-3 h-3" /> Your information is never stored.
+                  </p>
+                </div>
+              </div>
+
+              {/* Impact Box */}
+              <div className="bg-[#050A14] text-white rounded-xl p-6 shadow-xl relative overflow-hidden">
+                <h4 className="font-black text-xl uppercase tracking-tight mb-6 relative z-10">YOUR IMPACT</h4>
+                
+                <div className="flex flex-col gap-5 relative z-10">
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded bg-[#1877F2]/20 flex items-center justify-center border border-[#1877F2]/30 shrink-0">
+                      <FileText className="w-4 h-4 text-[#1877F2]" />
+                    </div>
+                    <div>
+                      <div className="font-black text-lg leading-none">4,281</div>
+                      <div className="text-[10px] text-slate-400">Letters sent</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded bg-[#1877F2]/20 flex items-center justify-center border border-[#1877F2]/30 shrink-0">
+                      <Users className="w-4 h-4 text-[#1877F2]" />
+                    </div>
+                    <div>
+                      <div className="font-black text-lg leading-none">312</div>
+                      <div className="text-[10px] text-slate-400">MPs contacted</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded bg-[#1877F2]/20 flex items-center justify-center border border-[#1877F2]/30 shrink-0">
+                      <Search className="w-4 h-4 text-[#1877F2]" />
+                    </div>
+                    <div>
+                      <div className="font-black text-lg leading-none">24</div>
+                      <div className="text-[10px] text-slate-400">Parliamentary questions asked</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded bg-[#1877F2]/20 flex items-center justify-center border border-[#1877F2]/30 shrink-0">
+                      <Megaphone className="w-4 h-4 text-[#1877F2]" />
+                    </div>
+                    <div>
+                      <div className="font-black text-lg leading-none">8</div>
+                      <div className="text-[10px] text-slate-400">Debates or commitments secured</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-white/10">
+                  <Button variant="link" className="text-[#1877F2] hover:text-white p-0 h-auto font-bold text-[10px] uppercase tracking-widest w-full justify-between">
+                    VIEW RECENT WINS <ArrowRight className="w-3 h-3" />
                   </Button>
                 </div>
               </div>
+
             </div>
 
           </div>

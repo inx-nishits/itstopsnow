@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { Search } from "lucide-react";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
@@ -8,11 +7,7 @@ import { cn } from "@/lib/utils";
 interface WallSearchControlsProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
-  sortBy: string;
-  onSortChange: (value: string) => void;
   resultCount: number;
-  hasActiveSort: boolean;
-  onClearSort: () => void;
   variant?: "default" | "sticky" | "campaign";
 }
 
@@ -21,11 +16,7 @@ const CONTROL_HEIGHT = "h-12";
 export default function WallSearchControls({
   searchQuery,
   onSearchChange,
-  sortBy,
-  onSortChange,
   resultCount,
-  hasActiveSort,
-  onClearSort,
   variant = "default",
 }: WallSearchControlsProps) {
   const isCampaign = variant === "campaign";
@@ -40,7 +31,7 @@ export default function WallSearchControls({
 
   return (
     <div className={cn(variant === "sticky" ? "py-1" : isCampaign ? "py-0" : "py-3")}>
-      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full">
+      <div className="flex w-full">
         <div className="relative flex-1 min-w-0">
           <div
             className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4"
@@ -57,59 +48,11 @@ export default function WallSearchControls({
             aria-label="Search memorial wall"
           />
         </div>
-
-        <SortSelect value={sortBy} onChange={onSortChange} dark={isCampaign} className={fieldBase}>
-          <option value="All">Default order</option>
-          <option value="Recently">Recently added</option>
-          <option value="MostTributed">Most tributed</option>
-        </SortSelect>
       </div>
-
-      {hasActiveSort && (
-        <button
-          type="button"
-          onClick={onClearSort}
-          className="text-xs text-[#1877F2] hover:text-white hover:underline mt-2 min-h-[44px] transition-colors"
-        >
-          Reset sort
-        </button>
-      )}
 
       <p className={cn("text-xs mt-2", isCampaign ? "text-slate-500" : hybrid.editorialMuted)}>
         {resultCount} {resultCount === 1 ? "life" : "lives"} on the wall
       </p>
     </div>
-  );
-}
-
-function SortSelect({
-  value,
-  onChange,
-  children,
-  dark,
-  className,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  children: ReactNode;
-  dark?: boolean;
-  className?: string;
-}) {
-  return (
-    <label className="relative block w-full sm:w-[200px] sm:shrink-0">
-      <span className="sr-only">Sort memorial wall</span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        aria-label="Sort memorial wall"
-        className={cn(
-          className,
-          "px-3 appearance-none cursor-pointer",
-          dark ? "bg-[#020611]" : undefined
-        )}
-      >
-        {children}
-      </select>
-    </label>
   );
 }

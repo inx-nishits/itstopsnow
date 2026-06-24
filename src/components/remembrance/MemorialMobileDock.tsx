@@ -23,36 +23,36 @@ export default function MemorialMobileDock({
       role="toolbar"
       aria-label="Memorial actions"
     >
-      <div className="flex items-stretch gap-2 px-3 pt-2.5">
+      <div className="flex items-stretch gap-2 px-2 pt-2">
         <button
           type="button"
           onClick={onLightCandle}
           disabled={isLit || loading}
-          className={`flex-1 flex flex-col items-center justify-center gap-1 min-h-[56px] rounded-2xl text-[11px] font-semibold transition-all active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2] ${
+          className={`flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl text-[10px] font-semibold transition-all active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2] ${
             isLit
-              ? "bg-white/5 text-slate-400 border border-white/10"
-              : "bg-[#1877F2] text-white shadow-[0_4px_16px_rgba(24,119,242,0.35)]"
+              ? "bg-[#1f2937] text-slate-300 border border-white/10"
+              : "bg-[#1f2937] text-white border border-white/10 shadow-sm"
           }`}
         >
-          <Flame className={`w-5 h-5 ${isLit ? "text-amber-400" : ""}`} />
+          <Flame className={`w-4 h-4 ${isLit ? "text-amber-400" : "text-slate-400"}`} />
           {loading ? "Lighting…" : isLit ? "Candle lit" : "Light candle"}
         </button>
 
         <button
           type="button"
           onClick={onLeaveTribute}
-          className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[56px] rounded-2xl bg-white/5 border border-white/10 text-slate-200 text-[11px] font-semibold active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
+          className="flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl bg-[#1f2937] border border-white/10 text-slate-300 text-[10px] font-semibold active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
         >
-          <MessageCircle className="w-5 h-5 text-slate-400" />
+          <MessageCircle className="w-4 h-4 text-slate-400" />
           Tribute
         </button>
 
         <button
           type="button"
           onClick={onShare}
-          className="flex flex-col items-center justify-center gap-1 min-w-[64px] min-h-[56px] rounded-2xl bg-white/5 border border-white/10 text-slate-200 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
+          className="flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl bg-[#1f2937] border border-white/10 text-slate-300 text-[10px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
         >
-          <Share2 className="w-5 h-5 text-slate-400" />
+          <Share2 className="w-4 h-4 text-slate-400" />
           Share
         </button>
       </div>

@@ -49,7 +49,7 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-[1.15] mb-4 max-w-4xl">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-4 max-w-4xl drop-shadow-2xl">
             {report.title}
           </h1>
 

@@ -2,25 +2,35 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, Loader2, FileText, CheckCircle, RotateCcw } from "lucide-react";
+import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, ArrowRight, Loader2, FileText, CheckCircle, RotateCcw, Shield, Check, Info, Users, Clock, Flame, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { simulateSubmit } from "@/lib/mock/utils";
 import { motion } from "framer-motion";
-import { EditorialSection } from "@/components/layout/PageSection";
-import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
-import { hybrid } from "@/lib/theme/hybrid";
-import TakeActionStepper, { type TakeActionStep } from "@/components/take-action/TakeActionStepper";
 
 const TEMPLATES = [
   { 
     id: 1, 
-    title: "Demand 12-Month Limit on Investigations", 
-    content: "Dear [MP_NAME],\n\nI am writing to you as a constituent residing at [POSTCODE] regarding a matter of urgent national importance affecting the welfare of our police officers.\n\nCurrently, police officers who are subjected to investigations by the IOPC face average delays of over 4 years. During this time, they are often suspended on restricted duties, isolated from their peers, and treated as guilty until proven innocent. The human cost is devastating, with a direct correlation between investigation delays and severe mental health crises.\n\nAs a [ROLE], I see this devastation firsthand. My name is [NAME] and I am asking you to intervene.\n\n[DETAILS]\n\nI urge you to support the 'It Stops Now' campaign's call for a strict 12-month time limit on all misconduct investigations. After 12 months, if no tribunal or criminal charge is brought, the case must be closed.\n\nPlease confirm that you will raise this issue with the Home Secretary.\n\nYours sincerely,\n[NAME]\n[POSTCODE]"
+    title: "Police Suicide Awareness", 
+    description: "Improve data transparency, prevention strategies and officer support.",
+    content: "Dear [MP_NAME],\n\nRe: Police Suicide Awareness - Improving Support and Transparency\n\nI am writing to you as your constituent to raise an issue of urgent concern: the continued loss of police officers to suicide and the need for greater transparency, prevention and support.\n\nPolice officers protect our communities every day, often facing traumatic, high-pressure and emotionally demanding situations. Yet too many are left without the support they need, and too many lives are lost.\n\nI am asking you to support calls for the government to improve data transparency, invest in early intervention and ensure that every officer has access to the mental health and welfare support they deserve.\n\nThis is not just about statistics – it is about real people, real families and a service that our communities rely on.\n\nI would be grateful if you could please let me know what steps you are taking to support police officer wellbeing and suicide prevention.\n\nThank you for your time and for representing our community.\n\nYours sincerely,\n[NAME]"
   },
   { 
     id: 2, 
-    title: "Protect Officer Anonymity", 
-    content: "Dear [MP_NAME],\n\nI am contacting you from [POSTCODE] to demand immediate action on the protection of police officer identities prior to conviction.\n\nIt is unacceptable that officers face trial by media for unproven allegations. This destroys careers and lives before any evidence is formally presented.\n\nAs a [ROLE], I am deeply concerned. [DETAILS]\n\nPlease support legislative changes to ensure anonymity for officers under investigation until formal charges are brought.\n\nSincerely,\n[NAME]"
+    title: "Misconduct Reform", 
+    description: "Ensure fair investigations and protect officer welfare.",
+    content: "Dear [MP_NAME],\n\nRe: Misconduct Reform\n\nI am contacting you to demand immediate action on reforming the misconduct investigation process...\n\nSincerely,\n[NAME]"
+  },
+  { 
+    id: 3, 
+    title: "Better Welfare Support", 
+    description: "Improve access to mental health and occupational support.",
+    content: "Dear [MP_NAME],\n\nRe: Better Welfare Support\n\nI am writing to urge you to support improved welfare funding...\n\nSincerely,\n[NAME]"
+  },
+  { 
+    id: 4, 
+    title: "Mandatory Reporting", 
+    description: "Support mandatory reporting of police officer suicides.",
+    content: "Dear [MP_NAME],\n\nRe: Mandatory Reporting\n\nI am writing to urge you to support mandatory reporting...\n\nSincerely,\n[NAME]"
   }
 ];
 
@@ -28,257 +38,417 @@ function PersonalizeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [mpFound, setMpFound] = useState<{name: string, party: string, constituency: string, email: string} | null>(null);
   
   // Form State
   const [postcode, setPostcode] = useState(searchParams.get("postcode") || "");
   const [name, setName] = useState(searchParams.get("name") || "");
-  const [role, setRole] = useState(searchParams.get("force") || "Constituent");
+  const [email, setEmail] = useState("");
+  const [connection, setConnection] = useState(searchParams.get("force") || "");
   const [details, setDetails] = useState(searchParams.get("details") || "");
   const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATES[0].id);
   const [letterContent, setLetterContent] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState("");
-  const [simulateNoMpEmail, setSimulateNoMpEmail] = useState(false);
+  const [connectionDropdownOpen, setConnectionDropdownOpen] = useState(false);
 
-  // Mock API Call to find MP
+  // Initial load auto-fetch MP if postcode passed from previous page
   useEffect(() => {
-    if (postcode) {
-      setLoading(true);
-      // Simulate API delay
-      setTimeout(() => {
-        setMpFound({
-          name: "Rt Hon Jane Smith MP",
-          party: "Independent",
-          constituency: "Local District",
-          email: "jane.smith.mp@parliament.uk"
-        });
-        setLoading(false);
-      }, 1500);
-    } else {
-      setLoading(false);
+    if (searchParams.get("postcode")) {
+      handleFindMp();
     }
-  }, [postcode]);
+  }, []);
+
+  const handleFindMp = () => {
+    if (!postcode) return;
+    setLoading(true);
+    // Simulate API delay
+    setTimeout(() => {
+      setMpFound({
+        name: "Jane Smith MP",
+        party: "Labour Party",
+        constituency: "Darlington",
+        email: "jane.smith.mp@parliament.uk"
+      });
+      setLoading(false);
+    }, 1500);
+  };
 
   const updateLetterContent = () => {
     const template = TEMPLATES.find(t => t.id === selectedTemplate);
     if (template) {
       let content = template.content;
       content = content.replace(/\[MP_NAME\]/g, mpFound ? mpFound.name : "Member of Parliament");
-      content = content.replace(/\[POSTCODE\]/g, postcode || "[Your Postcode]");
-      content = content.replace(/\[NAME\]/g, name || "[Your Name]");
-      content = content.replace(/\[ROLE\]/g, role || "concerned citizen");
-      content = content.replace(/\[DETAILS\]/g, details ? `Additional context: ${details}` : "");
+      content = content.replace(/\[NAME\]/g, name || "(Your Name)");
       setLetterContent(content);
     }
   };
 
-  // Update Letter Content dynamically when fields change
   useEffect(() => {
     updateLetterContent();
-  }, [selectedTemplate, name, postcode, role, details, mpFound]);
+  }, [selectedTemplate, name, mpFound]);
 
   const handleReset = () => {
     updateLetterContent();
   };
 
-  const currentStep: TakeActionStep = loading ? 2 : mpFound ? 3 : 2;
-
   return (
-    <div className="min-h-screen font-sans flex flex-col">
-      <PageHero
-        variant="utility"
-        backLink={
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Templates
-          </button>
-        }
-        title={
-          <>
-            PERSONALIZE &{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
-              SEND.
-            </span>
-          </>
-        }
-        description="Review your representative details and customize your letter before sending."
-      />
-
-      <EditorialSection className="pb-10 lg:pb-20 lg:pb-32">
-      <div className={PAGE_CONTENT_CONTAINER}>
-
-        <TakeActionStepper currentStep={currentStep} className="mb-10" />
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <div className="min-h-screen bg-[#050A14] text-white font-sans flex flex-col pt-20 md:pt-24">
+      {/* Top Header */}
+      <div className="w-full border-b border-white/10 relative z-10 bg-[#02050A]">
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-4 flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold tracking-widest">
+              <button onClick={() => router.back()} className="hover:text-white transition-colors">Home</button>
+              <span>&gt;</span>
+              <button onClick={() => router.back()} className="hover:text-white transition-colors">Take Action</button>
+              <span>&gt;</span>
+              <span className="text-[#1877F2]">Contact Your MP</span>
+            </div>
+            <div className="hidden md:flex items-center gap-2 text-[10px] text-slate-400">
+              <Shield className="w-3 h-3" /> Your information is secure and will never be shared.
+            </div>
+          </div>
           
-          {/* Left Column: MP Details & Settings */}
-          <div className="lg:col-span-4 flex flex-col gap-8">
+          <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-6">
+            <div>
+              <h1 className="text-2xl md:text-4xl font-black uppercase tracking-tight mb-1">CONTACT YOUR MP</h1>
+              <p className="text-slate-400 text-xs md:text-sm">Send a letter in minutes. Your voice can drive change.</p>
+            </div>
             
-            {/* MP Finder Widget */}
-            <div className={`${hybrid.editorialCard} p-8`}>
-              <div className={`flex items-center gap-3 mb-6 pb-6 border-b ${hybrid.editorialBorder}`}>
-                <Building2 className="w-5 h-5 text-[#1877F2]" />
-                <h2 className={`font-bold text-sm uppercase tracking-widest ${hybrid.editorialHeading}`}>Your Representative</h2>
+            {/* Progress Bar */}
+            <div className="flex overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-start gap-2 sm:gap-4 xl:gap-8 pb-4 mt-4 xl:mt-0 w-full xl:w-auto">
+              <div className="flex flex-col items-center gap-2 shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[10px] font-bold">1</div>
+                <span className="text-[10px] font-bold text-white whitespace-nowrap">Find Your MP</span>
+              </div>
+              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
+              <div className="flex flex-col items-center gap-2 shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[10px] font-bold">2</div>
+                <span className="text-[10px] font-bold text-white whitespace-nowrap">Personalise</span>
+              </div>
+              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
+              <div className="flex flex-col items-center gap-2 shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[10px] font-bold">3</div>
+                <span className="text-[10px] font-bold text-slate-300 whitespace-nowrap">Preview</span>
+              </div>
+              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
+              <div className="flex flex-col items-center gap-2 shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-[10px] font-bold">4</div>
+                <span className="text-[10px] font-bold text-slate-500 whitespace-nowrap">Add Your Voice</span>
+              </div>
+              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
+              <div className="flex flex-col items-center gap-2 shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-[10px] font-bold">5</div>
+                <span className="text-[10px] font-bold text-slate-500 whitespace-nowrap">Send Letter</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content 3 Columns */}
+      <div className="flex-grow w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          {/* Left Column: 1 FIND YOUR MP & 2 CHOOSE A CAMPAIGN */}
+          <div className="lg:col-span-3 flex flex-col gap-4 md:gap-6 max-lg:contents">
+            <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-1 lg:order-none">
+              <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-2">
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">1</span>
+                FIND YOUR MP
+              </h2>
+              <p className="text-[10px] md:text-xs text-slate-500 mb-4">Enter your postcode to find your Member of Parliament</p>
+              
+              <div className="flex gap-2 mb-4 items-stretch">
+                <input 
+                  type="text" 
+                  value={postcode}
+                  onChange={(e) => setPostcode(e.target.value)}
+                  placeholder="DL1 1AA"
+                  className="w-full bg-white border border-slate-300 rounded-md px-3 h-10 text-sm focus:outline-none focus:border-[#1877F2]"
+                />
+                <Button onClick={handleFindMp} className="bg-[#1877F2] hover:bg-blue-600 text-white rounded-md px-4 h-10">
+                  Find MP
+                </Button>
+              </div>
+
+              {loading && (
+                <div className="flex items-center justify-center py-4">
+                  <Loader2 className="w-6 h-6 animate-spin text-[#1877F2]" />
+                </div>
+              )}
+
+              {mpFound && !loading && (
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4">
+                  <div className="flex items-center gap-2 text-emerald-600 text-xs font-bold bg-emerald-50 px-3 py-2 rounded-md mb-4 border border-emerald-100">
+                    <Check className="w-4 h-4" /> Your MP has been found
+                  </div>
+                  <div className="flex items-start gap-4 mb-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-200 shrink-0">
+                      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="MP" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-sm text-slate-900">{mpFound.name}</h3>
+                      <p className="text-xs text-slate-500">{mpFound.constituency}</p>
+                      <p className="text-xs text-slate-500 mb-2">{mpFound.party}</p>
+                      <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-1">
+                        <Mail className="w-3 h-3" /> {mpFound.email}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-1">
+                        <span className="w-3 text-center">☎</span> 020 7219 6491
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-3">
+                        <MapPin className="w-3 h-3" /> House of Commons, London SW1A 0AA
+                      </div>
+                      <a href="#" className="text-[#1877F2] text-[10px] font-bold uppercase hover:underline">View on parliament.uk</a>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-2 lg:order-none">
+              <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-2">
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">2</span>
+                CHOOSE A CAMPAIGN
+              </h2>
+              <p className="text-[10px] md:text-xs text-slate-500 mb-5">Select the issue you want to raise</p>
+              
+              <div className="flex flex-col gap-4">
+                {TEMPLATES.map(t => (
+                  <label key={t.id} className="flex gap-3 cursor-pointer group">
+                    <div className="pt-0.5">
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${selectedTemplate === t.id ? 'border-[#1877F2]' : 'border-slate-300'}`}>
+                        {selectedTemplate === t.id && <div className="w-2 h-2 rounded-full bg-[#1877F2]" />}
+                      </div>
+                    </div>
+                    <div>
+                      <div className={`text-xs md:text-sm font-bold ${selectedTemplate === t.id ? 'text-[#1877F2]' : 'text-slate-900'}`}>{t.title}</div>
+                      <div className="text-[10px] text-slate-500 mt-0.5 leading-snug pr-2">{t.description}</div>
+                    </div>
+                  </label>
+                ))}
               </div>
               
-              <div className="mb-6">
-                <label className={`text-[10px] font-bold uppercase tracking-widest mb-2 block ${hybrid.editorialMuted}`}>Postcode Search</label>
-                <div className="flex gap-2">
+              <div className="mt-5 pt-4 border-t border-slate-100">
+                <button className="text-[#1877F2] text-[10px] font-bold hover:underline flex items-center gap-1 uppercase tracking-widest">
+                  View all campaigns <ArrowRight className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Center Column: 3 PREVIEW YOUR LETTER */}
+          <div className="lg:col-span-6 lg:self-stretch max-lg:contents">
+            <div className="bg-white rounded-xl text-slate-900 shadow-lg flex flex-col h-[500px] lg:h-full border border-slate-200 overflow-hidden order-4 lg:order-none">
+              <div className="p-4 md:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50">
+                <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight">
+                  <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">3</span>
+                  PREVIEW YOUR LETTER
+                </h2>
+                <div className="flex items-center gap-2 self-start sm:self-auto w-full sm:w-auto">
+                  <button onClick={handleReset} className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-200 px-3 py-1.5 rounded-md shadow-sm whitespace-nowrap">
+                    <RotateCcw className="w-3 h-3 shrink-0" /> Reset
+                  </button>
+                  <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-200 px-3 py-1.5 rounded-md shadow-sm whitespace-nowrap">
+                    <FileText className="w-3 h-3 shrink-0" /> Edit Template
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 md:p-8 flex-grow overflow-y-auto custom-scrollbar">
+                <div className="max-w-2xl mx-auto h-full flex flex-col">
+                  <div className="flex justify-between items-start mb-10">
+                    <div className="text-xs md:text-sm text-slate-700 leading-relaxed font-medium">
+                      {mpFound ? (
+                        <>
+                          {mpFound.name}<br/>
+                          House of Commons<br/>
+                          London<br/>
+                          SW1A 0AA
+                        </>
+                      ) : (
+                        <>
+                          [MP Name]<br/>
+                          House of Commons<br/>
+                          London<br/>
+                          SW1A 0AA
+                        </>
+                      )}
+                    </div>
+                    <div className="text-xs md:text-sm text-slate-700 font-medium">
+                      20 May 2024
+                    </div>
+                  </div>
+
+                  <textarea 
+                    value={letterContent}
+                    onChange={(e) => setLetterContent(e.target.value)}
+                    className="w-full flex-grow min-h-[300px] bg-transparent text-sm md:text-[15px] text-slate-800 leading-[1.8] font-medium focus:outline-none resize-none"
+                    placeholder="Your letter content will appear here..."
+                  />
+
+                  <div className="mt-8 p-4 bg-blue-50/50 border border-blue-100 rounded-lg flex items-start gap-3">
+                    <Info className="w-4 h-4 text-[#1877F2] shrink-0 mt-0.5" />
+                    <p className="text-[10px] md:text-xs text-[#1877F2] font-medium leading-relaxed">This is a template letter. You can edit it and add your own personal message in the next step.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 md:p-5 border-t border-slate-100 flex items-center justify-between bg-white mt-auto">
+                <Button variant="ghost" onClick={() => router.back()} className="text-slate-500 hover:text-slate-900 font-bold text-xs uppercase tracking-widest px-0">
+                  <ArrowLeft className="w-4 h-4 mr-2" /> Back
+                </Button>
+                <Button className="bg-[#1877F2] hover:bg-blue-600 text-white px-6 md:px-8 font-bold text-xs uppercase tracking-widest rounded-md">
+                  Continue <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: 4 PERSONALISE & 5 SEND */}
+          <div className="lg:col-span-3 flex flex-col gap-4 md:gap-6 max-lg:contents">
+            <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-3 lg:order-none">
+              <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-4">
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">4</span>
+                PERSONALISE YOUR LETTER
+              </h2>
+              
+              <div className="space-y-3">
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Name</label>
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="John Smith"
+                    className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2]"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Email</label>
+                  <input 
+                    type="email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="john.smith@email.com"
+                    className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2]"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Postcode</label>
                   <input 
                     type="text" 
                     value={postcode}
                     onChange={(e) => setPostcode(e.target.value)}
-                    placeholder="Enter Postcode"
-                    className={`w-full rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors ${hybrid.editorialInput}`}
+                    placeholder="DL1 1AA"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-500 focus:outline-none"
+                    readOnly
                   />
-                  <Button variant="outline" className="w-12 h-12 border-slate-300 hover:bg-[#010B19] hover:text-white">
-                    <Search className="w-4 h-4" />
-                  </Button>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Connection to Policing <span className="text-[8px] opacity-70">(optional)</span></label>
+                  <div className="relative">
+                    <button 
+                      type="button"
+                      onClick={() => setConnectionDropdownOpen(!connectionDropdownOpen)}
+                      className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2] text-left flex items-center justify-between"
+                    >
+                      {connection || "Serving Police Officer"}
+                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${connectionDropdownOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {connectionDropdownOpen && (
+                      <>
+                        <div className="fixed inset-0 z-40" onClick={() => setConnectionDropdownOpen(false)} />
+                        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-md shadow-lg border border-slate-200 py-1 z-50 animate-in fade-in slide-in-from-top-2">
+                          {["Serving Police Officer", "Family Member", "Retired Officer", "Supporter"].map(opt => (
+                            <button
+                              key={opt}
+                              type="button"
+                              onClick={() => { setConnection(opt); setConnectionDropdownOpen(false); }}
+                              className={`w-full text-left px-3 py-2 text-[13px] transition-colors ${connection === opt || (!connection && opt === "Serving Police Officer") ? "bg-blue-50 text-[#1877F2] font-semibold" : "hover:bg-slate-50 text-slate-700"}`}
+                            >
+                              {opt}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Add a personal message <span className="text-[8px] opacity-70">(optional)</span></label>
+                  <textarea 
+                    value={details}
+                    onChange={(e) => setDetails(e.target.value)}
+                    maxLength={300}
+                    placeholder="I have seen first-hand the impact that lack of support has on officers and their families."
+                    className="w-full h-20 bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2] resize-none leading-relaxed"
+                  />
+                  <div className="text-[10px] text-slate-400 text-right mt-1 font-medium">{details.length}/300 characters</div>
                 </div>
               </div>
-
-              {loading ? (
-                <div className={`py-8 flex flex-col items-center justify-center ${hybrid.editorialMuted}`}>
-                  <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#1877F2]" />
-                  <p className="text-xs font-bold uppercase tracking-widest">Finding your MP...</p>
-                </div>
-              ) : mpFound ? (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-[#1877F2]/10 border border-[#1877F2]/20 rounded-xl p-5">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-[#1877F2] flex items-center justify-center shrink-0">
-                      <User className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className={`font-bold text-lg ${hybrid.editorialHeading}`}>{mpFound.name}</h3>
-                      <p className={`text-sm ${hybrid.editorialBody}`}>{mpFound.party}</p>
-                      <p className={`text-xs flex items-center gap-1 mt-1 ${hybrid.editorialMuted}`}><MapPin className="w-3 h-3" /> {mpFound.constituency}</p>
-                    </div>
-                  </div>
-                  <div className="bg-slate-100 rounded-lg p-3 flex items-center justify-between gap-2">
-                    <span className={`text-xs truncate ${hybrid.editorialMuted}`}>
-                      {simulateNoMpEmail ? "Email not publicly available" : mpFound.email}
-                    </span>
-                    {!simulateNoMpEmail && <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />}
-                  </div>
-                  <label className="mt-4 flex items-center gap-2 text-[10px] text-slate-500 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={simulateNoMpEmail}
-                      onChange={(e) => setSimulateNoMpEmail(e.target.checked)}
-                      className="rounded border-slate-300"
-                    />
-                    Prototype: simulate MP with no email on file
-                  </label>
-                </motion.div>
-              ) : (
-                <div className={`py-8 text-center border border-dashed rounded-xl ${hybrid.editorialBorder}`}>
-                  <p className={`text-sm ${hybrid.editorialMuted}`}>Enter a valid postcode to find your MP.</p>
-                </div>
-              )}
             </div>
 
-            {/* Template Selection */}
-            <div className={`${hybrid.editorialCard} p-8`}>
-              <div className={`flex items-center gap-3 mb-6 pb-6 border-b ${hybrid.editorialBorder}`}>
-                <FileText className="w-5 h-5 text-[#1877F2]" />
-                <h2 className={`font-bold text-sm uppercase tracking-widest ${hybrid.editorialHeading}`}>Choose Template</h2>
-              </div>
-              <select 
-                value={selectedTemplate}
-                onChange={(e) => setSelectedTemplate(Number(e.target.value))}
-                className={`w-full rounded-xl px-4 py-4 text-sm focus:outline-none transition-colors appearance-none ${hybrid.editorialInput}`}
-              >
-                {TEMPLATES.map(t => (
-                  <option key={t.id} value={t.id}>{t.title}</option>
-                ))}
-              </select>
-            </div>
-
-          </div>
-
-          {/* Right Column: Letter Editor */}
-          <div className="lg:col-span-8">
-            <div className={`${hybrid.editorialCard} overflow-hidden flex flex-col h-full`}>
+            <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-5 lg:order-none">
+              <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-4">
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">5</span>
+                SEND YOUR LETTER
+              </h2>
               
-              <div className={`border-b ${hybrid.editorialBorder} p-6 flex flex-col sm:flex-row justify-between items-center gap-4`}>
-                <h2 className={`font-bold text-sm uppercase tracking-widest flex items-center gap-2 ${hybrid.editorialHeading}`}>
-                  <Mail className="w-4 h-4 text-[#1877F2]" /> Edit Letter
-                </h2>
-                <div className={`text-xs ${hybrid.editorialMuted}`}>
-                  <span className="text-emerald-500 font-bold">●</span> Ready to customize
+              <div className="space-y-3 mb-5">
+                <div className="flex gap-3">
+                  <div className="w-6 h-6 rounded-full bg-blue-50/80 flex items-center justify-center shrink-0 border border-blue-100">
+                    <Mail className="w-3 h-3 text-[#1877F2]" />
+                  </div>
+                  <p className="text-[11px] md:text-xs text-slate-600 leading-snug mt-0.5">We will send your letter directly to your MP via email.</p>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-6 h-6 rounded-full bg-blue-50/80 flex items-center justify-center shrink-0 border border-blue-100">
+                    <Shield className="w-3 h-3 text-[#1877F2]" />
+                  </div>
+                  <p className="text-[11px] md:text-xs text-slate-600 leading-snug mt-0.5">Your details will not be shared with anyone.</p>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-6 h-6 rounded-full bg-blue-50/80 flex items-center justify-center shrink-0 border border-blue-100">
+                    <CheckCircle className="w-3 h-3 text-[#1877F2]" />
+                  </div>
+                  <p className="text-[11px] md:text-xs text-slate-600 leading-snug mt-0.5">You'll receive a confirmation when your letter has been sent.</p>
                 </div>
               </div>
 
-              <div className="flex-grow p-6 md:p-10 bg-slate-50">
-                <textarea 
-                  value={letterContent}
-                  onChange={(e) => setLetterContent(e.target.value)}
-                  className={`w-full h-full min-h-[500px] bg-transparent text-[15px] leading-relaxed font-medium focus:outline-none resize-none ${hybrid.editorialBody}`}
-                  placeholder="Your letter content will appear here..."
-                />
-              </div>
-
-              <div className={`border-t ${hybrid.editorialBorder} p-6 flex flex-col sm:flex-row justify-between items-center gap-4`}>
-                <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
-                  <Button onClick={handleReset} variant="outline" className={`w-full sm:w-auto border-slate-300 ${hybrid.editorialMuted} hover:bg-slate-100 font-bold uppercase tracking-widest text-xs py-6 px-6 rounded-xl transition-all`}>
-                    <RotateCcw className="w-4 h-4 mr-2" /> Reset
-                  </Button>
-                  <Button variant="outline" className={`w-full sm:w-auto border-slate-300 ${hybrid.editorialHeading} hover:bg-[#010B19] hover:text-white font-bold uppercase tracking-widest text-xs py-6 px-8 rounded-xl transition-all`}>
-                    <Save className="w-4 h-4 mr-2" /> Save Draft
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  disabled={isSending || !mpFound}
-                  onClick={async () => {
-                    if (!mpFound) return;
-                    setSendError("");
-                    if (simulateNoMpEmail || !mpFound.email) {
-                      setSendError(
-                        "No email address is available for this MP. Your letter was not sent — please download a copy and post it instead."
-                      );
-                      return;
-                    }
-                    setIsSending(true);
-                    await simulateSubmit(2000);
-                    setIsSending(false);
-                    setSendSuccess(true);
-                  }}
-                  className="w-full sm:w-auto bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs py-6 px-10 rounded-xl shadow-[0_0_20px_rgba(24,119,242,0.3)] transition-all disabled:opacity-60"
-                >
-                  <Send className="w-4 h-4 mr-2" /> {isSending ? "Sending…" : sendSuccess ? "Sent!" : "Send to MP"}
-                </Button>
-              </div>
-
-              {sendSuccess && (
-                <div className="mx-6 mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm">
-                  Your letter has been sent to {mpFound?.name ?? "your MP"} (prototype). A copy would be emailed to you when the backend is connected.
-                </div>
-              )}
-              {sendError && (
-                <p className="mx-6 mb-6 text-red-500 text-xs" role="alert">{sendError}</p>
-              )}
-
+              <Button
+                disabled={isSending || !mpFound}
+                onClick={async () => {
+                  if (!mpFound) return;
+                  setIsSending(true);
+                  await simulateSubmit(2000);
+                  setIsSending(false);
+                  setSendSuccess(true);
+                }}
+                className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs py-5 rounded-md shadow-md transition-all h-auto"
+              >
+                {isSending ? "SENDING..." : sendSuccess ? "SENT!" : "SEND MY LETTER"} <ArrowRight className="w-4 h-4 ml-1.5" />
+              </Button>
+              {sendError && <p className="text-red-500 text-[10px] mt-2 text-center">{sendError}</p>}
             </div>
           </div>
 
         </div>
       </div>
-      </EditorialSection>
+
     </div>
   );
 }
 
 export default function PersonalizeEmailPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center font-sans"><Loader2 className="w-8 h-8 animate-spin text-[#1877F2]" /></div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center font-sans bg-[#050A14]"><Loader2 className="w-8 h-8 animate-spin text-[#1877F2]" /></div>}>
       <PersonalizeContent />
     </Suspense>
   );
 }
+

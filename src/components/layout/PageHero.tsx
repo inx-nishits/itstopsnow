@@ -11,12 +11,12 @@ export const PAGE_HERO_CONTAINER = `${PAGE_CONTENT_CONTAINER} relative z-10`;
 export const PAGE_HERO_EYEBROW =
   "text-[#1877F2] font-bold uppercase tracking-[0.28em] text-xs sm:text-sm mb-4 sm:mb-5 flex items-center gap-2.5 sm:gap-3";
 export const PAGE_HERO_TITLE_CAMPAIGN =
-  "text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tighter uppercase drop-shadow-2xl";
+  "text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight drop-shadow-2xl";
 export const PAGE_HERO_TITLE_UTILITY =
-  "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tighter uppercase drop-shadow-2xl";
+  "text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight drop-shadow-2xl";
 export const PAGE_HERO_DESCRIPTION =
-  "text-base md:text-lg xl:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl drop-shadow";
-export const PAGE_HERO_SECTION_PT = "pt-28 md:pt-32";
+  "text-sm sm:text-base md:text-lg xl:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl drop-shadow";
+export const PAGE_HERO_SECTION_PT = "pt-28 sm:pt-32 md:pt-40";
 
 /** Clears fixed site header (h-20 / h-24) plus safe-area — subpages without full PageHero */
 export const PAGE_BELOW_HEADER_PT =
@@ -25,8 +25,8 @@ export const PAGE_BELOW_HEADER_PT =
 export type PageHeroVariant = "campaign" | "utility";
 
 const variantLayout: Record<PageHeroVariant, string> = {
-  campaign: "min-h-[70vh] justify-center pb-14 md:pb-20 lg:pb-24",
-  utility: "min-h-[50vh] justify-center pb-12 md:pb-16",
+  campaign: "justify-end pb-6 sm:pb-8 lg:pb-10",
+  utility: "justify-end pb-6 sm:pb-8 lg:pb-10",
 };
 
 interface PageHeroProps {
@@ -165,7 +165,7 @@ export function ArticleHero({
       className={cn(
         "relative w-full flex flex-col justify-end bg-[#050A14] text-white border-b border-white/5 overflow-hidden",
         PAGE_HERO_SECTION_PT,
-        "min-h-[min(56vh,520px)] pb-12 md:pb-16"
+        "pt-4 pb-6 sm:pb-8 lg:pb-10"
       )}
     >
       <HeroBackground imageSrc={imageSrc} imageAlt={imageAlt} imageClassName="opacity-30" />
@@ -173,7 +173,7 @@ export function ArticleHero({
       <div className={PAGE_HERO_CONTAINER}>
         <div className="mb-6 sm:mb-8">{backLink}</div>
         {badges ? <div className="mb-5 sm:mb-6">{badges}</div> : null}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tighter uppercase mb-4 sm:mb-6 max-w-4xl">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-4 sm:mb-6 max-w-4xl">
           {title}
         </h1>
         {meta}
@@ -201,7 +201,7 @@ export function CompactPageHero({
       className={cn(
         "relative w-full flex flex-col justify-end overflow-hidden bg-[#050A14] text-white border-b border-white/5",
         PAGE_HERO_SECTION_PT,
-        "max-h-[min(45dvh,420px)] min-h-[220px] sm:min-h-[260px] pb-6 sm:pb-8"
+        "pt-4 pb-6 sm:pb-8 lg:pb-10"
       )}
     >
       <div className="absolute inset-0 z-0" aria-hidden>
@@ -217,7 +217,7 @@ export function CompactPageHero({
         <p className="text-[#1877F2] font-bold uppercase tracking-[0.28em] text-[10px] sm:text-xs mb-2 sm:mb-3">
           {eyebrow}
         </p>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.12] mb-2 sm:mb-3 max-w-3xl">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-2 sm:mb-3 max-w-3xl">
           {title}
         </h1>
         {description ? (

@@ -13,7 +13,7 @@ export default function Footer() {
   const newsletter = useNewsletterSubscribe();
 
   return (
-    <footer className="relative bg-[#02050A] pt-12 sm:pt-16 md:pt-24 pb-[max(2.5rem,env(safe-area-inset-bottom))] text-white font-sans overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#02050A] pt-8 sm:pt-16 md:pt-24 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-[max(2.5rem,env(safe-area-inset-bottom))] text-white font-sans overflow-hidden border-t border-white/5">
       
       {/* Massive Background Typography */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.04] translate-y-[18%]">
@@ -25,7 +25,7 @@ export default function Footer() {
       <div className="w-full px-4 sm:px-4 sm:px-4 sm:px-6 lg:px-12 mx-auto relative z-10 max-w-[1600px]">
 
         {/* Pocket Sergeant + Newsletter — side by side on desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mb-10 sm:mb-12 md:mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mb-8 sm:mb-12 md:mb-20">
           {/* POCKET SERGEANT CTA */}
           <div
             className={cn(
@@ -137,25 +137,25 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-16 lg:gap-8 mb-12 md:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-12 lg:gap-8 mb-8 md:mb-20">
           
           {/* Brand Col */}
           <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left pr-0 lg:pr-8">
-            <Link href="/" className="mb-8 block">
+            <Link href="/" className="mb-5 sm:mb-8 block">
               <img src="/ISN-Logo.svg" alt="It Stops Now Logo" className="h-14 w-auto opacity-90 hover:opacity-100 transition-opacity" />
             </Link>
-            <div className="w-12 h-[2px] bg-[#1877F2] mb-6"></div>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium mb-10 max-w-sm">
+            <div className="w-12 h-[2px] bg-[#1877F2] mb-4 sm:mb-6"></div>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium mb-6 sm:mb-10 max-w-sm">
               We are building a future where every officer is supported, valued, and never faces their struggles alone. Together, we can end police suicide.
             </p>
           </div>
 
           {/* Links 1 */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center justify-center lg:justify-start gap-3">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Explore
             </h4>
-            <ul className="space-y-5 text-sm font-medium text-slate-400">
+            <ul className="space-y-3 text-sm font-medium text-slate-400">
               <li><Link href="/about" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">About the Mission</Link></li>
               <li><Link href="/the-issue" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">The Issue</Link></li>
               <li><Link href="/events" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">Campaign Events</Link></li>
@@ -166,10 +166,10 @@ export default function Footer() {
 
           {/* Links 2 */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center justify-center lg:justify-start gap-3">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Action
             </h4>
-            <ul className="space-y-5 text-sm font-medium text-slate-400">
+            <ul className="space-y-3 text-sm font-medium text-slate-400">
               <li><Link href="/take-action" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">How to Help</Link></li>
               <li><Link href="/take-action/personalize" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Personalise Your Letter</Link></li>
               <li><Link href="/stories?submit=1" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Share Your Story</Link></li>
@@ -179,7 +179,7 @@ export default function Footer() {
 
           {/* Connect */}
           <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-8 flex items-center justify-center lg:justify-start gap-3">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Connect
             </h4>
             <div className="flex justify-center lg:justify-start flex-nowrap gap-4">
@@ -201,7 +201,7 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM ROW: Copyright & Legal */}
-        <div className="relative z-10 pt-10 flex flex-col items-center text-center md:flex-row md:items-center md:justify-between md:text-left gap-5 sm:gap-6 text-xs text-white font-medium">
+        <div className="relative z-10 pt-6 sm:pt-10 flex flex-col items-center text-center md:flex-row md:items-center md:justify-between md:text-left gap-4 sm:gap-6 text-xs text-white font-medium">
           <p className="text-slate-300 md:text-white">
             © {new Date().getFullYear()} It Stops Now. All rights reserved.
           </p>
