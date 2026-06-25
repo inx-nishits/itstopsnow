@@ -52,7 +52,7 @@ export default function ResearchSortMenu({ sortBy, onSortChange, className }: Re
         aria-controls={listboxId}
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          "inline-flex items-center justify-center gap-2 min-h-[48px] px-5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer",
+          "inline-flex items-center justify-center gap-1.5 sm:gap-2 min-h-[36px] sm:min-h-[48px] px-4 sm:px-5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer",
           open ? hybrid.editorialChipActive : hybrid.editorialChip
         )}
       >

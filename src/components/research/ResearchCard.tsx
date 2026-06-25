@@ -18,29 +18,29 @@ export default function ResearchCard({ item, onViewReport }: ResearchCardProps) 
       className={cn(
         hybrid.editorialCard,
         hybrid.editorialCardHover,
-        "group flex flex-col h-full overflow-hidden hover:-translate-y-1"
+        "group flex flex-row sm:flex-col h-full overflow-hidden hover:-translate-y-1"
       )}
     >
-      <div className={cn("relative aspect-[16/10] overflow-hidden bg-slate-100 border-b", hybrid.editorialBorder)}>
+      <div className={cn("relative w-[140px] sm:w-auto shrink-0 sm:aspect-[16/10] overflow-hidden bg-slate-100 border-r sm:border-r-0 sm:border-b", hybrid.editorialBorder)}>
         <img
           src={item.image}
           alt=""
           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-[1.03]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#010B19]/70 via-transparent to-transparent" />
-        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex flex-wrap gap-1.5 sm:gap-2">
           {item.featured ? (
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white bg-[#1877F2] px-3 py-1.5 rounded-full border border-[#1877F2]/20">
+            <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em] text-white bg-[#1877F2] px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[#1877F2]/20 whitespace-nowrap">
               Featured
             </span>
           ) : null}
-          <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full">
+          <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em] text-white bg-black/50 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full whitespace-nowrap">
             {item.category}
           </span>
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 p-4 sm:p-5">
+      <div className="flex flex-col flex-1 p-3 sm:p-5 min-w-0">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500 mb-2">
           <time>{item.date}</time>
           <span className="text-slate-300">·</span>
@@ -55,10 +55,10 @@ export default function ResearchCard({ item, onViewReport }: ResearchCardProps) 
 
         <p className="text-xs text-slate-500 mb-3 line-clamp-1">{item.institution}</p>
 
-        <p className={cn("text-sm leading-relaxed line-clamp-3 mb-4 flex-1", hybrid.editorialBody)}>{item.summary}</p>
+        <p className={cn("text-sm leading-relaxed line-clamp-3 mb-4 flex-1 hidden sm:block", hybrid.editorialBody)}>{item.summary}</p>
 
         {item.keyFindings.length > 0 ? (
-          <div className="mb-4 space-y-2">
+          <div className="mb-4 space-y-2 hidden sm:block">
             <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
               Key findings
             </p>
@@ -76,36 +76,25 @@ export default function ResearchCard({ item, onViewReport }: ResearchCardProps) 
         ) : null}
 
         <div className="flex flex-wrap items-center gap-2 mt-auto pt-1">
-          <Link
-            href={`/research/${item.slug}`}
-            className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-4 rounded-full bg-[#1877F2] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0"
-          >
-            Read story
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
           <button
             type="button"
             onClick={() => onViewReport(item)}
-            className={cn(
-              "inline-flex items-center justify-center gap-1.5 min-h-[40px] px-4 rounded-full text-[10px] font-bold uppercase tracking-widest transition-colors shrink-0",
-              hybrid.editorialChip
-            )}
+            className="inline-flex items-center justify-center gap-1.5 min-h-[36px] px-4 rounded-full bg-[#1877F2] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0 flex-1 sm:flex-none"
           >
+            Read story
             <FileText className="w-3.5 h-3.5" />
-            {item.hasPdf ? "View PDF" : "Quick view"}
           </button>
           {item.hasPdf ? (
             <button
               type="button"
               onClick={() => downloadResearchPdf(item)}
               className={cn(
-                "inline-flex items-center justify-center gap-1.5 min-h-[40px] px-4 rounded-full text-[10px] font-bold uppercase tracking-widest transition-colors shrink-0",
+                "inline-flex items-center justify-center min-h-[36px] w-[36px] rounded-full transition-colors shrink-0",
                 hybrid.editorialChip
               )}
               aria-label={`Download PDF for ${item.title}`}
             >
-              <Download className="w-3.5 h-3.5" />
-              PDF
+              <Download className="w-4 h-4" />
             </button>
           ) : null}
         </div>

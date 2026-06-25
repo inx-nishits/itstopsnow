@@ -12,10 +12,6 @@ export interface ResearchHeroContent {
   imageAlt?: string;
 }
 
-export interface ResearchRecommendation {
-  text: string;
-}
-
 export interface ResearchItem {
   id: string;
   slug: string;
@@ -35,6 +31,4 @@ export interface ResearchItem {
   articleContent?: string;
   pdfUrl?: string;
   hasPdf: boolean;
-  recommendations?: ResearchRecommendation[];
-  highlightStats?: { value: string; label: string }[];
 }

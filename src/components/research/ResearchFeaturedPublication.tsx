@@ -73,20 +73,13 @@ export default function ResearchFeaturedPublication({
           </ul>
 
           <div className="flex flex-wrap items-center gap-2 mt-auto">
-            <Link
-              href={`/research/${publication.slug}`}
-              className={cn(actionBtn, "bg-[#1877F2] text-white hover:bg-[#010B19]")}
-            >
-              Read story
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
             <button
               type="button"
               onClick={() => onViewReport(publication)}
-              className={cn(actionBtn, hybrid.editorialChip)}
+              className={cn(actionBtn, "bg-[#1877F2] text-white hover:bg-[#010B19]")}
             >
+              Read Research Story
               <FileText className="w-3.5 h-3.5" />
-              {publication.hasPdf ? "View PDF" : "Quick view"}
             </button>
             {publication.hasPdf ? (
               <button

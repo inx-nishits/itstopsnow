@@ -118,7 +118,7 @@ export default function ResearchViewerModal({ report, onClose }: ResearchViewerM
                   <ReportCover report={report} />
                   <ReportSummary report={report} />
                   <ReportFindings report={report} />
-                  {report.recommendations?.length ? <ReportRecommendations report={report} /> : null}
+                  
                 </div>
               )}
             </div>
@@ -173,16 +173,7 @@ function ReportSummary({ report }: { report: ResearchItem }) {
       <p className="text-sm text-slate-700 leading-relaxed mb-6 whitespace-pre-line">
         {report.articleContent ?? report.summary}
       </p>
-      {report.highlightStats?.length ? (
-        <div className="grid grid-cols-3 gap-3 mt-auto">
-          {report.highlightStats.map((stat) => (
-            <div key={stat.label} className="bg-slate-50 p-3 border border-slate-100 text-center rounded">
-              <div className="text-base font-bold text-[#1877F2]">{stat.value}</div>
-              <div className="text-[10px] text-slate-500 mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      ) : null}
+      
     </div>
   );
 }

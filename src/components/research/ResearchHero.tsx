@@ -1,9 +1,10 @@
-import { CompactPageHero } from "@/components/layout/PageHero";
+import { PageHero } from "@/components/layout/PageHero";
 import { RESEARCH_HERO } from "@/lib/research/data";
 
 export default function ResearchHero() {
   return (
-    <CompactPageHero
+    <PageHero
+      variant="utility"
       eyebrow={RESEARCH_HERO.eyebrow}
       title={RESEARCH_HERO.title}
       description={RESEARCH_HERO.description}

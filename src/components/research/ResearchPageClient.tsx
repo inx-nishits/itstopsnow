@@ -9,7 +9,7 @@ import ResearchEvidenceList from "@/components/research/ResearchEvidenceList";
 import ResearchViewerModal from "@/components/research/ResearchViewerModal";
 import { EditorialSection, EditorialStickyBar } from "@/components/layout/PageSection";
 import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
-import ResearchPagination from "@/components/research/ResearchPagination";
+import { Pagination } from "@/components/ui/Pagination";
 import { getEnabledResearchCategories, RESEARCH_ITEMS } from "@/lib/research/data";
 import type { ResearchItem } from "@/lib/research/types";
 import { matchesResearchSearch, sortResearchItems } from "@/lib/research/utils";
@@ -122,10 +122,11 @@ export default function ResearchPageClient() {
 
               <ResearchEvidenceList items={paginatedCatalog} onViewReport={setActiveReport} />
 
-              <ResearchPagination
+              <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
+                variant="editorial"
                 className={cn("mt-10 lg:mt-16 pt-10 border-t", hybrid.editorialBorder)}
               />
             </>

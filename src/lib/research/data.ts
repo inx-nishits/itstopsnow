@@ -7,8 +7,8 @@ export const RESEARCH_HERO: ResearchHeroContent = {
   description:
     "Peer-reviewed analysis and systemic reviews underpinning the case for reform. Browse reports as articles or download the original PDF.",
   imageSrc:
-    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1920",
-  imageAlt: "Research documents on a desk",
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1920",
+  imageAlt: "Data analysis and research charts",
 };
 
 /** Mock CMS categories — `enabled` simulates admin enable/disable */
@@ -50,16 +50,6 @@ export const RESEARCH_ITEMS: ResearchItem[] = [
       "Data was collected via anonymized surveys across 43 territorial police forces in England and Wales between Jan 2023 and Dec 2024.",
     hasPdf: true,
     pdfUrl: SAMPLE_PDF,
-    highlightStats: [
-      { value: "4.2 yrs", label: "Avg. investigation" },
-      { value: "+500%", label: "PTSD diagnosis" },
-      { value: "5,000", label: "Officers surveyed" },
-    ],
-    recommendations: [
-      { text: "Implement a statutory 12-month investigation limit for all IOPC proceedings." },
-      { text: "Establish welfare coordination roles with weekly contact for suspended officers." },
-      { text: "Publish annual transparency summaries on suspended officer salary costs." },
-    ],
     articleContent: `This landmark study examines the psychological toll of prolonged misconduct investigations on serving and suspended officers across England and Wales.
 
 Drawing on survey responses from more than 5,000 participants, the research documents a sharp rise in clinical anxiety, depression, and PTSD where cases extend beyond two years. Welfare provision remains inconsistent: fewer than one in ten suspended officers report structured weekly contact from their force.
@@ -89,16 +79,6 @@ The findings reinforce the campaign's central demand for a hard 12-month cap on 
     order: 2,
     hasPdf: true,
     pdfUrl: SAMPLE_PDF,
-    highlightStats: [
-      { value: "£120M", label: "Annual taxpayer cost" },
-      { value: "£150k", label: "Cost per suspension" },
-      { value: "+38%", label: "Cost increase" },
-    ],
-    recommendations: [
-      { text: "Introduce transparent annual reporting on suspension-related salary expenditure." },
-      { text: "Cap legal spend per case with independent audit triggers." },
-      { text: "Reinvest savings from faster case resolution into officer welfare programmes." },
-    ],
     articleContent: `Suspended officers continue to draw full salary while cases drag on — often for years. This report quantifies the direct and indirect costs borne by the public.
 
 Legal fees, backfill staffing, and opportunity costs compound the headline salary figure. Forces with the longest average case durations show the steepest year-on-year increases in total suspension spend.`,
