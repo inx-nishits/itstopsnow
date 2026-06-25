@@ -21,8 +21,7 @@ export const RESEARCH_CATEGORIES: ResearchCategory[] = [
   { id: "archived", label: "Archived", enabled: false },
 ];
 
-const SAMPLE_PDF =
-  "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+const SAMPLE_PDF = "/dummy.pdf";
 
 export const RESEARCH_ITEMS: ResearchItem[] = [
   {

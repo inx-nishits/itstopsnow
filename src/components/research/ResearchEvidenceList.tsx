@@ -5,10 +5,9 @@ import ResearchCard from "@/components/research/ResearchCard";
 
 interface ResearchEvidenceListProps {
   items: ResearchItem[];
-  onViewReport: (item: ResearchItem) => void;
 }
 
-export default function ResearchEvidenceList({ items, onViewReport }: ResearchEvidenceListProps) {
+export default function ResearchEvidenceList({ items }: ResearchEvidenceListProps) {
   if (items.length === 0) return null;
 
   return (
@@ -19,7 +18,7 @@ export default function ResearchEvidenceList({ items, onViewReport }: ResearchEv
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
         {items.map((item) => (
-          <ResearchCard key={item.id} item={item} onViewReport={onViewReport} />
+          <ResearchCard key={item.id} item={item} />
         ))}
       </div>
     </div>

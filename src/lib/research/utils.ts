@@ -43,8 +43,6 @@ export function downloadResearchPdf(report: ResearchItem) {
     const anchor = document.createElement("a");
     anchor.href = report.pdfUrl;
     anchor.download = `${report.slug}.pdf`;
-    anchor.target = "_blank";
-    anchor.rel = "noopener noreferrer";
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);

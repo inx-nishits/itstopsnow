@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Download, FileText } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import type { ResearchItem } from "@/lib/research/types";
 import { downloadResearchPdf } from "@/lib/research/utils";
 import { hybrid } from "@/lib/theme/hybrid";
@@ -9,10 +9,9 @@ import { cn } from "@/lib/utils";
 
 interface ResearchCardProps {
   item: ResearchItem;
-  onViewReport: (item: ResearchItem) => void;
 }
 
-export default function ResearchCard({ item, onViewReport }: ResearchCardProps) {
+export default function ResearchCard({ item }: ResearchCardProps) {
   return (
     <article
       className={cn(
@@ -21,7 +20,7 @@ export default function ResearchCard({ item, onViewReport }: ResearchCardProps) 
         "group flex flex-row sm:flex-col h-full overflow-hidden hover:-translate-y-1"
       )}
     >
-      <div className={cn("relative w-[140px] sm:w-auto shrink-0 sm:aspect-[16/10] overflow-hidden bg-slate-100 border-r sm:border-r-0 sm:border-b", hybrid.editorialBorder)}>
+      <div className={cn("relative w-[140px] sm:w-auto shrink-0 sm:aspect-[2/1] overflow-hidden bg-slate-100 border-r sm:border-r-0 sm:border-b", hybrid.editorialBorder)}>
         <img
           src={item.image}
           alt=""
@@ -40,33 +39,33 @@ export default function ResearchCard({ item, onViewReport }: ResearchCardProps) 
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 p-3 sm:p-5 min-w-0">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500 mb-2">
+      <div className="flex flex-col flex-1 p-3 sm:p-4 min-w-0">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] sm:text-xs text-slate-500 mb-1.5">
           <time>{item.date}</time>
           <span className="text-slate-300">·</span>
           <span className="line-clamp-1">{item.author}</span>
         </div>
 
-        <h3 className={cn("text-base sm:text-lg font-bold tracking-tight leading-snug mb-2", hybrid.editorialHeading)}>
-          <Link href={`/research/${item.slug}`} className="hover:text-[#1877F2] transition-colors">
+        <h3 className={cn("text-sm sm:text-base font-bold tracking-tight leading-snug mb-1", hybrid.editorialHeading)}>
+          <Link href={`/research/${item.slug}`} className="hover:text-[#1877F2] transition-colors line-clamp-2">
             {item.title}
           </Link>
         </h3>
 
-        <p className="text-xs text-slate-500 mb-3 line-clamp-1">{item.institution}</p>
+        <p className="text-[10px] sm:text-xs text-slate-500 mb-2 line-clamp-1">{item.institution}</p>
 
-        <p className={cn("text-sm leading-relaxed line-clamp-3 mb-4 flex-1 hidden sm:block", hybrid.editorialBody)}>{item.summary}</p>
+        <p className={cn("text-xs sm:text-sm leading-relaxed line-clamp-2 mb-3 flex-1 hidden sm:block", hybrid.editorialBody)}>{item.summary}</p>
 
         {item.keyFindings.length > 0 ? (
-          <div className="mb-4 space-y-2 hidden sm:block">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+          <div className="mb-3 space-y-1.5 hidden sm:block">
+            <p className="text-[9px] font-semibold uppercase tracking-wider text-slate-400">
               Key findings
             </p>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5">
               {item.keyFindings.slice(0, 2).map((finding) => (
                 <li
                   key={finding}
-                  className="border-l-2 border-[#1877F2] pl-3 text-sm text-slate-800 leading-snug line-clamp-2"
+                  className="border-l-2 border-[#1877F2] pl-2.5 text-xs text-slate-800 leading-snug line-clamp-2"
                 >
                   {finding}
                 </li>
@@ -76,25 +75,26 @@ export default function ResearchCard({ item, onViewReport }: ResearchCardProps) 
         ) : null}
 
         <div className="flex flex-wrap items-center gap-2 mt-auto pt-1">
-          <button
-            type="button"
-            onClick={() => onViewReport(item)}
-            className="inline-flex items-center justify-center gap-1.5 min-h-[36px] px-4 rounded-full bg-[#1877F2] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0 flex-1 sm:flex-none"
+          <a
+            href={item.hasPdf && item.pdfUrl ? item.pdfUrl : `/research/${item.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-1.5 min-h-[32px] px-3.5 rounded-full bg-[#1877F2] text-white text-[9px] font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0 flex-1 sm:flex-none"
           >
             Read story
             <FileText className="w-3.5 h-3.5" />
-          </button>
+          </a>
           {item.hasPdf ? (
             <button
               type="button"
               onClick={() => downloadResearchPdf(item)}
               className={cn(
-                "inline-flex items-center justify-center min-h-[36px] w-[36px] rounded-full transition-colors shrink-0",
+                "inline-flex items-center justify-center min-h-[32px] w-[32px] rounded-full transition-colors shrink-0",
                 hybrid.editorialChip
               )}
               aria-label={`Download PDF for ${item.title}`}
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5" />
             </button>
           ) : null}
         </div>

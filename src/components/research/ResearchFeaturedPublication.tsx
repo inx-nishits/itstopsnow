@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 
 interface ResearchFeaturedPublicationProps {
   publication: ResearchItem;
-  onViewReport: (item: ResearchItem) => void;
 }
 
 const actionBtn =
@@ -17,7 +16,6 @@ const actionBtn =
 
 export default function ResearchFeaturedPublication({
   publication,
-  onViewReport,
 }: ResearchFeaturedPublicationProps) {
   return (
     <article className={cn("mb-8 sm:mb-10 pb-8 sm:pb-10 border-b", hybrid.editorialBorder)}>
@@ -73,14 +71,15 @@ export default function ResearchFeaturedPublication({
           </ul>
 
           <div className="flex flex-wrap items-center gap-2 mt-auto">
-            <button
-              type="button"
-              onClick={() => onViewReport(publication)}
+            <a
+              href={publication.hasPdf && publication.pdfUrl ? publication.pdfUrl : `/research/${publication.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className={cn(actionBtn, "bg-[#1877F2] text-white hover:bg-[#010B19]")}
             >
               Read Research Story
               <FileText className="w-3.5 h-3.5" />
-            </button>
+            </a>
             {publication.hasPdf ? (
               <button
                 type="button"

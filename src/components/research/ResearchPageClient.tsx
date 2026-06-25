@@ -6,12 +6,10 @@ import ResearchHero from "@/components/research/ResearchHero";
 import ResearchToolbar from "@/components/research/ResearchToolbar";
 import ResearchFeaturedPublication from "@/components/research/ResearchFeaturedPublication";
 import ResearchEvidenceList from "@/components/research/ResearchEvidenceList";
-import ResearchViewerModal from "@/components/research/ResearchViewerModal";
 import { EditorialSection, EditorialStickyBar } from "@/components/layout/PageSection";
 import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { Pagination } from "@/components/ui/Pagination";
 import { getEnabledResearchCategories, RESEARCH_ITEMS } from "@/lib/research/data";
-import type { ResearchItem } from "@/lib/research/types";
 import { matchesResearchSearch, sortResearchItems } from "@/lib/research/utils";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
@@ -23,7 +21,6 @@ export default function ResearchPageClient() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState<"date" | "title">("date");
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeReport, setActiveReport] = useState<ResearchItem | null>(null);
 
   const categories = useMemo(() => getEnabledResearchCategories(), []);
 
@@ -116,11 +113,10 @@ export default function ResearchPageClient() {
               {featuredPublication ? (
                 <ResearchFeaturedPublication
                   publication={featuredPublication}
-                  onViewReport={setActiveReport}
                 />
               ) : null}
 
-              <ResearchEvidenceList items={paginatedCatalog} onViewReport={setActiveReport} />
+              <ResearchEvidenceList items={paginatedCatalog} />
 
               <Pagination
                 currentPage={currentPage}
@@ -133,8 +129,6 @@ export default function ResearchPageClient() {
           )}
         </div>
       </EditorialSection>
-
-      <ResearchViewerModal report={activeReport} onClose={() => setActiveReport(null)} />
     </div>
   );
 }

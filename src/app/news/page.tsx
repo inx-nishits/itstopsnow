@@ -49,6 +49,46 @@ export const LATEST_NEWS = [
     excerpt: "A powerful conversation about silence, stigma and the need for meaningful change.",
     image: "/images/take-action-hero.png",
     author: "Media Team"
+  },
+  { 
+    id: 5, 
+    category: "RESEARCH", 
+    date: "April 28, 2024", 
+    readTime: "8 min read", 
+    title: "New report highlights hidden financial cost of investigation delays", 
+    excerpt: "Our latest research shows millions wasted due to inefficiency in current misconduct procedures.",
+    image: "/images/memorial_hero.png",
+    author: "Research Dept"
+  },
+  { 
+    id: 6, 
+    category: "CAMPAIGN NEWS", 
+    date: "April 20, 2024", 
+    readTime: "3 min read", 
+    title: "Over 10,000 officers sign our petition for the 12-month limit", 
+    excerpt: "A huge milestone reached as momentum continues to build across all force areas.",
+    image: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&q=80&w=1200",
+    author: "Campaign Team"
+  },
+  { 
+    id: 7, 
+    category: "EXPERT VOICES", 
+    date: "April 15, 2024", 
+    readTime: "5 min read", 
+    title: "Legal briefing: Why the current IOPC guidelines fall short", 
+    excerpt: "A detailed analysis of where the procedural loopholes are failing frontline officers.",
+    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1200",
+    author: "Legal Team"
+  },
+  { 
+    id: 8, 
+    category: "MEDIA", 
+    date: "April 10, 2024", 
+    readTime: "4 min read", 
+    title: "Campaign featured in national weekend broadsheet", 
+    excerpt: "Extensive coverage on the mental health toll of policing and our push for reform.",
+    image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1200",
+    author: "Media Team"
   }
 ];
 
@@ -175,7 +215,7 @@ export default function NewsPage() {
               ) : (
                 <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 xl:grid-cols-3 sm:gap-6">
                   {paginatedNews.map((news) => (
-                    <div key={news.id} className="flex flex-row sm:flex-col group border border-slate-200 hover:border-slate-300 rounded-xl transition-all hover:shadow-lg bg-white overflow-hidden">
+                    <Link key={news.id} href={`/news/${news.id}`} className="flex flex-row sm:flex-col group border border-slate-200 hover:border-slate-300 rounded-xl transition-all hover:shadow-lg bg-white overflow-hidden">
                       <div className="w-[110px] shrink-0 sm:w-full sm:h-48 relative overflow-hidden bg-slate-100">
                         <img 
                           src={news.image} 
@@ -201,22 +241,15 @@ export default function NewsPage() {
                         
                         {/* Strict: Read Story CTA Link */}
                         <div className="hidden sm:block pt-4 border-t border-slate-100 mt-4">
-                          <Link href={`/news/${news.id}`} className="text-[10px] font-bold text-[#1877F2] uppercase tracking-widest hover:underline flex items-center">
+                          <span className="text-[10px] font-bold text-[#1877F2] uppercase tracking-widest group-hover:underline flex items-center">
                             Read Story <ArrowRight className="w-3 h-3 ml-1" />
-                          </Link>
+                          </span>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}
-
-              {/* View All Link (Bottom) */}
-              <div className="flex justify-end mt-6">
-                <Link href="#" className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-wide hover:underline flex items-center">
-                  View all <ArrowRight className="w-4 h-4 ml-1" />
-                </Link>
-              </div>
 
               {/* Strict: Pagination / Infinite Scroll */}
               {totalPages > 1 && (
