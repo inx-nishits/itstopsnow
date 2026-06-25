@@ -198,17 +198,3 @@ function ReportFindings({ report }: { report: ResearchItem }) {
   );
 }
 
-function ReportRecommendations({ report }: { report: ResearchItem }) {
-  return (
-    <div className="max-w-2xl mx-auto bg-white text-slate-900 p-8 md:p-14 shadow-lg border border-slate-200/80 min-h-[240px]">
-      <h4 className="text-lg font-bold text-[#010B19] mb-6 pb-2 border-b border-slate-200">
-        Recommendations
-      </h4>
-      <ul className="space-y-4 text-sm text-slate-700 leading-relaxed list-decimal list-inside">
-        {report.recommendations?.map((item) => (
-          <li key={item.text}>{item.text}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}

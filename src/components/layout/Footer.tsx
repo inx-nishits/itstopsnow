@@ -149,7 +149,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Links 1 */}
+          {/* Links 1   */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
             <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Explore
