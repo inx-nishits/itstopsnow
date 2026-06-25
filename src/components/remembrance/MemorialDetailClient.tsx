@@ -47,6 +47,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
     loading: candleLoading,
     message: candleMessage,
     lightCandle,
+    resetCandle,
   } = useCandleRitual({
     memorialId: memorial.sanityId ?? `isn-memorial-${memorial.id}`,
     storageKey: memorial.id,
@@ -75,7 +76,6 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
     const ids: MemorialSectionId[] = ["story"];
     if (timeline.length > 0) ids.push("timeline");
     ids.push("tributes");
-    ids.push("support");
     return ids;
   }, [timeline.length]);
   const visibleTimeline = isTimelineExpanded ? timeline : timeline.slice(0, 4);
@@ -91,6 +91,13 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
   };
 
   const scrollToSection = useCallback((id: string) => {
+    if (id === "candle" && !sectionRefs.current.candle) {
+      // On mobile, the candle widget is hidden, so we scroll to top where the header candle button is
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveSection("candle");
+      return;
+    }
+
     const el = sectionRefs.current[id];
     if (!el) return;
 
@@ -159,7 +166,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
       />
 
       <main className={`${PAGE_CONTENT_CONTAINER} pb-16 pt-2 sm:pt-8`}>
-        <div className="sticky top-[9.25rem] md:top-[10.25rem] z-30 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 pt-2 pb-3 sm:py-3 mb-6 sm:mb-10 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200">
+        <div className="sticky top-20 md:top-24 z-30 -mx-4 px-4 sm:mx-0 sm:px-0 pt-2 pb-3 sm:py-3 mb-6 sm:mb-10 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200">
           <MemorialSectionTabs
             activeSection={activeSection}
             onNavigate={scrollToSection}
@@ -254,6 +261,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                 <TributeCarousel 
                   tributes={tributes} 
                   onSeeAll={() => console.log('See all tributes clicked')} 
+                  onLeaveTribute={() => setIsTributeFormOpen(true)}
                 />
               ) : (
                 <>
@@ -314,7 +322,13 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
             )}
 
             {/* Support */}
-            <section id="support" className="scroll-mt-36">
+            <section 
+              id="support" 
+              ref={(el) => {
+                sectionRefs.current.support = el;
+              }}
+              className="scroll-mt-36"
+            >
               <h2 className="text-sm font-bold text-[#010B19] uppercase tracking-widest mb-4 pb-2 border-b-2 border-[#1877F2] inline-block">
                 Support If You Need It
               </h2>
@@ -343,7 +357,13 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
 
           {/* RIGHT COLUMN: Light a Candle (3 columns) */}
           <div className="hidden lg:block lg:col-span-3 sticky top-40">
-            <div id="candle" className="bg-[#0B1221] text-white rounded-2xl p-6 xl:p-8 shadow-xl border border-white/10 flex flex-col items-center text-center">
+            <div 
+              id="candle" 
+              ref={(el) => {
+                sectionRefs.current.candle = el;
+              }}
+              className="bg-[#0B1221] text-white rounded-2xl p-6 xl:p-8 shadow-xl border border-white/10 flex flex-col items-center text-center"
+            >
               <div className="w-12 h-12 bg-[#1e293b]/50 rounded-full flex items-center justify-center mb-4 border border-white/5">
                 <Flame className={cn("w-5 h-5", isLit ? "text-amber-400" : "text-slate-400")} />
               </div>
@@ -450,14 +470,6 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
             setIsSubmittingTribute(false);
           }
         }}
-      />
-
-      <MemorialMobileDock
-        isLit={isLit}
-        loading={candleLoading}
-        onLightCandle={lightCandle}
-        onLeaveTribute={() => setIsTributeFormOpen(true)}
-        onShare={() => setIsShareOpen(true)}
       />
     </div>
   );

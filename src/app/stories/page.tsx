@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check, ChevronDown } from "lucide-react";
+import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check, ChevronDown, Sparkles, Shield, Quote } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
@@ -23,7 +23,7 @@ export const STORIES = [
     date: "OCT 12, 2024",
     readTime: "8 min read",
     author: "Anonymous Serving Officer",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
     fullContent: `I joined the police because I wanted to help people. It sounds cliché, but it’s the truth. For 12 years, I put on the uniform, kissed my kids goodbye, and went out into the unknown. I dealt with things most people never see.
 
 Two years ago, I responded to a violent domestic incident. The suspect was armed and aggressive. I used force to detain him. It was textbook, by the book, exactly how we are trained. The suspect made a complaint claiming excessive force.
@@ -45,7 +45,7 @@ I resigned the next day. The job didn't break me; the way I was treated when I n
     date: "OCT 05, 2024",
     readTime: "6 min read",
     author: "Wife of a Serving Sergeant",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e?auto=format&fit=crop&q=80&w=800",
     fullContent: `For fifteen years, my husband gave everything to the police force. He worked nights, missed birthdays, and carried the weight of the community on his shoulders. He was a good cop. Everyone knew it.
 
 Then, a routine arrest went wrong. A complaint was filed, not out of truth, but out of retaliation. Within days, his badge was gone. He wasn't allowed to speak to his shiftmates—his support network, his second family.
@@ -63,7 +63,7 @@ We watched a proud, strong man fade into a ghost of himself. When the investigat
     date: "SEP 22, 2024",
     readTime: "5 min read",
     author: "Former PC Richard Vance",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
     fullContent: `I was a dedicated constable for eight years. I loved the job, the camaraderie, and the chance to make a difference. But one afternoon, in the heat of a fast-moving pursuit, I made a minor administrative omission in my log.
 
 It wasn't malicious, it was a mistake made under high stress. Instead of being pulled in for guidance or minor retraining, it was escalated to gross misconduct. My life was put on hold for eighteen months.
@@ -81,7 +81,7 @@ Eighteen months for a minor logging error. By the time the hearing actually took
     date: "SEP 10, 2024",
     readTime: "7 min read",
     author: "Serving Response Constable",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&q=80&w=800",
     fullContent: `We are trained to deal with crisis, but nothing prepares you for the Post-Incident Procedure (PIP) when things go wrong. Last winter, I was involved in a high-speed response collision while racing to a call of an active stabbing.
 
 The suspect's vehicle was stopped, and I had to make a split-second decision to box them in. We saved the victim, but the impact damaged a nearby parked car and the suspect claimed injury.
@@ -99,7 +99,7 @@ For the next ten months, I lived under the shadow of a criminal investigation. M
     date: "AUG 30, 2024",
     readTime: "10 min read",
     author: "Former Sgt. Sarah Jenkins",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&q=80&w=800",
     fullContent: `When the IOPC investigation finally ended, and I was completely exonerated of all allegations, everyone expected me to celebrate. They thought I would happily put the uniform back on and return to the streets.
 
 They didn't understand that you can't just switch the trauma off. I spent three years suspended, sitting at home, unable to sleep, watching my life's work be pulled apart in the tabloids.
@@ -117,7 +117,7 @@ Healing is a slow process, and the anger still flares up when I hear about other
     date: "AUG 15, 2024",
     readTime: "5 min read",
     author: "Husband of a Suspended Officer",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800",
     fullContent: `My wife has been a response officer for nine years. She loved her shift and worked massive amounts of overtime to help support our three kids and pay our mortgage.
 
 When she was suspended following a malicious complaint during a public order arrest, the police force continued to pay her basic salary. But basic salary doesn't include the overtime we relied on. We lost nearly £1,000 a month in household income overnight.
@@ -183,7 +183,7 @@ function StoriesPageContent() {
   });
 
   const totalPages = Math.ceil(sortedStories.length / itemsPerPage);
-  const paginatedStories = sortedStories.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedStories = sortedStories.slice(0, currentPage * itemsPerPage);
 
   // Reset to page 1 when search, filter, or sort changes
   useEffect(() => {
@@ -195,21 +195,22 @@ function StoriesPageContent() {
       
       <PageHero
         animate
-        eyebrow={
-          <>
-            <MessageSquare className="w-5 h-5 shrink-0" /> LIVED EXPERIENCES
-          </>
-        }
+        eyebrow="STORIES"
         title={
           <>
             <span className="text-white">REAL PEOPLE.</span>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-400">
+            <span className="text-[#1877F2]">
               REAL STORIES.
             </span>
           </>
         }
-        description="Behind every statistic is a human being. Read the raw, unfiltered experiences of police officers and their families navigating a broken system."
+        description={
+          <div className="flex flex-col gap-6">
+            <span>Behind every statistic is a human being. Read the raw, unfiltered experiences of police officers and their families navigating a broken system.</span>
+            <span className="text-[#1877F2] font-bold">It Stops Now.</span>
+          </div>
+        }
         imageSrc="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1920"
         imageAlt="People stories"
       />
@@ -217,186 +218,210 @@ function StoriesPageContent() {
       {/* Featured Story Section removed to match specifications */}
 
       {/* 3. FILTERS & SEARCH */}
-      <EditorialStickyBar>
-        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
+      <EditorialStickyBar className="bg-[#f4f5f7] border-b border-slate-200 !py-4 sm:!py-5">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 lg:gap-8">
             
-            <div className="flex items-center gap-3 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
+            <div className="flex items-center justify-between w-full lg:w-auto">
+              <h2 className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight text-[#010B19]">BROWSE STORIES</h2>
+              {/* Mobile Filter Toggle */}
+              <button 
+                type="button"
+                onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+                className="lg:hidden flex items-center gap-2 px-4 py-2 border border-slate-300 rounded-md bg-white text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#010B19] shadow-sm"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                Filter
+              </button>
+            </div>
+
+            {/* Desktop Filters (Hidden on Mobile unless toggled) */}
+            <div className={cn(
+              "lg:flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 scrollbar-hide",
+              sortDropdownOpen ? "flex" : "hidden"
+            )}>
               {filters.map(f => (
                 <button 
                   key={f}
                   onClick={() => setActiveFilter(f)}
                   className={cn(
-                    "px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors",
-                    activeFilter === f ? hybrid.editorialChipActive : hybrid.editorialChip
+                    "px-4 py-2.5 rounded text-[10px] sm:text-xs font-bold whitespace-nowrap transition-colors flex items-center gap-2 border",
+                    activeFilter === f 
+                      ? "bg-[#1877F2] text-white border-[#1877F2]" 
+                      : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
                   )}
                 >
-                  {f === "All" ? "All Stories" : f}
+                  {f === "All" && <div className={cn("w-3 h-3 rounded-sm", activeFilter === f ? "bg-white/30" : "bg-slate-200")} />}
+                  {f === "Serving Officer" && <User className="w-3 h-3" />}
+                  {f === "Family Member" && <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
+                  {f === "Former Officer" && <User className="w-3 h-3" />}
+                  {f === "Recovery" && <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75" /></svg>}
+                  {f === "All" ? "All Stories" : `${f} Stories`}
                 </button>
               ))}
             </div>
 
-            <div className="flex items-center gap-4 w-full lg:w-auto">
-              <div className="relative flex-grow lg:w-80">
-                <Search className="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input 
-                  type="text" 
-                  placeholder="SEARCH STORIES..." 
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn("w-full pl-14 pr-6 py-4 text-[10px] uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors", hybrid.editorialInput)} 
-                />
-              </div>
-              <div className="relative">
-                <button 
-                  type="button"
-                  onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-                  className={cn("h-[48px] pl-5 pr-4 rounded-full font-bold text-[10px] uppercase tracking-widest transition-colors flex items-center justify-between min-w-[140px]", hybrid.editorialChip)}
-                  aria-label="Sort stories"
-                >
-                  {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title A–Z"}
-                  <ChevronDown className={`w-4 h-4 ml-2 transition-transform ${sortDropdownOpen ? "rotate-180" : ""}`} />
-                </button>
-                {sortDropdownOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setSortDropdownOpen(false)} />
-                    <div className="absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-lg border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2 w-48">
-                      {[
-                        { value: "newest", label: "Newest First" },
-                        { value: "oldest", label: "Oldest First" },
-                        { value: "title-az", label: "Title A–Z" }
-                      ].map(opt => (
-                        <button
-                          key={opt.value}
-                          type="button"
-                          onClick={() => { setSortBy(opt.value as StorySort); setSortDropdownOpen(false); }}
-                          className={`w-full text-left px-5 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors ${sortBy === opt.value ? "bg-[#1877F2]/10 text-[#1877F2]" : "hover:bg-slate-50 text-slate-600"}`}
-                        >
-                          {opt.label}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
+            {/* Search Bar */}
+            <div className="relative w-full lg:w-72 shrink-0">
+              <input 
+                type="text" 
+                placeholder="Search stories..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-4 pr-10 py-2.5 text-sm rounded bg-white border border-slate-200 shadow-sm focus:outline-none focus:border-[#1877F2]/50 transition-colors text-slate-800" 
+              />
+              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
             </div>
           </div>
         </div>
       </EditorialStickyBar>
 
-      {/* 4. STORY GRID & COUNTER */}
-      <EditorialSection>
-        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className={cn("flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b pb-8 mb-10 sm:mb-16", hybrid.editorialBorder)}>
-            <h2 className={cn("font-sans text-3xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>LATEST STORIES</h2>
-            <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">Showing {sortedStories.length} stories</div>
-          </div>
-
+      {/* 4. STORY GRID */}
+      <section className="w-full bg-[#f4f5f7] pt-8 pb-16 sm:pb-20 lg:pb-32">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           {sortedStories.length === 0 ? (
-            <div className={cn("text-center py-10 lg:py-20 rounded-3xl", hybrid.editorialCard)}>
+            <div className="text-center py-10 lg:py-20 rounded-xl bg-white border border-slate-200">
               <Search className="w-12 h-12 mx-auto mb-4 text-slate-300" />
-              <p className={cn("font-bold uppercase tracking-widest text-sm", hybrid.editorialMuted)}>No stories found matching your search.</p>
+              <p className="font-bold uppercase tracking-widest text-sm text-slate-400">No stories found matching your search.</p>
               <button onClick={() => { setSearchTerm(""); setActiveFilter("All"); }} className="mt-4 text-[#1877F2] hover:text-[#010B19] transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer">Clear Filters</button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {paginatedStories.map((story) => (
-                <div key={story.id} className={cn(hybrid.editorialCard, hybrid.editorialCardHover, "overflow-hidden group hover:-translate-y-2 relative flex flex-col h-full")}>
-                  <div className={cn("h-64 w-full relative overflow-hidden bg-slate-100 border-b", hybrid.editorialBorder)}>
-                    <img 
-                      src={story.image} 
-                      alt={story.title} 
-                      className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                    />
-                  </div>
-
-                  <div className="p-5 sm:p-8 flex flex-col flex-grow">
-                    <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
-                      <span className="text-[9px] font-bold text-[#1877F2] uppercase tracking-[0.2em] bg-[#1877F2]/10 px-3 py-1.5 rounded-full border border-[#1877F2]/20">
-                        {story.type}
-                      </span>
-                      <div className={cn("flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest", hybrid.editorialMuted)}>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" /> {story.date}
-                        </span>
-                        <span className="flex items-center gap-1 text-[#1877F2]">
-                          <Clock className="w-3 h-3" /> {story.readTime}
-                        </span>
+            <>
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+                {paginatedStories.map((story) => (
+                  <div key={story.id} className="flex flex-col h-full">
+                    <Link href={`/stories/${story.id}`} className="group relative flex flex-row lg:flex-col gap-0 h-full bg-[#050A14] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer">
+                      {/* Image Container */}
+                      <div className="relative w-[35%] sm:w-2/5 lg:w-full min-h-[160px] lg:h-48 shrink-0 overflow-hidden bg-slate-800">
+                        <img 
+                          src={story.image} 
+                          alt={story.title} 
+                          className="absolute inset-0 w-full h-full object-cover object-top grayscale opacity-70 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#050A14] lg:bg-gradient-to-t lg:from-[#050A14] lg:via-[#050A14]/40 lg:to-transparent block" />
                       </div>
-                    </div>
-                    
-                    <h3 className={cn("font-sans font-bold text-xl mb-4 leading-snug group-hover:text-[#1877F2] transition-colors uppercase tracking-tight line-clamp-2", hybrid.editorialHeading)}>
-                      {story.title}
-                    </h3>
-                    
-                    <p className={cn("text-xs leading-relaxed mb-8 flex-grow line-clamp-3", hybrid.editorialBody)}>
-                      {story.excerpt}
-                    </p>
-                    
-                    <Link href={`/stories/${story.id}`} className={cn("mt-auto pt-6 border-t flex items-center font-bold text-[10px] uppercase tracking-widest group-hover:text-[#1877F2] transition-colors", hybrid.editorialBorder, hybrid.editorialHeading)}>
-                      Read Story <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
+
+                      {/* Content Container */}
+                      <div className="p-4 sm:p-5 flex flex-col flex-grow relative z-10 w-[65%] sm:w-3/5 lg:w-full">
+                        
+                        <span className="text-[8px] sm:text-[9px] font-bold text-white bg-[#1877F2] px-1.5 py-0.5 rounded-sm tracking-wider uppercase shadow-md w-fit mb-2">
+                          {story.type}
+                        </span>
+
+                        <h3 className="font-sans font-bold text-sm sm:text-base text-white mb-2 leading-tight group-hover:text-[#1877F2] transition-colors line-clamp-2">
+                          {story.title}
+                        </h3>
+                        
+                        <p className="text-[11px] sm:text-[13px] text-slate-300 leading-snug mb-3 flex-grow line-clamp-2 sm:line-clamp-3 pr-2 lg:pr-0">
+                          {story.excerpt}
+                        </p>
+                        
+                        <div className="flex items-center gap-3 text-[9px] sm:text-[10px] font-medium text-slate-400 mt-auto">
+                          <span className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3" /> {story.date}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" /> {story.readTime}
+                          </span>
+                        </div>
+
+                        <div className="mt-4 text-xs font-bold text-[#1877F2] group-hover:text-blue-400 transition-colors hidden lg:flex items-center gap-1 w-fit">
+                          Read Story <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                        </div>
+
+                        <div className="absolute right-3 bottom-3 lg:hidden">
+                          <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+                        </div>
+                      </div>
                     </Link>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={Math.max(1, totalPages)}
-            onPageChange={setCurrentPage}
-            className={cn("mt-8 lg:mt-16 pt-10 border-t", hybrid.editorialBorder)}
-          />
+              {/* View More Button */}
+              {paginatedStories.length < sortedStories.length && (
+                <div className="mt-8 lg:mt-12 flex justify-center">
+                  <button 
+                    onClick={() => setCurrentPage(prev => prev + 1)}
+                    className="w-auto text-[#1877F2] bg-transparent lg:bg-[#1877F2] lg:text-white hover:text-blue-700 lg:hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-6 py-4 lg:px-12 lg:py-4 rounded-full transition-all flex items-center justify-center gap-2 underline lg:no-underline underline-offset-4"
+                  >
+                    VIEW MORE STORIES <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </>
+          )}
         </div>
-      </EditorialSection>
+      </section>
 
       {/* 6. CALL TO ACTION BANNER */}
-      <CampaignSection className="relative overflow-hidden" noPadding>
-        <div className="relative w-full py-12 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=1920" 
-            alt="Supportive community background" 
-            className="w-full h-full object-cover mix-blend-luminosity opacity-40 grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#020611] via-[#020611]/70 to-[#020611]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-transparent to-[#020611]" />
-        </div>
+      <section className="bg-[#f4f5f7] pb-16 sm:pb-20 lg:pb-32 overflow-hidden">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+          <div className="relative w-full rounded-[2rem] overflow-hidden bg-[#050A14] shadow-none sm:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 group">
+             
+             {/* Abstract Background Elements */}
+             <div className="absolute -top-40 -right-40 w-[30rem] h-[30rem] bg-[#1877F2] rounded-full mix-blend-screen filter blur-[120px] opacity-30 group-hover:opacity-40 transition-opacity duration-1000" />
+             <div className="absolute -bottom-40 -left-40 w-[30rem] h-[30rem] bg-blue-500 rounded-full mix-blend-screen filter blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity duration-1000" />
+             
+             {/* Grid overlay for texture */}
+             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-        <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
-          <div className="lg:w-1/2 flex flex-col items-start gap-6 text-left">
-            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2]">YOU ARE NOT ALONE</h2>
-            <h3 className="font-sans text-3xl max-sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">YOUR VOICE COULD SAVE A LIFE</h3>
-            <p className="text-slate-300 text-base leading-relaxed max-w-xl">
-              By sharing your story, you help break the stigma, hold the system accountable, and show others they are not alone.
-            </p>
-            <div className="mt-4">
-              <Button onClick={() => setIsSubmitModalOpen(true)} className="bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] px-10 py-6 rounded-full shadow-[0_0_30px_rgba(24,119,242,0.3)] transition-all hover:-translate-y-1">
-                Share Your Story Today
-              </Button>
-            </div>
-          </div>
+             <div className="relative p-6 sm:p-8 lg:p-16 xl:p-20 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 lg:gap-20">
+               {/* Left Content */}
+               <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left z-10">
+                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 shadow-[0_0_15px_rgba(24,119,242,0.15)]">
+                   <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                   Join the Community
+                 </div>
+                 <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white leading-[1.1] tracking-tight mb-4 sm:mb-6">
+                   Your story has the power to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-300">save a life.</span>
+                 </h2>
+                 <p className="text-slate-300 text-sm sm:text-base lg:text-xl leading-relaxed max-w-xl mb-6 sm:mb-10">
+                   By sharing your experience, you could help someone else feel less alone and give them the courage to seek the support they need.
+                 </p>
+                 
+                 <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
+                   <Button onClick={() => setIsSubmitModalOpen(true)} className="relative overflow-hidden group/btn bg-[#1877F2] hover:bg-blue-600 text-white font-bold text-sm lg:text-base px-6 py-5 sm:px-8 sm:py-7 rounded-full shadow-[0_0_40px_rgba(24,119,242,0.4)] hover:shadow-[0_0_60px_rgba(24,119,242,0.6)] transition-all flex justify-center items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                     <span className="relative z-10 flex items-center gap-2 uppercase tracking-wider">Share Your Story <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:translate-x-1 transition-transform" /></span>
+                     <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite]" />
+                   </Button>
+                   <Link href="/about" className="group flex items-center gap-2 sm:gap-3 text-slate-300 hover:text-white transition-colors">
+                     <div className="w-10 h-10 rounded-full border border-slate-600 group-hover:border-[#1877F2] flex items-center justify-center transition-colors shrink-0">
+                       <Shield className="w-4 h-4 group-hover:text-[#1877F2]" />
+                     </div>
+                     <span className="text-sm font-medium border-b border-transparent group-hover:border-white transition-colors">
+                       Learn how we protect your privacy
+                     </span>
+                   </Link>
+                 </div>
+               </div>
 
-          <div className="lg:w-1/2 w-full">
-            {/* Supportive Quote Block */}
-            <div className={cn(hybrid.campaignCard, "p-6 md:p-10 relative overflow-hidden shadow-2xl group")}>
-              <div className="absolute top-0 right-0 w-24 h-24 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
-              <svg viewBox="0 0 24 24" className="w-10 h-10 text-[#1877F2] opacity-30 mb-6 fill-current" aria-hidden="true">
-                <path d="M11.19 10.43c0 2.2-1.29 3.44-2.53 4.41C7.4 15.82 6.5 17 6.5 19H5c0-2.42 1.34-3.88 2.5-4.79 1.05-.82 1.69-1.67 1.69-2.78H5V5h6.19v5.43zm9.81 0c0 2.2-1.29 3.44-2.53 4.41-1.26.98-2.16 2.16-2.16 4.16h-1.5c0-2.42 1.34-3.88 2.5-4.79 1.05-.82 1.69-1.67 1.69-2.78H16V5h6.19v5.43z"/>
-              </svg>
-              <p className="font-serif italic text-slate-300 leading-relaxed text-lg mb-6">
-                "Every number is a life left behind. Your story has the power to change policing forever."
-              </p>
-              <div className="border-t border-white/10 pt-4 flex items-center justify-between">
-                <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">IT STOPS NOW</span>
-                <span className="text-[#1877F2] text-[9px] font-bold uppercase tracking-[0.2em] bg-[#1877F2]/10 px-3 py-1 rounded-full border border-[#1877F2]/20">SUPPORT STRAPLINE</span>
-              </div>
-            </div>
+               {/* Right Testimonial */}
+               <div className="w-full lg:w-1/2 relative z-10 mt-6 sm:mt-8 lg:mt-0 max-w-lg mx-auto lg:mx-0">
+                 <div className="relative z-10 bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
+                   <Quote className="absolute -top-4 -left-4 sm:-top-5 sm:-left-5 w-10 h-10 sm:w-12 sm:h-12 text-[#1877F2] opacity-50" />
+                   <p className="text-sm sm:text-base sm:text-lg lg:text-xl text-white font-medium leading-relaxed mb-6 sm:mb-8 relative z-10 font-serif italic">
+                     "The bravest thing I ever did was speak out. It felt like a massive weight was lifted, and knowing it helped others gave me purpose."
+                   </p>
+                   <div className="flex items-center gap-3 sm:gap-4">
+                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#1877F2] to-blue-400 flex items-center justify-center p-[2px]">
+                       <div className="w-full h-full rounded-full bg-[#050A14] flex items-center justify-center">
+                         <User className="w-5 h-5 text-blue-300" />
+                       </div>
+                     </div>
+                     <div>
+                       <div className="text-white font-bold text-sm">Serving Officer</div>
+                       <div className="text-[#1877F2] text-[10px] font-bold uppercase tracking-wider mt-0.5">Shared Anonymously</div>
+                     </div>
+                   </div>
+                 </div>
+                 {/* Decorative background card */}
+                 <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-sm border border-white/5 rounded-2xl transform lg:-rotate-3 -z-10 mt-4 ml-4" />
+               </div>
+             </div>
           </div>
         </div>
-        </div>
-      </CampaignSection>
+      </section>
 
       {/* STORY SUBMISSION MODAL */}
       <AnimatePresence>

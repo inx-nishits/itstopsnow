@@ -37,9 +37,9 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-[#010b19] text-white overflow-x-hidden" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-sans bg-[#010b19] text-white overflow-x-clip" suppressHydrationWarning>
         <Header />
-        <main id="main-content" tabIndex={-1} className="flex-1 w-full overflow-x-hidden outline-none">
+        <main id="main-content" tabIndex={-1} className="flex-1 w-full overflow-x-clip outline-none">
           {children}
         </main>
         <Footer />

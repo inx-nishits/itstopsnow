@@ -27,9 +27,9 @@ export function EditorialSection({
     <section
       id={id}
       className={cn(
-        "theme-editorial relative text-[#010B19] overflow-hidden",
+        "theme-editorial relative text-[#010B19] overflow-clip",
         bg,
-        !noPadding && "py-12 sm:py-16 lg:py-24",
+        !noPadding && "py-16 sm:py-20 lg:py-32",
         className
       )}
     >
@@ -56,9 +56,9 @@ export function CampaignSection({
     <section
       id={id}
       className={cn(
-        "relative text-white overflow-hidden",
+        "relative text-white overflow-clip",
         bg,
-        !noPadding && "py-12 sm:py-16 lg:py-24",
+        !noPadding && "py-16 sm:py-20 lg:py-32",
         className
       )}
     >
@@ -76,7 +76,7 @@ export function EditorialStickyBar({ children, className }: { children: React.Re
   return (
     <div
       className={cn(
-        "theme-editorial sticky top-20 md:top-24 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm py-4 sm:py-5 overflow-x-hidden",
+        "theme-editorial sticky top-16 md:top-24 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm py-4 sm:py-5 overflow-x-hidden",
         className
       )}
     >

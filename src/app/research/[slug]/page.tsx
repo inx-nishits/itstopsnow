@@ -113,14 +113,14 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
               <FileText className="w-5 h-5 text-[#1877F2]" />
               Executive summary
             </h2>
-            <p className="text-base sm:text-lg text-slate-700 leading-[1.75]">{report.summary}</p>
+            <p className="text-sm sm:text-base sm:text-lg text-slate-700 leading-[1.75]">{report.summary}</p>
           </section>
 
           {report.articleContent ? (
             <section className="mb-10">
               <h2 className="text-lg font-bold text-[#010B19] mb-4">Full article</h2>
               <div className="bg-white border border-slate-200 rounded-xl p-5 sm:p-6">
-                <p className="text-base text-slate-700 leading-[1.8] whitespace-pre-line">
+                <p className="text-sm sm:text-base text-slate-700 leading-[1.8] whitespace-pre-line">
                   {report.articleContent}
                 </p>
               </div>
@@ -147,7 +147,7 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
           {report.methodology ? (
             <section className="mb-10">
               <h2 className="text-lg font-bold text-[#010B19] mb-4">Methodology</h2>
-              <p className="text-base text-slate-700 leading-[1.75]">{report.methodology}</p>
+              <p className="text-sm sm:text-base text-slate-700 leading-[1.75]">{report.methodology}</p>
             </section>
           ) : null}
 

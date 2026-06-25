@@ -60,8 +60,8 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
         imageAlt={story.title}
       />
 
-      <EditorialSection noPadding className="pb-12 lg:pb-24">
-        <div className={`${PAGE_CONTENT_CONTAINER} py-8 lg:py-16`}>
+      <EditorialSection noPadding className="pt-8 lg:pt-12 pb-16 sm:pb-20 lg:pb-32">
+        <div className={PAGE_CONTENT_CONTAINER}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             <div className="lg:col-span-8">
               <RichArticleBody blocks={richBlocks} />

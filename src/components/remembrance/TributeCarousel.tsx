@@ -7,9 +7,10 @@ import type { MemorialTribute } from "@/lib/memorial/types";
 interface TributeCarouselProps {
   tributes: MemorialTribute[];
   onSeeAll?: () => void;
+  onLeaveTribute?: () => void;
 }
 
-export default function TributeCarousel({ tributes, onSeeAll }: TributeCarouselProps) {
+export default function TributeCarousel({ tributes, onSeeAll, onLeaveTribute }: TributeCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollBy = (amount: number) => {
@@ -26,15 +27,26 @@ export default function TributeCarousel({ tributes, onSeeAll }: TributeCarouselP
         <h2 className="text-sm font-bold text-[#010B19] uppercase tracking-widest pb-2 border-b-2 border-[#1877F2] inline-block mb-0">
           Remembered By
         </h2>
-        {onSeeAll && (
-          <button
-            type="button"
-            onClick={onSeeAll}
-            className="shrink-0 min-h-[36px] text-[#1877F2] hover:text-[#1565d8] text-[10px] uppercase tracking-wider font-bold transition-colors flex items-center gap-1"
-          >
-            SEE ALL TRIBUTES <span aria-hidden>→</span>
-          </button>
-        )}
+        <div className="flex items-center gap-2 sm:gap-4">
+          {onLeaveTribute && (
+            <button
+              type="button"
+              onClick={onLeaveTribute}
+              className="shrink-0 min-h-[36px] bg-[#1877F2] hover:bg-[#1565d8] text-white px-3 sm:px-4 py-1.5 rounded-lg text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm"
+            >
+              Leave Tribute
+            </button>
+          )}
+          {onSeeAll && (
+            <button
+              type="button"
+              onClick={onSeeAll}
+              className="hidden sm:flex shrink-0 min-h-[36px] text-[#1877F2] hover:text-[#1565d8] text-[10px] uppercase tracking-wider font-bold transition-colors items-center gap-1"
+            >
+              SEE ALL TRIBUTES <span aria-hidden>→</span>
+            </button>
+          )}
+        </div>
       </div>
 
       <div 

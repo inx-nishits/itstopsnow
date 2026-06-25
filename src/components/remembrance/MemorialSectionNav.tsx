@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { Flame, MessageCircle, Share2, User, Star, MessageSquare, Heart } from "lucide-react";
 import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
@@ -11,8 +11,6 @@ const SECTIONS: { id: MemorialSectionId; label: string; icon: React.ElementType 
   { id: "story", label: "Their Story", icon: User },
   { id: "timeline", label: "Service & Career", icon: Star },
   { id: "tributes", label: "Remembered By", icon: MessageSquare },
-  { id: "candle", label: "Light a Candle", icon: Flame },
-  { id: "support", label: "Support & Help", icon: Heart },
 ];
 
 interface MemorialActionBarProps {
@@ -66,9 +64,23 @@ export function MemorialSectionTabs({
   hasTimeline = true,
 }: MemorialSectionTabsProps) {
   const sections = hasTimeline ? SECTIONS : SECTIONS.filter((s) => s.id !== "timeline");
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || !activeSection) return;
+    const activeTab = containerRef.current.querySelector(`[data-tab-id="${activeSection}"]`);
+    if (activeTab) {
+      activeTab.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [activeSection]);
 
   return (
     <div
+      ref={containerRef}
       className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1"
       role="tablist"
       aria-label="Memorial sections"
@@ -80,6 +92,7 @@ export function MemorialSectionTabs({
             key={id}
             type="button"
             role="tab"
+            data-tab-id={id}
             aria-selected={isActive}
             aria-controls={id}
             onClick={() => onNavigate(id)}

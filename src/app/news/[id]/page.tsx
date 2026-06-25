@@ -52,8 +52,8 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
         imageAlt={article.title}
       />
 
-      <EditorialSection noPadding className="pb-12 lg:pb-24">
-        <div className={`${PAGE_CONTENT_CONTAINER} py-8 sm:py-12`}>
+      <EditorialSection noPadding className="pt-8 lg:pt-12 pb-16 sm:pb-20 lg:pb-32">
+        <div className={PAGE_CONTENT_CONTAINER}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             <div className="lg:col-span-8">
               <p className={cn("text-lg sm:text-xl mb-8 leading-relaxed font-semibold text-[#1877F2]", hybrid.editorialBody)}>{article.excerpt}</p>

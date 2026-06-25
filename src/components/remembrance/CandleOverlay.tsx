@@ -7,21 +7,33 @@ interface CandleOverlayProps {
   isLoading?: boolean;
   onLight: () => void;
   disabled?: boolean;
+  className?: string;
+  showGlow?: boolean;
+  interactive?: boolean;
 }
 
 /** Compact vigil candle — secondary to the portrait, bottom-centre overlay */
-export default function CandleOverlay({ isLit, isLoading, onLight, disabled }: CandleOverlayProps) {
-  const canInteract = !disabled && !isLoading;
+export default function CandleOverlay({ 
+  isLit, 
+  isLoading, 
+  onLight, 
+  disabled,
+  className = "",
+  showGlow = true,
+  interactive = true 
+}: CandleOverlayProps) {
+  const canInteract = interactive && !disabled && !isLoading;
+  const Component = interactive ? "button" : "div";
 
   return (
-    <button
-      type="button"
+    <Component
+      type={interactive ? "button" : undefined}
       onClick={canInteract ? onLight : undefined}
-      disabled={!canInteract || isLit}
-      aria-label={isLit ? "Candle lit" : "Light a candle"}
+      disabled={interactive ? (!canInteract || isLit) : undefined}
+      aria-label={interactive ? (isLit ? "Candle lit" : "Light a candle") : undefined}
       className={`relative flex flex-col items-center justify-end w-11 h-[4.5rem] sm:w-12 sm:h-20 transition-opacity ${
-        isLit ? "cursor-default" : canInteract ? "cursor-pointer hover:scale-105 active:scale-95" : "cursor-not-allowed opacity-60"
-      }`}
+        isLit ? "cursor-default" : canInteract ? "cursor-pointer hover:scale-105 active:scale-95" : (interactive ? "cursor-not-allowed opacity-60" : "")
+      } ${className}`}
     >
       {/* Flame */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-10 sm:h-12 flex items-end justify-center pointer-events-none">
@@ -58,12 +70,12 @@ export default function CandleOverlay({ isLit, isLoading, onLight, disabled }: C
       </div>
 
       {/* Soft pool of light on portrait when lit */}
-      {isLit && (
+      {isLit && showGlow && (
         <div
           className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-12 bg-amber-400/25 rounded-full blur-xl pointer-events-none"
           aria-hidden
         />
       )}
-    </button>
+    </Component>
   );
 }

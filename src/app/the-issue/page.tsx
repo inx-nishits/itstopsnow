@@ -64,7 +64,7 @@ export default function TheIssuePage() {
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="text-left mb-6 md:mb-10 max-w-3xl">
             <h2 className="font-sans text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900 mb-3 sm:mb-4">THE FACTS</h2>
-            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed font-medium">The numbers don't lie. Our policing family is in crisis.</p>
+            <p className="text-slate-600 text-sm sm:text-[15px] sm:text-lg leading-relaxed font-medium">The numbers don't lie. Our policing family is in crisis.</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 border-t border-b border-slate-100">
@@ -118,7 +118,7 @@ export default function TheIssuePage() {
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="text-left mb-6 md:mb-10 max-w-3xl">
             <h2 className="font-sans text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900 mb-3 sm:mb-4">WHAT'S GOING WRONG?</h2>
-            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed font-medium">The problems run deep—and they are costing lives.</p>
+            <p className="text-slate-600 text-sm sm:text-[15px] sm:text-lg leading-relaxed font-medium">The problems run deep—and they are costing lives.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">

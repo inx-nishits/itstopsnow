@@ -16,7 +16,7 @@ export const PAGE_HERO_TITLE_UTILITY =
   "text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight drop-shadow-2xl";
 export const PAGE_HERO_DESCRIPTION =
   "text-sm sm:text-base md:text-lg xl:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl drop-shadow";
-export const PAGE_HERO_SECTION_PT = "pt-28 sm:pt-32 md:pt-40";
+export const PAGE_HERO_SECTION_PT = "pt-[max(7rem,env(safe-area-inset-top)+5rem)] md:pt-[max(9rem,env(safe-area-inset-top)+7rem)] lg:pt-[max(11rem,env(safe-area-inset-top)+9rem)]";
 
 /** Clears fixed site header (h-20 / h-24) plus safe-area — subpages without full PageHero */
 export const PAGE_BELOW_HEADER_PT =
@@ -25,8 +25,8 @@ export const PAGE_BELOW_HEADER_PT =
 export type PageHeroVariant = "campaign" | "utility";
 
 const variantLayout: Record<PageHeroVariant, string> = {
-  campaign: "justify-end pb-6 sm:pb-8 lg:pb-10",
-  utility: "justify-end pb-6 sm:pb-8 lg:pb-10",
+  campaign: "justify-end pb-10 sm:pb-12 lg:pb-16",
+  utility: "justify-end pb-10 sm:pb-12 lg:pb-16",
 };
 
 interface PageHeroProps {
@@ -103,16 +103,16 @@ export function PageHero({
   const descriptionContent =
     description &&
     (animate ? (
-      <motion.p
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         className={PAGE_HERO_DESCRIPTION}
       >
         {description}
-      </motion.p>
+      </motion.div>
     ) : (
-      <p className={PAGE_HERO_DESCRIPTION}>{description}</p>
+      <div className={PAGE_HERO_DESCRIPTION}>{description}</div>
     ));
 
   return (
@@ -164,14 +164,14 @@ export function ArticleHero({
     <section
       className={cn(
         "relative w-full flex flex-col justify-end bg-[#050A14] text-white border-b border-white/5 overflow-hidden",
-        PAGE_HERO_SECTION_PT,
-        "pt-4 pb-6 sm:pb-8 lg:pb-10"
+        "pt-24 sm:pt-28 md:pt-32",
+        "pb-6 sm:pb-8 lg:pb-10"
       )}
     >
       <HeroBackground imageSrc={imageSrc} imageAlt={imageAlt} imageClassName="opacity-30" />
 
       <div className={PAGE_HERO_CONTAINER}>
-        <div className="mb-6 sm:mb-8">{backLink}</div>
+        <div className="mb-4 sm:mb-6">{backLink}</div>
         {badges ? <div className="mb-5 sm:mb-6">{badges}</div> : null}
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-4 sm:mb-6 max-w-4xl">
           {title}
@@ -201,7 +201,7 @@ export function CompactPageHero({
       className={cn(
         "relative w-full flex flex-col justify-end overflow-hidden bg-[#050A14] text-white border-b border-white/5",
         PAGE_HERO_SECTION_PT,
-        "pt-4 pb-6 sm:pb-8 lg:pb-10"
+        "pb-6 sm:pb-8 lg:pb-10"
       )}
     >
       <div className="absolute inset-0 z-0" aria-hidden>

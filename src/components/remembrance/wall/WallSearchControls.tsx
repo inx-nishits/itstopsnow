@@ -50,7 +50,7 @@ export default function WallSearchControls({
         </div>
       </div>
 
-      <p className={cn("text-xs mt-2", isCampaign ? "text-slate-500" : hybrid.editorialMuted)}>
+      <p className={cn("text-xs mt-2 text-right", isCampaign ? "text-slate-500" : hybrid.editorialMuted)}>
         {resultCount} {resultCount === 1 ? "life" : "lives"} on the wall
       </p>
     </div>

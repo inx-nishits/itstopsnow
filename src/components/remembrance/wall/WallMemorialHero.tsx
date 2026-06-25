@@ -50,17 +50,19 @@ export default function WallMemorialHero({
           transition={{ duration: 0.7 }}
           className="max-w-2xl"
         >
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-1">
-            Wall of Remembrance
-          </h1>
-
-          <h2 className="text-xs sm:text-sm lg:text-base font-bold text-[#1877F2] uppercase tracking-wide mb-3 sm:mb-4">
-            Behind every name was a life, a family and a story.
-          </h2>
-
-          <p className="text-slate-300 text-xs sm:text-sm lg:text-base leading-relaxed mb-6 sm:mb-8 max-w-xl">
-            We remember police officers and staff who have died by suicide. We honour their service, their sacrifice and their commitment. We will not forget.
-          </p>
+          <div className="pr-[25%] sm:pr-0">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-1">
+              Wall of Remembrance
+            </h1>
+  
+            <h2 className="text-xs sm:text-sm lg:text-base font-bold text-[#1877F2] uppercase tracking-wide mb-3 sm:mb-4">
+              Behind every name was a life, a family and a story.
+            </h2>
+  
+            <p className="text-slate-300 text-xs sm:text-sm lg:text-base leading-relaxed mb-6 sm:mb-8 max-w-xl">
+              We remember police officers and staff who have died by suicide. We honour their service, their sacrifice and their commitment. We will not forget.
+            </p>
+          </div>
 
           <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div className="shrink-0 -mt-2">
@@ -85,7 +87,7 @@ export default function WallMemorialHero({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2 mt-2">
+          <div className="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2 mt-2">
             <div className="flex items-center gap-2.5 sm:gap-3">
               <Users className="w-6 h-6 sm:w-8 sm:h-8 text-[#1877F2]" />
               <div className="flex flex-col">

@@ -33,8 +33,13 @@ export function useCandleRitual({ memorialId, storageKey, initialCount }: UseCan
 
   useEffect(() => {
     const lit = localStorage.getItem(`${STORAGE_PREFIX}${storageId}`);
-    if (lit) setIsLit(true);
-  }, [storageId]);
+    setIsLit(!!lit);
+    setCandleCount(initialCount);
+    setPortraitGrayscale(cumulativeGrayscale(initialCount));
+    setPortraitScale(1);
+    setWarmGlowOpacity(0);
+    setMessage("");
+  }, [storageId, initialCount]);
 
   useEffect(() => {
     if (isAnimating) return;
@@ -162,6 +167,17 @@ export function useCandleRitual({ memorialId, storageKey, initialCount }: UseCan
     return () => animControls.current?.stop();
   }, []);
 
+  const resetCandle = useCallback(() => {
+    // Clear all candle states for all memorials
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith(STORAGE_PREFIX)) {
+        localStorage.removeItem(key);
+      }
+    });
+    setIsLit(false);
+    setMessage("");
+  }, [storageId]);
+
   return {
     candleCount,
     isLit,
@@ -173,5 +189,6 @@ export function useCandleRitual({ memorialId, storageKey, initialCount }: UseCan
     isAnimating,
     cumulativeGray,
     lightCandle,
+    resetCandle,
   };
 }

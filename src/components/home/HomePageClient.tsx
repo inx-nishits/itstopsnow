@@ -54,7 +54,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 EVERY NUMBER IS <br className="hidden lg:block" />
                 <span className="text-slate-500">A LIFE LEFT BEHIND.</span>
               </h3>
-              <p className="text-slate-600 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-xl font-medium">
+              <p className="text-slate-600 text-sm sm:text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-xl font-medium">
                 Every number represents a parent, a child, a partner and a friend left behind. Every story reminds us that officers' lives matter too.
               </p>
               <div>
@@ -82,7 +82,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
 
               <div className="relative md:absolute md:inset-0 flex flex-col justify-end md:justify-center p-6 sm:p-8 md:p-10 lg:p-12 bg-[#010B19] md:bg-transparent">
                 <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-[#1877F2]/60 mb-3 sm:mb-4 md:text-[#1877F2]/50 shrink-0" />
-                <p className="text-base sm:text-xl md:text-2xl text-white font-medium leading-[1.45] tracking-tight mb-5 sm:mb-6 md:mb-8 max-w-2xl text-balance">
+                <p className="text-sm sm:text-base sm:text-xl md:text-2xl text-white font-medium leading-[1.45] tracking-tight mb-5 sm:mb-6 md:mb-8 max-w-2xl text-balance">
                   &ldquo;To protect and serve others, they gave everything. Now,{" "}
                   <span className="text-[#1877F2]">it&apos;s our turn to protect them.</span>&rdquo;
                 </p>
@@ -109,31 +109,37 @@ export default function HomePageClient({ data }: HomePageClientProps) {
           </div>
 
           {/* Issue areas — editorial list on light surface */}
-          <SectionReveal delay={0.12} className="mt-12 sm:mt-16 lg:mt-20 pt-10 sm:pt-12 border-t border-slate-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
+          <SectionReveal delay={0.12} className="mt-12 sm:mt-16 lg:mt-20 pt-8 sm:pt-12 border-t border-slate-200">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8 lg:gap-12">
             
-            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 first:md:border-l-0 first:md:pl-0 group">
-              <div className="w-10 h-10 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
+            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 first:md:border-l-0 first:md:pl-0 group flex md:block items-start gap-4 sm:gap-5">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#1877F2]/10 rounded-lg flex items-center justify-center md:mb-4 mt-0.5 md:mt-0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 sm:w-6 sm:h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-[#010B19] tracking-wide mb-3">Systemic Failures</h3>
-              <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">The current investigative bodies act without accountability, leaving officers suspended in limbo for years for simply doing their duty.</p>
+              <div>
+                <h3 className="text-base sm:text-xl font-bold text-[#010B19] tracking-wide mb-1.5 md:mb-3">Systemic Failures</h3>
+                <p className="text-slate-600 text-[13px] sm:text-[15px] leading-relaxed">The current investigative bodies act without accountability, leaving officers suspended in limbo for years for simply doing their duty.</p>
+              </div>
             </div>
 
-            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group">
-              <div className="w-10 h-10 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group flex md:block items-start gap-4 sm:gap-5">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#1877F2]/10 rounded-lg flex items-center justify-center md:mb-4 mt-0.5 md:mt-0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 sm:w-6 sm:h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-[#010B19] tracking-wide mb-3">Mental Health Toll</h3>
-              <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">Prolonged investigations are destroying families and lives. We demand a 12-month time limit to prevent further psychological damage.</p>
+              <div>
+                <h3 className="text-base sm:text-xl font-bold text-[#010B19] tracking-wide mb-1.5 md:mb-3">Mental Health Toll</h3>
+                <p className="text-slate-600 text-[13px] sm:text-[15px] leading-relaxed">Prolonged investigations are destroying families and lives. We demand a 12-month time limit to prevent further psychological damage.</p>
+              </div>
             </div>
 
-            <div className="py-5 md:py-0 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group">
-              <div className="w-10 h-10 bg-[#1877F2]/10 rounded-lg flex items-center justify-center mb-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>
+            <div className="py-5 md:py-0 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group flex md:block items-start gap-4 sm:gap-5">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#1877F2]/10 rounded-lg flex items-center justify-center md:mb-4 mt-0.5 md:mt-0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 sm:w-6 sm:h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-[#010B19] tracking-wide mb-3">Legal Protection</h3>
-              <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">Officers deserve immediate, robust legal support after critical incidents, untainted by political pressures or media narratives.</p>
+              <div>
+                <h3 className="text-base sm:text-xl font-bold text-[#010B19] tracking-wide mb-1.5 md:mb-3">Legal Protection</h3>
+                <p className="text-slate-600 text-[13px] sm:text-[15px] leading-relaxed">Officers deserve immediate, robust legal support after critical incidents, untainted by political pressures or media narratives.</p>
+              </div>
             </div>
 
           </div>
@@ -159,7 +165,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 A Future Where <br className="hidden md:block"/> No Officer <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">Stands Alone.</span>
               </h3>
             </div>
-            <p className="text-slate-400 text-base sm:text-lg max-w-lg font-medium leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base sm:text-lg max-w-lg font-medium leading-relaxed">
               We are building a comprehensive support system to ensure every officer is valued, supported, and protected throughout their service and beyond.
             </p>
           </div>
@@ -273,7 +279,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
 
               <div className="lg:absolute relative mt-6 lg:mt-0 lg:-bottom-8 lg:-right-8 xl:-right-12 w-full lg:w-[min(400px,90%)] ml-auto bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-xl z-20">
                 <Quote className="w-9 h-9 text-[#1877F2] mb-5 opacity-80" />
-                <p className="text-[#010B19] text-base sm:text-lg lg:text-xl font-medium leading-relaxed mb-5 italic">
+                <p className="text-[#010B19] text-sm sm:text-base sm:text-lg lg:text-xl font-medium leading-relaxed mb-5 italic">
                   "This organization is not just about reform; it's about saving lives right now. They stepped in when no one else would listen."
                 </p>
                 <div className="flex items-center gap-4">
@@ -300,10 +306,10 @@ export default function HomePageClient({ data }: HomePageClientProps) {
               
               <div className="space-y-5 sm:space-y-6 border-l-2 border-slate-200 pl-6 sm:pl-8 lg:pl-10 relative">
                 <div className="absolute left-[-2px] top-0 w-[2px] h-1/3 bg-gradient-to-b from-[#1877F2] to-transparent"></div>
-                <p className="text-slate-800 text-lg sm:text-xl lg:text-2xl leading-relaxed font-medium">
+                <p className="text-slate-800 text-sm sm:text-lg sm:text-xl lg:text-2xl leading-relaxed font-medium">
                   We are building an unshakeable foundation of support to ensure that no police officer or family member ever has to face the devastating consequences of systemic investigations alone. 
                 </p>
-                <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
+                <p className="text-slate-600 text-sm sm:text-base sm:text-lg leading-relaxed">
                   We stand for fairness, mental health advocacy, and swift justice. By providing urgent crisis intervention, independent legal support, and driving legislative reform, we ensure the protectors are protected.
                 </p>
               </div>
