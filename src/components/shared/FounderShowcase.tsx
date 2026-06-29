@@ -203,7 +203,7 @@ function FoundersCarousel() {
 
 export default function FounderShowcase() {
   return (
-    <section className="bg-[#030712] text-white py-10 md:py-16 relative overflow-hidden">
+    <section className="bg-[#030712] text-white py-10 sm:py-20 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
       <SectionReveal className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 mb-8 lg:mb-12">
@@ -219,9 +219,9 @@ export default function FounderShowcase() {
           </div>
           
           <div className="w-full lg:w-[65%] flex flex-col justify-center text-center lg:text-left relative z-10 py-1 lg:py-2">
-            <span className="text-[#1877F2] text-[10px] font-bold uppercase tracking-[0.2em] mb-1 lg:mb-2 block">THE FOUNDER</span>
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-1 lg:mb-2">{PAUL_COOPER.name}</h3>
-            <p className="text-[#1877F2] font-medium text-[11px] sm:text-xs lg:text-sm mb-3 lg:mb-6">{PAUL_COOPER.role}</p>
+            <span className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-1 lg:mb-2 block">THE FOUNDER</span>
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white mb-1 lg:mb-2">{PAUL_COOPER.name}</h3>
+            <p className="text-[#1877F2] font-medium text-xs sm:text-sm mb-3 lg:mb-6">{PAUL_COOPER.role}</p>
             
             <div className="text-slate-300 text-xs lg:text-sm leading-relaxed space-y-2 lg:space-y-3 mb-4 lg:mb-6 text-left max-w-xl mx-auto lg:mx-0">
               <p>{PAUL_COOPER.bio1}</p>
@@ -239,13 +239,13 @@ export default function FounderShowcase() {
 
       <SectionReveal className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 pt-6 sm:pt-10 border-t border-white/5">
         <div className="text-center mb-8">
-          <h2 className="text-[#1877F2] text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase mb-4 block">
-            FOUNDING MEMBERS
-          </h2>
-          <h3 className="text-2xl sm:text-3xl lg:text-5xl font-black uppercase tracking-tighter text-white text-balance mb-4">
+          <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
+            <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">FOUNDING MEMBERS</h2>
+          </div>
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white text-balance mb-4 sm:mb-6">
             The people behind the mission
           </h3>
-          <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+          <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-medium max-w-2xl mx-auto">
             A dedicated team with a shared passion for supporting the mental health and wellbeing of our policing family.
           </p>
         </div>

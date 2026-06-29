@@ -27,17 +27,18 @@ export default function ResearchToolbar({
   onSortChange,
 }: ResearchToolbarProps) {
   return (
-    <div className={PAGE_CONTENT_CONTAINER}>
-      <div className="flex flex-col lg:flex-row justify-between items-center gap-3 sm:gap-4 lg:gap-6">
-        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto w-full lg:w-auto scrollbar-hide">
+    <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-4 py-2 sm:py-3">
+        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-grow pr-4 pb-1 md:pb-0">
           {categories.map((category) => (
             <button
               key={category.id}
               type="button"
               onClick={() => onCategoryChange(category.label)}
               className={cn(
-                "min-h-[36px] sm:min-h-[48px] px-4 sm:px-6 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer",
-                activeCategory === category.label ? hybrid.editorialChipActive : hybrid.editorialChip
+                "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0 cursor-pointer",
+                activeCategory === category.label 
+                  ? "bg-[#1877F2] text-white border-[#1877F2]" 
+                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
               )}
             >
               {category.label === "All" ? "All Reports" : category.label}
@@ -64,6 +65,5 @@ export default function ResearchToolbar({
           <ResearchSortMenu sortBy={sortBy} onSortChange={onSortChange} />
         </div>
       </div>
-    </div>
   );
 }

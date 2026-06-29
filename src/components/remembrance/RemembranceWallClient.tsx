@@ -146,12 +146,12 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
             </p>
           </header>
 
-          <div className="sticky top-16 md:top-24 z-40 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 py-3 mb-2 sm:mb-6 bg-[#f4f5f7]">
+          <div className="sticky top-16 md:top-24 z-40 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 py-1 mb-2 sm:mb-6 bg-[#f4f5f7]">
             <WallSearchControls
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               resultCount={sortedOfficers.length}
-              variant="default"
+              variant="sticky"
             />
           </div>
 

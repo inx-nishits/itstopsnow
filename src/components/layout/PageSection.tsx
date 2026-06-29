@@ -29,7 +29,7 @@ export function EditorialSection({
       className={cn(
         "theme-editorial relative text-[#010B19] overflow-clip",
         bg,
-        !noPadding && "py-16 sm:py-20 lg:py-32",
+        !noPadding && "py-10 sm:py-20 lg:py-24",
         className
       )}
     >
@@ -58,7 +58,7 @@ export function CampaignSection({
       className={cn(
         "relative text-white overflow-clip",
         bg,
-        !noPadding && "py-16 sm:py-20 lg:py-32",
+        !noPadding && "py-10 sm:py-20 lg:py-24",
         className
       )}
     >

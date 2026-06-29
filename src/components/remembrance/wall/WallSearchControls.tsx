@@ -11,7 +11,7 @@ interface WallSearchControlsProps {
   variant?: "default" | "sticky" | "campaign";
 }
 
-const CONTROL_HEIGHT = "h-12";
+const CONTROL_HEIGHT = "h-10 sm:h-12";
 
 export default function WallSearchControls({
   searchQuery,
@@ -50,7 +50,7 @@ export default function WallSearchControls({
         </div>
       </div>
 
-      <p className={cn("text-xs mt-2 text-right", isCampaign ? "text-slate-500" : hybrid.editorialMuted)}>
+      <p className={cn("text-[10px] sm:text-xs mt-1 sm:mt-2 text-right", isCampaign ? "text-slate-500" : hybrid.editorialMuted)}>
         {resultCount} {resultCount === 1 ? "life" : "lives"} on the wall
       </p>
     </div>

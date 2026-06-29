@@ -125,11 +125,11 @@ export default function VoicesRollSection({ voices, rollPreview }: VoicesRollSec
         <section className="theme-editorial relative bg-[#030712] text-white overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
-          <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 py-16 sm:py-20 lg:py-24">
+          <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 py-10 sm:py-20 lg:py-24">
             <SectionReveal>
-              <div className="flex items-center gap-4 mb-5 sm:mb-8">
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-12 h-[2px] bg-[#1877F2]" />
-                <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">
+                <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">
                   Voices from the Police Family
                 </h2>
               </div>

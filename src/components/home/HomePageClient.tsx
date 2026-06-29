@@ -39,22 +39,22 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       </div>
 
       {/* WHY IT STOPS NOW — light editorial */}
-      <section className="theme-editorial relative bg-white text-[#010B19] py-16 sm:py-20 lg:py-32 overflow-hidden">
+      <section className="theme-editorial relative bg-white text-[#010B19] py-10 sm:py-20 lg:py-24 overflow-hidden">
         <div className="absolute top-0 right-0 w-[min(800px,90vw)] h-[min(800px,90vw)] bg-[#1877F2]/[0.03] rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start lg:items-center">
             
             <SectionReveal className="flex flex-col justify-center lg:col-span-5">
-              <div className="flex items-center gap-4 mb-6 sm:mb-8">
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
-                <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Why It Stops Now</h2>
+                <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">Why It Stops Now</h2>
               </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#010B19] tracking-tight leading-[1.12] mb-5 sm:mb-6 text-balance">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-4 sm:mb-6 text-balance">
                 EVERY NUMBER IS <br className="hidden lg:block" />
                 <span className="text-slate-500">A LIFE LEFT BEHIND.</span>
               </h3>
-              <p className="text-slate-600 text-sm sm:text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-xl font-medium">
+              <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed font-medium mb-8 sm:mb-10 max-w-xl">
                 Every number represents a parent, a child, a partner and a friend left behind. Every story reminds us that officers' lives matter too.
               </p>
               <div>
@@ -69,7 +69,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             <SectionReveal delay={0.08} className="lg:col-span-7">
             <div className="relative overflow-hidden rounded-2xl md:rounded-[2rem] lg:rounded-[2.5rem] group shadow-xl border border-slate-200">
               {/* Mobile-first: photography above quote */}
-              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-auto md:min-h-[240px] lg:min-h-[280px]">
+              <div className="relative w-full aspect-[21/9] sm:aspect-[16/9] md:aspect-auto md:min-h-[240px] lg:min-h-[280px]">
                 <Image
                   src="/images/quote-bg.png"
                   alt="Supportive holding background"
@@ -80,7 +80,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#010B19] via-[#010B19]/40 to-transparent md:bg-gradient-to-r md:from-transparent md:via-[#010B19]/40 md:to-[#010B19]/85" />
               </div>
 
-              <div className="relative md:absolute md:inset-0 flex flex-col justify-end md:justify-center p-6 sm:p-8 md:p-10 lg:p-12 bg-[#010B19] md:bg-transparent">
+              <div className="relative md:absolute md:inset-0 flex flex-col justify-end md:justify-center p-5 sm:p-8 md:p-10 lg:p-12 bg-[#010B19] md:bg-transparent">
                 <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-[#1877F2]/60 mb-3 sm:mb-4 md:text-[#1877F2]/50 shrink-0" />
                 <p className="text-sm sm:text-base sm:text-xl md:text-2xl text-white font-medium leading-[1.45] tracking-tight mb-5 sm:mb-6 md:mb-8 max-w-2xl text-balance">
                   &ldquo;To protect and serve others, they gave everything. Now,{" "}
@@ -112,7 +112,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
       </section>
 
       {/* OUR MISSION — dark campaign */}
-      <section className="relative bg-[#030712] text-white py-16 sm:py-20 lg:py-28 overflow-hidden">
+      <section className="relative bg-[#030712] text-white py-10 sm:py-20 lg:py-24 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
@@ -120,15 +120,15 @@ export default function HomePageClient({ data }: HomePageClientProps) {
           <SectionReveal>
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-16 gap-6 md:gap-8">
             <div>
-              <div className="flex items-center gap-4 mb-5 sm:mb-6">
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-12 h-[2px] bg-[#1877F2]"></div>
-                <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">Our Mission</h2>
+                <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">Our Mission</h2>
               </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter uppercase leading-[1.08] text-balance">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white mb-4 sm:mb-6 text-balance">
                 A Future Where <br className="hidden md:block"/> No Officer <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">Stands Alone.</span>
               </h3>
             </div>
-            <p className="text-slate-400 text-sm sm:text-base sm:text-lg max-w-lg font-medium leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-medium max-w-lg">
               We are building a comprehensive support system to ensure every officer is valued, supported, and protected throughout their service and beyond.
             </p>
           </div>
@@ -216,7 +216,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
         </div>
       </section>
       {/* MISSION STATEMENT BANNER — light editorial */}
-      <section className="theme-editorial relative w-full py-16 sm:py-20 lg:py-28 bg-[#f4f5f7] text-[#010B19] overflow-hidden">
+      <section className="theme-editorial relative w-full py-10 sm:py-20 lg:py-24 bg-[#f4f5f7] text-[#010B19] overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent pointer-events-none" />
         
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
@@ -257,12 +257,12 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             </SectionReveal>
 
             <SectionReveal delay={0.1} className="w-full lg:w-1/2 pt-4 lg:pt-0 lg:pl-8">
-              <div className="flex items-center gap-4 mb-6 sm:mb-8">
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-12 h-[1px] bg-[#1877F2]"></div>
-                <span className="text-[#1877F2] text-xs font-bold tracking-[0.3em] uppercase">Why We Stand</span>
+                <span className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">Why We Stand</span>
               </div>
               
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-6 sm:mb-8 leading-[1.06] text-balance">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-4 sm:mb-6 text-balance">
                 Our Mission <br/>
                 <span className="text-[#1877F2]">Is Clear.</span>
               </h3>
@@ -272,7 +272,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 <p className="text-slate-800 text-sm sm:text-lg sm:text-xl lg:text-2xl leading-relaxed font-medium">
                   We are building an unshakeable foundation of support to ensure that no police officer or family member ever has to face the devastating consequences of systemic investigations alone. 
                 </p>
-                <p className="text-slate-600 text-sm sm:text-base sm:text-lg leading-relaxed">
+                <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed font-medium">
                   We stand for fairness, mental health advocacy, and swift justice. By providing urgent crisis intervention, independent legal support, and driving legislative reform, we ensure the protectors are protected.
                 </p>
               </div>

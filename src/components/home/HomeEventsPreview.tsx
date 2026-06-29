@@ -13,20 +13,20 @@ export default function HomeEventsPreview({ events }: HomeEventsPreviewProps) {
   if (!events.length) return null;
 
   return (
-    <section className="theme-editorial relative bg-[#f4f5f7] text-[#010B19] py-16 sm:py-20 lg:py-24 overflow-hidden border-t border-slate-200/80">
+    <section className="theme-editorial relative bg-[#f4f5f7] text-[#010B19] py-10 sm:py-20 lg:py-24 overflow-hidden border-t border-slate-200/80">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#1877F2]/15 to-transparent pointer-events-none" />
 
       <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
         <SectionReveal>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
             <div>
-              <div className="flex items-center gap-4 mb-3">
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-12 h-[2px] bg-[#1877F2]" />
-                <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase">
+                <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">
                   Upcoming Events
                 </h2>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-[#010B19] uppercase tracking-tighter text-balance">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] text-balance">
                 Stand With Us <span className="text-slate-400">In Person</span>
               </h3>
             </div>

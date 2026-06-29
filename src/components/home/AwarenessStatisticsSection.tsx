@@ -81,7 +81,7 @@ export default function AwarenessStatisticsSection({
   return (
     <>
       <section
-        className="theme-editorial relative z-20 bg-[#f4f5f7] text-[#010B19] pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pt-16 lg:pb-12"
+        className="theme-editorial relative z-20 bg-[#f4f5f7] text-[#010B19] py-4 sm:py-20 lg:py-24"
         aria-labelledby="awareness-statistics-heading"
       >
         <h2 id="awareness-statistics-heading" className="sr-only">

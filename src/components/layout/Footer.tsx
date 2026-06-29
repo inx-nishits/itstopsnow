@@ -13,7 +13,8 @@ export default function Footer() {
   const newsletter = useNewsletterSubscribe();
 
   return (
-    <footer className="relative bg-[#02050A] pt-8 sm:pt-16 md:pt-24 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-[max(2.5rem,env(safe-area-inset-bottom))] text-white font-sans overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#02050A] pt-4 sm:pt-16 md:pt-24 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-[max(2.5rem,env(safe-area-inset-bottom))] text-white font-sans overflow-hidden border-t border-white/5">
+
 
       {/* Massive Background Typography */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.04] translate-y-[18%]">

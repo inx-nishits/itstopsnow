@@ -66,20 +66,19 @@ export default function ResearchPageClient() {
     <div className="min-h-screen flex flex-col">
       <ResearchHero />
 
-      <EditorialStickyBar>
-        <ResearchToolbar
-          categories={categories}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-        />
-      </EditorialStickyBar>
-
       <EditorialSection noPadding className="flex-1">
-        <div className={`${PAGE_CONTENT_CONTAINER} py-8 sm:py-10 lg:py-14`}>
+        <div className={`${PAGE_CONTENT_CONTAINER} pt-0 pb-10 sm:pb-20 lg:pb-24`}>
+          <div className="sticky top-16 md:top-24 z-40 bg-[#f4f5f7]/95 backdrop-blur-xl mb-6 sm:mb-8 border-b border-slate-200">
+            <ResearchToolbar
+              categories={categories}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+            />
+          </div>
           <div
             className={cn(
               "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-5 mb-6 sm:mb-8",

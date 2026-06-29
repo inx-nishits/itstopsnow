@@ -69,15 +69,15 @@ export default function AboutPage() {
       />
 
       {/* 2. WHO IS POCKET SERGEANT */}
-      <EditorialSection className="py-12 md:py-16 lg:py-32">
+      <EditorialSection className="py-10 sm:py-20 lg:py-24">
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
-              <h2 className={`font-sans text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tight mb-4 ${hybrid.editorialHeading}`}>WHO IS POCKET SERGEANT?</h2>
-              <p className={`${hybrid.editorialBody} leading-relaxed mb-4 text-sm sm:text-lg`}>
+              <h2 className={`text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter mb-4 sm:mb-6 ${hybrid.editorialHeading}`}>WHO IS POCKET SERGEANT?</h2>
+              <p className={`${hybrid.editorialBody} leading-relaxed font-medium mb-4 sm:mb-6 text-sm sm:text-base md:text-lg`}>
                 Pocket Sergeant is the UK's leading app for police officers and staff. Created by former police officer Paul Cooper, it was built to solve a simple problem: officers needed quick, reliable access to the law, operational guidance, and wellbeing resources while out on the street.
               </p>
-              <p className={`${hybrid.editorialBody} leading-relaxed mb-6 text-sm sm:text-lg`}>
+              <p className={`${hybrid.editorialBody} leading-relaxed font-medium mb-6 sm:mb-8 text-sm sm:text-base md:text-lg`}>
                 Today, it is used by thousands of officers every single day. But our mission goes beyond making the job easier. We want to make the job safer—mentally and emotionally. That's why we are funding the 'It Stops Now' campaign.
               </p>
             </div>
@@ -144,15 +144,15 @@ export default function AboutPage() {
       </EditorialSection>
 
       {/* STATISTICS SECTION */}
-      <section className="py-12 md:py-16 lg:py-32 relative overflow-hidden">
+      <section className="py-10 sm:py-20 lg:py-24 relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#1877F2]/10 rounded-full blur-[150px] pointer-events-none" />
         <div className="absolute left-0 top-0 w-[500px] h-[500px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
         
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
           <div className="text-center mb-8 lg:mb-16 max-w-3xl mx-auto px-2">
-            <h2 className="text-xs lg:text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-2 lg:mb-4">Our Reach</h2>
-            <h2 className="font-sans text-2xl sm:text-3xl lg:text-5xl font-bold uppercase tracking-tight text-white mb-3 lg:mb-6 leading-tight">IMPACT BY THE NUMBERS</h2>
-            <p className="text-slate-400 text-sm sm:text-base lg:text-lg leading-relaxed">Pocket Sergeant's organizational achievements and the community we've built.</p>
+            <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-3 sm:mb-4">Our Reach</h2>
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white mb-4 sm:mb-6 text-balance">IMPACT BY THE NUMBERS</h3>
+            <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-medium">Pocket Sergeant's organizational achievements and the community we've built.</p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
@@ -240,16 +240,16 @@ export default function AboutPage() {
       </section>
 
       {/* WHY SUPPORTING THIS MOVEMENT */}
-      <section className="py-12 md:py-16 lg:py-32 w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+      <section className="py-10 sm:py-20 lg:py-24 w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
         <div className="md:bg-[#050B14] md:rounded-2xl md:border md:border-white/5 overflow-hidden flex flex-col lg:flex-row relative items-stretch">
           
           {/* Left Text */}
           <div className="flex-1 pt-0 pb-8 md:p-12 lg:p-14 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-white/10 relative z-10">
-            <h2 className="font-sans text-2xl md:text-3xl lg:text-[2.5rem] font-bold uppercase tracking-tight text-white mb-6 leading-[1.1] max-w-md">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white mb-4 sm:mb-6 text-balance max-w-md">
               WHY ARE THEY SUPPORTING<br />THIS MOVEMENT?
             </h2>
             <div className="w-8 h-1 bg-[#1877F2] mb-6"></div>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-md">
+            <p className="text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed font-medium max-w-md">
               Pocket Sergeant believes no officer should feel unsupported, silenced or forgotten. Supporting It Stops Now is part of a wider commitment to improving officer wellbeing and driving meaningful change across policing.
             </p>
           </div>
@@ -259,7 +259,7 @@ export default function AboutPage() {
             <div className="flex items-start gap-4 md:gap-6">
               <span className="text-[#1877F2] text-6xl md:text-7xl font-serif leading-none mt-1 shrink-0">“</span>
               <div>
-                <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 max-w-sm">
+                <p className="text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed font-medium mb-6 sm:mb-8 max-w-sm">
                   We know the pressures of policing are real. We've been there. We created Pocket Sergeant to make a difference – and we support It Stops Now to help create lasting change for today's officers and those who come after us.
                 </p>
                 <div>
@@ -284,12 +284,12 @@ export default function AboutPage() {
       </section>
 
       {/* FUNDING TRANSPARENCY */}
-      <EditorialSection className="py-12 md:py-16 lg:py-32">
+      <EditorialSection className="py-10 sm:py-20 lg:py-24">
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-3 sm:mb-4">Accountability</h2>
-            <h2 className={`font-sans text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-tight mb-5 sm:mb-8 ${hybrid.editorialHeading}`}>FUNDING & TRANSPARENCY</h2>
-            <p className={`${hybrid.editorialBody} text-sm sm:text-lg leading-relaxed`}>
+            <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-3 sm:mb-4">Accountability</h2>
+            <h3 className={`text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter mb-4 sm:mb-6 text-balance ${hybrid.editorialHeading}`}>FUNDING & TRANSPARENCY</h3>
+            <p className={`${hybrid.editorialBody} text-sm sm:text-base md:text-lg leading-relaxed font-medium`}>
               'It Stops Now' is fully funded by Pocket Sergeant Ltd. We do not accept government funding, police federation grants, or corporate sponsorships. 100% of our resources go directly to the cause.
             </p>
           </div>
@@ -347,7 +347,7 @@ export default function AboutPage() {
       </EditorialSection>
 
       {/* PODCAST SECTION */}
-      <CampaignSection className="py-12 md:py-16 lg:py-32 border-b border-white/5">
+      <CampaignSection className="py-10 sm:py-20 lg:py-24 border-b border-white/5">
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
             <div className="w-full lg:w-1/2 relative">
@@ -359,11 +359,11 @@ export default function AboutPage() {
             </div>
             
             <div className="lg:w-1/2 text-white relative z-10">
-              <div className="text-[#1877F2] text-xs font-bold uppercase tracking-[0.3em] mb-6 flex items-center gap-3">
+              <div className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-3 sm:mb-4 flex items-center gap-3">
                 <Headphones className="w-4 h-4" /> OFFICIAL PODCAST
               </div>
-              <h2 className="font-sans text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-tight mb-6 sm:mb-8">THE POCKET SERGEANT PODCAST</h2>
-              <p className="text-slate-400 leading-relaxed mb-10 text-sm sm:text-lg">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white mb-4 sm:mb-6 text-balance">THE POCKET SERGEANT PODCAST</h3>
+              <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-medium mb-8 sm:mb-10">
                 Join Paul Cooper and special guests as they discuss the real issues facing modern policing. From navigating the complexities of misconduct investigations to sharing survival strategies for mental health, we pull no punches.
               </p>
               
@@ -408,13 +408,13 @@ export default function AboutPage() {
       </CampaignSection>
 
       {/* LEARN MORE ABOUT POCKET SERGEANT CTA SECTION */}
-      <EditorialSection className="py-12 md:py-16 lg:py-32">
+      <EditorialSection className="py-10 sm:py-20 lg:py-24">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1877F2]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="w-full px-4 sm:px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10">
           <div className="text-center mb-10 sm:mb-16 max-w-3xl mx-auto">
-            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-[0.3em] text-[#1877F2] mb-3 sm:mb-4">Explore the App</h2>
-            <h2 className={`font-sans text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-tight mb-5 sm:mb-8 ${hybrid.editorialHeading}`}>LEARN MORE ABOUT POCKET SERGEANT</h2>
-            <p className={`${hybrid.editorialBody} mb-12 text-sm sm:text-xl leading-relaxed`}>Discover how our app supports officers on the front lines every day with essential resources, legal guidance, and wellbeing tools.</p>
+            <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-3 sm:mb-4">Explore the App</h2>
+            <h3 className={`text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter mb-4 sm:mb-6 text-balance ${hybrid.editorialHeading}`}>LEARN MORE ABOUT POCKET SERGEANT</h3>
+            <p className={`${hybrid.editorialBody} text-sm sm:text-base md:text-lg leading-relaxed font-medium mb-10 sm:mb-12`}>Discover how our app supports officers on the front lines every day with essential resources, legal guidance, and wellbeing tools.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">

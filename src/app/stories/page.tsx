@@ -244,7 +244,7 @@ function StoriesPageContent() {
                   data-tab-id={f}
                   onClick={() => setActiveFilter(f)}
                   className={cn(
-                    "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm sm:text-base font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
+                    "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
 
                     activeFilter === f 
                       ? "bg-[#1877F2] text-white border-[#1877F2]" 
@@ -262,38 +262,38 @@ function StoriesPageContent() {
             </div>
 
             {/* Sort & Search Container */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
-              {/* Sort Dropdown */}
-              <div className="relative">
-                <button 
-                  onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-                  className="w-full sm:w-auto h-10 sm:h-11 px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-3 text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
-                >
-                  <span className="flex items-center gap-2">
-                    <ArrowDownUp className="w-4 h-4 text-slate-400" /> 
-                    {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title (A-Z)"}
-                  </span>
-                  <ChevronDown className={cn("w-4 h-4 transition-transform", sortDropdownOpen && "rotate-180")} />
-                </button>
-                {sortDropdownOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50">
-                    <button onClick={() => {setSortBy("newest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Newest First</button>
-                    <button onClick={() => {setSortBy("oldest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Oldest First</button>
-                    <button onClick={() => {setSortBy("title-az"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Title (A-Z)</button>
-                  </div>
-                )}
-              </div>
-
+            <div className="flex flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
               {/* Search Bar */}
-              <div className="relative w-full md:w-64 xl:w-72 shrink-0">
-                <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+              <div className="relative flex-1 md:w-64 xl:w-72 shrink-0">
+                <Search className="w-4 h-4 absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input 
                   type="text" 
                   placeholder="Search stories..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-11 pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
+                  className="w-full pl-9 pr-3 sm:pl-11 sm:pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-xs sm:text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
                 />
+              </div>
+
+              {/* Sort Dropdown */}
+              <div className="relative shrink-0 sm:w-auto">
+                <button 
+                  onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+                  className="w-full h-10 sm:h-11 px-3 sm:px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-2 sm:gap-3 text-xs sm:text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
+                >
+                  <span className="flex items-center gap-1 sm:gap-2 truncate">
+                    <ArrowDownUp className="hidden sm:block w-4 h-4 text-slate-400" /> 
+                    {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title (A-Z)"}
+                  </span>
+                  <ChevronDown className={cn("w-4 h-4 shrink-0 transition-transform", sortDropdownOpen && "rotate-180")} />
+                </button>
+                {sortDropdownOpen && (
+                  <div className="absolute top-full right-0 sm:left-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50">
+                    <button onClick={() => {setSortBy("newest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Newest First</button>
+                    <button onClick={() => {setSortBy("oldest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Oldest First</button>
+                    <button onClick={() => {setSortBy("title-az"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Title (A-Z)</button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -301,7 +301,7 @@ function StoriesPageContent() {
       </EditorialStickyBar>
 
       {/* 4. STORY GRID */}
-      <section className="w-full bg-[#f4f5f7] pt-8 pb-16 sm:pb-20 lg:pb-32">
+      <section className="w-full bg-[#f4f5f7] pt-8 pb-16 sm:pb-24 lg:pb-32">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           {sortedStories.length === 0 ? (
             <div className="text-center py-10 lg:py-20 rounded-xl bg-white border border-slate-200">
@@ -378,7 +378,7 @@ function StoriesPageContent() {
       </section>
 
       {/* 6. CALL TO ACTION BANNER */}
-      <section className="bg-[#f4f5f7] pb-16 sm:pb-20 lg:pb-32 overflow-hidden">
+      <section className="bg-[#f4f5f7] pb-16 sm:pb-24 lg:pb-32 overflow-hidden">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="relative w-full rounded-[2rem] overflow-hidden bg-[#050A14] shadow-none sm:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 group">
              

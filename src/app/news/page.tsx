@@ -194,11 +194,11 @@ export default function NewsPage() {
       />
 
       {/* 2. MAIN CONTENT (News Grid + Newsletter) */}
-      <section id="latest-news" className="w-full relative z-10 bg-white pt-1 pb-16 md:pt-6 md:pb-20">
+      <section id="latest-news" className="w-full relative z-10 bg-white pt-0 pb-10 sm:pb-20 lg:pb-24">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           
           {/* Sticky Filters & Search (Extracted out of the grid to be full-bleed) */}
-          <div className="sticky top-16 md:top-24 z-30 bg-white -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 mb-8 border-b border-gray-100">
+          <div className="sticky top-16 md:top-24 z-30 bg-white mb-8 border-b border-gray-100">
             <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-4 py-2 sm:py-3">
               <div ref={tabsContainerRef} className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-grow pr-4 pb-1 md:pb-0">
                 {categories.map((cat) => (
@@ -207,7 +207,7 @@ export default function NewsPage() {
                     data-tab-id={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={cn(
-                      "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm sm:text-base font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
+                      "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
 
                       activeCategory === cat 
                         ? "bg-[#1877F2] text-white border-[#1877F2]" 
@@ -220,37 +220,37 @@ export default function NewsPage() {
               </div>
               
               {/* Sort & Search Container */}
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
-                {/* Sort Dropdown */}
-                <div className="relative">
-                  <button 
-                    onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-                    className="w-full sm:w-auto h-10 sm:h-11 px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-3 text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
-                      {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title (A-Z)"}
-                    </span>
-                    <svg className={cn("w-4 h-4 transition-transform", sortDropdownOpen && "rotate-180")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                  </button>
-                  {sortDropdownOpen && (
-                    <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50">
-                      <button onClick={() => {setSortBy("newest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Newest First</button>
-                      <button onClick={() => {setSortBy("oldest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Oldest First</button>
-                      <button onClick={() => {setSortBy("title-az"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Title (A-Z)</button>
-                    </div>
-                  )}
-                </div>
-                
+              <div className="flex flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
                 {/* Search Functionality */}
-                <div className="relative w-full md:w-64 xl:w-72 shrink-0">
-                  <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <div className="relative flex-1 md:w-64 xl:w-72 shrink-0">
+                  <Search className="w-4 h-4 absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input 
                     type="text" 
                     placeholder="Search news..." 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-11 pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
+                    className="w-full pl-9 pr-3 sm:pl-11 sm:pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-xs sm:text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
                   />
+                </div>
+
+                {/* Sort Dropdown */}
+                <div className="relative shrink-0 sm:w-auto">
+                  <button 
+                    onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+                    className="w-full h-10 sm:h-11 px-3 sm:px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-2 sm:gap-3 text-xs sm:text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
+                  >
+                    <span className="flex items-center gap-1 truncate">
+                      {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title (A-Z)"}
+                    </span>
+                    <svg className={cn("w-4 h-4 shrink-0 transition-transform", sortDropdownOpen && "rotate-180")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </button>
+                  {sortDropdownOpen && (
+                    <div className="absolute top-full right-0 sm:left-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50">
+                      <button onClick={() => {setSortBy("newest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Newest First</button>
+                      <button onClick={() => {setSortBy("oldest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Oldest First</button>
+                      <button onClick={() => {setSortBy("title-az"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Title (A-Z)</button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -365,13 +365,13 @@ export default function NewsPage() {
       </section>
 
       {/* 5. WHAT WE'RE WORKING ON SECTION */}
-      <section className="py-12 sm:py-24 bg-[#050A14] border-t border-white/5">
+      <section className="py-10 sm:py-20 lg:py-24 bg-[#050A14] border-t border-white/5">
         <div className={PAGE_CONTENT_CONTAINER}>
           <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight mb-3 sm:mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white text-balance mb-4 sm:mb-6">
               WHAT WE&apos;RE WORKING ON
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-medium">
               Our core initiatives designed to bring accountability, support, and cultural change to policing.
             </p>
           </div>

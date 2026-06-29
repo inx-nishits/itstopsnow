@@ -64,11 +64,12 @@ export default function TheIssuePage() {
 
       {/* THE FACTS STATISTICS SECTION */}
       {/* THE FACTS STATISTICS SECTION */}
-      <section className="bg-white py-12 md:py-20 border-b border-slate-100">
+      {/* THE FACTS STATISTICS SECTION */}
+      <section className="bg-white py-10 sm:py-20 lg:py-24 border-b border-slate-100">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="text-left mb-6 md:mb-10 max-w-3xl">
-            <h2 className="font-sans text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900 mb-3 sm:mb-4">THE FACTS</h2>
-            <p className="text-slate-600 text-sm sm:text-[15px] sm:text-lg leading-relaxed font-medium">The numbers don't lie. Our policing family is in crisis.</p>
+          <div className="text-left mb-6 sm:mb-8 lg:mb-10 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-4 sm:mb-6">THE FACTS</h2>
+            <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed font-medium">The numbers don't lie. Our policing family is in crisis.</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 border-t border-b border-slate-100">
@@ -118,11 +119,12 @@ export default function TheIssuePage() {
       </section>
 
       {/* WHAT'S GOING WRONG AWARENESS CARDS */}
-      <section className="bg-white py-12 md:py-20">
+      {/* WHAT'S GOING WRONG AWARENESS CARDS */}
+      <section className="bg-white py-10 sm:py-20 lg:py-24">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="text-left mb-6 md:mb-10 max-w-3xl">
-            <h2 className="font-sans text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900 mb-3 sm:mb-4">WHAT'S GOING WRONG?</h2>
-            <p className="text-slate-600 text-sm sm:text-[15px] sm:text-lg leading-relaxed font-medium">The problems run deep—and they are costing lives.</p>
+          <div className="text-left mb-6 sm:mb-8 lg:mb-10 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-4 sm:mb-6">WHAT'S GOING WRONG?</h2>
+            <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed font-medium">The problems run deep—and they are costing lives.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
@@ -175,15 +177,16 @@ export default function TheIssuePage() {
       </section>
 
       {/* THE IMPACT & CHANGE IS POSSIBLE SECTION */}
-      <section className="bg-white py-12 md:py-20 border-t border-slate-200">
+      {/* THE IMPACT & CHANGE IS POSSIBLE SECTION */}
+      <section className="bg-white py-10 sm:py-20 lg:py-24 border-t border-slate-200">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             
             {/* THE IMPACT (Left Column) */}
             <div className="flex flex-col justify-center">
-              <div className="mb-6">
-                <h2 className="font-sans text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-900 mb-2">THE IMPACT</h2>
-                <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">This isn't just a policing issue. It's a human issue.</p>
+              <div className="mb-6 sm:mb-8 lg:mb-10">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-4 sm:mb-6">THE IMPACT</h2>
+                <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed font-medium">This isn't just a policing issue. It's a human issue.</p>
               </div>
 
               <ul className="space-y-4">
