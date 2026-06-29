@@ -317,16 +317,18 @@ function PersonalizeContent() {
                 PERSONALISE YOUR LETTER
               </h2>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div>
                   <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Name <span className="text-red-500">*</span></label>
                   <input 
                     type="text" 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    onBlur={() => setName(name.trim())}
                     placeholder="John Smith"
-                    className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2]"
+                    className={`w-full bg-white border ${!name && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none`}
                   />
+                  {!name && sendError && <p className="text-[10px] text-red-500 mt-1">Name is required.</p>}
                 </div>
                 <div>
                   <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Email <span className="text-red-500">*</span></label>
@@ -334,18 +336,24 @@ function PersonalizeContent() {
                     type="email" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onBlur={() => setEmail(email.trim())}
                     placeholder="john.smith@email.com"
-                    className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2]"
+                    className={`w-full bg-white border ${(!email || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none`}
                   />
+                  {!email && sendError && <p className="text-[10px] text-red-500 mt-1">Email is required.</p>}
+                  {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && sendError && <p className="text-[10px] text-red-500 mt-1">Please enter a valid email address.</p>}
                 </div>
                 <div>
                   <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Full Address <span className="text-red-500">*</span></label>
                   <textarea 
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
+                    onBlur={() => setAddress(address.trim())}
                     placeholder="Full postal address including postcode..."
-                    className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2] min-h-[80px]"
+                    className={`w-full bg-white border ${(!address || address.length < 10) && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none min-h-[80px]`}
                   />
+                  {!address && sendError && <p className="text-[10px] text-red-500 mt-1">Full address is required.</p>}
+                  {address && address.length < 10 && sendError && <p className="text-[10px] text-red-500 mt-1">Please provide your complete address.</p>}
                   <p className="text-[10px] text-slate-500 mt-1">MPs require a full address to confirm you are a constituent.</p>
                 </div>
               </div>
@@ -379,9 +387,14 @@ function PersonalizeContent() {
               </div>
 
               <Button
-                disabled={isSending || !mpFound || !name || !email || !address}
+                disabled={isSending || !mpFound}
                 onClick={async () => {
                   if (!mpFound) return;
+                  if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !address || address.length < 10) {
+                    setSendError("validation_failed");
+                    return;
+                  }
+                  setSendError("");
                   setIsSending(true);
                   await simulateSubmit(2000);
                   setIsSending(false);
