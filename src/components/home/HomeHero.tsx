@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -64,14 +64,14 @@ function HeroCtaSecondaryLink({ href, label }: { href: string; label: string }) 
         "text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.05em] sm:tracking-[0.1em]",
         "transition-all duration-200 text-white",
         "gap-1.5 sm:gap-3",
-        "px-0 sm:px-6 h-auto py-2 sm:py-0 sm:h-11",
+        "px-0 sm:px-6 h-auto py-1 sm:py-0 sm:h-11",
         "border-transparent sm:border sm:border-white/20 sm:rounded-[5px]",
         "bg-transparent sm:hover:border-white/40 sm:hover:bg-white/5",
         "underline sm:no-underline hover:underline sm:hover:no-underline underline-offset-4"
       )}
     >
       <span className="truncate">{label}</span>
-      <ArrowRight className="hidden sm:block size-3.5 shrink-0 opacity-90 group-hover:translate-x-0.5 transition-transform" strokeWidth={2} aria-hidden />
+      <ArrowUpRight className="size-3.5 shrink-0 opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={2} aria-hidden />
     </Link>
   );
 }
@@ -124,12 +124,12 @@ function HeroContent({
       className={cn(
         "relative z-10 flex flex-col justify-center",
         HEADER_OFFSET,
-        "pb-10 sm:pb-12 lg:pb-16",
+        "pb-4 sm:pb-8 lg:pb-12",
         "lg:min-h-[100dvh] lg:max-h-dvh"
       )}
     >
       <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-20 mx-auto max-w-[1600px]">
-        <div className="w-full max-w-[18rem] sm:max-w-[26rem] lg:max-w-[34rem] xl:max-w-[38rem]">
+        <div className="w-full max-w-[18rem] sm:max-w-[26rem] lg:max-w-[42rem] xl:max-w-[48rem]">
           <M
             {...(animate
               ? {
@@ -161,9 +161,10 @@ function HeroContent({
               {HERO_DESCRIPTION}
             </p>
 
-            <div className="flex flex-row items-center gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12 w-full">
+            <div className="flex flex-row flex-wrap lg:flex-nowrap items-center gap-3 sm:gap-4 lg:gap-3 xl:gap-4 mb-5 sm:mb-8 lg:mb-10 w-full">
               <HeroCtaPrimaryButton label="Get Involved" onClick={onGetInvolvedClick} />
               <HeroCtaSecondaryLink href="/stories" label="Read the stories" />
+              <HeroCtaSecondaryLink href="/wall-of-remembrance" label="View Roll of Honour" />
             </div>
 
             <div className="flex items-center gap-2.5 lg:gap-3 text-white/80">

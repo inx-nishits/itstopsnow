@@ -1,14 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check, ChevronDown, Sparkles, Shield, Quote } from "lucide-react";
+import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check, ChevronDown, Sparkles, Shield, Quote, ArrowDownUp } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { simulateSubmit, validateEmail } from "@/lib/mock/utils";
 import { Pagination } from "@/components/ui/Pagination";
@@ -149,7 +149,21 @@ function StoriesPageContent() {
   const [submitError, setSubmitError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", title: "", story: "" });
   const [hasConsent, setHasConsent] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const itemsPerPage = 4;
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll the tabs horizontally
+  useEffect(() => {
+    if (!tabsContainerRef.current) return;
+    const activeTabEl = tabsContainerRef.current.querySelector(`[data-tab-id="${activeFilter}"]`) as HTMLElement;
+    if (activeTabEl) {
+      const container = tabsContainerRef.current;
+      const scrollLeft = activeTabEl.offsetLeft - container.offsetWidth / 2 + activeTabEl.offsetWidth / 2;
+      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+    }
+  }, [activeFilter]);
 
   useEffect(() => {
     if (searchParams.get("submit") === "1") {
@@ -218,59 +232,69 @@ function StoriesPageContent() {
       {/* Featured Story Section removed to match specifications */}
 
       {/* 3. FILTERS & SEARCH */}
-      <EditorialStickyBar className="bg-[#f4f5f7] border-b border-slate-200 !py-4 sm:!py-5">
+      <EditorialStickyBar className="bg-[#f4f5f7] border-b border-slate-200 !py-2 sm:!py-3">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 lg:gap-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-4">
             
-            <div className="flex items-center justify-between w-full lg:w-auto">
-              <h2 className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight text-[#010B19]">BROWSE STORIES</h2>
-              {/* Mobile Filter Toggle */}
-              <button 
-                type="button"
-                onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-                className="lg:hidden flex items-center gap-2 px-4 py-2 border border-slate-300 rounded-md bg-white text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#010B19] shadow-sm"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
-                Filter
-              </button>
-            </div>
-
-            {/* Desktop Filters (Hidden on Mobile unless toggled) */}
-            <div className={cn(
-              "lg:flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 scrollbar-hide",
-              sortDropdownOpen ? "flex" : "hidden"
-            )}>
+            {/* Desktop Filters (Always visible and scrollable horizontally like Support) */}
+            <div ref={tabsContainerRef} className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-grow pr-4 pb-1 md:pb-0">
               {filters.map(f => (
                 <button 
                   key={f}
+                  data-tab-id={f}
                   onClick={() => setActiveFilter(f)}
                   className={cn(
-                    "px-4 py-2.5 rounded text-[10px] sm:text-xs font-bold whitespace-nowrap transition-colors flex items-center gap-2 border",
+                    "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm sm:text-base font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
+
                     activeFilter === f 
                       ? "bg-[#1877F2] text-white border-[#1877F2]" 
-                      : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
+                      : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                   )}
                 >
                   {f === "All" && <div className={cn("w-3 h-3 rounded-sm", activeFilter === f ? "bg-white/30" : "bg-slate-200")} />}
-                  {f === "Serving Officer" && <User className="w-3 h-3" />}
-                  {f === "Family Member" && <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
-                  {f === "Former Officer" && <User className="w-3 h-3" />}
-                  {f === "Recovery" && <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75" /></svg>}
+                  {f === "Serving Officer" && <User className="w-4 h-4" />}
+                  {f === "Family Member" && <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
+                  {f === "Former Officer" && <User className="w-4 h-4" />}
+                  {f === "Recovery" && <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75" /></svg>}
                   {f === "All" ? "All Stories" : `${f} Stories`}
                 </button>
               ))}
             </div>
 
-            {/* Search Bar */}
-            <div className="relative w-full lg:w-72 shrink-0">
-              <input 
-                type="text" 
-                placeholder="Search stories..." 
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-4 pr-10 py-2.5 text-sm rounded bg-white border border-slate-200 shadow-sm focus:outline-none focus:border-[#1877F2]/50 transition-colors text-slate-800" 
-              />
-              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            {/* Sort & Search Container */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
+              {/* Sort Dropdown */}
+              <div className="relative">
+                <button 
+                  onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+                  className="w-full sm:w-auto h-10 sm:h-11 px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-3 text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <ArrowDownUp className="w-4 h-4 text-slate-400" /> 
+                    {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title (A-Z)"}
+                  </span>
+                  <ChevronDown className={cn("w-4 h-4 transition-transform", sortDropdownOpen && "rotate-180")} />
+                </button>
+                {sortDropdownOpen && (
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50">
+                    <button onClick={() => {setSortBy("newest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Newest First</button>
+                    <button onClick={() => {setSortBy("oldest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Oldest First</button>
+                    <button onClick={() => {setSortBy("title-az"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Title (A-Z)</button>
+                  </div>
+                )}
+              </div>
+
+              {/* Search Bar */}
+              <div className="relative w-full md:w-64 xl:w-72 shrink-0">
+                <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input 
+                  type="text" 
+                  placeholder="Search stories..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-11 pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -290,47 +314,46 @@ function StoriesPageContent() {
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
                 {paginatedStories.map((story) => (
                   <div key={story.id} className="flex flex-col h-full">
-                    <Link href={`/stories/${story.id}`} className="group relative flex flex-row lg:flex-col gap-0 h-full bg-[#050A14] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer">
+                    <Link href={`/stories/${story.id}`} className="group relative flex flex-col gap-0 h-full bg-[#050A14] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer">
                       {/* Image Container */}
-                      <div className="relative w-[35%] sm:w-2/5 lg:w-full min-h-[160px] lg:h-48 shrink-0 overflow-hidden bg-slate-800">
+                      <div className="relative w-full h-52 sm:h-60 shrink-0 overflow-hidden bg-slate-800">
                         <img 
                           src={story.image} 
                           alt={story.title} 
                           className="absolute inset-0 w-full h-full object-cover object-top grayscale opacity-70 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#050A14] lg:bg-gradient-to-t lg:from-[#050A14] lg:via-[#050A14]/40 lg:to-transparent block" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/40 to-transparent block" />
                       </div>
 
                       {/* Content Container */}
-                      <div className="p-4 sm:p-5 flex flex-col flex-grow relative z-10 w-[65%] sm:w-3/5 lg:w-full">
+                      <div className="p-4 sm:p-5 flex flex-col flex-grow relative z-10 w-full">
                         
-                        <span className="text-[8px] sm:text-[9px] font-bold text-white bg-[#1877F2] px-1.5 py-0.5 rounded-sm tracking-wider uppercase shadow-md w-fit mb-2">
+                        <span className="text-[10px] sm:text-xs font-bold text-white bg-[#1877F2] px-2 py-1 rounded-sm tracking-widest uppercase shadow-md w-fit mb-3">
                           {story.type}
                         </span>
 
-                        <h3 className="font-sans font-bold text-sm sm:text-base text-white mb-2 leading-tight group-hover:text-[#1877F2] transition-colors line-clamp-2">
+                        <h3 className="font-sans font-bold text-base sm:text-xl text-white mb-3 leading-snug group-hover:text-[#1877F2] transition-colors">
                           {story.title}
                         </h3>
                         
-                        <p className="text-[11px] sm:text-[13px] text-slate-300 leading-snug mb-3 flex-grow line-clamp-2 sm:line-clamp-3 pr-2 lg:pr-0">
+                        <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-4 flex-grow line-clamp-4">
                           {story.excerpt}
                         </p>
                         
-                        <div className="flex items-center gap-3 text-[9px] sm:text-[10px] font-medium text-slate-400 mt-auto">
-                          <span className="flex items-center gap-1">
-                            <Calendar className="w-3 h-3" /> {story.date}
+                        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm font-medium text-slate-400 mt-auto">
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {story.date}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" /> {story.readTime}
+                          <span className="flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {story.readTime}
                           </span>
                         </div>
 
-                        <div className="mt-4 text-xs font-bold text-[#1877F2] group-hover:text-blue-400 transition-colors hidden lg:flex items-center gap-1 w-fit">
-                          Read Story <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                        </div>
-
-                        <div className="absolute right-3 bottom-3 lg:hidden">
-                          <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+                        <div className="pt-4 border-t border-white/10 mt-4 w-full flex items-center justify-between text-[#1877F2] group-hover:text-blue-400 transition-colors">
+                          <span className="text-xs font-bold uppercase tracking-widest whitespace-nowrap">
+                            Read Story
+                          </span>
+                          <ArrowRight className="w-4 h-4" />
                         </div>
                       </div>
                     </Link>
@@ -532,12 +555,31 @@ function StoriesPageContent() {
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Upload images/documents</label>
-                  <div className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:border-[#1877F2]/50 hover:bg-[#1877F2]/5 transition-all cursor-pointer group">
+                  <div 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:border-[#1877F2]/50 hover:bg-[#1877F2]/5 transition-all cursor-pointer group"
+                  >
+                    <input 
+                      type="file" 
+                      ref={fileInputRef} 
+                      className="hidden" 
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files.length > 0) {
+                          setSelectedFile(e.target.files[0]);
+                        }
+                      }}
+                    />
                     <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-[#1877F2]/20 transition-colors">
                       <Upload className="w-5 h-5 text-slate-400 group-hover:text-[#1877F2] transition-colors" />
                     </div>
-                    <p className="text-sm font-bold text-white mb-1">Click to upload or drag and drop</p>
-                    <p className="text-xs text-slate-500">SVG, PNG, JPG or PDF (max. 10MB)</p>
+                    {selectedFile ? (
+                      <p className="text-sm font-bold text-[#1877F2] mb-1">{selectedFile.name}</p>
+                    ) : (
+                      <>
+                        <p className="text-sm font-bold text-white mb-1">Click to upload or drag and drop</p>
+                        <p className="text-xs text-slate-500">SVG, PNG, JPG or PDF (max. 10MB)</p>
+                      </>
+                    )}
                   </div>
                 </div>
 

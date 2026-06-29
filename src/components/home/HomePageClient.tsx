@@ -108,43 +108,6 @@ export default function HomePageClient({ data }: HomePageClientProps) {
 
           </div>
 
-          {/* Issue areas — editorial list on light surface */}
-          <SectionReveal delay={0.12} className="mt-12 sm:mt-16 lg:mt-20 pt-8 sm:pt-12 border-t border-slate-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8 lg:gap-12">
-            
-            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 first:md:border-l-0 first:md:pl-0 group flex md:block items-start gap-4 sm:gap-5">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#1877F2]/10 rounded-lg flex items-center justify-center md:mb-4 mt-0.5 md:mt-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 sm:w-6 sm:h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
-              </div>
-              <div>
-                <h3 className="text-base sm:text-xl font-bold text-[#010B19] tracking-wide mb-1.5 md:mb-3">Systemic Failures</h3>
-                <p className="text-slate-600 text-[13px] sm:text-[15px] leading-relaxed">The current investigative bodies act without accountability, leaving officers suspended in limbo for years for simply doing their duty.</p>
-              </div>
-            </div>
-
-            <div className="py-5 md:py-0 border-b md:border-b-0 border-slate-200 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group flex md:block items-start gap-4 sm:gap-5">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#1877F2]/10 rounded-lg flex items-center justify-center md:mb-4 mt-0.5 md:mt-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 sm:w-6 sm:h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
-              </div>
-              <div>
-                <h3 className="text-base sm:text-xl font-bold text-[#010B19] tracking-wide mb-1.5 md:mb-3">Mental Health Toll</h3>
-                <p className="text-slate-600 text-[13px] sm:text-[15px] leading-relaxed">Prolonged investigations are destroying families and lives. We demand a 12-month time limit to prevent further psychological damage.</p>
-              </div>
-            </div>
-
-            <div className="py-5 md:py-0 md:border-l-2 md:border-[#1877F2]/25 md:pl-7 group flex md:block items-start gap-4 sm:gap-5">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#1877F2]/10 rounded-lg flex items-center justify-center md:mb-4 mt-0.5 md:mt-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 sm:w-6 sm:h-6 text-[#1877F2]"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>
-              </div>
-              <div>
-                <h3 className="text-base sm:text-xl font-bold text-[#010B19] tracking-wide mb-1.5 md:mb-3">Legal Protection</h3>
-                <p className="text-slate-600 text-[13px] sm:text-[15px] leading-relaxed">Officers deserve immediate, robust legal support after critical incidents, untainted by political pressures or media narratives.</p>
-              </div>
-            </div>
-
-          </div>
-          </SectionReveal>
-
         </div>
       </section>
 
@@ -261,7 +224,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
             
             <SectionReveal className="w-full lg:w-1/2">
             <div className="relative">
-              <div className="relative rounded-2xl sm:rounded-[2rem] overflow-hidden aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:h-[min(560px,72vh)] shadow-xl border border-slate-200 group">
+              <div className="relative rounded-2xl sm:rounded-[2rem] overflow-hidden aspect-square sm:aspect-[3/4] lg:aspect-auto lg:h-[min(560px,72vh)] shadow-xl border border-slate-200 group">
                 <Image
                   src="/images/mission-support.png"
                   alt="Officers Standing Shoulder to Shoulder"

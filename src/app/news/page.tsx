@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Calendar, Clock, Shield, HeartPulse, Database, AlertTriangle, Mail, Search, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,13 @@ import { PAGE_CONTENT_CONTAINER, PageHero } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { Pagination } from "@/components/ui/Pagination";
+
+type NewsSort = "newest" | "oldest" | "title-az";
+
+function parseNewsDate(dateStr: string): number {
+  const parsed = Date.parse(dateStr);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
 
 export const LATEST_NEWS = [
   { 
@@ -118,11 +125,25 @@ const WORKING_ON = [
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<NewsSort>("newest");
+  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const newsletter = useNewsletterSubscribe();
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
 
   const categories = ["All", "Campaign News", "Parliament", "Expert Voices", "Research", "Media"];
+
+  // Auto-scroll the tabs horizontally
+  useEffect(() => {
+    if (!tabsContainerRef.current) return;
+    const activeTabEl = tabsContainerRef.current.querySelector(`[data-tab-id="${activeCategory}"]`) as HTMLElement;
+    if (activeTabEl) {
+      const container = tabsContainerRef.current;
+      const scrollLeft = activeTabEl.offsetLeft - container.offsetWidth / 2 + activeTabEl.offsetWidth / 2;
+      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+    }
+  }, [activeCategory]);
 
   const filteredNews = LATEST_NEWS.filter(news => {
     const matchesCategory = activeCategory === "All" || news.category.toUpperCase() === activeCategory.toUpperCase();
@@ -131,13 +152,22 @@ export default function NewsPage() {
     return matchesCategory && matchesSearch;
   });
 
-  const totalPages = Math.max(1, Math.ceil(filteredNews.length / itemsPerPage));
-  const paginatedNews = filteredNews.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const sortedNews = [...filteredNews].sort((a, b) => {
+    if (sortBy === "title-az") {
+      return a.title.localeCompare(b.title);
+    }
+    const dateA = parseNewsDate(a.date);
+    const dateB = parseNewsDate(b.date);
+    return sortBy === "newest" ? dateB - dateA : dateA - dateB;
+  });
+
+  const totalPages = Math.max(1, Math.ceil(sortedNews.length / itemsPerPage));
+  const paginatedNews = sortedNews.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, activeCategory]);
+  }, [searchTerm, activeCategory, sortBy]);
 
   return (
     <div className="flex flex-col min-h-screen font-sans bg-white">
@@ -164,8 +194,68 @@ export default function NewsPage() {
       />
 
       {/* 2. MAIN CONTENT (News Grid + Newsletter) */}
-      <section id="latest-news" className="py-12 md:py-20">
-        <div className={PAGE_CONTENT_CONTAINER}>
+      <section id="latest-news" className="w-full relative z-10 bg-white pt-1 pb-16 md:pt-6 md:pb-20">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+          
+          {/* Sticky Filters & Search (Extracted out of the grid to be full-bleed) */}
+          <div className="sticky top-16 md:top-24 z-30 bg-white -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 mb-8 border-b border-gray-100">
+            <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-4 py-2 sm:py-3">
+              <div ref={tabsContainerRef} className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-grow pr-4 pb-1 md:pb-0">
+                {categories.map((cat) => (
+                  <button 
+                    key={cat}
+                    data-tab-id={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={cn(
+                      "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm sm:text-base font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
+
+                      activeCategory === cat 
+                        ? "bg-[#1877F2] text-white border-[#1877F2]" 
+                        : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                    )}
+                  >
+                    {cat === "All" ? "All News" : cat}
+                  </button>
+                ))}
+              </div>
+              
+              {/* Sort & Search Container */}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
+                {/* Sort Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+                    className="w-full sm:w-auto h-10 sm:h-11 px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-3 text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title (A-Z)"}
+                    </span>
+                    <svg className={cn("w-4 h-4 transition-transform", sortDropdownOpen && "rotate-180")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </button>
+                  {sortDropdownOpen && (
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50">
+                      <button onClick={() => {setSortBy("newest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Newest First</button>
+                      <button onClick={() => {setSortBy("oldest"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Oldest First</button>
+                      <button onClick={() => {setSortBy("title-az"); setSortDropdownOpen(false);}} className="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 font-medium text-slate-700">Title (A-Z)</button>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Search Functionality */}
+                <div className="relative w-full md:w-64 xl:w-72 shrink-0">
+                  <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input 
+                    type="text" 
+                    placeholder="Search news..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-11 pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-start">
             
             {/* LEFT COLUMN (News Grid & Filters) */}
@@ -175,48 +265,16 @@ export default function NewsPage() {
                 <h2 className="font-black text-lg sm:text-2xl uppercase tracking-tight text-slate-900">LATEST NEWS</h2>
               </div>
 
-              {/* Strict: Search Bar & Category Filters */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 mb-8">
-                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide flex-grow pr-4">
-                  {categories.map((cat) => (
-                    <button 
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      className={cn(
-                        "px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-[10px] sm:text-[11px] font-bold tracking-wide whitespace-nowrap transition-colors border",
-                        activeCategory === cat 
-                          ? "bg-[#1877F2] text-white border-[#1877F2]" 
-                          : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
-                      )}
-                    >
-                      {cat === "All" ? "All News" : cat}
-                    </button>
-                  ))}
-                </div>
-                
-                {/* Search Functionality */}
-                <div className="relative w-full md:w-64 shrink-0">
-                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input 
-                    type="text" 
-                    placeholder="Search news..." 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 h-10 border border-slate-200 rounded-md text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white"
-                  />
-                </div>
-              </div>
-
               {/* News Cards Grid */}
               {paginatedNews.length === 0 ? (
                 <div className="text-center py-20 bg-slate-50 rounded-xl border border-slate-200">
                   <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">No news articles found.</p>
                 </div>
               ) : (
-                <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 xl:grid-cols-3 sm:gap-6">
+                <div className="flex flex-col gap-6 sm:grid sm:grid-cols-2 xl:grid-cols-3">
                   {paginatedNews.map((news) => (
-                    <Link key={news.id} href={`/news/${news.id}`} className="flex flex-row sm:flex-col group border border-slate-200 hover:border-slate-300 rounded-xl transition-all hover:shadow-lg bg-white overflow-hidden">
-                      <div className="w-[110px] shrink-0 sm:w-full sm:h-48 relative overflow-hidden bg-slate-100">
+                    <Link key={news.id} href={`/news/${news.id}`} className="flex flex-col group border border-slate-200 hover:border-slate-300 rounded-xl transition-all hover:shadow-lg bg-white overflow-hidden">
+                      <div className="w-full h-56 sm:h-64 relative overflow-hidden bg-slate-100">
                         <img 
                           src={news.image} 
                           alt={news.title} 
@@ -224,25 +282,25 @@ export default function NewsPage() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
-                      <div className="p-3 sm:p-5 flex flex-col flex-grow">
-                        <span className="text-[8px] sm:text-[9px] font-black text-[#1877F2] bg-[#1877F2]/10 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded self-start mb-2 sm:mb-3 uppercase tracking-widest">
+                      <div className="p-4 sm:p-5 flex flex-col flex-grow">
+                        <span className="text-[10px] sm:text-xs font-black text-[#1877F2] bg-[#1877F2]/10 px-2 py-1 rounded self-start mb-3 uppercase tracking-widest">
                           {news.category}
                         </span>
-                        <h3 className="font-bold text-xs sm:text-sm md:text-base mb-2 sm:mb-3 leading-snug text-slate-900 group-hover:text-[#1877F2] transition-colors line-clamp-3 sm:line-clamp-2">
+                        <h3 className="font-bold text-lg sm:text-xl mb-3 leading-snug text-slate-900 group-hover:text-[#1877F2] transition-colors line-clamp-2">
                           {news.title}
                         </h3>
-                        <p className="hidden sm:block text-xs text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-3">
+                        <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-4">
                           {news.excerpt}
                         </p>
-                        <div className="flex items-center gap-2 sm:gap-4 text-[9px] sm:text-[10px] font-medium text-slate-500 mt-auto">
-                          <span className="flex items-center gap-1 sm:gap-1.5"><Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {news.date}</span>
-                          <span className="flex items-center gap-1 sm:gap-1.5"><Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {news.readTime}</span>
+                        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm font-medium text-slate-500 mt-auto">
+                          <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {news.date}</span>
+                          <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {news.readTime}</span>
                         </div>
                         
-                        {/* Strict: Read Story CTA Link */}
-                        <div className="hidden sm:block pt-4 border-t border-slate-100 mt-4">
-                          <span className="text-[10px] font-bold text-[#1877F2] uppercase tracking-widest group-hover:underline flex items-center">
-                            Read Story <ArrowRight className="w-3 h-3 ml-1" />
+                        {/* Strict: Read News CTA Link */}
+                        <div className="pt-4 border-t border-slate-100 mt-4">
+                          <span className="text-xs font-bold text-[#1877F2] uppercase tracking-widest group-hover:underline flex items-center">
+                            Read News <ArrowRight className="w-4 h-4 ml-1" />
                           </span>
                         </div>
                       </div>

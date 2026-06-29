@@ -128,19 +128,6 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
           </div>
 
           <header className="mb-5 sm:hidden flex flex-col items-center text-center">
-            <button
-              onClick={() => {
-                const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
-                if (searchInput) {
-                  searchInput.focus();
-                  searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
-                }
-              }}
-              className="w-full flex items-center justify-center gap-2 bg-[#1877F2] hover:bg-[#1565d8] text-white rounded-xl py-3.5 font-bold text-sm shadow-md mb-3 transition-colors"
-            >
-              Browse the Roll of Honour
-              <ArrowRight className="w-4 h-4" aria-hidden />
-            </button>
             <p className="text-slate-500 text-xs sm:text-sm max-w-md leading-relaxed px-2">
               Select a profile to read their story, leave a tribute, or light a candle.
             </p>
@@ -159,7 +146,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
             </p>
           </header>
 
-          <div className="sticky top-20 md:top-24 z-40 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 py-3 mb-2 sm:mb-6 bg-[#f4f5f7]/95 backdrop-blur-xl">
+          <div className="sticky top-16 md:top-24 z-40 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-16 lg:px-16 py-3 mb-2 sm:mb-6 bg-[#f4f5f7]">
             <WallSearchControls
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}

@@ -118,20 +118,24 @@ export default function AboutPage() {
                 
                 {/* Store Downloads */}
                 <div className="grid grid-cols-2 gap-2 sm:gap-4 w-full border-t border-white/10 pt-6">
-                  <button className="bg-white/5 backdrop-blur-md border border-white/10 text-white flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-3 sm:px-6 sm:py-4 rounded-xl hover:bg-white/10 transition-colors w-full group">
-                    <Download className="w-4 h-4 sm:w-5 sm:h-5 text-[#1877F2] shrink-0 group-hover:scale-110 transition-transform" />
-                    <div className="text-left">
-                      <div className="text-[7px] sm:text-[9px] uppercase tracking-widest text-slate-400 font-bold leading-tight">Download on the</div>
-                      <div className="text-[11px] sm:text-sm font-bold leading-none mt-0.5 sm:mt-1 tracking-wide">App Store</div>
-                    </div>
-                  </button>
-                  <button className="bg-white/5 backdrop-blur-md border border-white/10 text-white flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-3 sm:px-6 sm:py-4 rounded-xl hover:bg-white/10 transition-colors w-full group">
-                    <Download className="w-4 h-4 sm:w-5 sm:h-5 text-[#1877F2] shrink-0 group-hover:scale-110 transition-transform" />
-                    <div className="text-left">
-                      <div className="text-[7px] sm:text-[9px] uppercase tracking-widest text-slate-400 font-bold leading-tight">Get it on</div>
-                      <div className="text-[11px] sm:text-sm font-bold leading-none mt-0.5 sm:mt-1 tracking-wide">Google Play</div>
-                    </div>
-                  </button>
+                  <a href="#" className="w-full">
+                    <button className="bg-white/5 backdrop-blur-md border border-white/10 text-white flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-3 sm:px-6 sm:py-4 rounded-xl hover:bg-white/10 transition-colors w-full group">
+                      <Download className="w-4 h-4 sm:w-5 sm:h-5 text-[#1877F2] shrink-0 group-hover:scale-110 transition-transform" />
+                      <div className="text-left">
+                        <div className="text-[7px] sm:text-[9px] uppercase tracking-widest text-slate-400 font-bold leading-tight">Download on the</div>
+                        <div className="text-[11px] sm:text-sm font-bold leading-none mt-0.5 sm:mt-1 tracking-wide">App Store</div>
+                      </div>
+                    </button>
+                  </a>
+                  <a href="#" className="w-full">
+                    <button className="bg-white/5 backdrop-blur-md border border-white/10 text-white flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-3 sm:px-6 sm:py-4 rounded-xl hover:bg-white/10 transition-colors w-full group">
+                      <Download className="w-4 h-4 sm:w-5 sm:h-5 text-[#1877F2] shrink-0 group-hover:scale-110 transition-transform" />
+                      <div className="text-left">
+                        <div className="text-[7px] sm:text-[9px] uppercase tracking-widest text-slate-400 font-bold leading-tight">Get it on</div>
+                        <div className="text-[11px] sm:text-sm font-bold leading-none mt-0.5 sm:mt-1 tracking-wide">Google Play</div>
+                      </div>
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>

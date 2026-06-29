@@ -8,6 +8,8 @@ import { PageHero } from "@/components/layout/PageHero";
 import { hybrid } from "@/lib/theme/hybrid";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import GetInvolvedModal from "@/components/global/GetInvolvedModal";
 
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isFloat = false }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string, isFloat?: boolean }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -34,6 +36,8 @@ function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isF
 }
 
 export default function TheIssuePage() {
+  const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen font-sans bg-white">
 
@@ -123,7 +127,7 @@ export default function TheIssuePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             <div className="relative bg-[#050A14] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-row md:flex-col items-center md:items-start text-left gap-5 sm:gap-6 group overflow-hidden border border-slate-800">
-              <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Prolonged Investigations" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
+              <img src="/app-1.png" alt="Prolonged Investigations" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-[#020611]/40" />
               <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#002868] border border-[#1877F2]/40 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(24,119,242,0.2)]">
                 <Clock className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#1877F2]" />
@@ -138,7 +142,7 @@ export default function TheIssuePage() {
             </div>
 
             <div className="relative bg-[#050A14] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-row md:flex-col items-center md:items-start text-left gap-5 sm:gap-6 group overflow-hidden border border-slate-800">
-              <img src="https://images.unsplash.com/photo-1584483766114-2cea6facdf57?auto=format&fit=crop&q=80&w=800" alt="Lack of Trauma Care" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
+              <img src="/app-2.png" alt="Lack of Trauma Care" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-[#020611]/40" />
               <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#002868] border border-[#1877F2]/40 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(24,119,242,0.2)]">
                 <Activity className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#1877F2]" />
@@ -153,7 +157,7 @@ export default function TheIssuePage() {
             </div>
 
             <div className="relative bg-[#050A14] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-row md:flex-col items-center md:items-start text-left gap-5 sm:gap-6 group overflow-hidden border border-slate-800">
-              <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=800" alt="Guilty Until Proven Innocent" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
+              <img src="/app-3.png" alt="Guilty Until Proven Innocent" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-30 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020611] via-[#020611]/80 to-[#020611]/40" />
               <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#002868] border border-[#1877F2]/40 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(24,119,242,0.2)]">
                 <Scale className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#1877F2]" />
@@ -248,11 +252,9 @@ export default function TheIssuePage() {
                   </li>
                 </ul>
                 <div className="flex flex-col sm:flex-row items-center gap-6 mt-auto">
-                  <Link href="/take-action" className="w-full sm:w-auto">
-                    <Button type="button" className="w-full bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-8 py-5 rounded shadow-lg transition-all">
-                      TAKE ACTION NOW <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </Link>
+                  <Button type="button" onClick={() => setIsGetInvolvedOpen(true)} className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-8 py-5 rounded shadow-lg transition-all">
+                    GET INVOLVED <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
                   <span className="text-slate-400 text-sm font-medium">Be part of the change.</span>
                 </div>
               </div>
@@ -262,6 +264,10 @@ export default function TheIssuePage() {
         </div>
       </section>
 
+      <GetInvolvedModal
+        isOpen={isGetInvolvedOpen}
+        onClose={() => setIsGetInvolvedOpen(false)}
+      />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
   Check,
   Flame,
   MessageCircle,
+  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,6 +27,8 @@ import TributeCarousel from "@/components/remembrance/TributeCarousel";
 import { MemorialShareActions } from "@/components/remembrance/MemorialShareActions";
 import TogetherWeRemember from "@/components/remembrance/wall/TogetherWeRemember";
 import { useCandleRitual } from "@/components/remembrance/useCandleRitual";
+import { generateMemorialPDF } from "@/lib/documentGenerator";
+import { downloadBlob } from "@/lib/downloadBlob";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
 import { validateEmail, simulateSubmit } from "@/lib/mock/utils";
@@ -63,6 +66,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
   const [isSubmittingTribute, setIsSubmittingTribute] = useState(false);
   const [tributeSuccess, setTributeSuccess] = useState(false);
   const [activeSection, setActiveSection] = useState<MemorialSectionId>("story");
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const isNavigatingRef = useRef(false);
@@ -74,10 +78,12 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
 
   const visibleSectionIds = useMemo((): MemorialSectionId[] => {
     const ids: MemorialSectionId[] = ["story"];
-    if (timeline.length > 0) ids.push("timeline");
+    if (memorial.familyQuote) ids.push("family");
+    if (galleryPhotos.length > 0) ids.push("gallery");
     ids.push("tributes");
+    if (timeline.length > 0) ids.push("timeline");
     return ids;
-  }, [timeline.length]);
+  }, [memorial.familyQuote, galleryPhotos.length, timeline.length]);
   const visibleTimeline = isTimelineExpanded ? timeline : timeline.slice(0, 4);
 
   const officer = {
@@ -148,6 +154,28 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
     setTimeout(() => setIsCopied(false), 2000);
   };
 
+  const handleDownloadPDF = async () => {
+    setIsGeneratingPDF(true);
+    try {
+      const blob = await generateMemorialPDF(
+        {
+          name: memorial.name,
+          role: memorial.rank,
+          force: memorial.force,
+          years: memorial.yearsServed,
+          age: memorial.age,
+          quote: memorial.familyQuote || "In loving memory.",
+        },
+        memorial.tributes.slice(0, 5) // Limit tributes to fit on one page
+      );
+      downloadBlob(blob, `${memorial.name.replace(/\s+/g, "_")}_Memorial.pdf`);
+    } catch (error) {
+      console.error("Failed to generate PDF", error);
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen font-sans bg-[#f4f5f7]">
       <MemorialProfileHeader
@@ -166,11 +194,11 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
       />
 
       <main className={`${PAGE_CONTENT_CONTAINER} pb-16 pt-2 sm:pt-8`}>
-        <div className="sticky top-20 md:top-24 z-30 -mx-4 px-4 sm:mx-0 sm:px-0 pt-2 pb-3 sm:py-3 mb-6 sm:mb-10 bg-[#f4f5f7]/95 backdrop-blur-xl border-b border-slate-200">
+        <div className="sticky top-16 md:top-24 z-30 -mx-4 sm:-mx-6 lg:-mx-16 pt-2 pb-3 sm:py-3 mb-6 sm:mb-10 bg-white border-b border-slate-200">
           <MemorialSectionTabs
             activeSection={activeSection}
             onNavigate={scrollToSection}
-            hasTimeline={timeline.length > 0}
+            visibleSectionIds={visibleSectionIds}
           />
         </div>
 
@@ -196,7 +224,11 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                   {memorial.biography}
                 </div>
                 {memorial.familyQuote && (
-                  <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                  <div 
+                    id="family"
+                    ref={(el) => { sectionRefs.current.family = el; }}
+                    className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm scroll-mt-36"
+                  >
                     <p className="text-[10px] font-bold uppercase tracking-widest text-[#1877F2] mb-2">From the family</p>
                     <p className="text-slate-600 italic text-sm leading-relaxed whitespace-pre-line">{memorial.familyQuote}</p>
                   </div>
@@ -206,6 +238,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
               {/* Gallery */}
               <section
                 id="gallery"
+                ref={(el) => { sectionRefs.current.gallery = el; }}
                 className="scroll-mt-36"
               >
                 <div className="grid grid-cols-2 gap-2 h-[240px] sm:h-[320px]">
@@ -400,6 +433,22 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                    </button>
                  </div>
+              </div>
+
+              <div className="w-full mt-6 pt-6 border-t border-white/10">
+                 <Button
+                   variant="outline"
+                   onClick={handleDownloadPDF}
+                   disabled={isGeneratingPDF}
+                   className="w-full min-h-[48px] bg-transparent border-white/20 text-white hover:bg-white/10 text-[11px] font-bold uppercase tracking-wider transition-colors"
+                 >
+                   {isGeneratingPDF ? "Generating PDF..." : (
+                     <>
+                       <Download className="w-4 h-4 mr-2" />
+                       Save Memorial PDF
+                     </>
+                   )}
+                 </Button>
               </div>
             </div>
           </div>

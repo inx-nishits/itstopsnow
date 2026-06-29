@@ -30,13 +30,13 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
             return <p key={index}>{block.text}</p>;
           case "heading":
             return (
-              <h3 key={index} className="text-2xl mt-12 mb-6 text-[#010B19] not-prose">
+              <h3 key={index} className="text-2xl mt-12 mb-6 last:mb-0 text-[#010B19] not-prose">
                 {block.text}
               </h3>
             );
           case "youtube":
             return (
-              <figure key={index} className="not-prose my-10">
+              <figure key={index} className="not-prose my-10 last:mb-0">
                 <div className="relative aspect-video overflow-hidden rounded-2xl border border-slate-200 bg-[#010B19] shadow-lg">
                   <iframe
                     title={block.title ?? "Embedded video"}
@@ -72,7 +72,7 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
               </>
             );
             return (
-              <figure key={index} className="not-prose my-10">
+              <figure key={index} className="not-prose my-10 last:mb-0">
                 {isExternal ? (
                   <a
                     href={block.href}
@@ -98,7 +98,7 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
             return (
               <div
                 key={index}
-                className="not-prose my-8 rounded-xl border border-[#1877F2]/20 bg-[#1877F2]/5 p-5"
+                className="not-prose my-8 last:mb-0 rounded-xl border border-[#1877F2]/20 bg-[#1877F2]/5 p-5"
               >
                 <p className="text-[10px] font-bold uppercase tracking-widest text-[#1877F2] mb-2">
                   Related resource

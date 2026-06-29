@@ -66,7 +66,7 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
             <div className="lg:col-span-8">
               <RichArticleBody blocks={richBlocks} />
 
-              <div className="mt-12 p-6 rounded-2xl bg-[#f4f5f7] border border-slate-200">
+              <div className="mt-8 p-6 rounded-2xl bg-[#f4f5f7] border border-slate-200">
                 <p className="text-sm text-slate-600 mb-4">
                   Your story could save a life. Share your lived experience with the campaign.
                 </p>

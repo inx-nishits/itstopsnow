@@ -37,15 +37,22 @@ export default function TemplatePreviewModal({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isDownloading, setIsDownloading] = useState<"pdf" | "docx" | null>(null);
 
+  const [personalisation, setPersonalisation] = useState({
+    senderName: "",
+    recipientName: "",
+    postcode: "",
+    policeForce: ""
+  });
+
   const buildPdfPreview = useCallback(async () => {
     if (!template) return;
     setIsGenerating(true);
     try {
       const blob = await generatePDF({
-        content,
-        mpName: "[MP Name]",
-        senderName: "[Your Name]",
-        senderAddress: "[Your Postcode]",
+        content: content + (personalisation.policeForce ? `\n\nRegarding: ${personalisation.policeForce}` : ""),
+        mpName: personalisation.recipientName || "[MP Name]",
+        senderName: personalisation.senderName || "[Your Name]",
+        senderAddress: personalisation.postcode || "[Your Postcode]",
       });
       setPdfUrl((prev) => {
         if (prev) URL.revokeObjectURL(prev);
@@ -56,7 +63,7 @@ export default function TemplatePreviewModal({
     } finally {
       setIsGenerating(false);
     }
-  }, [content, template]);
+  }, [content, template, personalisation]);
 
   useEffect(() => {
     if (!template) return;
@@ -64,7 +71,7 @@ export default function TemplatePreviewModal({
       void buildPdfPreview();
     }, 300);
     return () => clearTimeout(timer);
-  }, [template, buildPdfPreview]);
+  }, [template, buildPdfPreview, personalisation]);
 
   useEffect(() => {
     return () => {
@@ -77,10 +84,10 @@ export default function TemplatePreviewModal({
     setIsDownloading(format);
     try {
       const data = {
-        content,
-        mpName: "[MP Name]",
-        senderName: "[Your Name]",
-        senderAddress: "[Your Postcode]",
+        content: content + (personalisation.policeForce ? `\n\nRegarding: ${personalisation.policeForce}` : ""),
+        mpName: personalisation.recipientName || "[MP Name]",
+        senderName: personalisation.senderName || "[Your Name]",
+        senderAddress: personalisation.postcode || "[Your Postcode]",
       };
       const blob =
         format === "pdf" ? await generatePDF(data) : await generateDOCX(data);
@@ -212,14 +219,75 @@ export default function TemplatePreviewModal({
                   )}
                 </div>
               ) : (
-                <div className="flex flex-1 justify-center overflow-y-auto p-4 md:p-10">
-                  <div className="relative flex min-h-[600px] w-full max-w-[700px] flex-col rounded-sm bg-white p-8 shadow-2xl md:p-14">
-                    <textarea
-                      value={content}
-                      onChange={(e) => onContentChange(e.target.value)}
-                      className="min-h-[500px] w-full flex-1 resize-none rounded-md bg-transparent font-serif text-sm leading-relaxed text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1877F2]/20 md:text-base"
-                      aria-label="Edit letter template"
-                    />
+                <div className="flex flex-1 overflow-hidden">
+                  <div className="flex flex-1 justify-center overflow-y-auto p-4 md:p-10">
+                    <div className="relative flex min-h-[600px] w-full max-w-[700px] flex-col rounded-sm bg-white p-8 shadow-2xl md:p-14">
+                      <textarea
+                        value={content}
+                        onChange={(e) => onContentChange(e.target.value)}
+                        className="min-h-[500px] w-full flex-1 resize-none rounded-md bg-transparent font-serif text-sm leading-relaxed text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1877F2]/20 md:text-base"
+                        aria-label="Edit letter template"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Personalisation Sidebar */}
+                  <div className="w-80 border-l border-[#1877F2]/10 bg-[#02050A] p-6 overflow-y-auto hidden md:block shrink-0">
+                    <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Letter Personalisation</h4>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Name</label>
+                        <input 
+                          type="text" 
+                          placeholder="e.g. Jane Doe" 
+                          value={personalisation.senderName}
+                          onChange={(e) => setPersonalisation(p => ({ ...p, senderName: e.target.value }))}
+                          className="w-full bg-[#051024] border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#1877F2]" 
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recipient Name</label>
+                        <input 
+                          type="text" 
+                          placeholder="e.g. John Smith MP" 
+                          value={personalisation.recipientName}
+                          onChange={(e) => setPersonalisation(p => ({ ...p, recipientName: e.target.value }))}
+                          className="w-full bg-[#051024] border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#1877F2]" 
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Postcode</label>
+                        <input 
+                          type="text" 
+                          placeholder="e.g. SW1A 1AA" 
+                          value={personalisation.postcode}
+                          onChange={(e) => setPersonalisation(p => ({ ...p, postcode: e.target.value }))}
+                          className="w-full bg-[#051024] border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#1877F2]" 
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Police Force</label>
+                        <select 
+                          value={personalisation.policeForce}
+                          onChange={(e) => setPersonalisation(p => ({ ...p, policeForce: e.target.value }))}
+                          className="w-full bg-[#051024] border border-white/10 rounded-lg px-3 py-2 text-white text-sm cursor-pointer focus:outline-none focus:border-[#1877F2] [&>option]:bg-[#051024]"
+                        >
+                          <option value="">Select Force</option>
+                          <option value="Metropolitan Police">Metropolitan Police</option>
+                          <option value="Greater Manchester Police">Greater Manchester Police</option>
+                          <option value="West Midlands Police">West Midlands Police</option>
+                          <option value="Merseyside Police">Merseyside Police</option>
+                          <option value="Police Scotland">Police Scotland</option>
+                          <option value="Police Service of Northern Ireland">Police Service of Northern Ireland</option>
+                          <option value="South Wales Police">South Wales Police</option>
+                          <option value="Thames Valley Police">Thames Valley Police</option>
+                          <option value="West Yorkshire Police">West Yorkshire Police</option>
+                        </select>
+                      </div>
+                      <p className="text-[10px] text-slate-500 mt-2 leading-relaxed">
+                        These details will be injected into your generated PDF and Word documents.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

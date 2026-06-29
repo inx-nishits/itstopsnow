@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
-import { Flame, MessageCircle, Share2, User, Star, MessageSquare, Heart } from "lucide-react";
+import { Flame, MessageCircle, Share2, User, Star, MessageSquare, Heart, Camera, Shield } from "lucide-react";
 import { PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 
-export type MemorialSectionId = "story" | "timeline" | "tributes" | "candle" | "support";
+export type MemorialSectionId = "story" | "family" | "gallery" | "tributes" | "timeline" | "candle" | "support";
 
 const SECTIONS: { id: MemorialSectionId; label: string; icon: React.ElementType }[] = [
   { id: "story", label: "Their Story", icon: User },
-  { id: "timeline", label: "Service & Career", icon: Star },
+  { id: "family", label: "From the family", icon: Heart },
+  { id: "gallery", label: "Photos", icon: Camera },
   { id: "tributes", label: "Remembered By", icon: MessageSquare },
+  { id: "timeline", label: "Service & Career", icon: Shield },
 ];
 
 interface MemorialActionBarProps {
@@ -54,34 +56,32 @@ export function MemorialActionBar({
 interface MemorialSectionTabsProps {
   activeSection: MemorialSectionId;
   onNavigate: (id: MemorialSectionId) => void;
-  hasTimeline?: boolean;
+  visibleSectionIds: MemorialSectionId[];
 }
 
 /** Section tabs — lives inside the content column, sticky while scrolling. */
 export function MemorialSectionTabs({
   activeSection,
   onNavigate,
-  hasTimeline = true,
+  visibleSectionIds,
 }: MemorialSectionTabsProps) {
-  const sections = hasTimeline ? SECTIONS : SECTIONS.filter((s) => s.id !== "timeline");
+  const sections = SECTIONS.filter((s) => visibleSectionIds.includes(s.id));
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current || !activeSection) return;
-    const activeTab = containerRef.current.querySelector(`[data-tab-id="${activeSection}"]`);
+    const activeTab = containerRef.current.querySelector(`[data-tab-id="${activeSection}"]`) as HTMLElement;
     if (activeTab) {
-      activeTab.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "center",
-      });
+      const container = containerRef.current;
+      const scrollLeft = activeTab.offsetLeft - container.offsetWidth / 2 + activeTab.offsetWidth / 2;
+      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
     }
   }, [activeSection]);
 
   return (
     <div
       ref={containerRef}
-      className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1"
+      className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 px-4 sm:px-6 lg:px-16"
       role="tablist"
       aria-label="Memorial sections"
     >
@@ -97,14 +97,14 @@ export function MemorialSectionTabs({
             aria-controls={id}
             onClick={() => onNavigate(id)}
             className={cn(
-              "shrink-0 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 min-w-[56px] sm:min-w-0 min-h-[48px] sm:min-h-[44px] px-1 sm:px-5 rounded-none sm:rounded-full text-[9px] sm:text-[13px] font-semibold transition-all duration-200 cursor-pointer border-b-2 sm:border-b-0",
+              "shrink-0 flex flex-row items-center justify-center gap-1.5 sm:gap-2 min-h-[44px] px-4 sm:px-5 rounded-full text-[11px] sm:text-[13px] font-semibold transition-all duration-200 cursor-pointer border sm:border-0",
               isActive
-                ? "text-[#1877F2] border-[#1877F2] sm:bg-white sm:text-[#010B19] sm:shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
-                : "text-slate-500 border-transparent hover:text-slate-800 sm:hover:bg-white/60"
+                ? "text-[#1877F2] border-[#1877F2]/30 bg-[#1877F2]/5 sm:bg-white sm:text-[#010B19] sm:shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                : "text-slate-500 border-slate-200 hover:border-slate-300 hover:text-slate-800 sm:hover:bg-white/60"
             )}
           >
-            <Icon className={cn("w-[18px] h-[18px] sm:w-4 sm:h-4", isActive ? "text-[#1877F2]" : "text-slate-400")} />
-            {label}
+            <Icon className={cn("w-[16px] h-[16px] sm:w-4 sm:h-4", isActive ? "text-[#1877F2]" : "text-slate-400")} />
+            <span className="whitespace-nowrap">{label}</span>
           </button>
         );
       })}

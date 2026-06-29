@@ -12,25 +12,25 @@ const TEMPLATES = [
     id: 1, 
     title: "Police Suicide Awareness", 
     description: "Improve data transparency, prevention strategies and officer support.",
-    content: "Dear [MP_NAME],\n\nRe: Police Suicide Awareness - Improving Support and Transparency\n\nI am writing to you as your constituent to raise an issue of urgent concern: the continued loss of police officers to suicide and the need for greater transparency, prevention and support.\n\nPolice officers protect our communities every day, often facing traumatic, high-pressure and emotionally demanding situations. Yet too many are left without the support they need, and too many lives are lost.\n\nI am asking you to support calls for the government to improve data transparency, invest in early intervention and ensure that every officer has access to the mental health and welfare support they deserve.\n\nThis is not just about statistics – it is about real people, real families and a service that our communities rely on.\n\nI would be grateful if you could please let me know what steps you are taking to support police officer wellbeing and suicide prevention.\n\nThank you for your time and for representing our community.\n\nYours sincerely,\n[NAME]"
+    content: "Dear [MP_NAME],\n\nRe: Police Suicide Awareness - Improving Support and Transparency\n\nI am writing to you as your constituent to raise an issue of urgent concern: the continued loss of police officers to suicide and the need for greater transparency, prevention and support.\n\nPolice officers protect our communities every day, often facing traumatic, high-pressure and emotionally demanding situations. Yet too many are left without the support they need, and too many lives are lost.\n\nI am asking you to support calls for the government to improve data transparency, invest in early intervention and ensure that every officer has access to the mental health and welfare support they deserve.\n\nThis is not just about statistics – it is about real people, real families and a service that our communities rely on.\n\nI would be grateful if you could please let me know what steps you are taking to support police officer wellbeing and suicide prevention.\n\nThank you for your time and for representing our community.\n\nYours sincerely,\n[NAME]\n[ADDRESS]"
   },
   { 
     id: 2, 
     title: "Misconduct Reform", 
     description: "Ensure fair investigations and protect officer welfare.",
-    content: "Dear [MP_NAME],\n\nRe: Misconduct Reform\n\nI am contacting you to demand immediate action on reforming the misconduct investigation process...\n\nSincerely,\n[NAME]"
+    content: "Dear [MP_NAME],\n\nRe: Misconduct Reform\n\nI am contacting you as your constituent to demand immediate action on reforming the misconduct investigation process...\n\nSincerely,\n[NAME]\n[ADDRESS]"
   },
   { 
     id: 3, 
     title: "Better Welfare Support", 
     description: "Improve access to mental health and occupational support.",
-    content: "Dear [MP_NAME],\n\nRe: Better Welfare Support\n\nI am writing to urge you to support improved welfare funding...\n\nSincerely,\n[NAME]"
+    content: "Dear [MP_NAME],\n\nRe: Better Welfare Support\n\nI am writing to you as your constituent to urge you to support improved welfare funding...\n\nSincerely,\n[NAME]\n[ADDRESS]"
   },
   { 
     id: 4, 
     title: "Mandatory Reporting", 
     description: "Support mandatory reporting of police officer suicides.",
-    content: "Dear [MP_NAME],\n\nRe: Mandatory Reporting\n\nI am writing to urge you to support mandatory reporting...\n\nSincerely,\n[NAME]"
+    content: "Dear [MP_NAME],\n\nRe: Mandatory Reporting\n\nI am writing to you as your constituent to urge you to support mandatory reporting...\n\nSincerely,\n[NAME]\n[ADDRESS]"
   }
 ];
 
@@ -45,8 +45,7 @@ function PersonalizeContent() {
   const [postcode, setPostcode] = useState(searchParams.get("postcode") || "");
   const [name, setName] = useState(searchParams.get("name") || "");
   const [email, setEmail] = useState("");
-  const [connection, setConnection] = useState(searchParams.get("force") || "");
-  const [details, setDetails] = useState(searchParams.get("details") || "");
+  const [address, setAddress] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATES[0].id);
   const [letterContent, setLetterContent] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -82,13 +81,14 @@ function PersonalizeContent() {
       let content = template.content;
       content = content.replace(/\[MP_NAME\]/g, mpFound ? mpFound.name : "Member of Parliament");
       content = content.replace(/\[NAME\]/g, name || "(Your Name)");
+      content = content.replace(/\[ADDRESS\]/g, address || "(Your Full Address)");
       setLetterContent(content);
     }
   };
 
   useEffect(() => {
     updateLetterContent();
-  }, [selectedTemplate, name, mpFound]);
+  }, [selectedTemplate, name, address, mpFound]);
 
   const handleReset = () => {
     updateLetterContent();
@@ -319,7 +319,7 @@ function PersonalizeContent() {
               
               <div className="space-y-3">
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Name</label>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Name <span className="text-red-500">*</span></label>
                   <input 
                     type="text" 
                     value={name}
@@ -329,7 +329,7 @@ function PersonalizeContent() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Email</label>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Email <span className="text-red-500">*</span></label>
                   <input 
                     type="email" 
                     value={email}
@@ -339,56 +339,14 @@ function PersonalizeContent() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Postcode</label>
-                  <input 
-                    type="text" 
-                    value={postcode}
-                    onChange={(e) => setPostcode(e.target.value)}
-                    placeholder="DL1 1AA"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-500 focus:outline-none"
-                    readOnly
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Connection to Policing <span className="text-[8px] opacity-70">(optional)</span></label>
-                  <div className="relative">
-                    <button 
-                      type="button"
-                      onClick={() => setConnectionDropdownOpen(!connectionDropdownOpen)}
-                      className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2] text-left flex items-center justify-between"
-                    >
-                      {connection || "Serving Police Officer"}
-                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${connectionDropdownOpen ? "rotate-180" : ""}`} />
-                    </button>
-                    {connectionDropdownOpen && (
-                      <>
-                        <div className="fixed inset-0 z-40" onClick={() => setConnectionDropdownOpen(false)} />
-                        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-md shadow-lg border border-slate-200 py-1 z-50 animate-in fade-in slide-in-from-top-2">
-                          {["Serving Police Officer", "Family Member", "Retired Officer", "Supporter"].map(opt => (
-                            <button
-                              key={opt}
-                              type="button"
-                              onClick={() => { setConnection(opt); setConnectionDropdownOpen(false); }}
-                              className={`w-full text-left px-3 py-2 text-[13px] transition-colors ${connection === opt || (!connection && opt === "Serving Police Officer") ? "bg-blue-50 text-[#1877F2] font-semibold" : "hover:bg-slate-50 text-slate-700"}`}
-                            >
-                              {opt}
-                            </button>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Add a personal message <span className="text-[8px] opacity-70">(optional)</span></label>
+                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Full Address <span className="text-red-500">*</span></label>
                   <textarea 
-                    value={details}
-                    onChange={(e) => setDetails(e.target.value)}
-                    maxLength={300}
-                    placeholder="I have seen first-hand the impact that lack of support has on officers and their families."
-                    className="w-full h-20 bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2] resize-none leading-relaxed"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Full postal address including postcode..."
+                    className="w-full bg-white border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-[#1877F2] min-h-[80px]"
                   />
-                  <div className="text-[10px] text-slate-400 text-right mt-1 font-medium">{details.length}/300 characters</div>
+                  <p className="text-[10px] text-slate-500 mt-1">MPs require a full address to confirm you are a constituent.</p>
                 </div>
               </div>
             </div>
@@ -421,7 +379,7 @@ function PersonalizeContent() {
               </div>
 
               <Button
-                disabled={isSending || !mpFound}
+                disabled={isSending || !mpFound || !name || !email || !address}
                 onClick={async () => {
                   if (!mpFound) return;
                   setIsSending(true);

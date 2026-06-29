@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Download, FileText } from "lucide-react";
 import type { ResearchItem } from "@/lib/research/types";
 import { downloadResearchPdf } from "@/lib/research/utils";
 import { hybrid } from "@/lib/theme/hybrid";
 import { cn } from "@/lib/utils";
+import ResearchPdfModal from "./ResearchPdfModal";
 
 interface ResearchFeaturedPublicationProps {
   publication: ResearchItem;
@@ -17,6 +19,8 @@ const actionBtn =
 export default function ResearchFeaturedPublication({
   publication,
 }: ResearchFeaturedPublicationProps) {
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
+
   return (
     <article className={cn("mb-8 sm:mb-10 pb-8 sm:pb-10 border-b", hybrid.editorialBorder)}>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-7 items-start">
@@ -71,15 +75,24 @@ export default function ResearchFeaturedPublication({
           </ul>
 
           <div className="flex flex-wrap items-center gap-2 mt-auto">
-            <a
-              href={publication.hasPdf && publication.pdfUrl ? publication.pdfUrl : `/research/${publication.slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(actionBtn, "bg-[#1877F2] text-white hover:bg-[#010B19]")}
-            >
-              Read Research Story
-              <FileText className="w-3.5 h-3.5" />
-            </a>
+            {publication.hasPdf && publication.pdfUrl ? (
+              <button
+                type="button"
+                onClick={() => setIsPdfModalOpen(true)}
+                className={cn(actionBtn, "bg-[#1877F2] text-white hover:bg-[#010B19]")}
+              >
+                Read Research Story
+                <FileText className="w-3.5 h-3.5" />
+              </button>
+            ) : (
+              <a
+                href={`/research/${publication.slug}`}
+                className={cn(actionBtn, "bg-[#1877F2] text-white hover:bg-[#010B19]")}
+              >
+                Read Research Story
+                <FileText className="w-3.5 h-3.5" />
+              </a>
+            )}
             {publication.hasPdf ? (
               <button
                 type="button"
@@ -93,6 +106,12 @@ export default function ResearchFeaturedPublication({
           </div>
         </div>
       </div>
+      <ResearchPdfModal
+        open={isPdfModalOpen}
+        onClose={() => setIsPdfModalOpen(false)}
+        pdfUrl={publication.pdfUrl ?? null}
+        title={publication.title}
+      />
     </article>
   );
 }

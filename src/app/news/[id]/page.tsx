@@ -60,7 +60,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
               <RichArticleBody blocks={NEWS_RICH_BLOCKS} />
             </div>
 
-            <div className="lg:col-span-4 space-y-6">
+            <div className="lg:col-span-4 space-y-8">
               <div className={cn(hybrid.editorialCard, "p-8 sticky top-32")}>
                 <ShareButtons title={article.title} variant="editorial" />
               </div>
