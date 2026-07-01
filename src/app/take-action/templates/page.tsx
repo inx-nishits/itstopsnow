@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import TemplatePreviewModal, { type LetterTemplate } from "@/components/take-action/TemplatePreviewModal";
+import LetterPersonalizationModal from "@/components/take-action/LetterPersonalizationModal";
 import { generatePDF, generateDOCX } from "@/lib/documentGenerator";
 import { downloadBlob } from "@/lib/downloadBlob";
 
@@ -82,6 +83,7 @@ export default function TemplatesPage() {
   const [sortBy, setSortBy] = useState("Recently Added");
   const [currentPage, setCurrentPage] = useState(1);
   const [previewTemplate, setPreviewTemplate] = useState<LetterTemplate | null>(null);
+  const [personalizeTemplate, setPersonalizeTemplate] = useState<LetterTemplate | null>(null);
   const [editableContent, setEditableContent] = useState("");
   const itemsPerPage = 6;
 
@@ -188,7 +190,13 @@ export default function TemplatesPage() {
                     <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 mb-2">
                       <CampaignIcon className="w-4 h-4 text-white" />
                     </div>
-                    <h4 className="font-bold text-xl text-white uppercase tracking-tight">{campaign.title}</h4>
+                    <div>
+                      <h4 className="font-bold text-xl text-white uppercase tracking-tight mb-2">{campaign.title}</h4>
+                      <p className="text-white/80 text-sm leading-relaxed mb-4">{campaign.description}</p>
+                      <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-300">
+                        <FileText className="w-3.5 h-3.5" /> {campaign.templatesAvailable} Templates
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -332,12 +340,18 @@ export default function TemplatesPage() {
                         <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1877F2] bg-blue-50 px-3 py-1.5 rounded-md border border-blue-100">
                           {template.tone}
                         </span>
+                        <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-md border border-slate-200">
+                          <Clock className="w-3.5 h-3.5 text-slate-400" /> {template.readTime}
+                        </span>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-4 md:flex divide-x divide-slate-200 md:divide-x-0 items-center md:gap-4 shrink-0 w-full md:w-auto border-t border-slate-200 md:border-t-0 pt-3 md:pt-0 mt-2 md:mt-0">
-                    <button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 md:py-2.5 md:px-5 transition-colors">
+                  <div className="grid grid-cols-5 md:flex divide-x divide-slate-200 md:divide-x-0 items-center md:gap-4 shrink-0 w-full md:w-auto border-t border-slate-200 md:border-t-0 pt-3 md:pt-0 mt-2 md:mt-0">
+                    <button onClick={() => setPersonalizeTemplate(template)} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-white bg-[#1877F2] hover:bg-blue-600 rounded-md py-2 md:py-2.5 px-3 md:px-5 transition-colors shadow-sm font-bold text-[10px] md:text-xs uppercase tracking-widest mr-2 border border-[#1877F2]">
+                      Personalise
+                    </button>
+                    <button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 md:py-2.5 md:px-4 transition-colors">
                       <Eye className="w-5 h-5" strokeWidth={1.5} /> <span className="text-[10px] md:text-xs font-semibold">Preview</span>
                     </button>
                     <button onClick={() => void handleDownloadTemplate(template, "pdf")} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 md:py-2.5 md:px-5 transition-colors">
@@ -375,6 +389,12 @@ export default function TemplatesPage() {
         onContentChange={setEditableContent}
         onClose={() => setPreviewTemplate(null)}
         onReset={() => setEditableContent(previewTemplate?.content || "")}
+      />
+      
+      <LetterPersonalizationModal
+        isOpen={!!personalizeTemplate}
+        onClose={() => setPersonalizeTemplate(null)}
+        template={personalizeTemplate}
       />
     </div>
   );

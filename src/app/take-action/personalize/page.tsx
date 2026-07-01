@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, ArrowRight, Loader2, FileText, CheckCircle, RotateCcw, Shield, Check, Info, Users, Clock, Flame, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { simulateSubmit } from "@/lib/mock/utils";
+import { lookupAddress, type AddressResult } from "@/lib/mock/addressLookup";
 import { motion } from "framer-motion";
 
 const TEMPLATES = [
@@ -52,6 +53,11 @@ function PersonalizeContent() {
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState("");
   const [connectionDropdownOpen, setConnectionDropdownOpen] = useState(false);
+  
+  // Address Lookup State
+  const [addressLoading, setAddressLoading] = useState(false);
+  const [addressResults, setAddressResults] = useState<AddressResult[]>([]);
+  const [addressError, setAddressError] = useState("");
 
   // Initial load auto-fetch MP if postcode passed from previous page
   useEffect(() => {
@@ -217,20 +223,27 @@ function PersonalizeContent() {
               </h2>
               <p className="text-[10px] md:text-xs text-slate-500 mb-5">Select the issue you want to raise</p>
               
-              <div className="flex flex-col gap-4">
-                {TEMPLATES.map(t => (
-                  <label key={t.id} className="flex gap-3 cursor-pointer group">
-                    <div className="pt-0.5">
-                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${selectedTemplate === t.id ? 'border-[#1877F2]' : 'border-slate-300'}`}>
-                        {selectedTemplate === t.id && <div className="w-2 h-2 rounded-full bg-[#1877F2]" />}
-                      </div>
-                    </div>
-                    <div>
-                      <div className={`text-xs md:text-sm font-bold ${selectedTemplate === t.id ? 'text-[#1877F2]' : 'text-slate-900'}`}>{t.title}</div>
-                      <div className="text-[10px] text-slate-500 mt-0.5 leading-snug pr-2">{t.description}</div>
-                    </div>
-                  </label>
-                ))}
+              <div className="flex flex-col gap-4 relative">
+                <select
+                  value={selectedTemplate}
+                  onChange={(e) => setSelectedTemplate(Number(e.target.value))}
+                  className="w-full bg-white border border-slate-300 rounded-md px-3 py-3 text-[13px] md:text-sm font-medium text-slate-900 focus:outline-none focus:border-[#1877F2] appearance-none"
+                >
+                  {TEMPLATES.map(t => (
+                    <option key={t.id} value={t.id}>
+                      {t.title}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-[14px] pointer-events-none" />
+                
+                {TEMPLATES.find(t => t.id === selectedTemplate) && (
+                  <div className="bg-slate-50 p-3 rounded-md border border-slate-100 mt-2">
+                    <p className="text-[11px] md:text-xs text-slate-600 leading-snug">
+                      {TEMPLATES.find(t => t.id === selectedTemplate)?.description}
+                    </p>
+                  </div>
+                )}
               </div>
               
               <div className="mt-5 pt-4 border-t border-slate-100">
@@ -345,15 +358,66 @@ function PersonalizeContent() {
                 </div>
                 <div>
                   <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Full Address <span className="text-red-500">*</span></label>
-                  <textarea 
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    onBlur={() => setAddress(address.trim())}
-                    placeholder="Full postal address including postcode..."
-                    className={`w-full bg-white border ${(!address || address.length < 10) && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none min-h-[80px]`}
-                  />
-                  {!address && sendError && <p className="text-[10px] text-red-500 mt-1">Full address is required.</p>}
-                  {address && address.length < 10 && sendError && <p className="text-[10px] text-red-500 mt-1">Please provide your complete address.</p>}
+                  {!address ? (
+                    <div className="space-y-3">
+                      <div className="flex gap-2">
+                        <input 
+                          type="text"
+                          placeholder="Enter postcode"
+                          className="w-full bg-white border border-slate-300 focus:border-[#1877F2] rounded-md px-3 h-10 text-[13px] focus:outline-none"
+                          onKeyDown={async (e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              const val = e.currentTarget.value;
+                              if (!val) return;
+                              setAddressLoading(true);
+                              setAddressError("");
+                              try {
+                                const res = await lookupAddress(val);
+                                setAddressResults(res);
+                              } catch (err) {
+                                setAddressError("Could not find addresses. Please try again.");
+                              }
+                              setAddressLoading(false);
+                            }
+                          }}
+                        />
+                      </div>
+                      <p className="text-[10px] text-slate-500 mt-1">Type your postcode and press enter to search</p>
+                      {addressLoading && <div className="text-[10px] text-[#1877F2] flex items-center gap-2"><Loader2 className="w-3 h-3 animate-spin"/> Searching...</div>}
+                      {addressError && <p className="text-[10px] text-red-500">{addressError}</p>}
+                      {addressResults.length > 0 && (
+                        <div className="relative">
+                          <select 
+                            onChange={(e) => setAddress(e.target.value)}
+                            className="w-full bg-white border border-slate-300 rounded-md px-3 py-3 text-[13px] text-slate-900 focus:outline-none focus:border-[#1877F2] appearance-none"
+                            defaultValue=""
+                          >
+                            <option value="" disabled>Select your address...</option>
+                            {addressResults.map(r => (
+                              <option key={r.id} value={r.formattedAddress}>{r.formattedAddress}</option>
+                            ))}
+                          </select>
+                          <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-[14px] pointer-events-none" />
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <textarea 
+                        value={address}
+                        readOnly
+                        className="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none min-h-[80px] text-slate-700"
+                      />
+                      <button 
+                        onClick={() => { setAddress(""); setAddressResults([]); }}
+                        className="absolute top-2 right-2 text-[10px] text-[#1877F2] font-bold uppercase tracking-widest hover:underline bg-white px-2 py-1 rounded border border-blue-100"
+                      >
+                        Change
+                      </button>
+                    </div>
+                  )}
+                  {(!address) && sendError && <p className="text-[10px] text-red-500 mt-1">Full address is required.</p>}
                   <p className="text-[10px] text-slate-500 mt-1">MPs require a full address to confirm you are a constituent.</p>
                 </div>
               </div>
@@ -387,11 +451,11 @@ function PersonalizeContent() {
               </div>
 
               <Button
-                disabled={isSending || !mpFound}
+                disabled={isSending || !mpFound || !mpFound.email}
                 onClick={async () => {
-                  if (!mpFound) return;
-                  if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !address || address.length < 10) {
-                    setSendError("validation_failed");
+                  if (!mpFound || !mpFound.email) return;
+                  if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !address) {
+                    setSendError("Please complete all required fields.");
                     return;
                   }
                   setSendError("");
@@ -400,10 +464,17 @@ function PersonalizeContent() {
                   setIsSending(false);
                   setSendSuccess(true);
                 }}
-                className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs py-5 rounded-md shadow-md transition-all h-auto"
+                className={`w-full text-white font-bold uppercase tracking-widest text-xs py-5 rounded-md shadow-md transition-all h-auto ${
+                  (!mpFound || !mpFound.email) 
+                    ? 'bg-slate-300 text-slate-500 cursor-not-allowed' 
+                    : 'bg-[#1877F2] hover:bg-blue-600'
+                }`}
               >
                 {isSending ? "SENDING..." : sendSuccess ? "SENT!" : "SEND MY LETTER"} <ArrowRight className="w-4 h-4 ml-1.5" />
               </Button>
+              {mpFound && !mpFound.email && (
+                <p className="text-red-500 text-[10px] mt-3 text-center font-bold">This MP does not have an email address available on record. The letter cannot be sent.</p>
+              )}
               {sendError && <p className="text-red-500 text-[10px] mt-2 text-center">{sendError}</p>}
             </div>
           </div>

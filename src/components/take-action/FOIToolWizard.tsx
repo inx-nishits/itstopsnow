@@ -172,19 +172,19 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                       <div className="space-y-4">
                         <div>
                           <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><User className="w-3.5 h-3.5" /> Full Name *</label>
-                          <input type="text" value={personalDetails.name} onChange={e => setPersonalDetails({...personalDetails, name: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="e.g. Jane Doe" />
+                          <input type="text" value={personalDetails.name} onChange={e => setPersonalDetails({...personalDetails, name: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="e.g. Jane Doe" />
                         </div>
                         <div>
                           <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><Mail className="w-3.5 h-3.5" /> Email Address *</label>
-                          <input type="email" value={personalDetails.email} onChange={e => setPersonalDetails({...personalDetails, email: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="jane@example.com" />
+                          <input type="email" value={personalDetails.email} onChange={e => setPersonalDetails({...personalDetails, email: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="jane@example.com" />
                         </div>
                         <div>
                           <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><MapPin className="w-3.5 h-3.5" /> Postal Address *</label>
-                          <textarea value={personalDetails.address} onChange={e => setPersonalDetails({...personalDetails, address: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] min-h-[80px]" placeholder="Full postal address including postcode..." />
+                          <textarea value={personalDetails.address} onChange={e => setPersonalDetails({...personalDetails, address: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] min-h-[80px]" placeholder="Full postal address including postcode..." />
                         </div>
                         <div>
                           <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Telephone Number (Optional)</label>
-                          <input type="tel" value={personalDetails.phone} onChange={e => setPersonalDetails({...personalDetails, phone: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="07123 456789" />
+                          <input type="tel" value={personalDetails.phone} onChange={e => setPersonalDetails({...personalDetails, phone: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="07123 456789" />
                         </div>
                       </div>
                     </motion.div>
@@ -210,7 +210,7 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                         <textarea 
                           value={requestText} 
                           onChange={e => setRequestText(e.target.value)} 
-                          className="w-full bg-white border border-slate-200 rounded-lg px-4 py-4 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] min-h-[200px]" 
+                          className="w-full bg-white border border-slate-200 rounded-lg px-4 py-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] min-h-[200px]" 
                           placeholder="Under the Freedom of Information Act 2000, I would like to request the following information..." 
                         />
                       </div>
@@ -232,7 +232,7 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                           value={searchQuery}
                           onChange={e => setSearchQuery(e.target.value)}
                           placeholder="Search police forces..."
-                          className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-[#1877F2]"
+                          className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2]"
                         />
                       </div>
 
