@@ -21,7 +21,7 @@ export default function ResearchCard({ item }: ResearchCardProps) {
       className={cn(
         hybrid.editorialCard,
         hybrid.editorialCardHover,
-        "group flex flex-col h-full overflow-hidden hover:-translate-y-1"
+        "group flex flex-col h-full overflow-hidden"
       )}
     >
       <div className={cn("relative w-full shrink-0 h-48 sm:h-auto sm:aspect-[2/1] overflow-hidden bg-slate-100 border-b", hybrid.editorialBorder)}>

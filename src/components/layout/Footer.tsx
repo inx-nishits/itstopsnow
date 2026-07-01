@@ -138,20 +138,20 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-12 lg:gap-8 mb-4 md:mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-x-4 gap-y-8 md:gap-y-12 lg:gap-8 mb-4 md:mb-16">
 
           {/* Brand Col */}
-          <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left pr-0 lg:pr-8">
+          <div className="col-span-2 md:col-span-1 lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left pr-0 lg:pr-8">
             <Link href="/" className="mb-5 sm:mb-8 block">
               <img src="/ISN-Logo.svg" alt="It Stops Now Logo" className="h-14 w-auto opacity-90 hover:opacity-100 transition-opacity" />
             </Link>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium mb-6 sm:mb-10 max-w-sm">
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium mb-0 md:mb-10 max-w-sm">
               We are building a future where every officer is supported, valued, and never faces their struggles alone. Together, we can end police suicide.
             </p>
           </div>
 
           {/* Links 1   */}
-          <div className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+          <div className="col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
             <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Explore
             </h4>
@@ -165,7 +165,7 @@ export default function Footer() {
           </div>
 
           {/* Links 2 */}
-          <div className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+          <div className="col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
             <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Action
             </h4>
@@ -178,7 +178,7 @@ export default function Footer() {
           </div>
 
           {/* Connect */}
-          <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left">
+          <div className="col-span-2 md:col-span-1 lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left">
             <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Connect
             </h4>

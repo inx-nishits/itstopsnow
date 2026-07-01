@@ -43,6 +43,15 @@ export interface SupportOrganisation {
   link: string;
 }
 
+export interface SupportWebsite {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  logo: string;
+  link: string;
+}
+
 export const MOCK_APPS: SupportApp[] = [
   {
     id: "app1",
@@ -290,6 +299,41 @@ export const MOCK_PODCASTS: SupportPodcast[] = [
     topic: "Meditation",
     logo: "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?q=80&w=800&auto=format&fit=crop",
     link: "https://spotify.com",
+  }
+];
+
+export const MOCK_WEBSITES: SupportWebsite[] = [
+  {
+    id: "web1",
+    name: "Mind.org.uk",
+    description: "Information and support for anyone experiencing a mental health problem. Resources specific to emergency responders available.",
+    category: "Charity",
+    logo: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=400&auto=format&fit=crop",
+    link: "https://www.mind.org.uk",
+  },
+  {
+    id: "web2",
+    name: "Oscar Kilo",
+    description: "The National Police Wellbeing Service, providing evidence-based support, resources, and assessments for all forces.",
+    category: "Wellbeing Service",
+    logo: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=400&auto=format&fit=crop",
+    link: "https://oscarkilo.org.uk",
+  },
+  {
+    id: "web3",
+    name: "Police Care UK",
+    description: "The charity for police and their families, offering practical, emotional, and financial support for trauma and injury.",
+    category: "Charity",
+    logo: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=400&auto=format&fit=crop",
+    link: "https://www.policecare.org.uk",
+  },
+  {
+    id: "web4",
+    name: "Samaritans",
+    description: "Whatever you're going through, a Samaritan will face it with you, 24/7. Completely confidential support line.",
+    category: "Crisis Support",
+    logo: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=400&auto=format&fit=crop",
+    link: "https://www.samaritans.org",
   }
 ];
 

@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronsDown, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Anton } from "next/font/google";
+
+const anton = Anton({ weight: "400", subsets: ["latin"] });
 
 const HERO_IMAGE_ALT =
   "Police officer at night — representing the hidden crisis of police suicide and trauma";
@@ -13,68 +16,18 @@ const HERO_IMAGE_ALT =
 const HERO_IMAGES = {
   mobile: {
     src: "/hero-bg-v4.png",
-    objectPosition: "object-[85%_15%]",
+    objectPosition: "object-[70%_center] sm:object-[75%_center]",
   },
   desktop: {
     src: "/hero-bg-v4.png",
-    objectPosition: "object-[85%_15%]",
+    objectPosition: "object-[70%_center] lg:object-[75%_25%]",
   },
 } as const;
-
-const HERO_EYEBROW = "Police suicide. The hidden crisis.";
-const HERO_TAGLINE = "Every police suicide is one too many.";
-const HERO_DESCRIPTION =
-  "Raising awareness of police suicide, trauma, mental health and the support officers need before it's too late.";
-const HERO_FOOTER = "For officers. For families. For the future.";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const HEADER_OFFSET =
   "pt-[max(5.5rem,env(safe-area-inset-top)+4.5rem)] md:pt-[max(6rem,env(safe-area-inset-top)+5rem)]";
-
-const heroCtaBase = cn(
-  "group relative inline-flex items-center justify-center gap-2 sm:gap-3",
-  "h-10 sm:h-11 px-4 sm:px-8 rounded-[5px] w-fit shrink-0",
-  "text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.05em] sm:tracking-[0.1em]",
-  "transition-all duration-200"
-);
-
-function HeroCtaPrimaryButton({ label, onClick }: { label: string; onClick?: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        heroCtaBase,
-        "bg-[#1877F2] text-white hover:bg-[#1565d8] active:bg-[#1256c4] cursor-pointer"
-      )}
-    >
-      <span className="truncate">{label}</span>
-      <ArrowRight className="size-3.5 shrink-0 opacity-90 group-hover:translate-x-0.5 transition-transform" strokeWidth={2} aria-hidden />
-    </button>
-  );
-}
-
-function HeroCtaSecondaryLink({ href, label }: { href: string; label: string }) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "group relative inline-flex items-center justify-center w-fit shrink-0",
-        "text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.05em] sm:tracking-[0.1em]",
-        "transition-all duration-200 text-white",
-        "gap-1.5 sm:gap-3",
-        "px-0 sm:px-6 h-auto py-1 sm:py-0 sm:h-11",
-        "border-transparent sm:border sm:border-white/20 sm:rounded-[5px]",
-        "bg-transparent sm:hover:border-white/40 sm:hover:bg-white/5",
-        "underline sm:no-underline hover:underline sm:hover:no-underline underline-offset-4"
-      )}
-    >
-      <span className="truncate">{label}</span>
-      <ArrowUpRight className="size-3.5 shrink-0 opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={2} aria-hidden />
-    </Link>
-  );
-}
 
 function HeroBackground() {
   return (
@@ -104,8 +57,8 @@ function HeroBackground() {
         )}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-0% via-[#050A14]/94 via-[34%] sm:via-[38%] lg:via-[#050A14]/82 lg:via-[46%] to-transparent to-[78%] lg:to-[68%]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#050A14]/88 via-[#050A14]/10 to-[#050A14]/35 lg:from-[#050A14]/75" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-0% via-[#050A14]/80 via-45% to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
     </div>
   );
 }
@@ -120,16 +73,9 @@ function HeroContent({
   const M = animate ? motion.div : "div";
 
   return (
-    <div
-      className={cn(
-        "relative z-10 flex flex-col justify-center",
-        HEADER_OFFSET,
-        "pb-4 sm:pb-8 lg:pb-12",
-        "lg:min-h-[100dvh] lg:max-h-dvh"
-      )}
-    >
-      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-20 mx-auto max-w-[1600px]">
-        <div className="w-full max-w-[18rem] sm:max-w-[26rem] lg:max-w-[42rem] xl:max-w-[48rem]">
+    <div className="relative z-10 w-full min-h-[100dvh] flex flex-col justify-end pt-32 pb-24 sm:pt-32 sm:pb-28 lg:pt-24 lg:pb-16 xl:pt-28 xl:pb-20">
+      <div className="w-full px-4 sm:px-6 lg:px-12 mx-auto max-w-[1600px]">
+        <div className="w-full max-w-[22rem] sm:max-w-[28rem] lg:max-w-[42rem] xl:max-w-[48rem]">
           <M
             {...(animate
               ? {
@@ -139,41 +85,69 @@ function HeroContent({
               }
               : {})}
           >
-            <p className="text-[10px] sm:text-[11px] lg:text-xs font-bold uppercase tracking-[0.22em] lg:tracking-[0.26em] text-[#1877F2] mb-4 sm:mb-5 lg:mb-6">
+            <p className="text-[10px] sm:text-[11px] lg:text-xs font-bold uppercase tracking-[0.22em] lg:tracking-[0.26em] text-[#1877F2] mb-3 sm:mb-5 lg:mb-6">
               <span className="block sm:inline">Police suicide.</span>
               <span className="block sm:inline sm:ml-2">The hidden crisis.</span>
             </p>
 
-            <h1 className="font-black uppercase tracking-tight leading-[1.02] mb-3 sm:mb-4 lg:mb-5">
-              <span className="block text-[1.5rem] sm:text-[1.85rem] lg:text-[2.75rem] xl:text-[3.15rem] text-white">
-                Behind the
-              </span>
-              <span className="block text-[1.5rem] sm:text-[1.85rem] lg:text-[2.75rem] xl:text-[3.15rem] text-[#1877F2]">
-                uniform
-              </span>
+            <h1 
+              className={cn("flex flex-col uppercase mb-5 sm:mb-6 lg:mb-6 tracking-normal", anton.className)}
+              style={{ lineHeight: 0.95 }}
+            >
+              <span className="text-white text-[5.5rem] sm:text-[6.5rem] lg:text-[5rem] xl:text-[6rem]">BEHIND</span>
+              <span className="text-white text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">EVERY BADGE</span>
+              <span className="text-[#1877F2] text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">IS A LIFE</span>
+              <div className="flex flex-col lg:flex-row lg:gap-3 xl:gap-4">
+                <span className="text-white text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">WORTH</span>
+                <span className="text-white text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">FIGHTING FOR<span className="text-[#1877F2]">.</span></span>
+              </div>
             </h1>
 
-            <p className="text-[13px] sm:text-base lg:text-lg xl:text-xl font-bold text-white leading-snug mb-2.5 sm:mb-4 lg:mb-5">
-              {HERO_TAGLINE}
+            <p className="text-[16px] sm:text-lg lg:text-xl text-white/95 leading-relaxed mb-6 sm:mb-8 lg:mb-6 max-w-[20rem] sm:max-w-[32rem] lg:max-w-[45rem] xl:max-w-[50rem] font-medium tracking-wide">
+              Police suicide is a crisis we can't ignore. Together, we can break the silence, support our officers, and save lives.
             </p>
 
-            <p className="text-[12px] sm:text-sm lg:text-base xl:text-md text-white/80 leading-relaxed mb-6 sm:mb-7 lg:mb-9 max-w-[17rem] sm:max-w-none lg:max-w-xl">
-              {HERO_DESCRIPTION}
-            </p>
-
-            <div className="flex flex-row flex-wrap lg:flex-nowrap items-center gap-3 sm:gap-4 lg:gap-3 xl:gap-4 mb-5 sm:mb-8 lg:mb-10 w-full">
-              <HeroCtaPrimaryButton label="Get Involved" onClick={onGetInvolvedClick} />
-              <HeroCtaSecondaryLink href="/stories" label="Read the stories" />
-              <HeroCtaSecondaryLink href="/wall-of-remembrance" label="View Roll of Honour" />
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-4 w-full">
+              <button onClick={onGetInvolvedClick} className="flex items-center justify-center shrink-0 gap-3 w-fit h-12 px-6 sm:px-8 rounded-md bg-[#1877F2] text-white text-[12px] font-bold uppercase tracking-widest hover:bg-[#1565d8] transition-colors">
+                <span>JOIN THE MOVEMENT</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                <Link href="/stories" className="group flex items-center shrink-0 gap-2 text-white/90 hover:text-white transition-colors">
+                  <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-widest border-b border-white/30 group-hover:border-white/80 pb-0.5 transition-colors">
+                    Read the Stories
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
+                </Link>
+                
+                <Link href="/wall-of-remembrance" className="group flex items-center shrink-0 gap-2 text-white/90 hover:text-white transition-colors">
+                  <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-widest border-b border-white/30 group-hover:border-white/80 pb-0.5 transition-colors">
+                    View Wall of Remembrance
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
+                </Link>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2.5 lg:gap-3 text-white/80">
-              <ShieldCheck className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-[#1877F2] shrink-0" strokeWidth={2} />
-              <p className="text-[11px] sm:text-xs lg:text-sm leading-relaxed">{HERO_FOOTER}</p>
-            </div>
           </M>
         </div>
       </div>
+      
+      {/* Scroll Indicator */}
+      <button 
+        onClick={() => {
+          const headerHeight = document.querySelector('header')?.getBoundingClientRect().height || 80;
+          window.scrollTo({ top: window.innerHeight - headerHeight, behavior: 'smooth' });
+        }}
+        className="absolute bottom-10 lg:bottom-12 left-0 right-0 w-full flex justify-center lg:justify-end lg:px-12 xl:px-20 z-20 pointer-events-auto cursor-pointer group"
+        aria-label="Scroll to next section"
+      >
+        <div className="flex flex-col items-center text-white/60 animate-bounce group-hover:text-white transition-colors">
+          <span className="text-[10px] font-bold tracking-widest uppercase mb-1">Scroll to learn more</span>
+          <ChevronsDown className="w-5 h-5 opacity-80" />
+        </div>
+      </button>
     </div>
   );
 }
@@ -183,7 +157,7 @@ export default function HomeHero({ onGetInvolvedClick }: { onGetInvolvedClick?: 
   const animate = !prefersReducedMotion;
 
   return (
-    <section className="relative overflow-hidden bg-[#050A14] lg:h-dvh lg:max-h-dvh" aria-label="Campaign hero">
+    <section className="relative overflow-hidden bg-[#050A14] min-h-[100dvh]" aria-label="Campaign hero">
       <HeroBackground />
       <HeroContent animate={animate} onGetInvolvedClick={onGetInvolvedClick} />
     </section>

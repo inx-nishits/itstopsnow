@@ -60,14 +60,14 @@ export default function Header() {
           </Link>
 
           {/* DESKTOP NAV (Centered) */}
-          <nav className="hidden xl:flex items-center gap-3 xl:gap-4 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
+          <nav className="hidden xl:flex flex-1 justify-center items-center gap-2 2xl:gap-4 px-2 lg:px-4" aria-label="Main navigation">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative whitespace-nowrap text-sm xl:text-base font-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${isActive
+                  className={`relative whitespace-nowrap text-[13px] 2xl:text-base font-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${isActive
                       ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
                       : "text-slate-300 hover:text-white"
                     }`}

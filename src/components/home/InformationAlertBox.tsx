@@ -44,10 +44,10 @@ export default function InformationAlertBox({ alert }: InformationAlertBoxProps)
       aria-label={alert.badgeLabel}
     >
       <div className="w-full px-4 sm:px-6 lg:px-12 py-2 sm:py-2.5 mx-auto text-center sm:text-left leading-relaxed">
-        <span className="inline-block align-middle px-2 py-[2px] mr-2 rounded bg-white text-[#1877F2] text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] shadow-sm relative -top-[1px]">
+        <span className="inline-block align-middle px-2 py-[2px] mr-2 rounded bg-white text-[#1877F2] text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-sm relative -top-[1px]">
           {alert.badgeLabel}
         </span>
-        <span className="inline text-[12px] sm:text-[13px] font-medium align-middle">
+        <span className="inline text-[11px] lg:text-[13px] font-medium align-middle">
           {alert.messageBefore}
           {alert.highlightPhrase ? (
             <strong className="font-black mx-1 tracking-wide">{alert.highlightPhrase}</strong>
@@ -58,7 +58,7 @@ export default function InformationAlertBox({ alert }: InformationAlertBoxProps)
         {alert.ctaLabel && alert.ctaHref ? (
           <Link
             href={alert.ctaHref}
-            className="group inline-flex items-center gap-0.5 text-white hover:text-blue-100 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.1em] transition-colors duration-200 ml-2 whitespace-nowrap align-middle"
+            className="group inline-flex items-center gap-0.5 text-white hover:text-blue-100 text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.1em] transition-colors duration-200 ml-2 whitespace-nowrap align-middle"
           >
             <span className="underline underline-offset-4 decoration-white/40 group-hover:decoration-white">{alert.ctaLabel}</span>
             <span className="group-hover:translate-x-1 transition-transform duration-200 text-base leading-none">→</span>

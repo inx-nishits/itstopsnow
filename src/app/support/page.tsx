@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Heart, Search, Smartphone, Book, Headphones, Star, ChevronLeft, ChevronRight, LayoutGrid, Globe } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
-import { MOCK_APPS, MOCK_BOOKS, MOCK_PODCASTS } from "@/lib/support/mockData";
+import { MOCK_APPS, MOCK_BOOKS, MOCK_PODCASTS, MOCK_WEBSITES } from "@/lib/support/mockData";
 import { cn } from "@/lib/utils";
 
 // Types
@@ -20,8 +20,8 @@ const CATEGORIES: { label: FilterOption; icon: React.ElementType }[] = [
 ];
 
 // Super Clean App Card (Matching Screenshot)
-const AppItem = ({ item }: { item: any }) => (
-  <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex flex-col sm:flex-row w-[90px] sm:w-[320px] lg:w-[340px] h-auto sm:h-[176px] shrink-0 snap-start sm:snap-center cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4">
+const AppItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
     <div className="relative shrink-0 flex flex-col items-center">
       <img src={item.logo} alt={item.name} className="w-[90px] h-[90px] sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-[20px] sm:rounded-xl object-cover shadow-sm bg-white border border-slate-100" />
     </div>
@@ -48,14 +48,14 @@ const AppItem = ({ item }: { item: any }) => (
         <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
         <span className="text-[10px] font-medium text-slate-600">{item.rating} <span className="text-slate-400">({item.reviews})</span></span>
       </div>
-      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed mt-auto">{item.description}</p>
+      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
     </div>
   </Link>
 );
 
 // Super Clean Podcast Card (Matching Screenshot)
-const PodcastItem = ({ item }: { item: any }) => (
-  <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex flex-col sm:flex-row w-[90px] sm:w-[320px] lg:w-[340px] h-auto sm:h-[176px] shrink-0 snap-start sm:snap-center cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4">
+const PodcastItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
     <div className="relative shrink-0 flex flex-col items-center">
       <div className="w-[90px] h-[90px] sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-[20px] sm:rounded-xl overflow-hidden border border-slate-100 shadow-sm relative">
         <img src={item.logo} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -70,14 +70,14 @@ const PodcastItem = ({ item }: { item: any }) => (
           {item.topic}
         </span>
       </div>
-      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed mt-auto">{item.description}</p>
+      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
     </div>
   </Link>
 );
 
 // Super Clean Book Card (Matching Screenshot)
-const BookItem = ({ item }: { item: any }) => (
-  <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex flex-col sm:flex-row w-[90px] sm:w-[320px] lg:w-[340px] h-auto sm:h-[176px] shrink-0 snap-start sm:snap-center cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4">
+const BookItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
     <div className="relative shrink-0 flex flex-col items-center">
       <img src={item.cover} alt={item.title} className="w-[90px] sm:w-24 shrink-0 rounded-[12px] sm:rounded-lg object-cover shadow-sm bg-white aspect-[2/3]" />
     </div>
@@ -95,11 +95,31 @@ const BookItem = ({ item }: { item: any }) => (
         </div>
       )}
       
-      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 leading-relaxed mt-auto">{item.description}</p>
+      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 leading-relaxed">{item.description}</p>
       
       <div className="hidden sm:inline-flex mt-2">
         <span className="text-[9px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{item.category}</span>
       </div>
+    </div>
+  </Link>
+);
+
+// Super Clean Website Card
+const WebsiteItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
+    <div className="relative shrink-0 flex flex-col items-center">
+      <img src={item.logo} alt={item.name} className="w-[90px] h-[90px] sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-[20px] sm:rounded-xl object-cover shadow-sm bg-white border border-slate-100" />
+    </div>
+    <div className="flex flex-col mt-2 sm:mt-0 sm:ml-4 min-w-0 flex-1 items-center sm:items-start text-center sm:text-left">
+      <div className="flex justify-between items-start mb-1 w-full">
+        <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-1 sm:line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-snug w-full">{item.name}</h4>
+      </div>
+      <div className="hidden sm:inline-flex mb-2">
+        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+          {item.category}
+        </span>
+      </div>
+      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
     </div>
   </Link>
 );
@@ -164,7 +184,7 @@ export default function SupportListing() {
     const syncActiveFromScroll = () => {
       const offset = 200; // Offset for sticky header
       let current = "All"; // Default to All if near top
-      const sections = ["Apps", "Podcasts", "Books"];
+      const sections = ["Apps", "Podcasts", "Books", "Websites"];
       
       for (const id of sections) {
         const el = sectionRefs.current[id];
@@ -199,11 +219,13 @@ export default function SupportListing() {
   const filteredApps = MOCK_APPS.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
   const filteredPodcasts = MOCK_PODCASTS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
   const filteredBooks = MOCK_BOOKS.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredWebsites = MOCK_WEBSITES.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   // Duplicate items heavily to fill the screen as requested
   const allApps = [...filteredApps, ...filteredApps, ...filteredApps, ...filteredApps];
   const allPodcasts = [...filteredPodcasts, ...filteredPodcasts, ...filteredPodcasts, ...filteredPodcasts];
   const allBooks = [...filteredBooks, ...filteredBooks, ...filteredBooks, ...filteredBooks];
+  const allWebsites = [...filteredWebsites, ...filteredWebsites, ...filteredWebsites, ...filteredWebsites];
 
   const handleTabClick = (cat: FilterOption) => {
     if (cat === "All" && activeFilter === "All") {
@@ -285,9 +307,10 @@ export default function SupportListing() {
           <div className="mb-8">
             <button
               onClick={() => setActiveFilter("All")}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-100 hover:bg-[#1877F2] text-slate-700 hover:text-white rounded-full text-sm font-bold tracking-wide transition-all shadow-sm hover:shadow-md"
+              className="group inline-flex items-center gap-1.5 text-[13px] font-bold text-slate-500 hover:text-[#1877F2] transition-colors duration-300"
             >
-              <ChevronLeft className="w-4 h-4" /> Back to Recovery and Support
+              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
+              <span>Back to Recovery and Support</span>
             </button>
           </div>
         )}
@@ -321,6 +344,14 @@ export default function SupportListing() {
                   onViewAll={() => setActiveFilter("Books")}
                 />
               </div>
+              <div ref={(el) => { sectionRefs.current["Websites"] = el; }} className="scroll-mt-32">
+                <ResourceCarousel
+                  title="Websites"
+                  items={allWebsites}
+                  renderItem={(item) => <WebsiteItem item={item} />}
+                  onViewAll={() => setActiveFilter("Websites")}
+                />
+              </div>
             </motion.div>
           )}
 
@@ -330,8 +361,8 @@ export default function SupportListing() {
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-2xl font-bold text-gray-900">All Apps</h3>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-                {allApps.map((item, i) => <AppItem key={`grid-app-${item.id || item.name}-${i}`} item={item} />)}
+              <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center sm:justify-items-start">
+                {allApps.map((item, i) => <AppItem key={`grid-app-${item.id || item.name}-${i}`} item={item} isGrid />)}
               </div>
               {allApps.length === 0 && <p className="text-gray-500 text-sm">No apps found matching your search.</p>}
             </motion.div>
@@ -343,8 +374,8 @@ export default function SupportListing() {
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-2xl font-bold text-gray-900">All Podcasts</h3>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-                {allPodcasts.map((item, i) => <PodcastItem key={`grid-pod-${item.id || item.title}-${i}`} item={item} />)}
+              <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center sm:justify-items-start">
+                {allPodcasts.map((item, i) => <PodcastItem key={`grid-pod-${item.id || item.title}-${i}`} item={item} isGrid />)}
               </div>
               {allPodcasts.length === 0 && <p className="text-gray-500 text-sm">No podcasts found matching your search.</p>}
             </motion.div>
@@ -356,20 +387,23 @@ export default function SupportListing() {
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-2xl font-bold text-gray-900">All Books</h3>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-                {allBooks.map((item, i) => <BookItem key={`grid-book-${item.id || item.title}-${i}`} item={item} />)}
+              <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center sm:justify-items-start">
+                {allBooks.map((item, i) => <BookItem key={`grid-book-${item.id || item.title}-${i}`} item={item} isGrid />)}
               </div>
               {allBooks.length === 0 && <p className="text-gray-500 text-sm">No books found matching your search.</p>}
             </motion.div>
           )}
 
-          {/* "WEBSITES" VIEW - GRID (Empty placeholder as no data provided) */}
+          {/* "WEBSITES" VIEW - GRID */}
           {activeFilter === "Websites" && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-2xl font-bold text-gray-900">All Websites</h3>
               </div>
-              <p className="text-gray-500 text-sm">No websites found.</p>
+              <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center sm:justify-items-start">
+                {allWebsites.map((item, i) => <WebsiteItem key={`grid-web-${item.id || item.name}-${i}`} item={item} isGrid />)}
+              </div>
+              {allWebsites.length === 0 && <p className="text-gray-500 text-sm">No websites found matching your search.</p>}
             </motion.div>
           )}
 

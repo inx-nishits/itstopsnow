@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Download, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,12 @@ export default function ResearchPdfModal({
   pdfUrl,
   title,
 }: ResearchPdfModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -27,7 +34,9 @@ export default function ResearchPdfModal({
     }
   }, [open]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {open && pdfUrl && (
         <div
@@ -102,6 +111,7 @@ export default function ResearchPdfModal({
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
