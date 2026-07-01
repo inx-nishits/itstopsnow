@@ -57,9 +57,9 @@ export default function Footer() {
                 essential support resources, Pocket Sergeant is revolutionizing how we serve on the frontline.
               </p>
 
-              <Link href="/about" className="mt-auto w-full sm:w-auto">
+              <Link href="https://pocketsergeant.co.uk/" target="_blank" rel="noopener noreferrer" className="mt-auto w-full sm:w-auto">
                 <Button className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold sm:font-black uppercase tracking-wide sm:tracking-[0.12em] text-[11px] sm:text-xs rounded-xl sm:rounded-full px-4 sm:px-8 lg:px-10 py-4 sm:py-6 shadow-[0_0_20px_rgba(24,119,242,0.35)] hover:shadow-[0_0_32px_rgba(24,119,242,0.5)] transition-all duration-300 hover:-translate-y-0.5 whitespace-normal h-auto text-center leading-snug">
-                  Learn More About Pocket Sergeant
+                  Visit Pocket Sergeant Website
                 </Button>
               </Link>
             </div>
