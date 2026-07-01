@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart, MapPin, Edit3, Eye, Copy, Lock, Navigation, Building2, ChevronDown } from "lucide-react";
+import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart, MapPin, Edit3, Eye, Copy, Lock, Navigation, Building2, ChevronDown, LayoutGrid, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
@@ -207,37 +207,41 @@ export default function TemplatesPage() {
 
       {/* LIST LETTER TEMPLATES */}
       <EditorialSection id="letter-templates" className="py-12 md:py-20">
-        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1000px]">
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
 
-          {/* Search & Filters */}
-          <div className="bg-white rounded-2xl border border-slate-200 flex flex-col md:flex-row items-stretch md:items-center p-2 mb-8 shadow-sm gap-3 md:gap-0">
-            <div className="relative w-full md:flex-1 p-1 md:p-0 z-20">
-              <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input 
-                type="text" 
-                placeholder="Search templates..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 text-sm bg-transparent focus:outline-none text-slate-900 placeholder:text-slate-400 font-medium" 
-              />
-            </div>
-            
-            <div className="flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-0">
-              <div className="h-8 w-px bg-slate-200 hidden md:block" />
-              <div className="flex items-center gap-2 px-4 py-2 flex-grow sm:flex-grow-0 relative group z-30">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">For:</span>
-                <div className="relative flex-1 md:flex-none">
+          {/* Search & Filters Panel */}
+          <div className="flex flex-col gap-4 mb-8">
+            <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+              {/* Search Bar */}
+              <div className="relative flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm transition-all focus-within:border-[#1877F2]/40 focus-within:shadow-md flex items-center">
+                <Search className="w-5 h-5 ml-4 text-slate-400 shrink-0" />
+                <input 
+                  type="text" 
+                  placeholder="Search templates..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-3 pr-4 py-4 text-sm bg-transparent focus:outline-none text-slate-900 placeholder:text-slate-400 font-medium" 
+                />
+              </div>
+
+              {/* Filters Group */}
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-center">
+                {/* For: Recipient Dropdown */}
+                <div className="relative flex-1 sm:flex-initial">
                   <button 
                     onClick={() => { setRecipientDropdownOpen(!recipientDropdownOpen); setToneDropdownOpen(false); setSortDropdownOpen(false); }}
-                    className="w-full md:w-auto text-sm font-bold text-slate-900 bg-transparent focus:outline-none flex items-center justify-between gap-1 md:min-w-[120px] py-1"
+                    className="w-full sm:w-[160px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
-                    {recipientFilter === "All" ? "All" : recipientFilter}
-                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${recipientDropdownOpen ? "rotate-180" : ""}`} />
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">For:</span>
+                      <span className="text-slate-800 font-bold">{recipientFilter}</span>
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${recipientDropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   {recipientDropdownOpen && (
                     <>
                       <div className="fixed inset-0 z-40" onClick={() => setRecipientDropdownOpen(false)} />
-                      <div className="absolute top-full left-0 md:right-0 md:left-auto mt-3 w-48 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left md:origin-top-right">
+                      <div className="absolute top-[calc(100%+8px)] left-0 w-full sm:w-48 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left">
                         {["All", "MP", "PCC", "Chief Constable"].map(val => (
                           <button
                             key={val}
@@ -251,23 +255,23 @@ export default function TemplatesPage() {
                     </>
                   )}
                 </div>
-              </div>
-              
-              <div className="h-8 w-px bg-slate-200 hidden md:block" />
-              <div className="flex items-center gap-2 px-4 py-2 flex-grow sm:flex-grow-0 relative group z-20">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Voice:</span>
-                <div className="relative flex-1 md:flex-none">
+
+                {/* Voice: Tone Dropdown */}
+                <div className="relative flex-1 sm:flex-initial">
                   <button 
                     onClick={() => { setToneDropdownOpen(!toneDropdownOpen); setRecipientDropdownOpen(false); setSortDropdownOpen(false); }}
-                    className="w-full md:w-auto text-sm font-bold text-slate-900 bg-transparent focus:outline-none flex items-center justify-between gap-1 md:min-w-[100px] py-1"
+                    className="w-full sm:w-[150px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
-                    {toneFilter === "All" ? "All" : toneFilter}
-                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${toneDropdownOpen ? "rotate-180" : ""}`} />
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Voice:</span>
+                      <span className="text-slate-800 font-bold">{toneFilter}</span>
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${toneDropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   {toneDropdownOpen && (
                     <>
                       <div className="fixed inset-0 z-40" onClick={() => setToneDropdownOpen(false)} />
-                      <div className="absolute top-full left-0 md:right-0 md:left-auto mt-3 w-40 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left md:origin-top-right">
+                      <div className="absolute top-[calc(100%+8px)] left-0 w-full sm:w-44 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left">
                         {["All", "Formal", "Evidence-led", "Personal"].map(val => (
                           <button
                             key={val}
@@ -281,23 +285,23 @@ export default function TemplatesPage() {
                     </>
                   )}
                 </div>
-              </div>
 
-              <div className="h-8 w-px bg-slate-200 hidden md:block" />
-              <div className="flex items-center gap-2 px-4 py-2 flex-grow sm:flex-grow-0 relative group z-10">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Sort:</span>
-                <div className="relative flex-1 md:flex-none">
+                {/* Sort Dropdown */}
+                <div className="relative flex-1 sm:flex-initial">
                   <button 
                     onClick={() => { setSortDropdownOpen(!sortDropdownOpen); setToneDropdownOpen(false); setRecipientDropdownOpen(false); }}
-                    className="w-full md:w-auto text-sm font-bold text-slate-900 bg-transparent focus:outline-none flex items-center justify-between gap-1 md:min-w-[70px] py-1"
+                    className="w-full sm:w-[130px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
-                    {sortBy === "Recently Added" ? "Recent" : sortBy}
-                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${sortDropdownOpen ? "rotate-180" : ""}`} />
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sort:</span>
+                      <span className="text-slate-800 font-bold">{sortBy === "Recently Added" ? "Recent" : sortBy}</span>
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${sortDropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   {sortDropdownOpen && (
                     <>
                       <div className="fixed inset-0 z-40" onClick={() => setSortDropdownOpen(false)} />
-                      <div className="absolute top-full left-0 md:right-0 md:left-auto mt-3 w-40 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left md:origin-top-right">
+                      <div className="absolute top-[calc(100%+8px)] left-0 w-full sm:w-40 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left">
                         {["A-Z", "Z-A", "Recently Added"].map(val => (
                           <button
                             key={val}
@@ -311,58 +315,208 @@ export default function TemplatesPage() {
                     </>
                   )}
                 </div>
+
               </div>
             </div>
           </div>
 
-          {/* Templates List */}
-          <div className="flex flex-col gap-4">
+          {/* Templates Display */}
+          
+          {/* Desktop Table View */}
+          <div className="hidden sm:block bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)] overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50/50">
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Template</th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Recipient</th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Tone</th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Read Time</th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {paginatedTemplates.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="text-center py-16">
+                        <SearchX className="w-10 h-10 text-slate-300 mx-auto mb-4" />
+                        <h3 className="text-base font-bold text-slate-900 mb-1">No templates found</h3>
+                        <p className="text-sm text-slate-500">Try adjusting your filters or search query.</p>
+                      </td>
+                    </tr>
+                  ) : (
+                    paginatedTemplates.map(template => (
+                      <tr key={template.id} className="hover:bg-slate-50/80 transition-colors group">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1877F2]/10 to-[#1877F2]/5 flex items-center justify-center border border-[#1877F2]/10 group-hover:scale-105 group-hover:bg-[#1877F2]/15 transition-all duration-300">
+                              <FileText className="w-5 h-5 text-[#1877F2]" />
+                            </div>
+                            <div className="min-w-0">
+                              <div className="text-sm font-bold text-slate-900 leading-none group-hover:text-[#1877F2] transition-colors">{template.title}</div>
+                              <span className="text-[10px] text-slate-400 font-medium">ID: #{template.id}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-full">
+                            <Building2 className="w-3 h-3 text-slate-500 shrink-0" />
+                            {template.recipient}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1877F2] bg-blue-50/50 border border-blue-100 px-2.5 py-1 rounded-full">
+                            {template.tone}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-50/50 border border-slate-100/60 px-2.5 py-1 rounded-full">
+                            <Clock className="w-3 h-3 text-slate-400 shrink-0" />
+                            {template.readTime}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right">
+                          <div className="inline-flex items-center gap-2">
+                            <button
+                              onClick={() => setPersonalizeTemplate(template)}
+                              className="inline-flex items-center justify-center gap-1.5 text-white bg-[#1877F2] hover:bg-blue-600 rounded-xl py-2 px-3.5 transition-colors shadow-sm font-bold text-xs uppercase tracking-wider active:scale-95 duration-200"
+                            >
+                              Personalise
+                            </button>
+                            <button
+                              onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }}
+                              className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/60 text-[#1877F2] flex items-center justify-center transition-all duration-200 active:scale-95"
+                              title="Preview"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => void handleDownloadTemplate(template, "pdf")}
+                              className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-red-50 hover:text-red-500 border border-slate-200/60 text-slate-500 flex items-center justify-center transition-all duration-200 active:scale-95"
+                              title="Download PDF"
+                            >
+                              <Download className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => void handleDownloadTemplate(template, "docx")}
+                              className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-500 border border-slate-200/60 text-slate-500 flex items-center justify-center transition-all duration-200 active:scale-95"
+                              title="Download Word (DOCX)"
+                            >
+                              <FileText className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => { navigator.clipboard.writeText(template.content); alert("Template copied to clipboard!"); }}
+                              className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-green-50 hover:text-green-500 border border-slate-200/60 text-slate-500 flex items-center justify-center transition-all duration-200 active:scale-95"
+                              title="Copy to Clipboard"
+                            >
+                              <Copy className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Mobile Grid View */}
+          <div className="block sm:hidden grid grid-cols-1 gap-6">
             {paginatedTemplates.length === 0 ? (
-              <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
+              <div className="col-span-full text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
                 <SearchX className="w-10 h-10 text-slate-300 mx-auto mb-4" />
                 <h3 className="text-base font-bold text-slate-900 mb-1">No templates found</h3>
                 <p className="text-sm text-slate-500">Try adjusting your filters or search query.</p>
               </div>
             ) : (
               paginatedTemplates.map(template => (
-                <div key={template.id} className="bg-white rounded-2xl border border-slate-200 hover:border-[#1877F2]/40 hover:shadow-lg transition-all duration-300 p-4 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center group">
-                  <div className="flex items-start gap-3 md:gap-5 flex-1 w-full">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-[#1877F2]/5 flex items-center justify-center shrink-0 border border-[#1877F2]/20 group-hover:scale-110 group-hover:bg-[#1877F2]/10 transition-transform duration-300">
-                      <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#1877F2] stroke-[1.5]" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-base font-bold text-slate-900 mb-1.5">{template.title}</h4>
-                      <p className="text-sm text-slate-500 line-clamp-2 md:line-clamp-1 mb-3">Ask your {template.recipient} to support better data collection, prevention and officer mental health support.</p>
-                      <div className="flex flex-wrap items-center gap-2 md:gap-3">
-                        <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
-                          <Building2 className="w-3.5 h-3.5 text-slate-500" /> {template.recipient}
-                        </span>
-                        <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1877F2] bg-blue-50 px-3 py-1.5 rounded-md border border-blue-100">
-                          {template.tone}
-                        </span>
-                        <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-md border border-slate-200">
-                          <Clock className="w-3.5 h-3.5 text-slate-400" /> {template.readTime}
-                        </span>
+                <div 
+                  key={template.id} 
+                  className="bg-white rounded-3xl border border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)] p-6 flex flex-col justify-between h-full group"
+                >
+                  <div className="flex flex-col flex-1">
+                    {/* Header info */}
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1877F2]/10 to-[#1877F2]/5 flex items-center justify-center shrink-0 border border-[#1877F2]/10">
+                        <FileText className="w-6 h-6 text-[#1877F2] stroke-[1.5]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-lg font-bold text-slate-900 leading-snug truncate">
+                          {template.title}
+                        </h4>
+                        <span className="text-xs text-slate-400 font-medium">Template ID: #{template.id}</span>
                       </div>
                     </div>
+
+                    {/* Description */}
+                    <p className="text-sm text-slate-500 leading-relaxed line-clamp-3 mb-5">
+                      Ask your {template.recipient} to support better data collection, prevention and officer mental health support.
+                    </p>
+
+                    {/* Badges/Tags */}
+                    <div className="flex flex-wrap items-center gap-2 mt-auto mb-6">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-full">
+                        <Building2 className="w-3.5 h-3.5 text-slate-500 shrink-0" /> 
+                        <span className="truncate max-w-[120px]">{template.recipient}</span>
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1877F2] bg-blue-50/50 border border-blue-100 px-3 py-1.5 rounded-full shrink-0">
+                        {template.tone}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-50/50 border border-slate-100/60 px-3 py-1.5 rounded-full shrink-0">
+                        <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" /> 
+                        {template.readTime}
+                      </span>
+                    </div>
                   </div>
-                  
-                  <div className="grid grid-cols-5 md:flex divide-x divide-slate-200 md:divide-x-0 items-center md:gap-4 shrink-0 w-full md:w-auto border-t border-slate-200 md:border-t-0 pt-3 md:pt-0 mt-2 md:mt-0">
-                    <button onClick={() => setPersonalizeTemplate(template)} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-white bg-[#1877F2] hover:bg-blue-600 rounded-md py-2 md:py-2.5 px-3 md:px-5 transition-colors shadow-sm font-bold text-[10px] md:text-xs uppercase tracking-widest mr-2 border border-[#1877F2]">
-                      Personalise
-                    </button>
-                    <button onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 md:py-2.5 md:px-4 transition-colors">
-                      <Eye className="w-5 h-5" strokeWidth={1.5} /> <span className="text-[10px] md:text-xs font-semibold">Preview</span>
-                    </button>
-                    <button onClick={() => void handleDownloadTemplate(template, "pdf")} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 md:py-2.5 md:px-5 transition-colors">
-                      <Download className="w-5 h-5" strokeWidth={1.5} /> <span className="text-[10px] md:text-xs font-semibold">PDF</span>
-                    </button>
-                    <button onClick={() => void handleDownloadTemplate(template, "docx")} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 md:py-2.5 md:px-5 transition-colors">
-                      <FileText className="w-5 h-5" strokeWidth={1.5} /> <span className="text-[10px] md:text-xs font-semibold">Word</span>
-                    </button>
-                    <button onClick={() => { navigator.clipboard.writeText(template.content); alert("Template copied to clipboard!"); }} className="flex flex-col md:flex-row items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50 py-2 md:py-2.5 md:px-5 transition-colors">
-                      <Copy className="w-5 h-5" strokeWidth={1.5} /> <span className="text-[10px] md:text-xs font-semibold">Copy</span>
-                    </button>
+
+                  {/* Actions Container */}
+                  <div className="pt-6 mt-6 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                    {/* Left Button Actions */}
+                    <div className="flex items-center gap-2 flex-1 sm:flex-initial">
+                      <button 
+                        onClick={() => setPersonalizeTemplate(template)} 
+                        className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 text-white bg-[#1877F2] hover:bg-blue-600 rounded-xl py-3 px-4 transition-all shadow-sm font-bold text-xs uppercase tracking-wider active:scale-95 duration-200 border border-[#1877F2]"
+                      >
+                        Personalise
+                      </button>
+                      <button 
+                        onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} 
+                        className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50/60 border border-blue-100 rounded-xl py-3 px-4 transition-all font-bold text-xs uppercase tracking-wider active:scale-95 duration-200"
+                      >
+                        <Eye className="w-4 h-4 shrink-0" strokeWidth={2} />
+                        Preview
+                      </button>
+                    </div>
+
+                    {/* Right Icon Actions */}
+                    <div className="flex items-center justify-center sm:justify-end gap-2 shrink-0">
+                      <div className="hidden sm:block h-6 w-px bg-slate-200/80 mx-1" />
+                      
+                      <button 
+                        onClick={() => void handleDownloadTemplate(template, "pdf")} 
+                        className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-red-50 hover:text-red-500 border border-slate-200/60 hover:border-red-200 text-slate-500 flex items-center justify-center transition-all duration-200 shadow-sm active:scale-90"
+                        title="Download PDF"
+                      >
+                        <Download className="w-4 h-4" strokeWidth={2} />
+                      </button>
+                      
+                      <button 
+                        onClick={() => void handleDownloadTemplate(template, "docx")} 
+                        className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-500 border border-slate-200/60 hover:border-blue-200 text-slate-500 flex items-center justify-center transition-all duration-200 shadow-sm active:scale-90"
+                        title="Download Word (DOCX)"
+                      >
+                        <FileText className="w-4 h-4" strokeWidth={2} />
+                      </button>
+                      
+                      <button 
+                        onClick={() => { navigator.clipboard.writeText(template.content); alert("Template copied to clipboard!"); }} 
+                        className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-green-50 hover:text-green-500 border border-slate-200/60 hover:border-green-200 text-slate-500 flex items-center justify-center transition-all duration-200 shadow-sm active:scale-90"
+                        title="Copy to Clipboard"
+                      >
+                        <Copy className="w-4 h-4" strokeWidth={2} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))
@@ -374,7 +528,7 @@ export default function TemplatesPage() {
             <div className="flex justify-center pt-6 md:pt-10">
               <button 
                 onClick={() => setCurrentPage(p => p + 1)}
-                className="flex items-center justify-center w-full md:w-auto text-slate-700 font-bold uppercase tracking-widest text-[11px] bg-white rounded-full border border-slate-200 hover:border-[#1877F2] hover:text-[#1877F2] shadow-sm px-8 py-3.5 transition-all"
+                className="flex items-center justify-center w-full md:w-auto text-slate-700 font-bold uppercase tracking-widest text-[11px] bg-white rounded-full border border-slate-200 hover:border-[#1877F2] hover:text-[#1877F2] shadow-sm px-8 py-3.5 transition-all animate-bounce"
               >
                 LOAD MORE TEMPLATES <ChevronDown className="hidden md:block w-4 h-4 ml-2" />
               </button>

@@ -107,27 +107,32 @@ function HeroContent({
               Police suicide is a crisis we can't ignore. Together, we can break the silence, support our officers, and save lives.
             </p>
 
-            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-4 w-full">
-              <button onClick={onGetInvolvedClick} className="flex items-center justify-center shrink-0 gap-3 w-fit h-12 px-6 sm:px-8 rounded-md bg-[#1877F2] text-white text-[12px] font-bold uppercase tracking-widest hover:bg-[#1565d8] transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-12 lg:mb-4 w-full">
+              <button 
+                onClick={onGetInvolvedClick} 
+                className="flex items-center justify-center shrink-0 gap-3 w-[220px] h-12 rounded-md bg-[#1877F2] text-white text-[12px] font-bold uppercase tracking-widest hover:bg-[#1565d8] transition-colors"
+              >
                 <span>JOIN THE MOVEMENT</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-                <Link href="/stories" className="group flex items-center shrink-0 gap-2 text-white/90 hover:text-white transition-colors">
-                  <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-widest border-b border-white/30 group-hover:border-white/80 pb-0.5 transition-colors">
-                    Read the Stories
-                  </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </Link>
-                
-                <Link href="/wall-of-remembrance" className="group flex items-center shrink-0 gap-2 text-white/90 hover:text-white transition-colors">
-                  <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-widest border-b border-white/30 group-hover:border-white/80 pb-0.5 transition-colors">
-                    View Wall of Remembrance
-                  </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </Link>
-              </div>
+              <Link 
+                href="/stories" 
+                className="group flex items-center justify-center shrink-0 gap-3 w-[220px] h-12 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 text-white text-[12px] font-bold uppercase tracking-widest transition-all"
+              >
+                <span>Read the Stories</span>
+                <ArrowUpRight className="w-4 h-4 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
+              </Link>
+              
+              <Link 
+                href="/wall-of-remembrance" 
+                className="group flex items-center shrink-0 gap-2 text-white/90 hover:text-white transition-colors sm:ml-2"
+              >
+                <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-widest border-b border-white/30 group-hover:border-white/80 pb-0.5 transition-colors">
+                  View Wall of Remembrance
+                </span>
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
+              </Link>
             </div>
 
           </M>
