@@ -209,7 +209,13 @@ function StoriesPageContent() {
       
       <PageHero
         animate
-        eyebrow="STORIES"
+        className="bg-[#030712] border-t border-white/5"
+        eyebrow={
+          <>
+            <div className="w-12 h-[2px] bg-[#1877F2]"></div>
+            <span>STORIES</span>
+          </>
+        }
         title={
           <>
             <span className="text-white">REAL PEOPLE.</span>
@@ -225,8 +231,9 @@ function StoriesPageContent() {
             <span className="text-[#1877F2] font-bold">It Stops Now.</span>
           </div>
         }
-        imageSrc="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1920"
-        imageAlt="People stories"
+        imageSrc="/images/mission-support.png"
+        imageAlt="Police officers standing shoulder to shoulder in solidarity representing real police stories"
+        imageClassName="object-right opacity-[0.38] md:opacity-[0.45]"
       />
 
       {/* Featured Story Section removed to match specifications */}
@@ -366,7 +373,7 @@ function StoriesPageContent() {
                 <div className="mt-8 lg:mt-12 flex justify-center">
                   <button 
                     onClick={() => setCurrentPage(prev => prev + 1)}
-                    className="w-auto text-[#1877F2] bg-transparent lg:bg-[#1877F2] lg:text-white hover:text-blue-700 lg:hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-6 py-4 lg:px-12 lg:py-4 rounded-full transition-all flex items-center justify-center gap-2 underline lg:no-underline underline-offset-4"
+                    className="w-auto text-[#1877F2] bg-transparent lg:bg-[#1877F2] lg:text-white hover:text-blue-700 lg:hover:text-white lg:hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-6 py-4 lg:px-12 lg:py-4 rounded-full transition-all flex items-center justify-center gap-2 underline lg:no-underline underline-offset-4"
                   >
                     VIEW MORE STORIES <ArrowRight className="w-4 h-4" />
                   </button>

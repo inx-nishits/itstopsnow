@@ -59,8 +59,8 @@ function HeroBackground({
         src={imageSrc}
         alt={imageAlt}
         className={cn(
-          "w-full h-full object-cover object-center mix-blend-luminosity opacity-40 grayscale",
-          imageClassName
+          "w-full h-full object-cover mix-blend-luminosity grayscale",
+          imageClassName || "object-center opacity-40"
         )}
       />
       <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
