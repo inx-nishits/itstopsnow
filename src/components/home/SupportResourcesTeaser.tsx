@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { LayoutGrid, Smartphone, Headphones, Book, Globe, ArrowRight, ArrowUpRight } from "lucide-react";
 import SectionReveal from "@/components/home/SectionReveal";
+import { supportTabHref, type SupportTabSlug } from "@/lib/support/tabs";
 
 export default function SupportResourcesTeaser() {
-  const categories = [
+  const categories: { id: SupportTabSlug; label: string; description: string; icon: typeof Smartphone }[] = [
     {
       id: "apps",
       label: "Apps",
@@ -56,7 +57,7 @@ export default function SupportResourcesTeaser() {
             </p>
             
             <div>
-              <Link href="/support">
+              <Link href={supportTabHref("all")}>
                 <button className="flex items-center gap-2.5 bg-[#1877F2] hover:bg-[#010B19] text-white font-black px-8 py-4 sm:py-5 rounded-full text-xs tracking-widest uppercase transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer">
                   <LayoutGrid className="w-4 h-4 shrink-0" />
                   <span>BROWSE ALL RESOURCES</span>
@@ -73,7 +74,7 @@ export default function SupportResourcesTeaser() {
                 <h4 className="text-[#010B19] font-black text-xs tracking-widest uppercase">
                   EXPLORE BY CATEGORY
                 </h4>
-                <Link href="/support" className="hidden lg:flex items-center gap-1.5 text-xs font-black text-[#1877F2] hover:underline uppercase tracking-widest cursor-pointer">
+                <Link href={supportTabHref("all")} className="hidden lg:flex items-center gap-1.5 text-xs font-black text-[#1877F2] hover:underline uppercase tracking-widest cursor-pointer">
                   View All <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -84,7 +85,7 @@ export default function SupportResourcesTeaser() {
                 const IconComponent = cat.icon;
                 return (
                   <SectionReveal key={cat.id} delay={0.1 + i * 0.05}>
-                    <Link href={`/support`}>
+                    <Link href={supportTabHref(cat.id)}>
                       <div className="group flex flex-row items-center p-4 sm:p-5 bg-[#f4f5f7]/60 border border-slate-200 rounded-2xl hover:border-[#1877F2]/40 hover:bg-white transition-all duration-300 hover:shadow-md min-h-[88px] sm:min-h-[100px] cursor-pointer">
                         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                           {/* Icon Circle */}

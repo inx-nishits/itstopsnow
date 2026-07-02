@@ -1,15 +1,21 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { Heart, Search, Smartphone, Book, Headphones, Star, ChevronLeft, ChevronRight, LayoutGrid, Globe } from "lucide-react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { MOCK_APPS, MOCK_BOOKS, MOCK_PODCASTS, MOCK_WEBSITES } from "@/lib/support/mockData";
+import {
+  parseSupportTabParam,
+  supportFilterToSlug,
+  type SupportFilterOption,
+} from "@/lib/support/tabs";
 import { cn } from "@/lib/utils";
 
 // Types
-type FilterOption = "All" | "Apps" | "Podcasts" | "Books" | "Websites";
+type FilterOption = SupportFilterOption;
 
 const CATEGORIES: { label: FilterOption; icon: React.ElementType }[] = [
   { label: "All", icon: LayoutGrid },
@@ -151,32 +157,40 @@ const ResourceCarousel = ({ title, items, renderItem, onViewAll }: { title: stri
           </div>
         </div>
       </div>
-      <div className="relative group">
-        <div ref={scrollRef} className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-4 sm:-mx-6 lg:-mx-16 scroll-pl-4 sm:scroll-pl-6 lg:scroll-pl-16">
-          {/* Left Spacer to align first item with header */}
-          <div className="w-4 sm:w-6 lg:w-16 shrink-0" aria-hidden="true" />
-          
+      <div
+        className="relative group"
+        style={{ marginRight: "calc((100vw - 100%) / -2)" }}
+      >
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 gap-4 sm:gap-6 lg:gap-8"
+          style={{ paddingRight: "calc((100vw - 100%) / 2)" }}
+        >
           {items.map((item, i) => (
-            <div key={`${item.id || item.name || item.title}-${i}`} className="shrink-0 mr-4 sm:mr-6 lg:mr-8 last:mr-0 snap-start sm:snap-center">
+            <div key={`${item.id || item.name || item.title}-${i}`} className="shrink-0 snap-start sm:snap-center">
               {renderItem(item)}
             </div>
           ))}
-          
-          {/* Right Spacer */}
-          <div className="w-4 sm:w-6 lg:w-16 shrink-0" aria-hidden="true" />
         </div>
       </div>
     </div>
   );
 };
 
-export default function SupportListing() {
+function SupportPageContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const [activeFilter, setActiveFilter] = useState<FilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [scrolledSection, setScrolledSection] = useState<string>("All");
 
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const tabsContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setActiveFilter(parseSupportTabParam(searchParams.get("tab")));
+  }, [searchParams]);
 
   // Sync scroll position to active section
   useEffect(() => {
@@ -229,9 +243,13 @@ export default function SupportListing() {
 
   const handleTabClick = (cat: FilterOption) => {
     if (cat === "All" && activeFilter === "All") {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
     setActiveFilter(cat);
+
+    const slug = supportFilterToSlug(cat);
+    const nextUrl = slug === "all" ? pathname : `${pathname}?tab=${slug}`;
+    router.replace(nextUrl, { scroll: false });
   };
 
   return (
@@ -306,7 +324,7 @@ export default function SupportListing() {
         ) : (
           <div className="mb-8">
             <button
-              onClick={() => setActiveFilter("All")}
+              onClick={() => handleTabClick("All")}
               className="group inline-flex items-center gap-1.5 text-[13px] font-bold text-slate-500 hover:text-[#1877F2] transition-colors duration-300"
             >
               <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
@@ -325,7 +343,7 @@ export default function SupportListing() {
                   title="Apps"
                   items={allApps}
                   renderItem={(item) => <AppItem item={item} />}
-                  onViewAll={() => setActiveFilter("Apps")}
+                  onViewAll={() => handleTabClick("Apps")}
                 />
               </div>
               <div ref={(el) => { sectionRefs.current["Podcasts"] = el; }} className="scroll-mt-32">
@@ -333,7 +351,7 @@ export default function SupportListing() {
                   title="Podcasts"
                   items={allPodcasts}
                   renderItem={(item) => <PodcastItem item={item} />}
-                  onViewAll={() => setActiveFilter("Podcasts")}
+                  onViewAll={() => handleTabClick("Podcasts")}
                 />
               </div>
               <div ref={(el) => { sectionRefs.current["Books"] = el; }} className="scroll-mt-32">
@@ -341,7 +359,7 @@ export default function SupportListing() {
                   title="Books"
                   items={allBooks}
                   renderItem={(item) => <BookItem item={item} />}
-                  onViewAll={() => setActiveFilter("Books")}
+                  onViewAll={() => handleTabClick("Books")}
                 />
               </div>
               <div ref={(el) => { sectionRefs.current["Websites"] = el; }} className="scroll-mt-32">
@@ -349,7 +367,7 @@ export default function SupportListing() {
                   title="Websites"
                   items={allWebsites}
                   renderItem={(item) => <WebsiteItem item={item} />}
-                  onViewAll={() => setActiveFilter("Websites")}
+                  onViewAll={() => handleTabClick("Websites")}
                 />
               </div>
             </motion.div>
@@ -411,5 +429,19 @@ export default function SupportListing() {
       </section>
 
     </div>
+  );
+}
+
+export default function SupportPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center font-sans text-slate-500">
+          Loading resources…
+        </div>
+      }
+    >
+      <SupportPageContent />
+    </Suspense>
   );
 }
