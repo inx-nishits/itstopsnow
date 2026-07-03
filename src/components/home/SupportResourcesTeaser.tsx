@@ -28,7 +28,7 @@ export default function SupportResourcesTeaser() {
     {
       id: "websites",
       label: "Websites",
-      description: "Trusted organisations and services.",
+      description: "Trusted orgs and services.",
       icon: Globe,
     },
   ];
@@ -80,28 +80,26 @@ export default function SupportResourcesTeaser() {
               </div>
             </SectionReveal>
 
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full items-stretch">
               {categories.map((cat, i) => {
                 const IconComponent = cat.icon;
                 return (
-                  <SectionReveal key={cat.id} delay={0.1 + i * 0.05}>
-                    <Link href={supportTabHref(cat.id)}>
-                      <div className="group flex flex-col items-start justify-center p-4 sm:p-5 bg-[#f4f5f7]/60 border border-slate-200 rounded-2xl hover:border-[#1877F2]/40 hover:bg-white transition-all duration-300 hover:shadow-md min-h-[120px] sm:min-h-[130px] cursor-pointer">
-                        <div className="flex flex-col items-start gap-3 sm:gap-4 min-w-0 w-full">
-                          {/* Top Row: Icon Circle + Arrow */}
-                          <div className="flex items-start justify-between w-full">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-slate-300 bg-white flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-colors duration-300 shrink-0 shadow-sm">
-                              <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <SectionReveal key={cat.id} delay={0.1 + i * 0.05} className="h-full">
+                    <Link href={supportTabHref(cat.id)} className="block h-full">
+                      <div className="group flex h-full min-h-[8.5rem] flex-col p-4 sm:min-h-[9rem] sm:p-5 bg-[#f4f5f7]/60 border border-slate-200 rounded-2xl hover:border-[#1877F2]/40 hover:bg-white transition-all duration-300 hover:shadow-md cursor-pointer">
+                        <div className="flex h-full min-w-0 w-full flex-col">
+                          <div className="mb-3 flex w-full items-start justify-between sm:mb-4">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-[#1877F2] shadow-sm transition-colors duration-300 group-hover:bg-[#1877F2] group-hover:text-white sm:h-12 sm:w-12">
+                              <IconComponent className="h-4 w-4 sm:h-5 sm:w-5" />
                             </div>
-                            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#1877F2] shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 mt-1 sm:mt-0 mr-1 sm:mr-0" />
+                            <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-[#1877F2] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:mt-0 sm:h-5 sm:w-5 sm:mr-0 mr-1" />
                           </div>
-                          
-                          {/* Title & Description Stacked */}
-                          <div className="flex flex-col min-w-0 w-full">
-                            <h5 className="font-black text-sm sm:text-base text-[#010B19] uppercase tracking-tight leading-none">
-                              <span>{cat.label}</span>
+
+                          <div className="mt-auto flex min-w-0 w-full flex-col">
+                            <h5 className="font-black text-sm uppercase leading-none tracking-tight text-[#010B19] sm:text-base">
+                              {cat.label}
                             </h5>
-                            <p className="text-slate-500 text-xs sm:text-xs lg:text-sm mt-1.5 sm:mt-2 leading-snug text-balance">
+                            <p className="mt-1.5 text-xs leading-relaxed text-slate-500 sm:mt-2 sm:text-sm">
                               {cat.description}
                             </p>
                           </div>

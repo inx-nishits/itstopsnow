@@ -26,8 +26,8 @@ export default function WallRemembranceStrip({ officers }: WallRemembranceStripP
           {/* Mobile: stacked layout — stats on top, avatars + button below */}
           <div className="flex flex-col gap-3 sm:hidden w-full">
             {/* Row 1: Candle + Stats */}
-            <div className="flex items-center gap-3 w-full">
-              <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-white/10 bg-[#02050b] shadow-inner">
+            <div className="flex items-stretch gap-3 w-full">
+              <div className="relative w-[4.25rem] min-h-[4.25rem] shrink-0 self-stretch rounded-xl overflow-hidden border border-white/10 bg-[#02050b] shadow-inner">
                 <Image
                   src="/images/candle_glow.png"
                   alt="Lit candle"
@@ -89,8 +89,8 @@ export default function WallRemembranceStrip({ officers }: WallRemembranceStripP
           {/* Desktop: original side-by-side layout */}
           <div className="hidden sm:flex flex-row items-center justify-between gap-6 w-full">
             {/* Left Side: Candle & Stats */}
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-white/10 bg-[#02050b] shadow-inner">
+            <div className="flex items-stretch gap-4 flex-1 min-w-0">
+              <div className="relative w-[4.75rem] min-h-[4.75rem] shrink-0 self-stretch rounded-xl overflow-hidden border border-white/10 bg-[#02050b] shadow-inner sm:w-20 sm:min-h-20">
                 <Image
                   src="/images/candle_glow.png"
                   alt="Lit candle"
