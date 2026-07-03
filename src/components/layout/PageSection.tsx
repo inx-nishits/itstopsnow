@@ -76,11 +76,11 @@ export function EditorialStickyBar({ children, className }: { children: React.Re
   return (
     <div
       className={cn(
-        "theme-editorial sticky top-16 md:top-24 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm py-4 sm:py-5",
+        "theme-editorial sticky top-16 md:top-24 z-40 w-full bg-white border-b border-slate-200 shadow-sm",
         className
       )}
     >
-      <div>{children}</div>
+      {children}
     </div>
   );
 }

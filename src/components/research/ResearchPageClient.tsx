@@ -67,8 +67,9 @@ export default function ResearchPageClient() {
       <ResearchHero />
 
       <EditorialSection noPadding className="flex-1">
-        <div className={`${PAGE_CONTENT_CONTAINER} pt-0 pb-10 sm:pb-20 lg:pb-24`}>
-          <div className="sticky top-16 md:top-24 z-40 bg-[#f4f5f7]/95 backdrop-blur-xl mb-6 sm:mb-8 border-b border-slate-200">
+        {/* Sticky toolbar — full viewport width so bg doesn't clip */}
+        <EditorialStickyBar className="bg-[#f4f5f7] !border-b border-slate-200 !py-0">
+          <div className={`${PAGE_CONTENT_CONTAINER}`}>
             <ResearchToolbar
               categories={categories}
               searchQuery={searchQuery}
@@ -79,6 +80,9 @@ export default function ResearchPageClient() {
               onSortChange={setSortBy}
             />
           </div>
+        </EditorialStickyBar>
+
+        <div className={`${PAGE_CONTENT_CONTAINER} pt-6 sm:pt-8 pb-10 sm:pb-20 lg:pb-24`}>
           <div
             className={cn(
               "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-5 mb-6 sm:mb-8",
@@ -86,7 +90,7 @@ export default function ResearchPageClient() {
             )}
           >
             <h2 className={cn("font-sans text-xl sm:text-2xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>
-              Research & Evidence
+              Research &amp; Evidence
             </h2>
             <div className="text-xs font-bold text-[#1877F2] uppercase tracking-[0.2em]">
               Showing {sortedResearch.length} {sortedResearch.length === 1 ? "report" : "reports"}

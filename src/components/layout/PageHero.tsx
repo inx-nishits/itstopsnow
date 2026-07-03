@@ -16,7 +16,7 @@ export const PAGE_HERO_TITLE_UTILITY =
   "text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight drop-shadow-2xl";
 export const PAGE_HERO_DESCRIPTION =
   "text-sm sm:text-base md:text-lg xl:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl drop-shadow";
-export const PAGE_HERO_SECTION_PT = "pt-[max(7rem,env(safe-area-inset-top)+5rem)] md:pt-[max(9rem,env(safe-area-inset-top)+7rem)] lg:pt-[max(11rem,env(safe-area-inset-top)+9rem)]";
+export const PAGE_HERO_SECTION_PT = "pt-[max(6rem,env(safe-area-inset-top)+4rem)] md:pt-[max(9rem,env(safe-area-inset-top)+7rem)] lg:pt-[max(11rem,env(safe-area-inset-top)+9rem)]";
 
 /** Clears fixed site header (h-20 / h-24) plus safe-area — subpages without full PageHero */
 export const PAGE_BELOW_HEADER_PT =

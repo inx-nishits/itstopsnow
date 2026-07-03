@@ -27,7 +27,7 @@ export default function WallRemembranceStrip({ officers }: WallRemembranceStripP
           <div className="flex flex-col gap-3 sm:hidden w-full">
             {/* Row 1: Candle + Stats */}
             <div className="flex items-center gap-3 w-full">
-              <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 border border-white/10 bg-[#02050b] shadow-inner">
+              <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-white/10 bg-[#02050b] shadow-inner">
                 <Image
                   src="/images/candle_glow.png"
                   alt="Lit candle"
@@ -35,7 +35,7 @@ export default function WallRemembranceStrip({ officers }: WallRemembranceStripP
                   className="object-cover scale-105"
                 />
               </div>
-              <div className="flex flex-col justify-center min-w-0">
+              <div className="flex flex-col justify-center flex-1 min-w-0">
                 <div className="text-xl font-black text-white tracking-tight leading-none">
                   {totalCandles.toLocaleString()}
                 </div>

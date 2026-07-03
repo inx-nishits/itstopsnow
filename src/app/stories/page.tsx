@@ -251,7 +251,7 @@ function StoriesPageContent() {
                   data-tab-id={f}
                   onClick={() => setActiveFilter(f)}
                   className={cn(
-                    "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
+                    "flex items-center justify-center gap-2 px-5 sm:px-6 h-12 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
 
                     activeFilter === f 
                       ? "bg-[#1877F2] text-white border-[#1877F2]" 
@@ -278,7 +278,7 @@ function StoriesPageContent() {
                   placeholder="Search stories..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-3 sm:pl-11 sm:pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-xs sm:text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
+                  className="w-full pl-9 pr-3 sm:pl-11 sm:pr-5 h-12 sm:h-11 border border-slate-200 rounded-full text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
                 />
               </div>
 
@@ -286,7 +286,7 @@ function StoriesPageContent() {
               <div className="relative shrink-0 sm:w-auto">
                 <button 
                   onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-                  className="w-full h-10 sm:h-11 px-3 sm:px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-2 sm:gap-3 text-xs sm:text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
+                  className="w-full h-12 sm:h-11 px-3 sm:px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-2 sm:gap-3 text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
                 >
                   <span className="flex items-center gap-1 sm:gap-2 truncate">
                     <ArrowDownUp className="hidden sm:block w-4 h-4 text-slate-400" /> 

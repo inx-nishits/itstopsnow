@@ -43,14 +43,15 @@ export default function WallMemorialHero({
         <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/40 to-transparent" />
       </div>
 
-      <div className={`${PAGE_HERO_CONTAINER} pt-4 pb-6 sm:pb-8 lg:pb-10 relative z-10`}>
+      <div className={`${PAGE_HERO_CONTAINER} pt-4 pb-3 sm:pb-8 lg:pb-10 relative z-10`}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           className="max-w-2xl"
         >
-          <div>
+          {/* Title block — constrained to 65% on mobile so bg image shows right */}
+          <div className="w-[65%] sm:w-auto">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-1">
               Wall of Remembrance
             </h1>
@@ -64,29 +65,28 @@ export default function WallMemorialHero({
             </p>
           </div>
 
-          <div className="mb-6 sm:mb-8">
-            {/* Candle stat row — icon + number + label */}
-            <div className="flex items-center gap-3 sm:gap-4 mb-3">
-              <div className="shrink-0">
+          {/* Candle stats — always full width, never clipped */}
+          <div className="mb-3 sm:mb-8">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="shrink-0 mt-0.5">
                 <CandleOverlay isLit={true} onLight={() => {}} disabled={true} />
               </div>
-              <div>
+              <div className="flex flex-col min-w-0">
                 <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight leading-none block">
                   {totalCandles.toLocaleString()}
                 </span>
                 <span className="text-xs font-bold tracking-wider text-slate-400 leading-tight block mt-0.5">
                   Candles lit in remembrance
                 </span>
+                <button
+                  type="button"
+                  onClick={onLightCandleClick}
+                  className="mt-1 text-base sm:text-lg font-semibold text-[#1877F2] hover:text-blue-400 flex items-center gap-1.5 group transition-colors w-fit"
+                >
+                  Light a candle <span className="group-hover:translate-x-1 transition-transform">&#8594;</span>
+                </button>
               </div>
             </div>
-            {/* CTA — sits below on its own line, never competes for space */}
-            <button
-              type="button"
-              onClick={onLightCandleClick}
-              className="text-base sm:text-lg font-semibold text-[#1877F2] hover:text-blue-400 flex items-center gap-1.5 group transition-colors"
-            >
-              Light a candle <span className="group-hover:translate-x-1 transition-transform">&#8594;</span>
-            </button>
           </div>
 
           <div className="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2 mt-2">

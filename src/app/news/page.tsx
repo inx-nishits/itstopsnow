@@ -195,10 +195,10 @@ export default function NewsPage() {
 
       {/* 2. MAIN CONTENT (News Grid + Newsletter) */}
       <section id="latest-news" className="w-full relative z-10 bg-white pt-0 pb-10 sm:pb-20 lg:pb-24">
-        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          
-          {/* Sticky Filters & Search (Extracted out of the grid to be full-bleed) */}
-          <div className="sticky top-16 md:top-24 z-30 bg-white mb-8 border-b border-gray-100">
+
+        {/* Sticky Filters & Search — full viewport width so BG doesn't clip */}
+        <div className="sticky top-16 md:top-24 z-30 w-full bg-white border-b border-gray-100 shadow-sm">
+          <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
             <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-4 py-2 sm:py-3">
               <div ref={tabsContainerRef} className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-grow pr-4 pb-1 md:pb-0">
                 {categories.map((cat) => (
@@ -207,7 +207,7 @@ export default function NewsPage() {
                     data-tab-id={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={cn(
-                      "flex items-center justify-center gap-2 px-5 sm:px-6 h-10 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
+                      "flex items-center justify-center gap-2 px-5 sm:px-6 h-12 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
 
                       activeCategory === cat 
                         ? "bg-[#1877F2] text-white border-[#1877F2]" 
@@ -229,7 +229,7 @@ export default function NewsPage() {
                     placeholder="Search news..." 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-9 pr-3 sm:pl-11 sm:pr-5 h-10 sm:h-11 border border-slate-200 rounded-full text-xs sm:text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
+                    className="w-full pl-9 pr-3 sm:pl-11 sm:pr-5 h-12 sm:h-11 border border-slate-200 rounded-full text-sm font-medium focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] placeholder:text-slate-400 text-slate-900 bg-white transition-all"
                   />
                 </div>
 
@@ -237,7 +237,7 @@ export default function NewsPage() {
                 <div className="relative shrink-0 sm:w-auto">
                   <button 
                     onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-                    className="w-full h-10 sm:h-11 px-3 sm:px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-2 sm:gap-3 text-xs sm:text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
+                    className="w-full h-12 sm:h-11 px-3 sm:px-5 border border-slate-200 bg-white rounded-full flex items-center justify-between gap-2 sm:gap-3 text-sm font-medium text-slate-700 hover:border-[#1877F2] transition-colors"
                   >
                     <span className="flex items-center gap-1 truncate">
                       {sortBy === "newest" ? "Newest First" : sortBy === "oldest" ? "Oldest First" : "Title (A-Z)"}
@@ -255,8 +255,11 @@ export default function NewsPage() {
               </div>
             </div>
           </div>
+        </div>
 
+        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] pt-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-start">
+
             
             {/* LEFT COLUMN (News Grid & Filters) */}
             <div className="lg:col-span-8 xl:col-span-9">

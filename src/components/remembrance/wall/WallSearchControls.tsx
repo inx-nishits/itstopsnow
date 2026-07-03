@@ -11,7 +11,7 @@ interface WallSearchControlsProps {
   variant?: "default" | "sticky" | "campaign";
 }
 
-const CONTROL_HEIGHT = "h-10 sm:h-12";
+const CONTROL_HEIGHT = "h-12 sm:h-12";
 
 export default function WallSearchControls({
   searchQuery,

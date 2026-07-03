@@ -78,42 +78,54 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
         <div className={`${PAGE_CONTENT_CONTAINER} pt-8 sm:pt-10 lg:pt-14`}>
           {/* Mobile-only Stats Block (Moved from Hero) */}
           <div className="grid grid-cols-2 gap-3 mb-8 sm:hidden">
+            {/* Officers — Amber */}
             <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
-              <Users className="w-6 h-6 text-[#1877F2] mb-2" />
+              <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center mb-2">
+                <Users className="w-5 h-5 text-amber-500" />
+              </div>
               <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
                 {wallStats.officersRemembered.toLocaleString()}
               </span>
-              <span className="text-[12px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+              <span className="text-[11px] font-bold uppercase tracking-wide text-slate-500 leading-tight">
                 Officers
               </span>
             </div>
 
+            {/* Monthly Avg — Emerald */}
             <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
-              <CalendarDays className="w-6 h-6 text-[#1877F2] mb-2" />
+              <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-2">
+                <CalendarDays className="w-5 h-5 text-emerald-500" />
+              </div>
               <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
                 {wallStats.monthlyRemembranceAvg?.toLocaleString() || 124}
               </span>
-              <span className="text-[12px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+              <span className="text-[11px] font-bold uppercase tracking-wide text-slate-500 leading-tight">
                 Monthly Avg
               </span>
             </div>
 
+            {/* Forces — Violet */}
             <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
-              <Shield className="w-6 h-6 text-[#1877F2] mb-2" />
+              <div className="w-10 h-10 rounded-full bg-violet-50 border border-violet-100 flex items-center justify-center mb-2">
+                <Shield className="w-5 h-5 text-violet-500" />
+              </div>
               <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
                 {wallStats.forcesRepresented?.toLocaleString() || 12}
               </span>
-              <span className="text-[12px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+              <span className="text-[11px] font-bold uppercase tracking-wide text-slate-500 leading-tight">
                 Forces
               </span>
             </div>
 
+            {/* Not Forgotten — Rose */}
             <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
-              <Heart className="w-6 h-6 text-[#1877F2] mb-2" />
+              <div className="w-10 h-10 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center mb-2">
+                <Heart className="w-5 h-5 text-rose-500" />
+              </div>
               <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
                 {wallStats.notForgottenPercent || 92}%
               </span>
-              <span className="text-[12px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+              <span className="text-[11px] font-bold uppercase tracking-wide text-slate-500 leading-tight whitespace-nowrap">
                 Not Forgotten
               </span>
             </div>
