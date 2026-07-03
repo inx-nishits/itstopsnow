@@ -34,7 +34,7 @@ export default function AboutMovementSection() {
       
       <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1400px]">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 lg:mb-14">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-6 lg:mb-8">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-px bg-gradient-to-r from-transparent to-[#1877F2]" />
             <span className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">
@@ -48,13 +48,11 @@ export default function AboutMovementSection() {
             <span className="block text-slate-400 mt-2">who stand for us.</span>
           </h2>
 
-          <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-medium mb-6">
+          <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-medium mb-0">
             It Stops Now is a growing campaign for officer wellbeing, family support, and
             meaningful reform — built on real stories, lived experience, and a refusal to look
             away.
           </p>
-
-
         </div>
 
         {/* 4 Column Pillars Grid */}

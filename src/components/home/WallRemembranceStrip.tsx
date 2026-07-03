@@ -39,7 +39,7 @@ export default function WallRemembranceStrip({ officers }: WallRemembranceStripP
                 <div className="text-xl sm:text-2xl font-black text-white tracking-tight leading-none">
                   {totalCandles.toLocaleString()}
                 </div>
-                <div className="text-xs lg:text-sm font-bold text-slate-400 tracking-wider uppercase mt-1 leading-tight block w-full">
+                <div className="text-xs lg:text-sm font-bold text-slate-400 tracking-wider mt-1 leading-tight block w-full">
                   Candles lit in remembrance
                 </div>
                 <Link

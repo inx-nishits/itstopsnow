@@ -43,8 +43,8 @@ export default function AboutPage() {
           </>
         }
         description="It Stops Now is proudly funded and supported by Pocket Sergeant – the essential app created by police, for police. We believe that officer wellbeing and reform are not optional; they are critical."
-        imageSrc="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=1920"
-        imageAlt="Protest movement"
+        imageSrc="/images/uk_police_london_v2.png"
+        imageAlt="UK Police Officers facing London at dusk"
       />
 
       <AboutMovementSection />

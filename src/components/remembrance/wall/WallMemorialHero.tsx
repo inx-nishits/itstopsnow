@@ -73,7 +73,7 @@ export default function WallMemorialHero({
                 <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight leading-none">
                   {totalCandles.toLocaleString()}
                 </span>
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 leading-tight block w-full sm:w-auto">
+                <span className="text-xs font-bold tracking-wider text-slate-400 leading-tight block w-full sm:w-auto">
                   Candles lit in remembrance
                 </span>
               </div>

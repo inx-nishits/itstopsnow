@@ -59,11 +59,11 @@ function HeroBackground({
         src={imageSrc}
         alt={imageAlt}
         className={cn(
-          "w-full h-full object-cover mix-blend-luminosity grayscale",
-          imageClassName || "object-center opacity-40"
+          "w-full h-full object-cover",
+          imageClassName || "object-[25%_center] sm:object-center opacity-80"
         )}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[20%] via-[#050A14]/60 via-[60%] to-[#050A14]/20 to-[90%]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#050A14] from-[15%] via-[#050A14]/90 via-[60%] to-transparent sm:via-[55%]" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-transparent to-transparent" />
     </div>
   );
@@ -131,12 +131,14 @@ export function PageHero({
       )}
 
       <div className={PAGE_HERO_CONTAINER}>
-        {backLink ? <div className="mb-6 sm:mb-8">{backLink}</div> : null}
-        {eyebrow ? <div className={PAGE_HERO_EYEBROW}>{eyebrow}</div> : null}
-        {titleContent}
-        {descriptionContent}
-        {meta ? <div className="mt-4 sm:mt-5">{meta}</div> : null}
-        {children ? <div className="mt-6 sm:mt-8">{children}</div> : null}
+        <div className="w-full max-w-[18rem] sm:max-w-[28rem] md:max-w-[42rem] lg:max-w-[48rem]">
+          {backLink ? <div className="mb-6 sm:mb-8">{backLink}</div> : null}
+          {eyebrow ? <div className={PAGE_HERO_EYEBROW}>{eyebrow}</div> : null}
+          {titleContent}
+          {descriptionContent}
+          {meta ? <div className="mt-4 sm:mt-5">{meta}</div> : null}
+          {children ? <div className="mt-6 sm:mt-8">{children}</div> : null}
+        </div>
       </div>
     </section>
   );
