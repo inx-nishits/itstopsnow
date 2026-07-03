@@ -8,6 +8,7 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import { simulateSubmit } from "@/lib/mock/utils";
 import { lookupAddress, type AddressResult } from "@/lib/mock/addressLookup";
 import { motion } from "framer-motion";
+import PersonalizeProgressStepper from "@/components/take-action/PersonalizeProgressStepper";
 
 const TEMPLATES = [
   { 
@@ -125,33 +126,7 @@ function PersonalizeContent() {
               <p className="text-slate-400 text-xs md:text-sm">Send a letter in minutes. Your voice can drive change.</p>
             </div>
             
-            {/* Progress Bar */}
-            <div className="flex overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-start gap-2 sm:gap-4 xl:gap-8 pb-4 mt-4 xl:mt-0 w-full xl:w-auto">
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs font-bold">1</div>
-                <span className="text-xs font-bold text-white whitespace-nowrap">Find Your MP</span>
-              </div>
-              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs font-bold">2</div>
-                <span className="text-xs font-bold text-white whitespace-nowrap">Personalise</span>
-              </div>
-              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs font-bold">3</div>
-                <span className="text-xs font-bold text-slate-300 whitespace-nowrap">Preview</span>
-              </div>
-              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-xs font-bold">4</div>
-                <span className="text-xs font-bold text-slate-500 whitespace-nowrap">Add Your Voice</span>
-              </div>
-              <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-xs font-bold">5</div>
-                <span className="text-xs font-bold text-slate-500 whitespace-nowrap">Send Letter</span>
-              </div>
-            </div>
+            <PersonalizeProgressStepper />
           </div>
         </div>
       </div>

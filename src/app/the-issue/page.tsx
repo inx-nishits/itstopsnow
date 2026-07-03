@@ -1,15 +1,13 @@
 "use client";
 
-import { motion, useInView, animate } from "framer-motion";
-import { ShieldAlert, HeartPulse, Clock, SearchX, Briefcase, CheckCircle, ArrowRight, AlertTriangle, Scale, Activity } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
-import { PageHero } from "@/components/layout/PageHero";
-import { hybrid } from "@/lib/theme/hybrid";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInView, animate } from "framer-motion";
+import { ShieldAlert, HeartPulse, Clock, SearchX, Briefcase, ArrowRight, Scale, Activity, Check } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { PageHero } from "@/components/layout/PageHero";
+import { cn } from "@/lib/utils";
 import GetInvolvedModal from "@/components/global/GetInvolvedModal";
+import SectionReveal from "@/components/home/SectionReveal";
 
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isFloat = false }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string, isFloat?: boolean }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -34,6 +32,41 @@ function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "", isF
 
   return <span ref={nodeRef}>{prefix}{from}{suffix}</span>;
 }
+
+const IMPACT_ITEMS = [
+  {
+    icon: HeartPulse,
+    text: "Officers experience clinical depression, severe anxiety, and PTSD leading to tragic increases in suicide rates.",
+  },
+  {
+    icon: Briefcase,
+    text: "Loss of overtime, suspension of pay progression, and massive legal fees to defend against false claims.",
+  },
+  {
+    icon: ShieldAlert,
+    text: "Spouses and children carry the burden, leading to higher divorce rates and secondary trauma.",
+  },
+  {
+    icon: SearchX,
+    text: "Fear of career-ending investigations causes risk-aversion, leading to fewer proactive stops.",
+  },
+  {
+    icon: Activity,
+    text: "The mass exodus of highly trained officers leaves forces under-resourced and communities vulnerable.",
+  },
+  {
+    icon: Scale,
+    text: "When officers cannot perform their duties with confidence, criminals are emboldened and the public is left less safe.",
+  },
+] as const;
+
+const SOLUTION_ITEMS = [
+  "Better mental health and trauma support",
+  "Fair, transparent misconduct processes",
+  "A culture of openness, respect and accountability",
+  "Stronger welfare for officers and their families",
+  "Leadership that puts people before politics",
+] as const;
 
 export default function TheIssuePage() {
   const [isGetInvolvedOpen, setIsGetInvolvedOpen] = useState(false);
@@ -176,93 +209,99 @@ export default function TheIssuePage() {
         </div>
       </section>
 
-      {/* THE IMPACT & CHANGE IS POSSIBLE SECTION */}
-      {/* THE IMPACT & CHANGE IS POSSIBLE SECTION */}
-      <section className="bg-white py-10 sm:py-20 lg:py-24 border-t border-slate-200">
-        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            
-            {/* THE IMPACT (Left Column) */}
+      {/* THE IMPACT & CHANGE IS POSSIBLE */}
+      <section className="border-t border-slate-200 bg-white py-10 sm:py-20 lg:py-24">
+        <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-16">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+            {/* THE IMPACT — original light layout */}
             <div className="flex flex-col justify-center">
               <div className="mb-6 sm:mb-8 lg:mb-10">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[#010B19] mb-4 sm:mb-6">THE IMPACT</h2>
-                <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed font-medium">This isn't just a policing issue. It's a human issue.</p>
+                <h2 className="mb-4 text-3xl font-black uppercase tracking-tighter text-[#010B19] sm:mb-6 md:text-4xl lg:text-5xl">
+                  THE IMPACT
+                </h2>
+                <p className="text-sm font-medium leading-relaxed text-slate-600 sm:text-base md:text-lg">
+                  This isn&apos;t just a policing issue. It&apos;s a human issue.
+                </p>
               </div>
 
               <ul className="space-y-4">
-                <li className="flex items-start gap-4">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
-                    <HeartPulse className="w-5 h-5" strokeWidth={2} />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Officers experience clinical depression, severe anxiety, and PTSD leading to tragic increases in suicide rates.</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
-                    <Briefcase className="w-5 h-5" strokeWidth={2} />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Loss of overtime, suspension of pay progression, and massive legal fees to defend against false claims.</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
-                    <ShieldAlert className="w-5 h-5" strokeWidth={2} />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Spouses and children carry the burden, leading to higher divorce rates and secondary trauma.</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
-                    <SearchX className="w-5 h-5" strokeWidth={2} />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 leading-relaxed">Fear of career-ending investigations causes risk-aversion, leading to fewer proactive stops.</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
-                    <Activity className="w-5 h-5" strokeWidth={2} />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 leading-relaxed">The mass exodus of highly trained officers leaves forces under-resourced and communities vulnerable.</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center text-[#1877F2]">
-                    <Scale className="w-5 h-5" strokeWidth={2} />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 leading-relaxed">When officers cannot perform their duties with confidence, criminals are emboldened and the public is left less safe.</span>
-                </li>
+                {IMPACT_ITEMS.map(({ icon: Icon, text }, index) => (
+                  <li key={index} className="flex items-start gap-4">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center text-[#1877F2]">
+                      <Icon className="h-5 w-5" strokeWidth={2} />
+                    </div>
+                    <span className="text-sm font-medium leading-relaxed text-slate-700">{text}</span>
+                  </li>
+                ))}
               </ul>
-              <p className="text-[#1877F2] font-bold text-sm mt-8">We cannot protect the public if we don't protect those who protect the public.</p>
+
+              <p className="mt-8 text-sm font-bold text-[#1877F2]">
+                We cannot protect the public if we don&apos;t protect those who protect the public.
+              </p>
             </div>
 
-            {/* CHANGE IS POSSIBLE (Right Column) */}
-            <div className="bg-[#020611] rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
-              <div className="relative z-10">
-                <h2 className="text-2xl md:text-3xl font-black text-white mb-2 uppercase tracking-tight">CHANGE IS POSSIBLE.</h2>
-                <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 font-medium">
-                  But it starts with facing the truth. We need real action, real accountability and real support systems that truly work.
-                </p>
-                <ul className="space-y-3 mb-10">
-                  <li className="flex items-start gap-3 text-white font-medium text-sm">
-                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Better mental health and trauma support
-                  </li>
-                  <li className="flex items-start gap-3 text-white font-medium text-sm">
-                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Fair, transparent misconduct processes
-                  </li>
-                  <li className="flex items-start gap-3 text-white font-medium text-sm">
-                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> A culture of openness, respect and accountability
-                  </li>
-                  <li className="flex items-start gap-3 text-white font-medium text-sm">
-                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Stronger welfare for officers and their families
-                  </li>
-                  <li className="flex items-start gap-3 text-white font-medium text-sm">
-                    <CheckCircle className="w-5 h-5 text-[#1877F2] shrink-0" /> Leadership that puts people before politics
-                  </li>
-                </ul>
-                <div className="flex flex-col sm:flex-row items-center gap-6 mt-auto">
-                  <Button type="button" onClick={() => setIsGetInvolvedOpen(true)} className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-blue-600 font-bold uppercase tracking-widest text-xs px-8 py-5 rounded shadow-lg transition-all">
-                    GET INVOLVED <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                  <span className="text-slate-400 text-sm font-medium">Be part of the change.</span>
+            {/* CHANGE IS POSSIBLE — revamped card */}
+            <SectionReveal delay={0.08}>
+              <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#020611] p-6 shadow-xl sm:rounded-[1.75rem] sm:p-8 lg:p-10">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(ellipse_at_top,rgba(24,119,242,0.18)_0%,transparent_70%)]" />
+
+                <div className="relative">
+                  <div className="mb-4 flex items-center gap-3 sm:mb-5">
+                    <div className="h-[2px] w-10 bg-[#1877F2]" />
+                    <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#1877F2]">
+                      The path forward
+                    </span>
+                  </div>
+
+                  <h2 className="mb-4 text-2xl font-black uppercase leading-none tracking-tight text-white sm:text-3xl md:text-4xl">
+                    Change is{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-blue-300">
+                      possible.
+                    </span>
+                  </h2>
+
+                  <p className="mb-8 max-w-lg text-sm font-medium leading-relaxed text-slate-300 sm:text-base">
+                    But it starts with facing the truth. We need real action, real accountability and support systems that truly work.
+                  </p>
+
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {SOLUTION_ITEMS.map((item, index) => (
+                      <div
+                        key={item}
+                        className={cn(
+                          "flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4",
+                          index === SOLUTION_ITEMS.length - 1 && "sm:col-span-2"
+                        )}
+                      >
+                        <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1877F2] text-white">
+                          <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm font-medium leading-snug text-white">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setIsGetInvolvedOpen(true)}
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1877F2] px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-white shadow-[0_8px_24px_rgba(24,119,242,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-600 sm:w-auto"
+                    >
+                      Get involved
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+
+                    <Link
+                      href="/take-action"
+                      className="inline-flex items-center justify-center gap-2 text-sm font-medium text-slate-400 transition-colors hover:text-white sm:justify-end"
+                    >
+                      Take action now
+                      <ArrowRight className="h-4 w-4 text-[#1877F2]" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-
+            </SectionReveal>
           </div>
         </div>
       </section>

@@ -40,6 +40,28 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
     }
   }, [isOpen]);
 
+  // Prevent background scroll while modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.paddingRight = previousBodyPaddingRight;
+    };
+  }, [isOpen]);
+
   const handleClose = () => {
     onClose();
   };
@@ -77,7 +99,7 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
+      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden p-4 sm:p-6 md:p-8 overscroll-none">
         <motion.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
@@ -311,13 +333,18 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
 
           {/* Footer Actions */}
           {!isSuccess && (
-            <div className="p-4 sm:p-6 bg-white border-t border-slate-100 flex items-center justify-between">
+            <div className="flex items-center justify-between border-t border-slate-100 bg-white p-4 sm:p-6">
               {step > 1 ? (
-                <Button variant="outline" onClick={() => setStep(s => s - 1)} className="rounded-full text-xs font-bold uppercase tracking-widest px-6 h-12">
-                  <ArrowLeft className="w-4 h-4 mr-2" /> Back
-                </Button>
+                <button
+                  type="button"
+                  onClick={() => setStep((s) => s - 1)}
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 text-xs font-bold uppercase tracking-widest text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1877F2]/30"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back
+                </button>
               ) : (
-                <div /> // Placeholder to keep spacing
+                <div aria-hidden />
               )}
               
               {step < 4 ? (

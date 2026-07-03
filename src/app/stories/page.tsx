@@ -12,6 +12,7 @@ import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { simulateSubmit, validateEmail } from "@/lib/mock/utils";
 import { Pagination } from "@/components/ui/Pagination";
+import { ScrollableTabRow } from "@/components/layout/ScrollableTabRow";
 
 export const STORIES = [
   { 
@@ -152,18 +153,6 @@ function StoriesPageContent() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const itemsPerPage = 4;
-  const tabsContainerRef = useRef<HTMLDivElement>(null);
-
-  // Auto-scroll the tabs horizontally
-  useEffect(() => {
-    if (!tabsContainerRef.current) return;
-    const activeTabEl = tabsContainerRef.current.querySelector(`[data-tab-id="${activeFilter}"]`) as HTMLElement;
-    if (activeTabEl) {
-      const container = tabsContainerRef.current;
-      const scrollLeft = activeTabEl.offsetLeft - container.offsetWidth / 2 + activeTabEl.offsetWidth / 2;
-      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-    }
-  }, [activeFilter]);
 
   useEffect(() => {
     if (searchParams.get("submit") === "1") {
@@ -241,18 +230,16 @@ function StoriesPageContent() {
       {/* 3. FILTERS & SEARCH */}
       <EditorialStickyBar className="bg-[#f4f5f7] border-b border-slate-200 !py-2 sm:!py-3">
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-4">
+          <div className="flex flex-col gap-2 sm:gap-4 md:flex-row md:items-center">
             
-            {/* Desktop Filters (Always visible and scrollable horizontally like Support) */}
-            <div ref={tabsContainerRef} className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-grow pr-4 pb-1 md:pb-0">
+            <ScrollableTabRow activeTabId={activeFilter} fadeFromClass="from-[#f4f5f7]">
               {filters.map(f => (
                 <button 
                   key={f}
                   data-tab-id={f}
                   onClick={() => setActiveFilter(f)}
                   className={cn(
-                    "flex items-center justify-center gap-2 px-5 sm:px-6 h-12 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
-
+                    "flex h-12 shrink-0 items-center justify-center gap-2 rounded-full border px-5 text-sm font-bold tracking-wide whitespace-nowrap transition-all sm:h-11 sm:px-6",
                     activeFilter === f 
                       ? "bg-[#1877F2] text-white border-[#1877F2]" 
                       : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
@@ -266,10 +253,10 @@ function StoriesPageContent() {
                   {f === "All" ? "All Stories" : `${f} Stories`}
                 </button>
               ))}
-            </div>
+            </ScrollableTabRow>
 
             {/* Sort & Search Container */}
-            <div className="flex flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
+            <div className="relative z-20 flex w-full shrink-0 flex-row gap-2 sm:gap-4 md:w-auto">
               {/* Search Bar */}
               <div className="relative flex-1 md:w-64 xl:w-72 shrink-0">
                 <Search className="w-4 h-4 absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" />

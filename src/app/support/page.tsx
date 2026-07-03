@@ -25,86 +25,98 @@ const CATEGORIES: { label: FilterOption; icon: React.ElementType }[] = [
   { label: "Websites", icon: Globe },
 ];
 
+// Shared resource card text styles
+const CATEGORY_BADGE_CLASS =
+  "inline-flex max-w-full items-center whitespace-nowrap rounded bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-500";
+
+const FEATURE_BADGE_CLASS =
+  "inline-flex max-w-full items-center whitespace-nowrap rounded bg-[#1877F2] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white";
+
+const RESOURCE_DESC_CLASS =
+  "hidden sm:block h-10 overflow-hidden text-xs leading-5 text-slate-500";
+
+const RESOURCE_TITLE_CLASS =
+  "mb-1 w-full text-sm font-bold leading-snug text-gray-900 line-clamp-2 group-hover:text-[#1877F2] transition-colors";
+
+const RESOURCE_CARD_CLASS =
+  "flex h-full shrink-0 cursor-pointer flex-col bg-transparent group sm:flex-row sm:overflow-hidden sm:rounded-2xl sm:border sm:border-slate-200 sm:bg-white sm:p-4 border-transparent transition-all sm:hover:border-[#1877F2]/40 hover:shadow-lg";
+
+const RESOURCE_CARD_SIZE =
+  "w-[90px] sm:w-[360px] lg:w-[380px] snap-start sm:snap-center";
+
 // Super Clean App Card (Matching Screenshot)
 const AppItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
-  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
-    <div className="relative shrink-0 flex flex-col items-center">
-      <img src={item.logo} alt={item.name} className="w-[90px] h-[90px] sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-[20px] sm:rounded-xl object-cover shadow-sm bg-white border border-slate-100" />
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn(RESOURCE_CARD_CLASS, isGrid ? "w-full" : RESOURCE_CARD_SIZE)}>
+    <div className="relative flex shrink-0 flex-col items-center">
+      <img src={item.logo} alt={item.name} className="h-[90px] w-[90px] rounded-[20px] border border-slate-100 bg-white object-cover shadow-sm sm:h-20 sm:w-20 sm:rounded-xl lg:h-24 lg:w-24" />
     </div>
-    <div className="flex flex-col mt-2 sm:mt-0 sm:ml-4 min-w-0 flex-1 items-center sm:items-start text-center sm:text-left">
-      <div className="flex justify-between items-start mb-1 w-full">
-        <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-1 sm:line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-snug w-full">{item.name}</h4>
-      </div>
-      
-      {/* Mobile Rating */}
-      <div className="flex sm:hidden items-center justify-center gap-1 mt-0.5">
+    <div className="mt-2 flex min-w-0 flex-1 flex-col items-center text-center sm:mt-0 sm:ml-4 sm:items-start sm:text-left">
+      <h4 className={RESOURCE_TITLE_CLASS}>{item.name}</h4>
+
+      <div className="mt-0.5 flex items-center justify-center gap-1 sm:hidden">
         <span className="text-xs font-medium text-slate-500">{item.rating}</span>
-        <Star className="w-2.5 h-2.5 fill-slate-400 text-slate-400" />
+        <Star className="h-2.5 w-2.5 fill-slate-400 text-slate-400" />
       </div>
 
-      <div className="hidden sm:flex flex-wrap items-center gap-1.5 mb-2">
-        <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{item.category}</span>
-        {item.badge && (
-          <span className="text-xs font-bold uppercase tracking-wider text-white bg-[#1877F2] px-2 py-0.5 rounded">
-            {item.badge}
-          </span>
-        )}
+      <div className="mb-1.5 hidden w-full flex-wrap items-center gap-1.5 sm:flex">
+        <span className={CATEGORY_BADGE_CLASS}>{item.category}</span>
+        {item.badge ? <span className={FEATURE_BADGE_CLASS}>{item.badge}</span> : null}
       </div>
-      <div className="hidden sm:flex items-center gap-1 mb-2">
-        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-        <span className="text-xs font-medium text-slate-600">{item.rating} <span className="text-slate-400">({item.reviews})</span></span>
+
+      <div className="mb-1.5 hidden items-center gap-1 sm:flex">
+        <Star className="h-3 w-3 shrink-0 fill-amber-400 text-amber-400" />
+        <span className="text-xs font-medium text-slate-600">
+          {item.rating} <span className="text-slate-400">({item.reviews})</span>
+        </span>
       </div>
-      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
+
+      <p className={RESOURCE_DESC_CLASS}>{item.description}</p>
     </div>
   </Link>
 );
 
 // Super Clean Podcast Card (Matching Screenshot)
 const PodcastItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
-  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
-    <div className="relative shrink-0 flex flex-col items-center">
-      <div className="w-[90px] h-[90px] sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-[20px] sm:rounded-xl overflow-hidden border border-slate-100 shadow-sm relative">
-        <img src={item.logo} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn(RESOURCE_CARD_CLASS, isGrid ? "w-full" : RESOURCE_CARD_SIZE)}>
+    <div className="relative flex shrink-0 flex-col items-center">
+      <div className="relative h-[90px] w-[90px] overflow-hidden rounded-[20px] border border-slate-100 shadow-sm sm:h-20 sm:w-20 sm:rounded-xl lg:h-24 lg:w-24">
+        <img src={item.logo} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
       </div>
     </div>
-    <div className="flex flex-col mt-2 sm:mt-0 sm:ml-4 min-w-0 flex-1 items-center sm:items-start text-center sm:text-left">
-      <div className="flex justify-between items-start mb-1 w-full">
-        <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-tight sm:leading-snug w-full">{item.title}</h4>
+    <div className="mt-2 flex min-w-0 flex-1 flex-col items-center text-center sm:mt-0 sm:ml-4 sm:items-start sm:text-left">
+      <h4 className={RESOURCE_TITLE_CLASS}>{item.title}</h4>
+      <div className="mb-1.5 hidden w-full flex-wrap items-center gap-1.5 sm:flex">
+        <span className={CATEGORY_BADGE_CLASS}>{item.topic}</span>
       </div>
-      <div className="hidden sm:inline-flex mb-2">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-          {item.topic}
-        </span>
-      </div>
-      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
+      <p className={RESOURCE_DESC_CLASS}>{item.description}</p>
     </div>
   </Link>
 );
 
 // Super Clean Book Card (Matching Screenshot)
 const BookItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
-  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
-    <div className="relative shrink-0 flex flex-col items-center">
-      <img src={item.cover} alt={item.title} className="w-[90px] sm:w-24 shrink-0 rounded-[12px] sm:rounded-lg object-cover shadow-sm bg-white aspect-[2/3]" />
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn(RESOURCE_CARD_CLASS, isGrid ? "w-full" : RESOURCE_CARD_SIZE)}>
+    <div className="relative flex shrink-0 flex-col items-center">
+      <img src={item.cover} alt={item.title} className="aspect-[2/3] w-[90px] shrink-0 rounded-[12px] bg-white object-cover shadow-sm sm:w-24 sm:rounded-lg" />
     </div>
-    <div className="flex flex-col mt-2 sm:mt-0 sm:ml-4 min-w-0 flex-1 items-center sm:items-start text-center sm:text-left">
-      <div className="flex justify-between items-start mb-1 w-full">
-        <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-tight sm:leading-snug w-full">{item.title}</h4>
-      </div>
-      
-      <p className="hidden sm:block text-xs text-slate-500 mb-2 font-medium">By {item.author}</p>
-      
-      {item.recommendedBy && (
-        <div className="hidden sm:inline-flex items-center gap-1.5 mb-2 bg-emerald-50 text-emerald-700 px-2 py-1 rounded-md border border-emerald-100/50">
-          <Star className="w-3 h-3 fill-emerald-500 text-emerald-500 shrink-0" />
-          <span className="text-xs font-bold uppercase tracking-wider line-clamp-1 leading-none">{item.recommendedBy}</span>
+    <div className="mt-2 flex min-w-0 flex-1 flex-col items-center text-center sm:mt-0 sm:ml-4 sm:items-start sm:text-left">
+      <h4 className={RESOURCE_TITLE_CLASS}>{item.title}</h4>
+
+      <p className="mb-1.5 hidden text-xs font-medium text-slate-500 sm:block">By {item.author}</p>
+
+      {item.recommendedBy ? (
+        <div className="mb-1.5 hidden w-full flex-wrap items-center gap-1.5 sm:flex">
+          <span className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-emerald-100/50 bg-emerald-50 px-2 py-1 text-emerald-700">
+            <Star className="h-3 w-3 shrink-0 fill-emerald-500 text-emerald-500" />
+            <span className="text-[10px] font-bold uppercase tracking-wide leading-none">{item.recommendedBy}</span>
+          </span>
         </div>
-      )}
-      
-      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 leading-relaxed">{item.description}</p>
-      
-      <div className="hidden sm:inline-flex mt-2">
-        <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{item.category}</span>
+      ) : null}
+
+      <p className={RESOURCE_DESC_CLASS}>{item.description}</p>
+
+      <div className="mt-1.5 hidden w-full flex-wrap items-center gap-1.5 sm:flex">
+        <span className={CATEGORY_BADGE_CLASS}>{item.category}</span>
       </div>
     </div>
   </Link>
@@ -112,20 +124,16 @@ const BookItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
 
 // Super Clean Website Card
 const WebsiteItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
-  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn("flex flex-col sm:flex-row h-full shrink-0 cursor-pointer group bg-transparent sm:bg-white border-transparent sm:border sm:border-slate-200 sm:rounded-2xl hover:shadow-lg transition-all sm:hover:border-[#1877F2]/40 sm:p-4", isGrid ? "w-full" : "w-[90px] sm:w-[320px] lg:w-[340px] snap-start sm:snap-center")}>
-    <div className="relative shrink-0 flex flex-col items-center">
-      <img src={item.logo} alt={item.name} className="w-[90px] h-[90px] sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-[20px] sm:rounded-xl object-cover shadow-sm bg-white border border-slate-100" />
+  <Link href={item.link} target="_blank" rel="noopener noreferrer" className={cn(RESOURCE_CARD_CLASS, isGrid ? "w-full" : RESOURCE_CARD_SIZE)}>
+    <div className="relative flex shrink-0 flex-col items-center">
+      <img src={item.logo} alt={item.name} className="h-[90px] w-[90px] rounded-[20px] border border-slate-100 bg-white object-cover shadow-sm sm:h-20 sm:w-20 sm:rounded-xl lg:h-24 lg:w-24" />
     </div>
-    <div className="flex flex-col mt-2 sm:mt-0 sm:ml-4 min-w-0 flex-1 items-center sm:items-start text-center sm:text-left">
-      <div className="flex justify-between items-start mb-1 w-full">
-        <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-1 sm:line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-snug w-full">{item.name}</h4>
+    <div className="mt-2 flex min-w-0 flex-1 flex-col items-center text-center sm:mt-0 sm:ml-4 sm:items-start sm:text-left">
+      <h4 className={RESOURCE_TITLE_CLASS}>{item.name}</h4>
+      <div className="mb-1.5 hidden w-full flex-wrap items-center gap-1.5 sm:flex">
+        <span className={CATEGORY_BADGE_CLASS}>{item.category}</span>
       </div>
-      <div className="hidden sm:inline-flex mb-2">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-          {item.category}
-        </span>
-      </div>
-      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
+      <p className={RESOURCE_DESC_CLASS}>{item.description}</p>
     </div>
   </Link>
 );

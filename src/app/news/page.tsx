@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, Calendar, Clock, Shield, HeartPulse, Database, AlertTriangle, Mail, Search, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { PAGE_CONTENT_CONTAINER, PageHero } from "@/components/layout/PageHero";
 import { cn } from "@/lib/utils";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { Pagination } from "@/components/ui/Pagination";
+import { ScrollableTabRow } from "@/components/layout/ScrollableTabRow";
 
 type NewsSort = "newest" | "oldest" | "title-az";
 
@@ -130,20 +131,8 @@ export default function NewsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const newsletter = useNewsletterSubscribe();
-  const tabsContainerRef = useRef<HTMLDivElement>(null);
 
   const categories = ["All", "Campaign News", "Parliament", "Expert Voices", "Research", "Media"];
-
-  // Auto-scroll the tabs horizontally
-  useEffect(() => {
-    if (!tabsContainerRef.current) return;
-    const activeTabEl = tabsContainerRef.current.querySelector(`[data-tab-id="${activeCategory}"]`) as HTMLElement;
-    if (activeTabEl) {
-      const container = tabsContainerRef.current;
-      const scrollLeft = activeTabEl.offsetLeft - container.offsetWidth / 2 + activeTabEl.offsetWidth / 2;
-      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-    }
-  }, [activeCategory]);
 
   const filteredNews = LATEST_NEWS.filter(news => {
     const matchesCategory = activeCategory === "All" || news.category.toUpperCase() === activeCategory.toUpperCase();
@@ -199,16 +188,15 @@ export default function NewsPage() {
         {/* Sticky Filters & Search — full viewport width so BG doesn't clip */}
         <div className="sticky top-16 md:top-24 z-30 w-full bg-white border-b border-gray-100 shadow-sm">
           <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-            <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-4 py-2 sm:py-3">
-              <div ref={tabsContainerRef} className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-grow pr-4 pb-1 md:pb-0">
+            <div className="flex flex-col gap-2 py-2 sm:gap-4 sm:py-3 md:flex-row md:items-center">
+              <ScrollableTabRow activeTabId={activeCategory}>
                 {categories.map((cat) => (
                   <button 
                     key={cat}
                     data-tab-id={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={cn(
-                      "flex items-center justify-center gap-2 px-5 sm:px-6 h-12 sm:h-11 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all border shrink-0",
-
+                      "flex h-12 shrink-0 items-center justify-center gap-2 rounded-full border px-5 text-sm font-bold tracking-wide whitespace-nowrap transition-all sm:h-11 sm:px-6",
                       activeCategory === cat 
                         ? "bg-[#1877F2] text-white border-[#1877F2]" 
                         : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
@@ -217,10 +205,10 @@ export default function NewsPage() {
                     {cat === "All" ? "All News" : cat}
                   </button>
                 ))}
-              </div>
+              </ScrollableTabRow>
               
               {/* Sort & Search Container */}
-              <div className="flex flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
+              <div className="relative z-20 flex w-full shrink-0 flex-row gap-2 sm:gap-4 md:w-auto">
                 {/* Search Functionality */}
                 <div className="relative flex-1 md:w-96 xl:w-[30rem] shrink-0">
                   <Search className="w-4 h-4 absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" />

@@ -131,8 +131,8 @@ export function PageHero({
       )}
 
       <div className={PAGE_HERO_CONTAINER}>
+        {backLink ? <div className="mb-6 sm:mb-8 w-full">{backLink}</div> : null}
         <div className="w-full max-w-[18rem] sm:max-w-[28rem] md:max-w-[42rem] lg:max-w-[48rem]">
-          {backLink ? <div className="mb-6 sm:mb-8">{backLink}</div> : null}
           {eyebrow ? <div className={PAGE_HERO_EYEBROW}>{eyebrow}</div> : null}
           {titleContent}
           {descriptionContent}

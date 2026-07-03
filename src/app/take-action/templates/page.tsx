@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, FileText, Download, Target, Users, Megaphone, ArrowRight, ArrowLeft, BookOpen, Clock, Settings, SearchX, Shield, AlertTriangle, Heart, MapPin, Edit3, Eye, Copy, Lock, Navigation, Building2, ChevronDown, LayoutGrid, List } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Search, FileText, Download, Clock, SearchX, Shield, AlertTriangle, Heart, Eye, Copy, Building2, ChevronDown } from "lucide-react";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import TemplatePreviewModal, { type LetterTemplate } from "@/components/take-action/TemplatePreviewModal";
@@ -73,9 +72,53 @@ const TEMPLATES = [
   },
 ];
 
+function CampaignCard({
+  campaign,
+  onSelect,
+}: {
+  campaign: (typeof CAMPAIGNS)[number];
+  onSelect: (title: string) => void;
+}) {
+  const CampaignIcon = campaign.icon;
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => onSelect(campaign.title)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(campaign.title);
+        }
+      }}
+      className="group relative flex min-h-[260px] cursor-pointer flex-col justify-end overflow-hidden rounded-[2rem] border border-white/10 p-6 shadow-xl transition-colors duration-500 hover:border-[#1877F2]/50 sm:min-h-[300px]"
+    >
+      <div className="absolute inset-0 z-0">
+        <img
+          src={campaign.bgImage}
+          alt=""
+          className="h-full w-full object-cover opacity-30 grayscale transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/80 to-transparent" />
+      </div>
+
+      <div className="relative z-10 flex flex-col gap-4">
+        <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md">
+          <CampaignIcon className="h-4 w-4 text-white" />
+        </div>
+        <div>
+          <h4 className="mb-2 text-lg font-bold uppercase tracking-tight text-white sm:text-xl">{campaign.title}</h4>
+          <p className="mb-4 text-sm leading-relaxed text-white/80">{campaign.description}</p>
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-300">
+            <FileText className="h-3.5 w-3.5" /> {campaign.templatesAvailable} Templates
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function TemplatesPage() {
-  const router = useRouter();
-  
   // Templates state
   const [searchQuery, setSearchQuery] = useState("");
   const [recipientFilter, setRecipientFilter] = useState("All");
@@ -90,8 +133,6 @@ export default function TemplatesPage() {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, recipientFilter, toneFilter, sortBy]);
-
-  const [activeCampaignIdx, setActiveCampaignIdx] = useState(0);
 
   const [recipientDropdownOpen, setRecipientDropdownOpen] = useState(false);
   const [toneDropdownOpen, setToneDropdownOpen] = useState(false);
@@ -150,64 +191,66 @@ export default function TemplatesPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen font-sans bg-slate-50 pt-20">
-      
-      {/* Top Header */}
-      <div className="w-full border-b border-white/10 relative z-10 bg-[#050A14]">
-        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16 py-6 flex flex-col gap-4">
-          <div className="flex items-center gap-2 text-xs text-slate-400 font-bold tracking-widest">
-            <button onClick={() => router.push('/')} className="hover:text-white transition-colors">Home</button>
-            <span>&gt;</span>
-            <button onClick={() => router.push('/take-action')} className="hover:text-white transition-colors">Take Action</button>
-            <span>&gt;</span>
-            <span className="text-[#1877F2]">Templates</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-white mb-2">LETTER TEMPLATES</h1>
-          <p className="text-slate-400 text-sm md:text-base max-w-2xl">Browse our library of pre-written letter templates covering various campaigns. Download, personalise, and send to drive change.</p>
-        </div>
-      </div>
+    <div className="flex min-h-screen flex-col font-sans bg-slate-50">
+      <PageHero
+        animate
+        className="!min-h-0 pb-8 md:pb-12 lg:pb-16"
+        backLink={
+          <nav
+            className="flex flex-nowrap items-center gap-x-2 overflow-x-auto text-xs font-bold tracking-wide text-slate-400 scrollbar-hide"
+            aria-label="Breadcrumb"
+          >
+            <Link href="/" className="shrink-0 whitespace-nowrap transition-colors hover:text-white">
+              Home
+            </Link>
+            <span className="shrink-0 text-slate-600" aria-hidden>
+              &gt;
+            </span>
+            <Link href="/take-action" className="shrink-0 whitespace-nowrap transition-colors hover:text-white">
+              Take Action
+            </Link>
+            <span className="shrink-0 text-slate-600" aria-hidden>
+              &gt;
+            </span>
+            <span className="shrink-0 whitespace-nowrap text-[#1877F2]">Templates</span>
+          </nav>
+        }
+        eyebrow={
+          <>
+            <FileText className="h-5 w-5 shrink-0" /> LETTER TEMPLATES
+          </>
+        }
+        title={
+          <>
+            <span className="text-white">BROWSE </span>
+            <br className="hidden md:block" />
+            <span className="bg-gradient-to-r from-[#1877F2] to-blue-400 bg-clip-text pr-2 text-transparent">
+              TEMPLATES.
+            </span>
+          </>
+        }
+        description="Browse our library of pre-written letter templates covering various campaigns. Download, personalise, and send to drive change."
+        imageSrc="/images/take-action-hero.png"
+        imageAlt="Person writing a formal letter"
+        imageClassName="opacity-40 object-center scale-105"
+      />
 
-      {/* FEATURED CAMPAIGNS SECTION */}
-      <div className="w-full bg-[#02050A] py-16">
-        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
-          <h2 className="text-xs font-bold text-[#1877F2] tracking-[0.3em] uppercase mb-8">Targeted Campaigns</h2>
-          
-          <div className="hidden md:grid md:grid-cols-3 gap-6">
-            {CAMPAIGNS.map((campaign) => {
-              const CampaignIcon = campaign.icon;
-              return (
-                <div 
-                  key={campaign.id} 
-                  onClick={() => handleCampaignClick(campaign.title)}
-                  className="group relative rounded-[2rem] border border-white/10 overflow-hidden min-h-[300px] flex flex-col justify-end p-6 hover:border-[#1877F2]/50 transition-colors duration-500 shadow-xl cursor-pointer"
-                >
-                  <div className="absolute inset-0 z-0">
-                    <img src={campaign.bgImage} alt={campaign.title} className="w-full h-full object-cover grayscale opacity-30 group-hover:scale-105 group-hover:grayscale-0 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/80 to-transparent" />
-                  </div>
-                  
-                  <div className="relative z-10 flex flex-col gap-4">
-                    <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 mb-2">
-                      <CampaignIcon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-xl text-white uppercase tracking-tight mb-2">{campaign.title}</h4>
-                      <p className="text-white/80 text-sm leading-relaxed mb-4">{campaign.description}</p>
-                      <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-300">
-                        <FileText className="w-3.5 h-3.5" /> {campaign.templatesAvailable} Templates
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+      <CampaignSection variant="deep">
+        <div className={PAGE_CONTENT_CONTAINER}>
+          <h2 className="mb-6 text-xs font-bold uppercase tracking-[0.28em] text-[#1877F2] sm:mb-8">
+            Targeted Campaigns
+          </h2>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+            {CAMPAIGNS.map((campaign) => (
+              <CampaignCard key={campaign.id} campaign={campaign} onSelect={handleCampaignClick} />
+            ))}
           </div>
         </div>
-      </div>
+      </CampaignSection>
 
-      {/* LIST LETTER TEMPLATES */}
-      <EditorialSection id="letter-templates" className="py-12 md:py-20">
-        <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px]">
+      <EditorialSection id="letter-templates">
+        <div className={PAGE_CONTENT_CONTAINER}>
 
           {/* Search & Filters Panel */}
           <div className="flex flex-col gap-4 mb-8">
@@ -431,90 +474,91 @@ export default function TemplatesPage() {
               </div>
             ) : (
               paginatedTemplates.map(template => (
-                <div 
-                  key={template.id} 
-                  className="bg-white rounded-3xl border border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)] p-6 flex flex-col justify-between h-full group"
+                <div
+                  key={template.id}
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)]"
                 >
-                  <div className="flex flex-col flex-1">
-                    {/* Header info */}
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1877F2]/10 to-[#1877F2]/5 flex items-center justify-center shrink-0 border border-[#1877F2]/10">
-                        <FileText className="w-6 h-6 text-[#1877F2] stroke-[1.5]" />
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="mb-4 flex items-start gap-3">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#1877F2]/10 bg-gradient-to-br from-[#1877F2]/10 to-[#1877F2]/5">
+                        <FileText className="h-5 w-5 text-[#1877F2] stroke-[1.5]" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-lg font-bold text-slate-900 leading-snug truncate">
+                      <div className="min-w-0 flex-1">
+                        <h4 className="line-clamp-2 text-base font-bold leading-snug text-slate-900">
                           {template.title}
                         </h4>
-                        <span className="text-xs text-slate-400 font-medium">Template ID: #{template.id}</span>
+                        <span className="text-xs font-medium text-slate-400">Template ID: #{template.id}</span>
                       </div>
                     </div>
 
-                    {/* Description */}
-                    <p className="text-sm text-slate-500 leading-relaxed line-clamp-3 mb-5">
+                    <p className="mb-4 h-10 overflow-hidden text-sm leading-5 text-slate-500">
                       Ask your {template.recipient} to support better data collection, prevention and officer mental health support.
                     </p>
 
-                    {/* Badges/Tags */}
-                    <div className="flex flex-wrap items-center gap-2 mt-auto mb-6">
-                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-full">
-                        <Building2 className="w-3.5 h-3.5 text-slate-500 shrink-0" /> 
-                        <span className="truncate max-w-[120px]">{template.recipient}</span>
+                    <div className="mt-auto flex flex-wrap items-center gap-2">
+                      <span className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-slate-100 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+                        <Building2 className="h-3 w-3 shrink-0 text-slate-500" />
+                        <span className="truncate">{template.recipient}</span>
                       </span>
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1877F2] bg-blue-50/50 border border-blue-100 px-3 py-1.5 rounded-full shrink-0">
+                      <span className="inline-flex shrink-0 items-center rounded-full border border-blue-100 bg-blue-50/50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#1877F2]">
                         {template.tone}
                       </span>
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-50/50 border border-slate-100/60 px-3 py-1.5 rounded-full shrink-0">
-                        <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" /> 
+                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-slate-100/60 bg-slate-50/50 px-2.5 py-1 text-[11px] font-medium text-slate-500">
+                        <Clock className="h-3 w-3 shrink-0 text-slate-400" />
                         {template.readTime}
                       </span>
                     </div>
                   </div>
 
-                  {/* Actions Container */}
-                  <div className="pt-6 mt-6 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-                    {/* Left Button Actions */}
-                    <div className="flex items-center gap-2 flex-1 sm:flex-initial">
-                      <button 
-                        onClick={() => setPersonalizeTemplate(template)} 
-                        className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 text-white bg-[#1877F2] hover:bg-blue-600 rounded-xl py-3 px-4 transition-all shadow-sm font-bold text-xs uppercase tracking-wider active:scale-95 duration-200 border border-[#1877F2]"
+                  <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/60 px-5 py-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setPersonalizeTemplate(template)}
+                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#1877F2] bg-[#1877F2] px-3 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all active:scale-[0.98] hover:bg-blue-600"
                       >
                         Personalise
                       </button>
-                      <button 
-                        onClick={() => { setPreviewTemplate(template); setEditableContent(template.content); }} 
-                        className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 text-[#1877F2] hover:bg-blue-50/60 border border-blue-100 rounded-xl py-3 px-4 transition-all font-bold text-xs uppercase tracking-wider active:scale-95 duration-200"
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPreviewTemplate(template);
+                          setEditableContent(template.content);
+                        }}
+                        className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-blue-100 bg-white px-3 py-2.5 text-xs font-bold uppercase tracking-wider text-[#1877F2] transition-all active:scale-[0.98] hover:bg-blue-50/60"
                       >
-                        <Eye className="w-4 h-4 shrink-0" strokeWidth={2} />
+                        <Eye className="h-4 w-4 shrink-0" strokeWidth={2} />
                         Preview
                       </button>
                     </div>
 
-                    {/* Right Icon Actions */}
-                    <div className="flex items-center justify-center sm:justify-end gap-2 shrink-0">
-                      <div className="hidden sm:block h-6 w-px bg-slate-200/80 mx-1" />
-                      
-                      <button 
-                        onClick={() => void handleDownloadTemplate(template, "pdf")} 
-                        className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-red-50 hover:text-red-500 border border-slate-200/60 hover:border-red-200 text-slate-500 flex items-center justify-center transition-all duration-200 shadow-sm active:scale-90"
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => void handleDownloadTemplate(template, "pdf")}
+                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-500 transition-all active:scale-[0.98] hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                         title="Download PDF"
                       >
-                        <Download className="w-4 h-4" strokeWidth={2} />
+                        <Download className="h-4 w-4" strokeWidth={2} />
                       </button>
-                      
-                      <button 
-                        onClick={() => void handleDownloadTemplate(template, "docx")} 
-                        className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-500 border border-slate-200/60 hover:border-blue-200 text-slate-500 flex items-center justify-center transition-all duration-200 shadow-sm active:scale-90"
+                      <button
+                        type="button"
+                        onClick={() => void handleDownloadTemplate(template, "docx")}
+                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-500 transition-all active:scale-[0.98] hover:border-blue-200 hover:bg-blue-50 hover:text-blue-500"
                         title="Download Word (DOCX)"
                       >
-                        <FileText className="w-4 h-4" strokeWidth={2} />
+                        <FileText className="h-4 w-4" strokeWidth={2} />
                       </button>
-                      
-                      <button 
-                        onClick={() => { navigator.clipboard.writeText(template.content); alert("Template copied to clipboard!"); }} 
-                        className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-green-50 hover:text-green-500 border border-slate-200/60 hover:border-green-200 text-slate-500 flex items-center justify-center transition-all duration-200 shadow-sm active:scale-90"
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText(template.content);
+                          alert("Template copied to clipboard!");
+                        }}
+                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-500 transition-all active:scale-[0.98] hover:border-green-200 hover:bg-green-50 hover:text-green-500"
                         title="Copy to Clipboard"
                       >
-                        <Copy className="w-4 h-4" strokeWidth={2} />
+                        <Copy className="h-4 w-4" strokeWidth={2} />
                       </button>
                     </div>
                   </div>

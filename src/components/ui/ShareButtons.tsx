@@ -47,18 +47,20 @@ export function ShareButtons({ title, url, variant = "editorial", className }: S
   const isEditorial = variant === "editorial";
 
   const containerClass = isEditorial 
-    ? "flex flex-row flex-wrap gap-3" 
+    ? "grid w-full grid-cols-5 gap-2 sm:gap-3" 
     : "flex flex-col gap-3";
 
+  const iconClass = isEditorial ? "h-5 w-5 sm:h-6 sm:w-6" : "h-4 w-4";
+
   const btnClass = isEditorial
-    ? "w-11 h-11 rounded-full bg-slate-100 hover:bg-[#1877F2] hover:text-white flex items-center justify-center text-slate-600 transition-all duration-300"
+    ? "flex aspect-square w-full min-h-11 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-all duration-300 hover:bg-[#1877F2] hover:text-white sm:min-h-[3.25rem]"
     : "w-full px-4 py-3.5 rounded-lg flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10";
 
   return (
     <div className={className}>
       {isEditorial && (
-        <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2 text-slate-500">
-          <Share2 className="w-3.5 h-3.5" /> Share this story
+        <h3 className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500">
+          <Share2 className="h-4 w-4" /> Share this story
         </h3>
       )}
       <div className={containerClass}>
@@ -68,7 +70,7 @@ export function ShareButtons({ title, url, variant = "editorial", className }: S
           className={cn(btnClass, isEditorial ? "hover:bg-[#1877F2]" : "")}
           aria-label="Share on Facebook"
         >
-          {isEditorial ? <FacebookIcon className="w-4 h-4" /> : "Share on Facebook"}
+          {isEditorial ? <FacebookIcon className={iconClass} /> : "Share on Facebook"}
         </button>
         <button
           type="button"
@@ -76,7 +78,7 @@ export function ShareButtons({ title, url, variant = "editorial", className }: S
           className={cn(btnClass, isEditorial ? "hover:bg-slate-900" : "")}
           aria-label="Share on X"
         >
-          {isEditorial ? <TwitterIcon className="w-4 h-4" /> : "Share on X / Twitter"}
+          {isEditorial ? <TwitterIcon className={iconClass} /> : "Share on X / Twitter"}
         </button>
         <button
           type="button"
@@ -84,7 +86,7 @@ export function ShareButtons({ title, url, variant = "editorial", className }: S
           className={cn(btnClass, isEditorial ? "hover:bg-[#0077B5]" : "")}
           aria-label="Share on LinkedIn"
         >
-          {isEditorial ? <LinkedinIcon className="w-4 h-4" /> : "Share on LinkedIn"}
+          {isEditorial ? <LinkedinIcon className={iconClass} /> : "Share on LinkedIn"}
         </button>
         <button
           type="button"
@@ -92,13 +94,13 @@ export function ShareButtons({ title, url, variant = "editorial", className }: S
           className={cn(btnClass, isEditorial ? "hover:bg-slate-700" : "")}
           aria-label="Share via Email"
         >
-          {isEditorial ? <Mail className="w-4 h-4" /> : <><Mail className="w-4 h-4" /> Share via Email</>}
+          {isEditorial ? <Mail className={iconClass} /> : <><Mail className="w-4 h-4" /> Share via Email</>}
         </button>
         <button type="button" onClick={handleCopy} className={btnClass} aria-label="Copy Link">
           {isCopied ? (
-            isEditorial ? <Check className="w-4 h-4 text-green-500" /> : <><Check className="w-4 h-4 text-green-500" /><span className="text-green-600">Link Copied!</span></>
+            isEditorial ? <Check className={cn(iconClass, "text-green-500")} /> : <><Check className="w-4 h-4 text-green-500" /><span className="text-green-600">Link Copied!</span></>
           ) : (
-            isEditorial ? <LinkIcon className="w-4 h-4" /> : <><LinkIcon className="w-4 h-4" /> Copy Share Link</>
+            isEditorial ? <LinkIcon className={iconClass} /> : <><LinkIcon className="w-4 h-4" /> Copy Share Link</>
           )}
         </button>
       </div>
