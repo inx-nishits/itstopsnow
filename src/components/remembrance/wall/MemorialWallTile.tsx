@@ -66,19 +66,19 @@ export default function MemorialWallTile({
         </h3>
         
         {rank && (
-          <p className="text-[11px] sm:text-[11px] font-semibold text-[#1877F2] truncate mb-0.5">
+          <p className="text-xs sm:text-xs font-semibold text-[#1877F2] truncate mb-0.5">
             {rank}
           </p>
         )}
 
         {force && (
-          <p className="text-[11px] sm:text-[11px] font-medium text-slate-500 truncate mb-0.5">
+          <p className="text-xs sm:text-xs font-medium text-slate-500 truncate mb-0.5">
             {force}
           </p>
         )}
         
         {years && (
-          <p className="text-[10px] sm:text-[10px] text-slate-400 font-medium mb-2">
+          <p className="text-xs sm:text-xs text-slate-400 font-medium mb-2">
             {years}
           </p>
         )}
@@ -90,13 +90,13 @@ export default function MemorialWallTile({
               <span className="text-[12px] sm:text-[13px] font-bold text-slate-800 tabular-nums leading-none block">
                 {candleCount.toLocaleString()}
               </span>
-              <span className="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none block mt-0.5">
+              <span className="text-xs sm:text-xs font-bold text-slate-400 uppercase tracking-widest leading-none block mt-0.5">
                 Candles lit
               </span>
             </div>
           </div>
 
-          <div className="px-2 py-1.5 sm:px-2.5 rounded bg-[#1877F2] text-white shadow-sm group-hover:bg-blue-600 transition-all text-[8px] font-bold uppercase tracking-wider whitespace-nowrap shrink-0">
+          <div className="px-2 py-1.5 sm:px-2.5 rounded bg-[#1877F2] text-white shadow-sm group-hover:bg-blue-600 transition-all text-xs font-bold uppercase tracking-wider whitespace-nowrap shrink-0">
             View Tribute
           </div>
         </div>

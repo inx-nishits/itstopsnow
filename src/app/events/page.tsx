@@ -136,7 +136,7 @@ export default function EventsPage() {
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`min-h-[48px] px-6 text-[10px] font-bold tracking-widest uppercase transition-all rounded-full ${
+              className={`min-h-[48px] px-6 text-xs font-bold tracking-widest uppercase transition-all rounded-full ${
                 activeFilter === filter
                   ? "bg-[#1877F2] text-white shadow-[0_0_15px_rgba(24,119,242,0.3)]"
                   : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
@@ -169,15 +169,15 @@ export default function EventsPage() {
                   <div>
                     {/* Header Strip */}
                     <div className="flex justify-between items-center mb-6">
-                      <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${hybrid.editorialMuted}`}>
+                      <span className={`text-xs font-bold uppercase tracking-[0.2em] ${hybrid.editorialMuted}`}>
                         {event.date}
                       </span>
                       {event.badge ? (
-                        <span className="bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/20 px-3 py-1 text-[8px] font-bold uppercase tracking-wider rounded-full">
+                        <span className="bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/20 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full">
                           {event.badge}
                         </span>
                       ) : (
-                        <span className={`text-[8px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${
+                        <span className={`text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${
                           event.type === "upcoming" ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-slate-100 text-slate-500 border border-slate-200"
                         }`}>
                           {event.type}
@@ -220,13 +220,13 @@ export default function EventsPage() {
                       <button
                         type="button"
                         onClick={() => setSelectedEvent(event)}
-                        className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:text-blue-600 min-h-[48px] transition-colors cursor-pointer"
+                        className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#1877F2] hover:text-blue-600 min-h-[48px] transition-colors cursor-pointer"
                       >
                         <span>Register Interest</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     ) : (
-                      <span className={`text-[10px] font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>
+                      <span className={`text-xs font-bold uppercase tracking-widest ${hybrid.editorialMuted}`}>
                         Event Concluded
                       </span>
                     )}
@@ -278,7 +278,7 @@ export default function EventsPage() {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
                         Full Name
                       </label>
                       <input
@@ -292,7 +292,7 @@ export default function EventsPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
                         Email Address
                       </label>
                       <input
@@ -306,7 +306,7 @@ export default function EventsPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
                         Police Force / Organisation (Optional)
                       </label>
                       <input
@@ -322,7 +322,7 @@ export default function EventsPage() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] min-h-[48px] disabled:opacity-50"
+                    className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs min-h-[48px] disabled:opacity-50"
                   >
                     {isSubmitting ? "Processing Registration..." : "Confirm Attendance"}
                   </Button>
@@ -342,7 +342,7 @@ export default function EventsPage() {
                   </div>
                   <Button
                     onClick={closeRegisterModal}
-                    className="bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold uppercase tracking-widest text-[10px] px-8 min-h-[48px] mt-4"
+                    className="bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold uppercase tracking-widest text-xs px-8 min-h-[48px] mt-4"
                   >
                     Close Panel
                   </Button>

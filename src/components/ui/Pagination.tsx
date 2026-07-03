@@ -36,7 +36,7 @@ export function Pagination({
       : "bg-[#1877F2] text-white shadow-[0_0_20px_rgba(24,119,242,0.3)] ring-2 ring-white/10 scale-[1.02]";
 
   const buttonClass =
-    "inline-flex items-center justify-center gap-2 min-h-[48px] px-4 sm:px-5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all";
+    "inline-flex items-center justify-center gap-2 min-h-[48px] px-4 sm:px-5 rounded-full text-xs font-bold uppercase tracking-widest transition-all";
     
   const disabledClass = 
     variant === "editorial"

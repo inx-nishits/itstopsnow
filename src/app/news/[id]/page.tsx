@@ -28,23 +28,23 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
         backLink={
           <Link
             href="/news"
-            className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors"
+            className="inline-flex items-center text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors"
           >
             <ArrowLeft className="w-3 h-3 mr-2" /> Back to News
           </Link>
         }
         badges={
           <div className="flex flex-wrap items-center gap-4">
-            <span className="bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
+            <span className="bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
               {article.category}
             </span>
-            <span className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+            <span className="flex items-center gap-1.5 text-slate-400 text-xs font-bold uppercase tracking-widest">
               <User className="w-3.5 h-3.5" /> {article.author}
             </span>
-            <span className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+            <span className="flex items-center gap-1.5 text-slate-400 text-xs font-bold uppercase tracking-widest">
               <Calendar className="w-3.5 h-3.5" /> {article.date}
             </span>
-            <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">{article.readTime}</span>
+            <span className="text-slate-500 text-xs font-bold uppercase tracking-widest">{article.readTime}</span>
           </div>
         }
         title={article.title}
@@ -72,7 +72,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
                   Contact your MP today and ask them to support the 12-month investigation limit.
                 </p>
                 <Link href="/take-action">
-                  <Button className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-[10px] py-4 rounded-xl shadow-lg hover:-translate-y-1 transition-all">
+                  <Button className="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-xl shadow-lg hover:-translate-y-1 transition-all">
                     Write to Your MP
                   </Button>
                 </Link>

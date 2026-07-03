@@ -111,7 +111,7 @@ export function CandleCard({ name, force, dates, imageUrl, initialCandles }: Can
               >
                 {candles.toLocaleString()}
               </motion.p>
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Candles Lit</p>
+              <p className="text-xs uppercase tracking-widest text-slate-500 font-bold">Candles Lit</p>
             </div>
           </div>
           

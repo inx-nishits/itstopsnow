@@ -229,7 +229,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                     ref={(el) => { sectionRefs.current.family = el; }}
                     className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm scroll-mt-36"
                   >
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#1877F2] mb-2">From the family</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-[#1877F2] mb-2">From the family</p>
                     <p className="text-slate-600 italic text-sm leading-relaxed whitespace-pre-line">{memorial.familyQuote}</p>
                   </div>
                 )}
@@ -275,7 +275,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                 <button
                   type="button"
                   onClick={() => setActivePhotoIndex(0)}
-                  className="w-full mt-4 flex items-center justify-center font-bold uppercase tracking-[0.14em] text-[#1877F2] text-[10px] sm:text-[11px] hover:text-[#1565d8] transition-colors"
+                  className="w-full mt-4 flex items-center justify-center font-bold uppercase tracking-[0.14em] text-[#1877F2] text-xs sm:text-xs hover:text-[#1565d8] transition-colors"
                 >
                   View all photos
                 </button>
@@ -336,7 +336,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                   {visibleTimeline.map((event, index) => (
                     <li key={`${event.date}-${event.title}-${index}`} className="relative pl-6 pb-6 last:pb-0">
                       <span className="absolute left-[-6px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] ring-[3px] ring-white" aria-hidden />
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#1877F2] mb-0.5">{event.date}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-[#1877F2] mb-0.5">{event.date}</p>
                       <h3 className="text-sm font-bold text-[#010B19] mb-1">{event.title}</h3>
                       <p className="text-[13px] text-slate-500 leading-relaxed">{event.description}</p>
                     </li>
@@ -346,7 +346,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                   <button
                     type="button"
                     onClick={() => setIsTimelineExpanded(!isTimelineExpanded)}
-                    className="mt-4 w-full py-2.5 text-[10px] font-bold text-[#1877F2] uppercase tracking-wider border border-[#1877F2]/20 rounded-lg hover:bg-[#1877F2]/5 transition-colors"
+                    className="mt-4 w-full py-2.5 text-xs font-bold text-[#1877F2] uppercase tracking-wider border border-[#1877F2]/20 rounded-lg hover:bg-[#1877F2]/5 transition-colors"
                   >
                     {isTimelineExpanded ? "Show less" : "View Full Timeline"}
                   </button>
@@ -369,19 +369,19 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                  <p className="text-xs text-slate-500 mb-4 leading-relaxed">If this story affects you, please know that help is available. You are not alone.</p>
                  <div className="space-y-2">
                     <a href="#" className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-200 hover:border-[#1877F2]/40 transition-colors shadow-sm">
-                      <div><p className="text-xs font-semibold text-[#010B19]">Samaritans</p><p className="text-[10px] text-slate-500 mt-0.5">Call 116 123</p></div>
+                      <div><p className="text-xs font-semibold text-[#010B19]">Samaritans</p><p className="text-xs text-slate-500 mt-0.5">Call 116 123</p></div>
                       <ArrowRight className="w-4 h-4 text-slate-300" />
                     </a>
                     <a href="#" className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-200 hover:border-[#1877F2]/40 transition-colors shadow-sm">
-                      <div><p className="text-xs font-semibold text-[#010B19]">Police Treatment Centres</p><p className="text-[10px] text-slate-500 mt-0.5">enquiries@ptc.org.uk</p></div>
+                      <div><p className="text-xs font-semibold text-[#010B19]">Police Treatment Centres</p><p className="text-xs text-slate-500 mt-0.5">enquiries@ptc.org.uk</p></div>
                       <ArrowRight className="w-4 h-4 text-slate-300" />
                     </a>
                     <a href="#" className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-200 hover:border-[#1877F2]/40 transition-colors shadow-sm">
-                      <div><p className="text-xs font-semibold text-[#010B19]">Mind</p><p className="text-[10px] text-slate-500 mt-0.5">0300 123 3393</p></div>
+                      <div><p className="text-xs font-semibold text-[#010B19]">Mind</p><p className="text-xs text-slate-500 mt-0.5">0300 123 3393</p></div>
                       <ArrowRight className="w-4 h-4 text-slate-300" />
                     </a>
                  </div>
-                 <button className="w-full mt-3 py-2.5 text-[10px] font-bold text-[#1877F2] uppercase tracking-wider border border-[#1877F2]/20 rounded-lg hover:bg-[#1877F2]/5 transition-colors">
+                 <button className="w-full mt-3 py-2.5 text-xs font-bold text-[#1877F2] uppercase tracking-wider border border-[#1877F2]/20 rounded-lg hover:bg-[#1877F2]/5 transition-colors">
                    View more support services
                  </button>
               </div>
@@ -400,17 +400,17 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
               <div className="w-12 h-12 bg-[#1e293b]/50 rounded-full flex items-center justify-center mb-4 border border-white/5">
                 <Flame className={cn("w-5 h-5", isLit ? "text-amber-400" : "text-slate-400")} />
               </div>
-              <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-2">Light a candle</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] mb-2">Light a candle</h3>
               <p className="text-xs text-slate-400 mb-6">Keep {memorial.name.split(' ')[0]}'s memory alive.</p>
               
               <div className="text-3xl xl:text-4xl font-black mb-1 tabular-nums">{candleCount.toLocaleString()}</div>
-              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-6">Candles lit</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 mb-6">Candles lit</p>
               
               <Button 
                 onClick={lightCandle} 
                 disabled={isLit || candleLoading} 
                 className={cn(
-                  "w-full min-h-[48px] font-bold uppercase tracking-wider text-[11px] transition-all",
+                  "w-full min-h-[48px] font-bold uppercase tracking-wider text-xs transition-all",
                   isLit 
                     ? "bg-[#0c4a6e]/40 text-[#38bdf8] border border-[#0ea5e9]/20 shadow-none opacity-100" 
                     : "bg-[#1877F2] hover:bg-[#1565d8] text-white shadow-[0_0_20px_rgba(24,119,242,0.3)]"
@@ -418,10 +418,10 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
               >
                  {isLit ? "Candle lit" : candleLoading ? "Lighting..." : "Light a candle"}
               </Button>
-              {candleMessage && <p className="text-[10px] text-[#1877F2] font-semibold mt-3 leading-relaxed">{candleMessage}</p>}
+              {candleMessage && <p className="text-xs text-[#1877F2] font-semibold mt-3 leading-relaxed">{candleMessage}</p>}
 
               <div className="w-full mt-6 pt-6 border-t border-white/10">
-                 <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-4">Share tribute</p>
+                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 mb-4">Share tribute</p>
                  <div className="flex items-center justify-center gap-3">
                    <button className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-all text-slate-300">
                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -440,7 +440,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                    variant="outline"
                    onClick={handleDownloadPDF}
                    disabled={isGeneratingPDF}
-                   className="w-full min-h-[48px] bg-transparent border-white/20 text-white hover:bg-white/10 text-[11px] font-bold uppercase tracking-wider transition-colors"
+                   className="w-full min-h-[48px] bg-transparent border-white/20 text-white hover:bg-white/10 text-xs font-bold uppercase tracking-wider transition-colors"
                  >
                    {isGeneratingPDF ? "Generating PDF..." : (
                      <>
@@ -534,7 +534,7 @@ function SectionLabel({
   className?: string;
 }) {
   return (
-    <h2 className={cn("text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2", className)}>
+    <h2 className={cn("text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2", className)}>
       {icon}
       {children}
     </h2>
@@ -730,7 +730,7 @@ function PhotoLightbox({
 function FormField({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className={cn("text-[10px] font-semibold uppercase tracking-widest", hybrid.editorialMuted)}>{label}</span>
+      <span className={cn("text-xs font-semibold uppercase tracking-widest", hybrid.editorialMuted)}>{label}</span>
       {children}
     </label>
   );

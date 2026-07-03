@@ -57,7 +57,7 @@ export function ShareButtons({ title, url, variant = "editorial", className }: S
   return (
     <div className={className}>
       {isEditorial && (
-        <h3 className="text-[10px] font-bold uppercase tracking-widest mb-4 flex items-center gap-2 text-slate-500">
+        <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2 text-slate-500">
           <Share2 className="w-3.5 h-3.5" /> Share this story
         </h3>
       )}

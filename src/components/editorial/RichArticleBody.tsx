@@ -65,7 +65,7 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
                   alt={block.alt}
                   className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
-                <span className="flex items-center justify-center gap-2 bg-[#010B19] px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white">
+                <span className="flex items-center justify-center gap-2 bg-[#010B19] px-4 py-3 text-xs font-bold uppercase tracking-widest text-white">
                   <ExternalLink className="h-3.5 w-3.5 text-[#1877F2]" />
                   Tap to visit linked source
                 </span>
@@ -100,7 +100,7 @@ export default function RichArticleBody({ blocks, className }: RichArticleBodyPr
                 key={index}
                 className="not-prose my-8 last:mb-0 rounded-xl border border-[#1877F2]/20 bg-[#1877F2]/5 p-5"
               >
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#1877F2] mb-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#1877F2] mb-2">
                   Related resource
                 </p>
                 <Link

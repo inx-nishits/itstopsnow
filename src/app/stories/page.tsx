@@ -335,7 +335,7 @@ function StoriesPageContent() {
                       {/* Content Container */}
                       <div className="p-4 sm:p-5 flex flex-col flex-grow relative z-10 w-full">
                         
-                        <span className="text-[10px] sm:text-xs font-bold text-white bg-[#1877F2] px-2 py-1 rounded-sm tracking-widest uppercase shadow-md w-fit mb-3">
+                        <span className="text-xs sm:text-xs font-bold text-white bg-[#1877F2] px-2 py-1 rounded-sm tracking-widest uppercase shadow-md w-fit mb-3">
                           {story.type}
                         </span>
 
@@ -347,12 +347,12 @@ function StoriesPageContent() {
                           {story.excerpt}
                         </p>
                         
-                        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm font-medium text-slate-400 mt-auto">
-                          <span className="flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {story.date}
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm font-medium text-slate-400 mt-auto">
+                          <span className="flex items-center gap-1.5 whitespace-nowrap">
+                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" /> {story.date}
                           </span>
-                          <span className="flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {story.readTime}
+                          <span className="flex items-center gap-1.5 whitespace-nowrap">
+                            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" /> {story.readTime}
                           </span>
                         </div>
 
@@ -399,7 +399,7 @@ function StoriesPageContent() {
              <div className="relative p-6 sm:p-8 lg:p-16 xl:p-20 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 lg:gap-20">
                {/* Left Content */}
                <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left z-10">
-                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 shadow-[0_0_15px_rgba(24,119,242,0.15)]">
+                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] text-xs sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 shadow-[0_0_15px_rgba(24,119,242,0.15)]">
                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                    Join the Community
                  </div>
@@ -441,7 +441,7 @@ function StoriesPageContent() {
                      </div>
                      <div>
                        <div className="text-white font-bold text-sm">Serving Officer</div>
-                       <div className="text-[#1877F2] text-[10px] font-bold uppercase tracking-wider mt-0.5">Shared Anonymously</div>
+                       <div className="text-[#1877F2] text-xs font-bold uppercase tracking-wider mt-0.5">Shared Anonymously</div>
                      </div>
                    </div>
                  </div>
@@ -502,7 +502,7 @@ function StoriesPageContent() {
                 <div className="space-y-4">
                   <div className="flex flex-col md:flex-row gap-4">
                     <div className="flex-1 space-y-2">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Full Name</label>
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Full Name</label>
                       <input 
                         type="text" 
                         disabled={isAnonymous}
@@ -513,7 +513,7 @@ function StoriesPageContent() {
                       />
                     </div>
                     <div className="flex-1 space-y-2">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
                       <input 
                         type="email" 
                         value={form.email}
@@ -539,7 +539,7 @@ function StoriesPageContent() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Story Title</label>
+                  <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Story Title</label>
                   <input 
                     type="text" 
                     value={form.title}
@@ -550,7 +550,7 @@ function StoriesPageContent() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Story</label>
+                  <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Your Story</label>
                   <textarea 
                     rows={8}
                     value={form.story}
@@ -561,7 +561,7 @@ function StoriesPageContent() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Upload images/documents</label>
+                  <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Upload images/documents</label>
                   <div 
                     onClick={() => fileInputRef.current?.click()}
                     className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:border-[#1877F2]/50 hover:bg-[#1877F2]/5 transition-all cursor-pointer group"

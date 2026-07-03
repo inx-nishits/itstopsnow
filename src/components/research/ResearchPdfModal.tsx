@@ -74,7 +74,7 @@ export default function ResearchPdfModal({
                   href={pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 min-h-[36px] px-3 rounded-lg text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                  className="flex items-center gap-1.5 min-h-[36px] px-3 rounded-lg text-xs font-bold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
                   title="Open in new tab"
                 >
                   <Maximize2 className="w-3.5 h-3.5" />
@@ -83,7 +83,7 @@ export default function ResearchPdfModal({
                 <a
                   href={pdfUrl}
                   download
-                  className="flex items-center gap-1.5 min-h-[36px] px-3 rounded-lg text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:bg-[#1877F2]/10 transition-colors"
+                  className="flex items-center gap-1.5 min-h-[36px] px-3 rounded-lg text-xs font-bold uppercase tracking-widest text-[#1877F2] hover:bg-[#1877F2]/10 transition-colors"
                   title="Download PDF"
                 >
                   <Download className="w-3.5 h-3.5" />

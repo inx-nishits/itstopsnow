@@ -38,23 +38,23 @@ const AppItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
       
       {/* Mobile Rating */}
       <div className="flex sm:hidden items-center justify-center gap-1 mt-0.5">
-        <span className="text-[10px] font-medium text-slate-500">{item.rating}</span>
+        <span className="text-xs font-medium text-slate-500">{item.rating}</span>
         <Star className="w-2.5 h-2.5 fill-slate-400 text-slate-400" />
       </div>
 
       <div className="hidden sm:flex flex-wrap items-center gap-1.5 mb-2">
-        <span className="text-[9px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{item.category}</span>
+        <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{item.category}</span>
         {item.badge && (
-          <span className="text-[9px] font-bold uppercase tracking-wider text-white bg-[#1877F2] px-2 py-0.5 rounded">
+          <span className="text-xs font-bold uppercase tracking-wider text-white bg-[#1877F2] px-2 py-0.5 rounded">
             {item.badge}
           </span>
         )}
       </div>
       <div className="hidden sm:flex items-center gap-1 mb-2">
         <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-        <span className="text-[10px] font-medium text-slate-600">{item.rating} <span className="text-slate-400">({item.reviews})</span></span>
+        <span className="text-xs font-medium text-slate-600">{item.rating} <span className="text-slate-400">({item.reviews})</span></span>
       </div>
-      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
+      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
     </div>
   </Link>
 );
@@ -72,11 +72,11 @@ const PodcastItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
         <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-tight sm:leading-snug w-full">{item.title}</h4>
       </div>
       <div className="hidden sm:inline-flex mb-2">
-        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
           {item.topic}
         </span>
       </div>
-      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
+      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
     </div>
   </Link>
 );
@@ -92,19 +92,19 @@ const BookItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
         <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-tight sm:leading-snug w-full">{item.title}</h4>
       </div>
       
-      <p className="hidden sm:block text-[10px] text-slate-500 mb-2 font-medium">By {item.author}</p>
+      <p className="hidden sm:block text-xs text-slate-500 mb-2 font-medium">By {item.author}</p>
       
       {item.recommendedBy && (
         <div className="hidden sm:inline-flex items-center gap-1.5 mb-2 bg-emerald-50 text-emerald-700 px-2 py-1 rounded-md border border-emerald-100/50">
           <Star className="w-3 h-3 fill-emerald-500 text-emerald-500 shrink-0" />
-          <span className="text-[9px] font-bold uppercase tracking-wider line-clamp-1 leading-none">{item.recommendedBy}</span>
+          <span className="text-xs font-bold uppercase tracking-wider line-clamp-1 leading-none">{item.recommendedBy}</span>
         </div>
       )}
       
-      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 leading-relaxed">{item.description}</p>
+      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 leading-relaxed">{item.description}</p>
       
       <div className="hidden sm:inline-flex mt-2">
-        <span className="text-[9px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{item.category}</span>
+        <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{item.category}</span>
       </div>
     </div>
   </Link>
@@ -121,11 +121,11 @@ const WebsiteItem = ({ item, isGrid }: { item: any, isGrid?: boolean }) => (
         <h4 className="text-[12px] sm:text-sm font-bold text-gray-900 line-clamp-1 sm:line-clamp-2 group-hover:text-[#1877F2] transition-colors leading-snug w-full">{item.name}</h4>
       </div>
       <div className="hidden sm:inline-flex mb-2">
-        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
           {item.category}
         </span>
       </div>
-      <p className="hidden sm:block text-[10px] text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
+      <p className="hidden sm:block text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">{item.description}</p>
     </div>
   </Link>
 );

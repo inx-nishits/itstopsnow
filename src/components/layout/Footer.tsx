@@ -40,7 +40,7 @@ export default function Footer() {
             <div className="relative z-10 flex flex-col flex-1">
               <div className="flex items-center gap-2.5 mb-3 sm:mb-4">
                 <div className="w-6 sm:w-8 h-[2px] bg-[#1877F2]" />
-                <span className="text-[#1877F2] font-bold text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em]">
+                <span className="text-[#1877F2] font-bold text-xs sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em]">
                   Empowering Officers
                 </span>
               </div>
@@ -58,7 +58,7 @@ export default function Footer() {
               </p>
 
               <Link href="https://pocketsergeant.co.uk/" target="_blank" rel="noopener noreferrer" className="mt-auto w-full sm:w-auto">
-                <Button className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold sm:font-black uppercase tracking-wide sm:tracking-[0.12em] text-[11px] sm:text-xs rounded-xl sm:rounded-full px-4 sm:px-8 lg:px-10 py-4 sm:py-6 shadow-[0_0_20px_rgba(24,119,242,0.35)] hover:shadow-[0_0_32px_rgba(24,119,242,0.5)] transition-all duration-300 hover:-translate-y-0.5 whitespace-normal h-auto text-center leading-snug">
+                <Button className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] bg-[#1877F2] text-white hover:bg-white hover:text-black font-bold sm:font-black uppercase tracking-wide sm:tracking-[0.12em] text-xs sm:text-xs rounded-xl sm:rounded-full px-4 sm:px-8 lg:px-10 py-4 sm:py-6 shadow-[0_0_20px_rgba(24,119,242,0.35)] hover:shadow-[0_0_32px_rgba(24,119,242,0.5)] transition-all duration-300 hover:-translate-y-0.5 whitespace-normal h-auto text-center leading-snug">
                   Visit Pocket Sergeant Website
                 </Button>
               </Link>
@@ -138,7 +138,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-x-4 gap-y-8 md:gap-y-12 lg:gap-8 mb-4 md:mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-x-4 gap-y-10 md:gap-y-12 lg:gap-8 mb-4 md:mb-16">
 
           {/* Brand Col */}
           <div className="col-span-2 md:col-span-1 lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left pr-0 lg:pr-8">
@@ -152,10 +152,10 @@ export default function Footer() {
 
           {/* Links 1   */}
           <div className="col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-3 md:mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Explore
             </h4>
-            <ul className="space-y-3 text-sm font-medium text-slate-400">
+            <ul className="space-y-2 lg:space-y-3 text-sm font-medium text-slate-400">
               <li><Link href="/about" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">About the Mission</Link></li>
               <li><Link href="/the-issue" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">The Issue</Link></li>
               <li><Link href="/events" className="hover:text-white lg:hover:translate-x-2 inline-block transition-all duration-300">Campaign Events</Link></li>
@@ -166,10 +166,10 @@ export default function Footer() {
 
           {/* Links 2 */}
           <div className="col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-5 flex items-center justify-center lg:justify-start gap-3">
+            <h4 className="font-bold text-white uppercase tracking-[0.2em] text-xs mb-3 md:mb-5 flex items-center justify-center lg:justify-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#1877F2] shadow-[0_0_8px_#1877F2]"></div> Action
             </h4>
-            <ul className="space-y-3 text-sm font-medium text-slate-400">
+            <ul className="space-y-2 lg:space-y-3 text-sm font-medium text-slate-400">
               <li><Link href="/take-action" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">How to Help</Link></li>
               <li><Link href="/take-action/personalize" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Personalise Your Letter</Link></li>
               <li><Link href="/stories?submit=1" className="hover:text-[#1877F2] lg:hover:translate-x-2 inline-block transition-all duration-300">Share Your Story</Link></li>

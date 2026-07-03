@@ -84,7 +84,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
                 <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
                   {wallStats.officersRemembered.toLocaleString()}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
                   Officers
                 </span>
               </div>
@@ -96,7 +96,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
                 <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
                   {wallStats.monthlyRemembranceAvg?.toLocaleString() || 124}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
                   Monthly Avg
                 </span>
               </div>
@@ -108,7 +108,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
                 <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
                   {wallStats.forcesRepresented?.toLocaleString() || 12}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
                   Forces
                 </span>
               </div>
@@ -120,7 +120,7 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
                 <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
                   {wallStats.notForgottenPercent || 92}%
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
                   Not Forgotten
                 </span>
               </div>

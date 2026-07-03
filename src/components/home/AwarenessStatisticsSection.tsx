@@ -99,13 +99,13 @@ export default function AwarenessStatisticsSection({
                     key={stat.id}
                     className="group relative bg-white rounded-xl border border-slate-200/90 p-3 sm:p-3.5 lg:p-4 transition-all duration-300 hover:border-[#1877F2]/25 hover:shadow-sm flex flex-col h-full"
                   >
-                    <div className="flex items-center gap-2 mb-2 sm:mb-2.5">
+                    <div className="flex flex-col items-start gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
                       <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1877F2]/10 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-colors duration-300 shrink-0">
                         <IconComponent
                           className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${stat.isPulsing ? "animate-[pulse_1.5s_infinite]" : ""}`}
                         />
                       </div>
-                      <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 group-hover:text-slate-700 transition-colors uppercase tracking-[0.12em] leading-tight line-clamp-2">
+                      <span className="text-xs sm:text-xs lg:text-sm font-semibold text-slate-500 group-hover:text-slate-700 transition-colors leading-tight line-clamp-2">
                         {stat.label}
                       </span>
                     </div>
@@ -125,7 +125,7 @@ export default function AwarenessStatisticsSection({
                       ) : null}
                     </div>
 
-                    <p className="text-slate-600 text-[11px] sm:text-xs leading-snug font-normal group-hover:text-slate-800 transition-colors line-clamp-3">
+                    <p className="text-slate-600 text-xs sm:text-xs lg:text-sm leading-snug font-normal group-hover:text-slate-800 transition-colors line-clamp-3">
                       {stat.description}
                     </p>
                   </div>
@@ -135,7 +135,7 @@ export default function AwarenessStatisticsSection({
           </SectionReveal>
 
           {footnote ? (
-            <p className="mt-5 sm:mt-6 text-center text-slate-500 text-xs italic max-w-xl mx-auto leading-relaxed">
+            <p className="mt-5 sm:mt-6 text-center text-slate-500 text-xs lg:text-sm italic max-w-xl mx-auto leading-relaxed">
               {footnote}
             </p>
           ) : null}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, User, MapPin, Building2, AlignLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CustomSelect from "@/components/ui/CustomSelect";
 import { useRouter } from "next/navigation";
 import { UK_POLICE_FORCES } from "@/lib/data/policeForces";
 import type { LetterTemplate } from "@/components/take-action/TemplatePreviewModal";
@@ -38,6 +39,7 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!template) return;
+    if (!formData.name || !formData.postcode || !formData.policeForce) return;
     
     // Convert state to URLSearchParams
     const params = new URLSearchParams();
@@ -89,7 +91,7 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
             <form id="personalization-form" onSubmit={handleSubmit} className="space-y-6">
               
               <div>
-                <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
                   <User className="w-3.5 h-3.5" /> Your Name
                 </label>
                 <input 
@@ -103,7 +105,7 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
               </div>
 
               <div>
-                <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5" /> Postcode
                 </label>
                 <input 
@@ -117,24 +119,23 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
               </div>
 
               <div>
-                <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
                   <Building2 className="w-3.5 h-3.5" /> Police Force Selection
                 </label>
-                <select
-                  required
+                <CustomSelect
                   value={formData.policeForce}
-                  onChange={e => setFormData({...formData, policeForce: e.target.value})}
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] appearance-none"
-                >
-                  <option value="" disabled>Select a police force</option>
-                  {UK_POLICE_FORCES.map(force => (
-                    <option key={force} value={force}>{force}</option>
-                  ))}
-                </select>
+                  onChange={(policeForce) => setFormData({ ...formData, policeForce })}
+                  placeholder="Select a police force"
+                  options={UK_POLICE_FORCES.map((force) => ({
+                    value: force,
+                    label: force,
+                  }))}
+                  ariaLabel="Police force selection"
+                />
               </div>
 
               <div>
-                <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-2 flex items-center gap-2">
                   <AlignLeft className="w-3.5 h-3.5" /> Additional Details (Optional)
                 </label>
                 <textarea 

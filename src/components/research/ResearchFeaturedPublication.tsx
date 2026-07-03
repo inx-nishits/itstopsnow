@@ -14,7 +14,7 @@ interface ResearchFeaturedPublicationProps {
 }
 
 const actionBtn =
-  "inline-flex items-center justify-center gap-1.5 min-h-[40px] px-4 rounded-full text-[10px] font-bold uppercase tracking-widest transition-colors shrink-0";
+  "inline-flex items-center justify-center gap-1.5 min-h-[40px] px-4 rounded-full text-xs font-bold uppercase tracking-widest transition-colors shrink-0";
 
 export default function ResearchFeaturedPublication({
   publication,
@@ -33,10 +33,10 @@ export default function ResearchFeaturedPublication({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#010B19]/50 via-transparent to-transparent" />
             <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-white bg-[#1877F2] px-2 py-0.5 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-wider text-white bg-[#1877F2] px-2 py-0.5 rounded-full">
                 Featured
               </span>
-              <span className="text-[9px] font-bold uppercase tracking-wider text-white/95 bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-wider text-white/95 bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full">
                 {publication.category}
               </span>
             </div>
@@ -44,7 +44,7 @@ export default function ResearchFeaturedPublication({
         </div>
 
         <div className="lg:col-span-7 flex flex-col min-w-0">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-slate-500 mb-2">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-slate-500 mb-2">
             <time>{publication.date}</time>
             <span className="text-slate-300">·</span>
             <span className="line-clamp-1">
@@ -66,7 +66,7 @@ export default function ResearchFeaturedPublication({
                 key={finding}
                 className="flex gap-2.5 text-sm text-slate-700 leading-snug border-l-2 border-[#1877F2] pl-3"
               >
-                <span className="text-[10px] font-bold text-[#1877F2] tabular-nums shrink-0 pt-0.5">
+                <span className="text-xs font-bold text-[#1877F2] tabular-nums shrink-0 pt-0.5">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="line-clamp-2">{finding}</span>

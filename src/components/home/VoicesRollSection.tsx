@@ -48,7 +48,7 @@ function VoiceTabBar({
             <span className="block text-xs font-semibold whitespace-nowrap leading-snug">
               {voice.name}
             </span>
-            <span className="block text-[9px] uppercase tracking-wider mt-0.5 opacity-75 max-w-[9rem] truncate">
+            <span className="block text-xs lg:text-sm uppercase tracking-wider mt-0.5 opacity-75 max-w-[9rem] truncate">
               {voice.relationship}
             </span>
           </button>
@@ -90,7 +90,7 @@ function VoicePillSelectors({
             >
               {voice.name}
             </span>
-            <span className="block text-[10px] uppercase tracking-wider truncate mt-0.5 opacity-80">
+            <span className="block text-xs lg:text-sm uppercase tracking-wider truncate mt-0.5 opacity-80">
               {voice.relationship}
             </span>
           </button>
@@ -169,7 +169,7 @@ export default function VoicesRollSection({ voices, rollPreview }: VoicesRollSec
                   <div className="absolute inset-0 bg-gradient-to-t from-[#010B19]/85 via-[#010B19]/20 to-transparent pointer-events-none" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 pointer-events-none">
                     <p className="text-white font-bold text-sm">{activeVoice.name}</p>
-                    <p className="text-slate-300 text-[11px] uppercase tracking-widest mt-1">
+                    <p className="text-slate-300 text-xs lg:text-sm uppercase tracking-widest mt-1">
                       {activeVoice.relationship}
                     </p>
                   </div>

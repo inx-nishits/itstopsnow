@@ -86,20 +86,22 @@ export default function SupportResourcesTeaser() {
                 return (
                   <SectionReveal key={cat.id} delay={0.1 + i * 0.05}>
                     <Link href={supportTabHref(cat.id)}>
-                      <div className="group flex flex-row items-center p-4 sm:p-5 bg-[#f4f5f7]/60 border border-slate-200 rounded-2xl hover:border-[#1877F2]/40 hover:bg-white transition-all duration-300 hover:shadow-md min-h-[88px] sm:min-h-[100px] cursor-pointer">
-                        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                          {/* Icon Circle */}
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-slate-300 bg-white flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-colors duration-300 shrink-0 shadow-sm">
-                            <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <div className="group flex flex-col items-start justify-center p-4 sm:p-5 bg-[#f4f5f7]/60 border border-slate-200 rounded-2xl hover:border-[#1877F2]/40 hover:bg-white transition-all duration-300 hover:shadow-md min-h-[120px] sm:min-h-[130px] cursor-pointer">
+                        <div className="flex flex-col items-start gap-3 sm:gap-4 min-w-0 w-full">
+                          {/* Top Row: Icon Circle + Arrow */}
+                          <div className="flex items-start justify-between w-full">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-slate-300 bg-white flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-colors duration-300 shrink-0 shadow-sm">
+                              <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
+                            </div>
+                            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#1877F2] shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 mt-1 sm:mt-0 mr-1 sm:mr-0" />
                           </div>
                           
                           {/* Title & Description Stacked */}
-                          <div className="flex flex-col min-w-0">
-                            <h5 className="font-black text-sm sm:text-base text-[#010B19] uppercase tracking-tight leading-none flex items-center gap-1">
+                          <div className="flex flex-col min-w-0 w-full">
+                            <h5 className="font-black text-sm sm:text-base text-[#010B19] uppercase tracking-tight leading-none">
                               <span>{cat.label}</span>
-                              <ArrowUpRight className="w-3.5 h-3.5 text-[#1877F2] shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </h5>
-                            <p className="text-slate-500 text-[10px] sm:text-xs mt-1 sm:mt-1.5 leading-snug text-balance">
+                            <p className="text-slate-500 text-xs sm:text-xs lg:text-sm mt-1.5 sm:mt-2 leading-snug text-balance">
                               {cat.description}
                             </p>
                           </div>

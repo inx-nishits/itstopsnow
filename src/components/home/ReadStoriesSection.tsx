@@ -49,8 +49,9 @@ export default function ReadStoriesSection() {
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const cardWidth = 340; // match card width + gap
-      const amount = direction === "left" ? -cardWidth : cardWidth;
+      // Dynamically scroll based on screen size so it works properly on mobile
+      const scrollAmount = scrollRef.current.clientWidth * 0.8; 
+      const amount = direction === "left" ? -scrollAmount : scrollAmount;
       scrollRef.current.scrollBy({ left: amount, behavior: "smooth" });
     }
   };
@@ -108,13 +109,34 @@ export default function ReadStoriesSection() {
         <SectionReveal delay={0.1}>
           <div className="border-t border-white/5 pt-8 sm:pt-10">
             {/* Subsection header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 pr-4 sm:pr-8">
               <h3 className="font-bold text-slate-300 uppercase tracking-widest text-xs sm:text-sm">
                 Recent Stories
               </h3>
-              <Link href="/stories" className="flex items-center gap-1.5 text-[#1877F2] hover:text-white text-xs sm:text-sm font-bold uppercase tracking-widest transition-colors duration-300">
-                View All <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              <div className="flex items-center gap-4 sm:gap-6">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => scroll("left")}
+                    disabled={!showLeftArrow}
+                    className="w-8 h-8 sm:w-10 sm:h-10 bg-[#050a14] hover:bg-[#1877F2] border border-white/10 rounded-full flex items-center justify-center text-white shadow-xl transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                  <button
+                    onClick={() => scroll("right")}
+                    disabled={!showRightArrow}
+                    className="w-8 h-8 sm:w-10 sm:h-10 bg-[#050a14] hover:bg-[#1877F2] border border-white/10 rounded-full flex items-center justify-center text-white shadow-xl transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                </div>
+                
+                <Link href="/stories" className="hidden sm:flex items-center gap-1.5 text-[#1877F2] hover:text-white text-xs sm:text-sm font-bold uppercase tracking-widest transition-colors duration-300">
+                  View All <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
 
             {/* Carousel Container */}
@@ -122,27 +144,6 @@ export default function ReadStoriesSection() {
               className="relative group" 
               style={{ marginRight: "calc((100vw - 100%) / -2)" }}
             >
-              {/* Left Arrow Button */}
-              {showLeftArrow && (
-                <button
-                  onClick={() => scroll("left")}
-                  className="absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-[#050a14]/90 hover:bg-[#1877F2] border border-white/10 rounded-full flex items-center justify-center text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-              )}
-
-              {/* Right Arrow Button */}
-              {showRightArrow && (
-                <button
-                  onClick={() => scroll("right")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-[#050a14]/90 hover:bg-[#1877F2] border border-white/10 rounded-full flex items-center justify-center text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              )}
 
               {/* Scrollable Area */}
               <div
@@ -174,7 +175,7 @@ export default function ReadStoriesSection() {
                     {/* Card Content */}
                     <div className="relative z-20 flex flex-col items-start w-full">
                       {/* Badge / Type */}
-                      <span className="text-[9px] font-black text-white bg-[#1877F2] px-2.5 py-1 rounded-md tracking-widest uppercase mb-3 shadow-md">
+                      <span className="text-xs lg:text-sm font-black text-white bg-[#1877F2] px-2.5 py-1 rounded-md tracking-widest uppercase mb-3 shadow-md">
                         {story.type}
                       </span>
 
@@ -184,19 +185,26 @@ export default function ReadStoriesSection() {
                       </h4>
 
                       {/* Footer Info */}
-                      <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest border-t border-white/10 pt-3.5 w-full">
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-3.5 h-3.5 text-slate-500" />
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs lg:text-sm font-bold text-slate-400 uppercase tracking-widest border-t border-white/10 pt-3.5 w-full">
+                        <span className="flex items-center gap-1.5 whitespace-nowrap">
+                          <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                           {story.readTime}
                         </span>
-                        <span className="flex items-center gap-1.5">
-                          <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                        <span className="flex items-center gap-1.5 whitespace-nowrap">
+                          <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                           {story.date}
                         </span>
                       </div>
                     </div>
                   </Link>
                 ))}
+              </div>
+
+              {/* Mobile View All Link */}
+              <div className="flex sm:hidden justify-center mt-6 pr-4">
+                <Link href="/stories" className="flex items-center gap-1.5 text-[#1877F2] hover:text-white text-xs font-bold uppercase tracking-widest transition-colors duration-300">
+                  View All Stories <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </div>
           </div>

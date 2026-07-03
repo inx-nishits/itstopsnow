@@ -32,7 +32,7 @@ export default function TributeCarousel({ tributes, onSeeAll, onLeaveTribute }: 
             <button
               type="button"
               onClick={onLeaveTribute}
-              className="shrink-0 min-h-[36px] bg-[#1877F2] hover:bg-[#1565d8] text-white px-3 sm:px-4 py-1.5 rounded-lg text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm"
+              className="shrink-0 min-h-[36px] bg-[#1877F2] hover:bg-[#1565d8] text-white px-3 sm:px-4 py-1.5 rounded-lg text-xs uppercase tracking-wider font-bold transition-colors shadow-sm"
             >
               Leave Tribute
             </button>
@@ -41,7 +41,7 @@ export default function TributeCarousel({ tributes, onSeeAll, onLeaveTribute }: 
             <button
               type="button"
               onClick={onSeeAll}
-              className="hidden sm:flex shrink-0 min-h-[36px] text-[#1877F2] hover:text-[#1565d8] text-[10px] uppercase tracking-wider font-bold transition-colors items-center gap-1"
+              className="hidden sm:flex shrink-0 min-h-[36px] text-[#1877F2] hover:text-[#1565d8] text-xs uppercase tracking-wider font-bold transition-colors items-center gap-1"
             >
               SEE ALL TRIBUTES <span aria-hidden>→</span>
             </button>
@@ -65,7 +65,7 @@ export default function TributeCarousel({ tributes, onSeeAll, onLeaveTribute }: 
                 {tribute.text}
               </p>
             </div>
-            <p className="text-[10px] sm:text-[11px] font-bold text-[#7E93A8] uppercase tracking-widest">— {tribute.name}</p>
+            <p className="text-xs sm:text-xs font-bold text-[#7E93A8] uppercase tracking-widest">— {tribute.name}</p>
           </div>
         ))}
       </div>

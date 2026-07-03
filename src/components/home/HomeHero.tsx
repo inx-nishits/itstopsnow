@@ -85,7 +85,7 @@ function HeroContent({
               }
               : {})}
           >
-            <p className="text-[10px] sm:text-[11px] lg:text-xs font-bold uppercase tracking-[0.22em] lg:tracking-[0.26em] text-[#1877F2] mb-3 sm:mb-5 lg:mb-6">
+            <p className="text-xs sm:text-xs lg:text-sm font-bold uppercase tracking-[0.22em] lg:tracking-[0.26em] text-[#1877F2] mb-3 sm:mb-5 lg:mb-6">
               <span className="block sm:inline">Police suicide.</span>
               <span className="block sm:inline sm:ml-2">The hidden crisis.</span>
             </p>
@@ -128,7 +128,7 @@ function HeroContent({
                 href="/wall-of-remembrance" 
                 className="group flex items-center shrink-0 gap-2 text-white/90 hover:text-white transition-colors sm:ml-2"
               >
-                <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-widest border-b border-white/30 group-hover:border-white/80 pb-0.5 transition-colors">
+                <span className="whitespace-nowrap text-xs font-bold uppercase tracking-widest border-b border-white/30 group-hover:border-white/80 pb-0.5 transition-colors">
                   View Wall of Remembrance
                 </span>
                 <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
@@ -149,7 +149,7 @@ function HeroContent({
         aria-label="Scroll to next section"
       >
         <div className="flex flex-col items-center text-white/60 animate-bounce group-hover:text-white transition-colors">
-          <span className="text-[10px] font-bold tracking-widest uppercase mb-1">Scroll to learn more</span>
+          <span className="text-xs font-bold tracking-widest uppercase mb-1">Scroll to learn more</span>
           <ChevronsDown className="w-5 h-5 opacity-80" />
         </div>
       </button>

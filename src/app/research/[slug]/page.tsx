@@ -35,13 +35,13 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
         backLink={
           <Link
             href="/research"
-            className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest py-2 transition-colors"
+            className="inline-flex items-center text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest py-2 transition-colors"
           >
             <ArrowLeft className="w-3 h-3 mr-2" /> Back to Research
           </Link>
         }
         badges={
-          <span className="inline-flex bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
+          <span className="inline-flex bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
             {research.category}
           </span>
         }
@@ -112,7 +112,7 @@ export default function ResearchDetailPage({ params }: { params: Promise<{ slug:
                     <button
                       type="button"
                       onClick={() => downloadResearchPdf(research)}
-                      className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-full bg-[#1877F2] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-full bg-[#1877F2] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors"
                     >
                       <Download className="w-4 h-4" /> Download PDF
                     </button>

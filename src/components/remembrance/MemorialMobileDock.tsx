@@ -28,7 +28,7 @@ export default function MemorialMobileDock({
           type="button"
           onClick={onLightCandle}
           disabled={isLit || loading}
-          className={`flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl text-[10px] font-semibold transition-all active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2] ${
+          className={`flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl text-xs font-semibold transition-all active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2] ${
             isLit
               ? "bg-[#1f2937] text-slate-300 border border-white/10"
               : "bg-[#1f2937] text-white border border-white/10 shadow-sm"
@@ -41,7 +41,7 @@ export default function MemorialMobileDock({
         <button
           type="button"
           onClick={onLeaveTribute}
-          className="flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl bg-[#1f2937] border border-white/10 text-slate-300 text-[10px] font-semibold active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
+          className="flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl bg-[#1f2937] border border-white/10 text-slate-300 text-xs font-semibold active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
         >
           <MessageCircle className="w-4 h-4 text-slate-400" />
           Tribute
@@ -50,7 +50,7 @@ export default function MemorialMobileDock({
         <button
           type="button"
           onClick={onShare}
-          className="flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl bg-[#1f2937] border border-white/10 text-slate-300 text-[10px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
+          className="flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[48px] rounded-xl bg-[#1f2937] border border-white/10 text-slate-300 text-xs font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1877F2]"
         >
           <Share2 className="w-4 h-4 text-slate-400" />
           Share

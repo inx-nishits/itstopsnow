@@ -142,14 +142,14 @@ export default function MemorialProfileHeader({
 
             {/* Mobile Meta Info */}
             <div className="flex-1 min-w-0 flex flex-col justify-center py-1">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">IN MEMORY OF</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">IN MEMORY OF</p>
               <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-[1.1] mb-1 break-words">
                 <span className="block text-sm sm:text-base text-slate-200 mb-0.5">{officer.role}</span>
                 {displayName}
               </h1>
-              <p className="text-[11px] text-[#1877F2] font-bold uppercase tracking-widest truncate mb-4">{officer.force}</p>
+              <p className="text-xs text-[#1877F2] font-bold uppercase tracking-widest truncate mb-4">{officer.force}</p>
 
-              <div className="flex flex-col gap-2 text-[11px] sm:text-xs text-slate-300 font-medium">
+              <div className="flex flex-col gap-2 text-xs sm:text-xs text-slate-300 font-medium">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-slate-500 shrink-0" />
                   <span className="truncate">17 May 1987 - {officer.stats.dateOfLoss}</span>
@@ -255,7 +255,7 @@ export default function MemorialProfileHeader({
               </span>
               <blockquote className="text-[13px] sm:text-[15px] lg:text-lg italic text-slate-300 leading-relaxed max-w-2xl relative z-10">
                 He dedicated his life to helping others. He was the first person people called in a crisis, yet struggled silently with his own pain.
-                <footer className="mt-3 text-[10px] sm:text-xs font-bold text-slate-500 not-italic uppercase tracking-widest">— His Family</footer>
+                <footer className="mt-3 text-xs sm:text-xs font-bold text-slate-500 not-italic uppercase tracking-widest">— His Family</footer>
               </blockquote>
             </div>
 

@@ -52,7 +52,7 @@ export default function WallStatsRibbon({
       />
 
       <div className={`${PAGE_CONTENT_CONTAINER} py-6 sm:py-8 lg:py-10`}>
-        <p className="text-center lg:text-left text-[10px] sm:text-xs font-bold uppercase tracking-[0.28em] text-slate-500 mb-4 sm:mb-6">
+        <p className="text-center lg:text-left text-xs sm:text-xs font-bold uppercase tracking-[0.28em] text-slate-500 mb-4 sm:mb-6">
           A living record of remembrance
         </p>
 
@@ -101,7 +101,7 @@ export default function WallStatsRibbon({
                   {values[key]}
                 </p>
 
-                <p className="mt-2 sm:mt-2.5 text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase tracking-wider text-slate-500 leading-snug">
+                <p className="mt-2 sm:mt-2.5 text-xs sm:text-xs lg:text-xs font-semibold uppercase tracking-wider text-slate-500 leading-snug">
                   {label}
                 </p>
               </div>

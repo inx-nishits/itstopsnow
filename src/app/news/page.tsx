@@ -283,7 +283,7 @@ export default function NewsPage() {
                         />
                       </div>
                       <div className="p-4 sm:p-5 flex flex-col flex-grow">
-                        <span className="text-[10px] sm:text-xs font-black text-[#1877F2] bg-[#1877F2]/10 px-2 py-1 rounded self-start mb-3 uppercase tracking-widest">
+                        <span className="text-xs sm:text-xs font-black text-[#1877F2] bg-[#1877F2]/10 px-2 py-1 rounded self-start mb-3 uppercase tracking-widest">
                           {news.category}
                         </span>
                         <h3 className="font-bold text-lg sm:text-xl mb-3 leading-snug text-slate-900 group-hover:text-[#1877F2] transition-colors line-clamp-2">
@@ -292,9 +292,9 @@ export default function NewsPage() {
                         <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-4">
                           {news.excerpt}
                         </p>
-                        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm font-medium text-slate-500 mt-auto">
-                          <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {news.date}</span>
-                          <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {news.readTime}</span>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm font-medium text-slate-500 mt-auto">
+                          <span className="flex items-center gap-1.5 whitespace-nowrap"><Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" /> {news.date}</span>
+                          <span className="flex items-center gap-1.5 whitespace-nowrap"><Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" /> {news.readTime}</span>
                         </div>
                         
                         {/* Strict: Read News CTA Link */}
@@ -333,7 +333,7 @@ export default function NewsPage() {
                 
                 <div className="flex gap-4 mb-6 relative z-10">
                   <Mail className="w-8 h-8 text-slate-400 shrink-0 stroke-[1.5]" />
-                  <p className="text-[11px] text-slate-300 leading-relaxed font-medium">
+                  <p className="text-xs text-slate-300 leading-relaxed font-medium">
                     Subscribe to receive the latest news, updates, and organizational initiatives directly to your inbox.
                   </p>
                 </div>
@@ -345,17 +345,17 @@ export default function NewsPage() {
                     value={newsletter.email}
                     onChange={(e) => newsletter.setEmail(e.target.value)}
                     placeholder="Your email address" 
-                    className="w-full h-11 px-4 bg-white text-slate-900 text-[11px] font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#1877F2] transition-shadow" 
+                    className="w-full h-11 px-4 bg-white text-slate-900 text-xs font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#1877F2] transition-shadow" 
                   />
-                  <Button type="submit" disabled={newsletter.isSubscribing} className="w-full h-11 bg-[#1877F2] hover:bg-blue-600 font-bold text-[11px] uppercase tracking-widest rounded-md transition-colors">
+                  <Button type="submit" disabled={newsletter.isSubscribing} className="w-full h-11 bg-[#1877F2] hover:bg-blue-600 font-bold text-xs uppercase tracking-widest rounded-md transition-colors">
                     {newsletter.isSubscribing ? "SUBSCRIBING..." : "SUBSCRIBE"}
                   </Button>
                 </form>
                 {newsletter.error && (
-                  <p className="text-red-400 text-[10px] mt-2">{newsletter.error}</p>
+                  <p className="text-red-400 text-xs mt-2">{newsletter.error}</p>
                 )}
                 {newsletter.isSubscribed && (
-                  <p className="text-green-400 text-[10px] mt-2 font-bold">Thank you for subscribing!</p>
+                  <p className="text-green-400 text-xs mt-2 font-bold">Thank you for subscribing!</p>
                 )}
               </div>
 

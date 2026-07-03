@@ -121,7 +121,7 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                       {step > s ? <Check className="w-4 h-4" /> : s}
                     </div>
                     <span className={cn(
-                      "text-[10px] font-bold uppercase tracking-widest hidden sm:block text-center",
+                      "text-xs font-bold uppercase tracking-widest hidden sm:block text-center",
                       step >= s ? "text-slate-900" : "text-slate-400"
                     )}>
                       {s === 1 ? "Details" : s === 2 ? "Request" : s === 3 ? "Forces" : "Review"}
@@ -171,19 +171,19 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                       </div>
                       <div className="space-y-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><User className="w-3.5 h-3.5" /> Full Name *</label>
+                          <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><User className="w-3.5 h-3.5" /> Full Name *</label>
                           <input type="text" value={personalDetails.name} onChange={e => setPersonalDetails({...personalDetails, name: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="e.g. Jane Doe" />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><Mail className="w-3.5 h-3.5" /> Email Address *</label>
+                          <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><Mail className="w-3.5 h-3.5" /> Email Address *</label>
                           <input type="email" value={personalDetails.email} onChange={e => setPersonalDetails({...personalDetails, email: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="jane@example.com" />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><MapPin className="w-3.5 h-3.5" /> Postal Address *</label>
+                          <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><MapPin className="w-3.5 h-3.5" /> Postal Address *</label>
                           <textarea value={personalDetails.address} onChange={e => setPersonalDetails({...personalDetails, address: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] min-h-[80px]" placeholder="Full postal address including postcode..." />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Telephone Number (Optional)</label>
+                          <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-1.5 block flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Telephone Number (Optional)</label>
                           <input type="tel" value={personalDetails.phone} onChange={e => setPersonalDetails({...personalDetails, phone: e.target.value})} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" placeholder="07123 456789" />
                         </div>
                       </div>
@@ -206,7 +206,7 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                       </div>
 
                       <div>
-                        <label className="text-[11px] font-bold uppercase tracking-widest text-slate-700 mb-1.5 block">FOI Request Details *</label>
+                        <label className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-1.5 block">FOI Request Details *</label>
                         <textarea 
                           value={requestText} 
                           onChange={e => setRequestText(e.target.value)} 
@@ -276,7 +276,7 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
 
                       <div className="bg-white border border-slate-200 rounded-xl p-5 space-y-5">
                         <div>
-                          <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2">Sender Details</h4>
+                          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2">Sender Details</h4>
                           <div className="text-sm text-slate-700">
                             <strong>{personalDetails.name}</strong><br/>
                             {personalDetails.email}<br/>
@@ -285,14 +285,14 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                         </div>
 
                         <div>
-                          <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2">FOI Request</h4>
+                          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2">FOI Request</h4>
                           <div className="text-sm text-slate-700 whitespace-pre-wrap bg-slate-50 p-4 rounded-lg border border-slate-100">
                             {requestText}
                           </div>
                         </div>
 
                         <div>
-                          <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2">Recipients ({selectedForces.length})</h4>
+                          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2">Recipients ({selectedForces.length})</h4>
                           <div className="flex flex-wrap gap-2">
                             {selectedForces.map(force => (
                               <span key={force} className="text-xs bg-[#1877F2]/10 text-[#1877F2] font-semibold px-2.5 py-1 rounded-md border border-[#1877F2]/20">

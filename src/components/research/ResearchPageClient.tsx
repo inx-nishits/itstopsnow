@@ -88,7 +88,7 @@ export default function ResearchPageClient() {
             <h2 className={cn("font-sans text-xl sm:text-2xl font-bold uppercase tracking-tight", hybrid.editorialHeading)}>
               Research & Evidence
             </h2>
-            <div className="text-[10px] font-bold text-[#1877F2] uppercase tracking-[0.2em]">
+            <div className="text-xs font-bold text-[#1877F2] uppercase tracking-[0.2em]">
               Showing {sortedResearch.length} {sortedResearch.length === 1 ? "report" : "reports"}
             </div>
           </div>

@@ -214,7 +214,7 @@ export function CompactPageHero({
       </div>
 
       <div className={PAGE_HERO_CONTAINER}>
-        <p className="text-[#1877F2] font-bold uppercase tracking-[0.28em] text-[10px] sm:text-xs mb-2 sm:mb-3">
+        <p className="text-[#1877F2] font-bold uppercase tracking-[0.28em] text-xs sm:text-xs mb-2 sm:mb-3">
           {eyebrow}
         </p>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-2 sm:mb-3 max-w-3xl">

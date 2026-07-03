@@ -73,7 +73,7 @@ export default function WallMemorialHero({
                 <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight">
                   {totalCandles.toLocaleString()}
                 </span>
-                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-xs sm:text-xs font-bold uppercase tracking-wider text-slate-400">
                   Candles lit in remembrance
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function WallMemorialHero({
                 <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
                   {officersRemembered.toLocaleString()}
                 </span>
-                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                <span className="text-xs sm:text-xs font-bold uppercase tracking-widest text-slate-400 leading-tight">
                   Officers
                 </span>
               </div>
@@ -106,7 +106,7 @@ export default function WallMemorialHero({
                 <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
                   {monthlyAverage?.toLocaleString() || 124}
                 </span>
-                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                <span className="text-xs sm:text-xs font-bold uppercase tracking-widest text-slate-400 leading-tight">
                   Monthly Avg
                 </span>
               </div>
@@ -118,7 +118,7 @@ export default function WallMemorialHero({
                 <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
                   {forcesRepresented?.toLocaleString() || 12}
                 </span>
-                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                <span className="text-xs sm:text-xs font-bold uppercase tracking-widest text-slate-400 leading-tight">
                   Forces
                 </span>
               </div>
@@ -130,7 +130,7 @@ export default function WallMemorialHero({
                 <span className="text-lg sm:text-xl font-black text-white tabular-nums leading-none mb-0.5">
                   {notForgottenPercentage || 92}%
                 </span>
-                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 leading-tight">
+                <span className="text-xs sm:text-xs font-bold uppercase tracking-widest text-slate-400 leading-tight">
                   Not Forgotten
                 </span>
               </div>

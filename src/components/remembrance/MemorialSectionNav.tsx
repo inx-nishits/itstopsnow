@@ -97,7 +97,7 @@ export function MemorialSectionTabs({
             aria-controls={id}
             onClick={() => onNavigate(id)}
             className={cn(
-              "shrink-0 flex flex-row items-center justify-center gap-1.5 sm:gap-2 min-h-[44px] px-4 sm:px-5 rounded-full text-[11px] sm:text-[13px] font-semibold transition-all duration-200 cursor-pointer border sm:border-0",
+              "shrink-0 flex flex-row items-center justify-center gap-1.5 sm:gap-2 min-h-[44px] px-4 sm:px-5 rounded-full text-xs sm:text-[13px] font-semibold transition-all duration-200 cursor-pointer border sm:border-0",
               isActive
                 ? "text-[#1877F2] border-[#1877F2]/30 bg-[#1877F2]/5 sm:bg-white sm:text-[#010B19] sm:shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
                 : "text-slate-500 border-slate-200 hover:border-slate-300 hover:text-slate-800 sm:hover:bg-white/60"
@@ -133,7 +133,7 @@ function ActionButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex flex-col items-center justify-center gap-1.5 min-h-[58px] sm:min-h-[64px] px-2 rounded-xl text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer",
+        "flex flex-col items-center justify-center gap-1.5 min-h-[58px] sm:min-h-[64px] px-2 rounded-xl text-xs sm:text-xs font-bold uppercase tracking-widest transition-all cursor-pointer",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1877F2]",
         disabled && "cursor-not-allowed",
         variant === "candle-unlit" && [

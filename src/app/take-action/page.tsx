@@ -44,30 +44,30 @@ export default function TakeActionPage() {
           <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col md:flex-row items-center md:items-center justify-center gap-3 hover:bg-slate-50 transition-colors duration-500 text-center md:text-left h-full">
             <FileText className="w-7 h-7 md:w-8 md:h-8 text-[#1877F2] shrink-0" strokeWidth={1.5} />
             <div className="max-w-[200px]">
-              <h3 className="font-bold text-[10px] md:text-[11px] uppercase tracking-widest mb-1 text-slate-900 leading-tight">READY TEMPLATES</h3>
-              <p className="text-slate-500 text-[10px] md:text-[11px] leading-tight">Professional &<br className="hidden md:block"/>effective letters.</p>
+              <h3 className="font-bold text-xs md:text-xs uppercase tracking-widest mb-1 text-slate-900 leading-tight">READY TEMPLATES</h3>
+              <p className="text-slate-500 text-xs md:text-xs leading-tight">Professional &<br className="hidden md:block"/>effective letters.</p>
             </div>
           </div>
           <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col md:flex-row items-center md:items-center justify-center gap-3 hover:bg-slate-50 transition-colors duration-500 border-l border-slate-100 md:border-l-0 text-center md:text-left h-full">
             <Clock className="w-7 h-7 md:w-8 md:h-8 text-[#1877F2] shrink-0" strokeWidth={1.5} />
             <div className="max-w-[200px]">
-              <h3 className="font-bold text-[10px] md:text-[11px] uppercase tracking-widest mb-1 text-slate-900 leading-tight">SAVE TIME</h3>
-              <p className="text-slate-500 text-[10px] md:text-[11px] leading-tight">Skip the blank page.<br className="hidden md:block"/>Make impact fast.</p>
+              <h3 className="font-bold text-xs md:text-xs uppercase tracking-widest mb-1 text-slate-900 leading-tight">SAVE TIME</h3>
+              <p className="text-slate-500 text-xs md:text-xs leading-tight">Skip the blank page.<br className="hidden md:block"/>Make impact fast.</p>
             </div>
           </div>
           <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col md:flex-row items-center md:items-center justify-center gap-3 hover:bg-slate-50 transition-colors duration-500 text-center md:text-left h-full">
             <Shield className="w-7 h-7 md:w-8 md:h-8 text-[#1877F2] shrink-0" strokeWidth={1.5} />
             <div className="max-w-[200px]">
-              <h3 className="font-bold text-[10px] md:text-[11px] uppercase tracking-widest mb-1 text-slate-900 leading-tight">DRIVE CHANGE</h3>
-              <p className="text-slate-500 text-[10px] md:text-[11px] leading-tight">Demand accountability<br className="hidden md:block"/>and reform.</p>
+              <h3 className="font-bold text-xs md:text-xs uppercase tracking-widest mb-1 text-slate-900 leading-tight">DRIVE CHANGE</h3>
+              <p className="text-slate-500 text-xs md:text-xs leading-tight">Demand accountability<br className="hidden md:block"/>and reform.</p>
             </div>
           </div>
           <div className="py-6 px-3 lg:py-8 lg:px-6 flex flex-col justify-center items-center hover:bg-slate-50 transition-colors duration-500 border-l border-slate-100 md:border-l-0">
             <div className={`text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-[#1877F2] leading-none mb-1 ${hybrid.editorialHeading}`}>
               <AnimatedCounter from={0} to={4281} duration={2} />
             </div>
-            <div className="text-[10px] font-bold uppercase tracking-widest text-slate-900 mt-1">LETTERS SENT</div>
-            <div className="text-[9px] text-slate-500">and counting.</div>
+            <div className="text-xs font-bold uppercase tracking-widest text-slate-900 mt-1">LETTERS SENT</div>
+            <div className="text-xs text-slate-500">and counting.</div>
           </div>
         </div>
       </EditorialSection>
@@ -93,7 +93,7 @@ export default function TakeActionPage() {
               </div>
               <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-3">Write to your MP</h3>
               <p className="text-slate-500 text-sm mb-8 flex-grow">Find your local Member of Parliament and send a personalised letter demanding legislative change and better support.</p>
-              <div className="text-[11px] font-bold uppercase tracking-widest text-[#1877F2] flex items-center gap-2">
+              <div className="text-xs font-bold uppercase tracking-widest text-[#1877F2] flex items-center gap-2">
                 Start Writing <ArrowRight className="w-4 h-4" />
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function TakeActionPage() {
               </div>
               <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-3">Browse Templates</h3>
               <p className="text-slate-500 text-sm mb-8 flex-grow">Access our library of professionally written templates targeting specific campaigns and issues.</p>
-              <div className="text-[11px] font-bold uppercase tracking-widest text-[#1877F2] flex items-center gap-2">
+              <div className="text-xs font-bold uppercase tracking-widest text-[#1877F2] flex items-center gap-2">
                 View Templates <ArrowRight className="w-4 h-4" />
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function TakeActionPage() {
               className="bg-white rounded-3xl border border-[#1877F2]/20 shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center cursor-pointer group relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#1877F2]/10 blur-3xl rounded-full" />
-              <div className="inline-flex items-center gap-2 bg-[#1877F2]/10 text-[#1877F2] font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full mb-6 relative z-10">
+              <div className="inline-flex items-center gap-2 bg-[#1877F2]/10 text-[#1877F2] font-bold text-xs uppercase tracking-widest px-3 py-1.5 rounded-full mb-6 relative z-10">
                 New Tool
               </div>
               <div className="w-20 h-20 rounded-2xl bg-[#050A14] flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300 relative z-10 shadow-xl">
@@ -127,7 +127,7 @@ export default function TakeActionPage() {
               </div>
               <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-3 relative z-10">Submit FOI Request</h3>
               <p className="text-slate-500 text-sm mb-8 flex-grow relative z-10">Legally demand answers. Send Freedom of Information requests to multiple UK police forces simultaneously.</p>
-              <div className="text-[11px] font-bold uppercase tracking-widest text-[#1877F2] flex items-center gap-2 relative z-10">
+              <div className="text-xs font-bold uppercase tracking-widest text-[#1877F2] flex items-center gap-2 relative z-10">
                 Launch FOI Tool <ArrowRight className="w-4 h-4" />
               </div>
             </div>

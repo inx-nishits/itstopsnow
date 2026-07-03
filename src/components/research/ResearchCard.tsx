@@ -33,18 +33,18 @@ export default function ResearchCard({ item }: ResearchCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#010B19]/70 via-transparent to-transparent" />
         <div className="absolute top-3 left-3 flex flex-wrap gap-2">
           {item.featured ? (
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-[#1877F2] px-3 py-1.5 rounded-full border border-[#1877F2]/20 whitespace-nowrap">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-white bg-[#1877F2] px-3 py-1.5 rounded-full border border-[#1877F2]/20 whitespace-nowrap">
               Featured
             </span>
           ) : null}
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full whitespace-nowrap">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-white bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full whitespace-nowrap">
             {item.category}
           </span>
         </div>
       </div>
 
       <div className="flex flex-col flex-1 p-5 sm:p-6 min-w-0">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs text-slate-500 mb-2">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-xs text-slate-500 mb-2">
           <time>{item.date}</time>
           <span className="text-slate-300">·</span>
           <span className="line-clamp-1">{item.author}</span>
@@ -56,13 +56,13 @@ export default function ResearchCard({ item }: ResearchCardProps) {
           </Link>
         </h3>
 
-        <p className="text-[11px] sm:text-xs font-medium text-slate-500 mb-3 line-clamp-1">{item.institution}</p>
+        <p className="text-xs sm:text-xs font-medium text-slate-500 mb-3 line-clamp-1">{item.institution}</p>
 
         <p className={cn("text-sm leading-relaxed line-clamp-3 mb-4 flex-1", hybrid.editorialBody)}>{item.summary}</p>
 
         {item.keyFindings.length > 0 ? (
           <div className="mb-4 space-y-2 hidden sm:block">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
               Key findings
             </p>
             <ul className="space-y-1.5">
@@ -83,7 +83,7 @@ export default function ResearchCard({ item }: ResearchCardProps) {
             <button
               type="button"
               onClick={() => setIsPdfModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-full bg-[#1877F2] text-white text-[11px] font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0 flex-1 sm:flex-none"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-full bg-[#1877F2] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0 flex-1 sm:flex-none"
             >
               Read story
               <FileText className="w-4 h-4" />
@@ -91,7 +91,7 @@ export default function ResearchCard({ item }: ResearchCardProps) {
           ) : (
             <a
               href={`/research/${item.slug}`}
-              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-full bg-[#1877F2] text-white text-[11px] font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0 flex-1 sm:flex-none"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-full bg-[#1877F2] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#010B19] transition-colors shrink-0 flex-1 sm:flex-none"
             >
               Read story
               <FileText className="w-4 h-4" />

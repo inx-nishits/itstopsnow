@@ -46,7 +46,7 @@ export default function TakeActionStepper({ currentStep, className }: TakeAction
               <div className="min-w-0 pt-0.5">
                 <p
                   className={cn(
-                    "text-[11px] font-bold uppercase tracking-wider",
+                    "text-xs font-bold uppercase tracking-wider",
                     isCurrent ? "text-[#1877F2]" : isComplete ? "text-[#010B19]" : "text-slate-400"
                   )}
                 >

@@ -2,8 +2,9 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, ArrowRight, Loader2, FileText, CheckCircle, RotateCcw, Shield, Check, Info, Users, Clock, Flame, ChevronDown } from "lucide-react";
+import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, ArrowRight, Loader2, FileText, CheckCircle, RotateCcw, Shield, Check, Info, Users, Clock, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CustomSelect from "@/components/ui/CustomSelect";
 import { simulateSubmit } from "@/lib/mock/utils";
 import { lookupAddress, type AddressResult } from "@/lib/mock/addressLookup";
 import { motion } from "framer-motion";
@@ -106,14 +107,14 @@ function PersonalizeContent() {
       <div className="w-full border-b border-white/10 relative z-10 bg-[#02050A]">
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-4 flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold tracking-widest">
+            <div className="flex items-center gap-2 text-xs text-slate-400 font-bold tracking-widest">
               <button onClick={() => router.back()} className="hover:text-white transition-colors">Home</button>
               <span>&gt;</span>
               <button onClick={() => router.back()} className="hover:text-white transition-colors">Take Action</button>
               <span>&gt;</span>
               <span className="text-[#1877F2]">Contact Your MP</span>
             </div>
-            <div className="hidden md:flex items-center gap-2 text-[10px] text-slate-400">
+            <div className="hidden md:flex items-center gap-2 text-xs text-slate-400">
               <Shield className="w-3 h-3" /> Your information is secure and will never be shared.
             </div>
           </div>
@@ -127,28 +128,28 @@ function PersonalizeContent() {
             {/* Progress Bar */}
             <div className="flex overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-start gap-2 sm:gap-4 xl:gap-8 pb-4 mt-4 xl:mt-0 w-full xl:w-auto">
               <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[10px] font-bold">1</div>
-                <span className="text-[10px] font-bold text-white whitespace-nowrap">Find Your MP</span>
+                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs font-bold">1</div>
+                <span className="text-xs font-bold text-white whitespace-nowrap">Find Your MP</span>
               </div>
               <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
               <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[10px] font-bold">2</div>
-                <span className="text-[10px] font-bold text-white whitespace-nowrap">Personalise</span>
+                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs font-bold">2</div>
+                <span className="text-xs font-bold text-white whitespace-nowrap">Personalise</span>
               </div>
               <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
               <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[10px] font-bold">3</div>
-                <span className="text-[10px] font-bold text-slate-300 whitespace-nowrap">Preview</span>
+                <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs font-bold">3</div>
+                <span className="text-xs font-bold text-slate-300 whitespace-nowrap">Preview</span>
               </div>
               <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
               <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-[10px] font-bold">4</div>
-                <span className="text-[10px] font-bold text-slate-500 whitespace-nowrap">Add Your Voice</span>
+                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-xs font-bold">4</div>
+                <span className="text-xs font-bold text-slate-500 whitespace-nowrap">Add Your Voice</span>
               </div>
               <div className="w-4 sm:w-8 xl:w-12 h-px bg-white/20 mt-3 shrink-0"></div>
               <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-[10px] font-bold">5</div>
-                <span className="text-[10px] font-bold text-slate-500 whitespace-nowrap">Send Letter</span>
+                <div className="w-6 h-6 rounded-full bg-[#1A2332] text-slate-500 flex items-center justify-center text-xs font-bold">5</div>
+                <span className="text-xs font-bold text-slate-500 whitespace-nowrap">Send Letter</span>
               </div>
             </div>
           </div>
@@ -163,10 +164,10 @@ function PersonalizeContent() {
           <div className="lg:col-span-3 flex flex-col gap-4 md:gap-6 max-lg:contents">
             <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-1 lg:order-none">
               <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-2">
-                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">1</span>
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs md:text-xs shrink-0">1</span>
                 FIND YOUR MP
               </h2>
-              <p className="text-[10px] md:text-xs text-slate-500 mb-4">Enter your postcode to find your Member of Parliament</p>
+              <p className="text-xs md:text-xs text-slate-500 mb-4">Enter your postcode to find your Member of Parliament</p>
               
               <div className="flex gap-2 mb-4 items-stretch">
                 <input 
@@ -209,7 +210,7 @@ function PersonalizeContent() {
                       <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-3">
                         <MapPin className="w-3 h-3" /> House of Commons, London SW1A 0AA
                       </div>
-                      <a href="#" className="text-[#1877F2] text-[10px] font-bold uppercase hover:underline">View on parliament.uk</a>
+                      <a href="#" className="text-[#1877F2] text-xs font-bold uppercase hover:underline">View on parliament.uk</a>
                     </div>
                   </div>
                 </motion.div>
@@ -218,28 +219,25 @@ function PersonalizeContent() {
 
             <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-2 lg:order-none">
               <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-2">
-                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">2</span>
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs md:text-xs shrink-0">2</span>
                 CHOOSE A CAMPAIGN
               </h2>
-              <p className="text-[10px] md:text-xs text-slate-500 mb-5">Select the issue you want to raise</p>
+              <p className="text-xs md:text-xs text-slate-500 mb-5">Select the issue you want to raise</p>
               
-              <div className="flex flex-col gap-4 relative">
-                <select
+              <div className="flex flex-col gap-4">
+                <CustomSelect
                   value={selectedTemplate}
-                  onChange={(e) => setSelectedTemplate(Number(e.target.value))}
-                  className="w-full bg-white border border-slate-300 rounded-md px-3 py-3 text-[13px] md:text-sm font-medium text-slate-900 focus:outline-none focus:border-[#1877F2] appearance-none"
-                >
-                  {TEMPLATES.map(t => (
-                    <option key={t.id} value={t.id}>
-                      {t.title}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-[14px] pointer-events-none" />
+                  onChange={setSelectedTemplate}
+                  options={TEMPLATES.map((template) => ({
+                    value: template.id,
+                    label: template.title,
+                  }))}
+                  ariaLabel="Choose a campaign"
+                />
                 
                 {TEMPLATES.find(t => t.id === selectedTemplate) && (
                   <div className="bg-slate-50 p-3 rounded-md border border-slate-100 mt-2">
-                    <p className="text-[11px] md:text-xs text-slate-600 leading-snug">
+                    <p className="text-xs md:text-xs text-slate-600 leading-snug">
                       {TEMPLATES.find(t => t.id === selectedTemplate)?.description}
                     </p>
                   </div>
@@ -247,7 +245,7 @@ function PersonalizeContent() {
               </div>
               
               <div className="mt-5 pt-4 border-t border-slate-100">
-                <button className="text-[#1877F2] text-[10px] font-bold hover:underline flex items-center gap-1 uppercase tracking-widest">
+                <button className="text-[#1877F2] text-xs font-bold hover:underline flex items-center gap-1 uppercase tracking-widest">
                   View all campaigns <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
@@ -259,14 +257,14 @@ function PersonalizeContent() {
             <div className="bg-white rounded-xl text-slate-900 shadow-lg flex flex-col h-[500px] lg:h-full border border-slate-200 overflow-hidden order-4 lg:order-none">
               <div className="p-4 md:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50">
                 <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight">
-                  <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">3</span>
+                  <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs md:text-xs shrink-0">3</span>
                   PREVIEW YOUR LETTER
                 </h2>
                 <div className="flex items-center gap-2 self-start sm:self-auto w-full sm:w-auto">
-                  <button onClick={handleReset} className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-200 px-3 py-1.5 rounded-md shadow-sm whitespace-nowrap">
+                  <button onClick={handleReset} className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-200 px-3 py-1.5 rounded-md shadow-sm whitespace-nowrap">
                     <RotateCcw className="w-3 h-3 shrink-0" /> Reset
                   </button>
-                  <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-200 px-3 py-1.5 rounded-md shadow-sm whitespace-nowrap">
+                  <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-200 px-3 py-1.5 rounded-md shadow-sm whitespace-nowrap">
                     <FileText className="w-3 h-3 shrink-0" /> Edit Template
                   </button>
                 </div>
@@ -306,7 +304,7 @@ function PersonalizeContent() {
 
                   <div className="mt-8 p-4 bg-blue-50/50 border border-blue-100 rounded-lg flex items-start gap-3">
                     <Info className="w-4 h-4 text-[#1877F2] shrink-0 mt-0.5" />
-                    <p className="text-[10px] md:text-xs text-[#1877F2] font-medium leading-relaxed">This is a template letter. You can edit it and add your own personal message in the next step.</p>
+                    <p className="text-xs md:text-xs text-[#1877F2] font-medium leading-relaxed">This is a template letter. You can edit it and add your own personal message in the next step.</p>
                   </div>
                 </div>
               </div>
@@ -326,13 +324,13 @@ function PersonalizeContent() {
           <div className="lg:col-span-3 flex flex-col gap-4 md:gap-6 max-lg:contents">
             <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-3 lg:order-none">
               <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-4">
-                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">4</span>
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs md:text-xs shrink-0">4</span>
                 PERSONALISE YOUR LETTER
               </h2>
               
               <div className="space-y-4">
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Name <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Name <span className="text-red-500">*</span></label>
                   <input 
                     type="text" 
                     value={name}
@@ -341,10 +339,10 @@ function PersonalizeContent() {
                     placeholder="John Smith"
                     className={`w-full bg-white border ${!name && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none`}
                   />
-                  {!name && sendError && <p className="text-[10px] text-red-500 mt-1">Name is required.</p>}
+                  {!name && sendError && <p className="text-xs text-red-500 mt-1">Name is required.</p>}
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Email <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Email <span className="text-red-500">*</span></label>
                   <input 
                     type="email" 
                     value={email}
@@ -353,11 +351,11 @@ function PersonalizeContent() {
                     placeholder="john.smith@email.com"
                     className={`w-full bg-white border ${(!email || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none`}
                   />
-                  {!email && sendError && <p className="text-[10px] text-red-500 mt-1">Email is required.</p>}
-                  {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && sendError && <p className="text-[10px] text-red-500 mt-1">Please enter a valid email address.</p>}
+                  {!email && sendError && <p className="text-xs text-red-500 mt-1">Email is required.</p>}
+                  {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && sendError && <p className="text-xs text-red-500 mt-1">Please enter a valid email address.</p>}
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Full Address <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-bold uppercase tracking-widest mb-1 block text-slate-400">Your Full Address <span className="text-red-500">*</span></label>
                   {!address ? (
                     <div className="space-y-3">
                       <div className="flex gap-2">
@@ -383,23 +381,20 @@ function PersonalizeContent() {
                           }}
                         />
                       </div>
-                      <p className="text-[10px] text-slate-500 mt-1">Type your postcode and press enter to search</p>
-                      {addressLoading && <div className="text-[10px] text-[#1877F2] flex items-center gap-2"><Loader2 className="w-3 h-3 animate-spin"/> Searching...</div>}
-                      {addressError && <p className="text-[10px] text-red-500">{addressError}</p>}
+                      <p className="text-xs text-slate-500 mt-1">Type your postcode and press enter to search</p>
+                      {addressLoading && <div className="text-xs text-[#1877F2] flex items-center gap-2"><Loader2 className="w-3 h-3 animate-spin"/> Searching...</div>}
+                      {addressError && <p className="text-xs text-red-500">{addressError}</p>}
                       {addressResults.length > 0 && (
-                        <div className="relative">
-                          <select 
-                            onChange={(e) => setAddress(e.target.value)}
-                            className="w-full bg-white border border-slate-300 rounded-md px-3 py-3 text-[13px] text-slate-900 focus:outline-none focus:border-[#1877F2] appearance-none"
-                            defaultValue=""
-                          >
-                            <option value="" disabled>Select your address...</option>
-                            {addressResults.map(r => (
-                              <option key={r.id} value={r.formattedAddress}>{r.formattedAddress}</option>
-                            ))}
-                          </select>
-                          <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-[14px] pointer-events-none" />
-                        </div>
+                        <CustomSelect
+                          value={address}
+                          onChange={setAddress}
+                          placeholder="Select your address..."
+                          options={addressResults.map((result) => ({
+                            value: result.formattedAddress,
+                            label: result.formattedAddress,
+                          }))}
+                          ariaLabel="Select your address"
+                        />
                       )}
                     </div>
                   ) : (
@@ -411,21 +406,21 @@ function PersonalizeContent() {
                       />
                       <button 
                         onClick={() => { setAddress(""); setAddressResults([]); }}
-                        className="absolute top-2 right-2 text-[10px] text-[#1877F2] font-bold uppercase tracking-widest hover:underline bg-white px-2 py-1 rounded border border-blue-100"
+                        className="absolute top-2 right-2 text-xs text-[#1877F2] font-bold uppercase tracking-widest hover:underline bg-white px-2 py-1 rounded border border-blue-100"
                       >
                         Change
                       </button>
                     </div>
                   )}
-                  {(!address) && sendError && <p className="text-[10px] text-red-500 mt-1">Full address is required.</p>}
-                  <p className="text-[10px] text-slate-500 mt-1">MPs require a full address to confirm you are a constituent.</p>
+                  {(!address) && sendError && <p className="text-xs text-red-500 mt-1">Full address is required.</p>}
+                  <p className="text-xs text-slate-500 mt-1">MPs require a full address to confirm you are a constituent.</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-white rounded-xl p-5 md:p-6 text-slate-900 shadow-lg border border-slate-200 order-5 lg:order-none">
               <h2 className="flex items-center gap-2 md:gap-3 font-black text-base md:text-lg uppercase tracking-tight mb-4">
-                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[11px] md:text-xs shrink-0">5</span>
+                <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs md:text-xs shrink-0">5</span>
                 SEND YOUR LETTER
               </h2>
               
@@ -434,19 +429,19 @@ function PersonalizeContent() {
                   <div className="w-6 h-6 rounded-full bg-blue-50/80 flex items-center justify-center shrink-0 border border-blue-100">
                     <Mail className="w-3 h-3 text-[#1877F2]" />
                   </div>
-                  <p className="text-[11px] md:text-xs text-slate-600 leading-snug mt-0.5">We will send your letter directly to your MP via email.</p>
+                  <p className="text-xs md:text-xs text-slate-600 leading-snug mt-0.5">We will send your letter directly to your MP via email.</p>
                 </div>
                 <div className="flex gap-3">
                   <div className="w-6 h-6 rounded-full bg-blue-50/80 flex items-center justify-center shrink-0 border border-blue-100">
                     <Shield className="w-3 h-3 text-[#1877F2]" />
                   </div>
-                  <p className="text-[11px] md:text-xs text-slate-600 leading-snug mt-0.5">Your details will not be shared with anyone.</p>
+                  <p className="text-xs md:text-xs text-slate-600 leading-snug mt-0.5">Your details will not be shared with anyone.</p>
                 </div>
                 <div className="flex gap-3">
                   <div className="w-6 h-6 rounded-full bg-blue-50/80 flex items-center justify-center shrink-0 border border-blue-100">
                     <CheckCircle className="w-3 h-3 text-[#1877F2]" />
                   </div>
-                  <p className="text-[11px] md:text-xs text-slate-600 leading-snug mt-0.5">You'll receive a confirmation when your letter has been sent.</p>
+                  <p className="text-xs md:text-xs text-slate-600 leading-snug mt-0.5">You'll receive a confirmation when your letter has been sent.</p>
                 </div>
               </div>
 
@@ -473,9 +468,9 @@ function PersonalizeContent() {
                 {isSending ? "SENDING..." : sendSuccess ? "SENT!" : "SEND MY LETTER"} <ArrowRight className="w-4 h-4 ml-1.5" />
               </Button>
               {mpFound && !mpFound.email && (
-                <p className="text-red-500 text-[10px] mt-3 text-center font-bold">This MP does not have an email address available on record. The letter cannot be sent.</p>
+                <p className="text-red-500 text-xs mt-3 text-center font-bold">This MP does not have an email address available on record. The letter cannot be sent.</p>
               )}
-              {sendError && <p className="text-red-500 text-[10px] mt-2 text-center">{sendError}</p>}
+              {sendError && <p className="text-red-500 text-xs mt-2 text-center">{sendError}</p>}
             </div>
           </div>
 

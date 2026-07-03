@@ -59,7 +59,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                   </p>
                   <div>
                     <Link href="/the-issue">
-                      <Button className="border border-slate-300 text-[#010B19] bg-transparent hover:bg-[#010B19] hover:text-white font-bold px-8 sm:px-10 py-6 sm:py-7 rounded-full text-xs tracking-widest uppercase transition-all hover:-translate-y-0.5">
+                      <Button className="border border-slate-300 text-[#010B19] bg-transparent hover:bg-[#010B19] hover:text-white font-bold px-8 sm:px-10 py-6 sm:py-7 rounded-full text-xs lg:text-sm tracking-widest uppercase transition-all hover:-translate-y-0.5">
                         LEARN THE FACTS
                       </Button>
                     </Link>
@@ -90,14 +90,14 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-center gap-3 sm:gap-4">
                         <div className="w-8 sm:w-10 h-[2px] bg-[#1877F2]/50 md:bg-white/25 shrink-0" />
-                        <span className="text-slate-300 text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase">
+                        <span className="text-slate-300 text-xs sm:text-xs lg:text-sm font-bold tracking-[0.2em] uppercase">
                           The Mission
                         </span>
                       </div>
                       <button
                         type="button"
                         onClick={() => setIsGetInvolvedOpen(true)}
-                        className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-white hover:text-[#010B19] text-xs font-bold uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 cursor-pointer shadow-[0_8px_24px_rgba(24,119,242,0.35)] ring-2 ring-[#1877F2]/20 min-h-[48px]"
+                        className="w-full sm:w-auto bg-[#1877F2] text-white hover:bg-white hover:text-[#010B19] text-xs lg:text-sm font-bold uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 cursor-pointer shadow-[0_8px_24px_rgba(24,119,242,0.35)] ring-2 ring-[#1877F2]/20 min-h-[48px]"
                       >
                         Get Involved
                       </button>
@@ -220,7 +220,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                   </div>
                   <button
                     onClick={() => setIsGetInvolvedOpen(true)}
-                    className="hidden sm:inline-flex shrink-0 items-center gap-3 bg-[#1877F2] hover:bg-white hover:text-[#010B19] text-white font-black text-xs tracking-widest uppercase px-6 py-3.5 rounded-full transition-all duration-300 group cursor-pointer shadow-[0_8px_24px_rgba(24,119,242,0.35)]"
+                    className="hidden sm:inline-flex shrink-0 items-center gap-3 bg-[#1877F2] hover:bg-white hover:text-[#010B19] text-white font-black text-xs lg:text-sm tracking-widest uppercase px-6 py-3.5 rounded-full transition-all duration-300 group cursor-pointer shadow-[0_8px_24px_rgba(24,119,242,0.35)]"
                   >
                     Get Involved
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -228,85 +228,121 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 </div>
               </SectionReveal>
 
-              {/* 2 × 2 Pillar Grid */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
+              {/* 1-Column Vertical Stack */}
+              <div className="flex flex-col gap-2 sm:gap-3 lg:gap-4">
 
                 {/* Pillar 1 */}
                 <SectionReveal delay={0.05}>
-                  <div className="group relative rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-[#0c1a30] backdrop-blur-sm p-4 sm:p-6 overflow-hidden transition-all duration-500 hover:border-[#1877F2]/40 hover:shadow-[0_20px_60px_rgba(24,119,242,0.12)]">
-                    <span className="absolute top-3 right-3 sm:top-4 sm:right-4 text-4xl sm:text-5xl font-black text-white/[0.04] select-none leading-none">01</span>
-                    <div className="absolute left-0 top-5 bottom-5 w-[3px] rounded-r-full bg-transparent group-hover:bg-[#1877F2] transition-all duration-300" />
-                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#1877F2]/10 border border-[#1877F2]/20 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-all duration-400 mb-3 shadow-md">
-                      <Megaphone className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <div className="group relative rounded-xl border border-white/[0.07] bg-[#020c1b] overflow-hidden transition-all duration-500 p-4 sm:p-5 flex items-center">
+                    {/* Background Image */}
+                    <div className="absolute right-0 top-0 bottom-0 w-2/3 overflow-hidden z-0 pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#020c1b] via-[#020c1b]/80 to-transparent z-10" />
+                      <Image src="/images/take-action-hero.png" alt="Raise Awareness" fill className="object-cover opacity-20 mix-blend-luminosity group-hover:scale-105 transition-transform duration-700 group-hover:opacity-30" />
                     </div>
-                    <h5 className="font-black text-xs sm:text-sm text-white uppercase tracking-wider mb-1 group-hover:text-[#1877F2] transition-colors duration-300 leading-tight">
-                      Raise Awareness
-                    </h5>
-                    <p className="text-slate-400 text-[11px] sm:text-xs leading-snug font-medium group-hover:text-slate-200 transition-colors duration-300 hidden sm:block">
-                      Start conversations that challenge stigma and drive change.
-                    </p>
+                    
+                    <div className="relative z-10 flex items-center gap-4 sm:gap-6 w-full">
+                      <div className="shrink-0 text-[#1877F2]">
+                        <Megaphone className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1.5} />
+                      </div>
+                      <div className="flex flex-col">
+                        <h5 className="font-black text-sm sm:text-base text-white uppercase tracking-wider mb-0.5 group-hover:text-[#1877F2] transition-colors duration-300">
+                          Raise Awareness
+                        </h5>
+                        <p className="text-slate-400 text-xs sm:text-xs lg:text-sm leading-snug font-medium group-hover:text-slate-300 transition-colors duration-300">
+                          Start conversations that create change.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </SectionReveal>
 
                 {/* Pillar 2 */}
                 <SectionReveal delay={0.1}>
-                  <div className="group relative rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-[#0c1a30] backdrop-blur-sm p-4 sm:p-6 overflow-hidden transition-all duration-500 hover:border-[#1877F2]/40 hover:shadow-[0_20px_60px_rgba(24,119,242,0.12)]">
-                    <span className="absolute top-3 right-3 sm:top-4 sm:right-4 text-4xl sm:text-5xl font-black text-white/[0.04] select-none leading-none">02</span>
-                    <div className="absolute left-0 top-5 bottom-5 w-[3px] rounded-r-full bg-transparent group-hover:bg-[#1877F2] transition-all duration-300" />
-                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#1877F2]/10 border border-[#1877F2]/20 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-all duration-400 mb-3 shadow-md">
-                      <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <div className="group relative rounded-xl border border-white/[0.07] bg-[#020c1b] overflow-hidden transition-all duration-500 p-4 sm:p-5 flex items-center">
+                    {/* Background Image */}
+                    <div className="absolute right-0 top-0 bottom-0 w-2/3 overflow-hidden z-0 pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#020c1b] via-[#020c1b]/80 to-transparent z-10" />
+                      <Image src="/images/mission-support.png" alt="Support" fill className="object-cover opacity-20 mix-blend-luminosity group-hover:scale-105 transition-transform duration-700 group-hover:opacity-30" />
                     </div>
-                    <h5 className="font-black text-xs sm:text-sm text-white uppercase tracking-wider mb-1 group-hover:text-[#1877F2] transition-colors duration-300 leading-tight">
-                      Support
-                    </h5>
-                    <p className="text-slate-400 text-[11px] sm:text-xs leading-snug font-medium group-hover:text-slate-200 transition-colors duration-300 hidden sm:block">
-                      Practical resources, crisis guidance, and real community.
-                    </p>
+
+                    <div className="relative z-10 flex items-center gap-4 sm:gap-6 w-full">
+                      <div className="shrink-0 text-[#1877F2]">
+                        <Heart className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1.5} />
+                      </div>
+                      <div className="flex flex-col">
+                        <h5 className="font-black text-sm sm:text-base text-white uppercase tracking-wider mb-0.5 group-hover:text-[#1877F2] transition-colors duration-300">
+                          Support
+                        </h5>
+                        <p className="text-slate-400 text-xs sm:text-xs lg:text-sm leading-snug font-medium group-hover:text-slate-300 transition-colors duration-300">
+                          Practical resources, guidance and community.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </SectionReveal>
 
                 {/* Pillar 3 */}
                 <SectionReveal delay={0.15}>
-                  <div className="group relative rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-[#0c1a30] backdrop-blur-sm p-4 sm:p-6 overflow-hidden transition-all duration-500 hover:border-[#1877F2]/40 hover:shadow-[0_20px_60px_rgba(24,119,242,0.12)]">
-                    <span className="absolute top-3 right-3 sm:top-4 sm:right-4 text-4xl sm:text-5xl font-black text-white/[0.04] select-none leading-none">03</span>
-                    <div className="absolute left-0 top-5 bottom-5 w-[3px] rounded-r-full bg-transparent group-hover:bg-[#1877F2] transition-all duration-300" />
-                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#1877F2]/10 border border-[#1877F2]/20 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-all duration-400 mb-3 shadow-md">
-                      <Scale className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <div className="group relative rounded-xl border border-white/[0.07] bg-[#020c1b] overflow-hidden transition-all duration-500 p-4 sm:p-5 flex items-center">
+                    {/* Background Image */}
+                    <div className="absolute right-0 top-0 bottom-0 w-2/3 overflow-hidden z-0 pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#020c1b] via-[#020c1b]/80 to-transparent z-10" />
+                      <Image src="/images/uk_police_memorial_bg.png" alt="Advocate" fill className="object-cover opacity-20 mix-blend-luminosity group-hover:scale-105 transition-transform duration-700 group-hover:opacity-30" />
                     </div>
-                    <h5 className="font-black text-xs sm:text-sm text-white uppercase tracking-wider mb-1 group-hover:text-[#1877F2] transition-colors duration-300 leading-tight">
-                      Advocate
-                    </h5>
-                    <p className="text-slate-400 text-[11px] sm:text-xs leading-snug font-medium group-hover:text-slate-200 transition-colors duration-300 hidden sm:block">
-                      Campaign for reform, fairness, and accountability.
-                    </p>
+
+                    <div className="relative z-10 flex items-center gap-4 sm:gap-6 w-full">
+                      <div className="shrink-0 text-[#1877F2]">
+                        <Scale className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1.5} />
+                      </div>
+                      <div className="flex flex-col">
+                        <h5 className="font-black text-sm sm:text-base text-white uppercase tracking-wider mb-0.5 group-hover:text-[#1877F2] transition-colors duration-300">
+                          Advocate
+                        </h5>
+                        <p className="text-slate-400 text-xs sm:text-xs lg:text-sm leading-snug font-medium group-hover:text-slate-300 transition-colors duration-300">
+                          Campaigning for reform and accountability.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </SectionReveal>
 
                 {/* Pillar 4 */}
                 <SectionReveal delay={0.2}>
-                  <div className="group relative rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-[#0c1a30] backdrop-blur-sm p-4 sm:p-6 overflow-hidden transition-all duration-500 hover:border-[#1877F2]/40 hover:shadow-[0_20px_60px_rgba(24,119,242,0.12)]">
-                    <span className="absolute top-3 right-3 sm:top-4 sm:right-4 text-4xl sm:text-5xl font-black text-white/[0.04] select-none leading-none">04</span>
-                    <div className="absolute left-0 top-5 bottom-5 w-[3px] rounded-r-full bg-transparent group-hover:bg-[#1877F2] transition-all duration-300" />
-                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#1877F2]/10 border border-[#1877F2]/20 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-all duration-400 mb-3 shadow-md">
-                      <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <div className="group relative rounded-xl border border-white/[0.07] bg-[#020c1b] overflow-hidden transition-all duration-500 p-4 sm:p-5 flex items-center">
+                    {/* Background Image */}
+                    <div className="absolute right-0 top-0 bottom-0 w-2/3 overflow-hidden z-0 pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#020c1b] via-[#020c1b]/80 to-transparent z-10" />
+                      <Image src="/images/candle_glow.png" alt="Remember" fill className="object-cover opacity-20 mix-blend-luminosity group-hover:scale-105 transition-transform duration-700 group-hover:opacity-30" />
                     </div>
-                    <h5 className="font-black text-xs sm:text-sm text-white uppercase tracking-wider mb-1 group-hover:text-[#1877F2] transition-colors duration-300 leading-tight">
-                      Remember
-                    </h5>
-                    <p className="text-slate-400 text-[11px] sm:text-xs leading-snug font-medium group-hover:text-slate-200 transition-colors duration-300 hidden sm:block">
-                      Honour every officer lost — never forgotten.
-                    </p>
+
+                    <div className="relative z-10 flex items-center gap-4 sm:gap-6 w-full">
+                      <div className="shrink-0 text-[#1877F2]">
+                        <Flame className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1.5} />
+                      </div>
+                      <div className="flex flex-col">
+                        <h5 className="font-black text-sm sm:text-base text-white uppercase tracking-wider mb-0.5 group-hover:text-[#1877F2] transition-colors duration-300">
+                          Remember
+                        </h5>
+                        <p className="text-slate-400 text-xs sm:text-xs lg:text-sm leading-snug font-medium group-hover:text-slate-300 transition-colors duration-300">
+                          Honouring every officer we've lost.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </SectionReveal>
+
               </div>
 
-              {/* Mobile-only CTA */}
+              {/* Mobile CTA Button */}
               <SectionReveal delay={0.25}>
                 <button
                   onClick={() => setIsGetInvolvedOpen(true)}
-                  className="sm:hidden w-full mt-3 flex items-center justify-between bg-[#1877F2] hover:bg-blue-700 text-white font-black text-sm tracking-widest uppercase px-5 py-4 rounded-2xl transition-all duration-300 shadow-[0_8px_20px_rgba(24,119,242,0.3)] cursor-pointer group"
+                  className="sm:hidden w-full mt-3 flex items-center justify-between bg-[#1877F2] hover:bg-blue-600 text-white px-5 py-3.5 rounded-xl transition-all duration-300 shadow-[0_8px_20px_rgba(24,119,242,0.3)] cursor-pointer group"
                 >
-                  <span>Get Involved</span>
+                  <div className="flex flex-col text-left">
+                    <span className="font-black text-sm tracking-widest uppercase">Get Involved</span>
+                    <span className="text-xs font-semibold text-white/80">Be part of the change.</span>
+                  </div>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </SectionReveal>
@@ -340,7 +376,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
           <SectionReveal>
             <div className="inline-flex items-center gap-3 mb-4 justify-center">
               <div className="h-px w-8 bg-[#1877F2]" />
-              <span className="text-[#1877F2] text-xs font-black tracking-[0.3em] uppercase">Stay Informed</span>
+              <span className="text-[#1877F2] text-xs lg:text-sm font-black tracking-[0.3em] uppercase">Stay Informed</span>
               <div className="h-px w-8 bg-[#1877F2]" />
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white mb-3 leading-tight">
@@ -374,7 +410,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
                 <button
                   type="submit"
                   disabled={isSubscribing}
-                  className="shrink-0 bg-[#1877F2] hover:bg-white hover:text-[#010B19] disabled:opacity-60 text-white font-black text-xs tracking-widest uppercase px-7 py-4 rounded-2xl transition-all duration-300 cursor-pointer shadow-[0_8px_24px_rgba(24,119,242,0.3)]"
+                  className="shrink-0 bg-[#1877F2] hover:bg-white hover:text-[#010B19] disabled:opacity-60 text-white font-black text-xs lg:text-sm tracking-widest uppercase px-7 py-4 rounded-2xl transition-all duration-300 cursor-pointer shadow-[0_8px_24px_rgba(24,119,242,0.3)]"
                 >
                   {isSubscribing ? "Joining..." : "Subscribe"}
                 </button>

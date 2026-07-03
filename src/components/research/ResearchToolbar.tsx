@@ -55,7 +55,7 @@ export default function ResearchToolbar({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               className={cn(
-                "w-full pl-10 sm:pl-14 pr-4 sm:pr-6 py-2.5 sm:py-4 text-[9px] sm:text-[10px] uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors",
+                "w-full pl-10 sm:pl-14 pr-4 sm:pr-6 py-2.5 sm:py-4 text-xs sm:text-xs uppercase tracking-widest font-bold rounded-full focus:outline-none transition-colors",
                 hybrid.editorialInput
               )}
               aria-label="Search research"

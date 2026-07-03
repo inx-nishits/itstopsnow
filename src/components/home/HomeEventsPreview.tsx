@@ -32,7 +32,7 @@ export default function HomeEventsPreview({ events }: HomeEventsPreviewProps) {
             </div>
             <Link
               href="/events"
-              className="inline-flex items-center gap-1.5 shrink-0 text-[#1877F2] hover:text-[#010B19] text-xs font-bold uppercase tracking-widest transition-colors group"
+              className="inline-flex items-center gap-1.5 shrink-0 text-[#1877F2] hover:text-[#010B19] text-xs lg:text-sm font-bold uppercase tracking-widest transition-colors group"
             >
               View all events
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -47,12 +47,12 @@ export default function HomeEventsPreview({ events }: HomeEventsPreviewProps) {
                 className="group flex flex-col md:h-full bg-white border border-slate-200/90 rounded-xl md:rounded-2xl p-4 sm:p-5 hover:border-[#1877F2]/30 hover:shadow-sm transition-all duration-300"
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2 text-[#1877F2] text-[10px] font-bold uppercase tracking-widest">
+                  <div className="flex items-center gap-2 text-[#1877F2] text-xs lg:text-sm font-bold uppercase tracking-widest">
                     <Calendar className="w-3.5 h-3.5 shrink-0" />
                     {event.date}
                   </div>
                   {event.badge && (
-                    <span className="shrink-0 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/15">
+                    <span className="shrink-0 text-xs lg:text-sm font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/15">
                       {event.badge}
                     </span>
                   )}
@@ -66,20 +66,20 @@ export default function HomeEventsPreview({ events }: HomeEventsPreviewProps) {
                   {event.description}
                 </p>
 
-                <div className="space-y-1 text-slate-500 text-xs mt-auto pt-3 border-t border-slate-200/80">
+                <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-1.5 xl:gap-3 text-slate-500 text-xs lg:text-sm mt-auto pt-3 border-t border-slate-200/80">
                   {event.time && (
                     <div className="flex items-center gap-2">
-                      <Clock className="w-3.5 h-3.5 shrink-0" />
+                      <Clock className="w-3.5 h-3.5 lg:w-4 lg:h-4 shrink-0" />
                       <span>{event.time}</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 lg:w-4 lg:h-4 shrink-0" />
                     <span className="line-clamp-1">{event.location}</span>
                   </div>
                 </div>
 
-                <span className="inline-flex items-center gap-1.5 text-[#1877F2] text-[10px] font-bold uppercase tracking-widest mt-3 group-hover:gap-2 transition-all">
+                <span className="inline-flex items-center gap-1.5 text-[#1877F2] text-xs lg:text-sm font-bold uppercase tracking-widest mt-3 group-hover:gap-2 transition-all">
                   Learn more <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </Link>

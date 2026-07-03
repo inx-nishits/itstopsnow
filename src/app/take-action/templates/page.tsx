@@ -155,7 +155,7 @@ export default function TemplatesPage() {
       {/* Top Header */}
       <div className="w-full border-b border-white/10 relative z-10 bg-[#050A14]">
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16 py-6 flex flex-col gap-4">
-          <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold tracking-widest">
+          <div className="flex items-center gap-2 text-xs text-slate-400 font-bold tracking-widest">
             <button onClick={() => router.push('/')} className="hover:text-white transition-colors">Home</button>
             <span>&gt;</span>
             <button onClick={() => router.push('/take-action')} className="hover:text-white transition-colors">Take Action</button>
@@ -233,7 +233,7 @@ export default function TemplatesPage() {
                     className="w-full sm:w-[160px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
                     <span className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">For:</span>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">For:</span>
                       <span className="text-slate-800 font-bold">{recipientFilter}</span>
                     </span>
                     <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${recipientDropdownOpen ? "rotate-180" : ""}`} />
@@ -263,7 +263,7 @@ export default function TemplatesPage() {
                     className="w-full sm:w-[150px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
                     <span className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Voice:</span>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Voice:</span>
                       <span className="text-slate-800 font-bold">{toneFilter}</span>
                     </span>
                     <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${toneDropdownOpen ? "rotate-180" : ""}`} />
@@ -293,7 +293,7 @@ export default function TemplatesPage() {
                     className="w-full sm:w-[130px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
                     <span className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sort:</span>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Sort:</span>
                       <span className="text-slate-800 font-bold">{sortBy === "Recently Added" ? "Recent" : sortBy}</span>
                     </span>
                     <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${sortDropdownOpen ? "rotate-180" : ""}`} />
@@ -354,7 +354,7 @@ export default function TemplatesPage() {
                             </div>
                             <div className="min-w-0">
                               <div className="text-sm font-bold text-slate-900 leading-none group-hover:text-[#1877F2] transition-colors">{template.title}</div>
-                              <span className="text-[10px] text-slate-400 font-medium">ID: #{template.id}</span>
+                              <span className="text-xs text-slate-400 font-medium">ID: #{template.id}</span>
                             </div>
                           </div>
                         </td>
@@ -528,7 +528,7 @@ export default function TemplatesPage() {
             <div className="flex justify-center pt-6 md:pt-10">
               <button 
                 onClick={() => setCurrentPage(p => p + 1)}
-                className="flex items-center justify-center w-full md:w-auto text-slate-700 font-bold uppercase tracking-widest text-[11px] bg-white rounded-full border border-slate-200 hover:border-[#1877F2] hover:text-[#1877F2] shadow-sm px-8 py-3.5 transition-all animate-bounce"
+                className="flex items-center justify-center w-full md:w-auto text-slate-700 font-bold uppercase tracking-widest text-xs bg-white rounded-full border border-slate-200 hover:border-[#1877F2] hover:text-[#1877F2] shadow-sm px-8 py-3.5 transition-all animate-bounce"
               >
                 LOAD MORE TEMPLATES <ChevronDown className="hidden md:block w-4 h-4 ml-2" />
               </button>

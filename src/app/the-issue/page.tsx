@@ -79,8 +79,8 @@ export default function TheIssuePage() {
               <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight">
                 <AnimatedCounter from={0} to={68} suffix="%" duration={2} />
               </h3>
-              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Over two-thirds of gross misconduct investigations take longer than 12 months to resolve.</p>
-              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">PROLONGED INVESTIGATIONS</p>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Over two-thirds of gross misconduct investigations take longer than 12 months to resolve.</p>
+              <p className="font-bold text-xs sm:text-xs uppercase tracking-widest text-[#1877F2]">PROLONGED INVESTIGATIONS</p>
             </div>
             
             <div className="flex flex-col items-center text-center p-4 sm:p-8 lg:p-10 border-b md:border-b-0 md:border-r border-slate-100 group">
@@ -88,8 +88,8 @@ export default function TheIssuePage() {
               <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight">
                 <AnimatedCounter from={0} to={8.2} isFloat suffix="%" duration={2} />
               </h3>
-              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Only a tiny fraction of investigations result in convictions, despite millions in funding.</p>
-              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">IOPC CONVICTION RATE</p>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Only a tiny fraction of investigations result in convictions, despite millions in funding.</p>
+              <p className="font-bold text-xs sm:text-xs uppercase tracking-widest text-[#1877F2]">IOPC CONVICTION RATE</p>
             </div>
             
             <div className="flex flex-col items-center text-center p-4 sm:p-8 lg:p-10 border-r border-slate-100 md:border-r group">
@@ -97,8 +97,8 @@ export default function TheIssuePage() {
               <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight flex items-baseline justify-center">
                 <AnimatedCounter from={0} to={1} duration={1} /> <span className="text-base sm:text-xl ml-1.5 sm:ml-2">in 3</span>
               </h3>
-              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Serving officers suffer from PTSD, exacerbated by the stress of investigations.</p>
-              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">CLINICAL PTSD</p>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Serving officers suffer from PTSD, exacerbated by the stress of investigations.</p>
+              <p className="font-bold text-xs sm:text-xs uppercase tracking-widest text-[#1877F2]">CLINICAL PTSD</p>
             </div>
             
             <div className="flex flex-col items-center text-center p-4 sm:p-8 lg:p-10 group">
@@ -106,14 +106,14 @@ export default function TheIssuePage() {
               <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1877F2] mb-3 sm:mb-4 tracking-tight">
                 <AnimatedCounter from={0} to={9000} suffix="+" duration={2} />
               </h3>
-              <p className="text-[11px] sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Record numbers are resigning voluntarily, citing a culture of blame.</p>
-              <p className="font-bold text-[9px] sm:text-[11px] uppercase tracking-widest text-[#1877F2]">OFFICERS RESIGNING</p>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 sm:mb-6 flex-1">Record numbers are resigning voluntarily, citing a culture of blame.</p>
+              <p className="font-bold text-xs sm:text-xs uppercase tracking-widest text-[#1877F2]">OFFICERS RESIGNING</p>
             </div>
             
           </div>
           
           <div className="text-center mt-6 sm:mt-8">
-             <p className="text-[10px] sm:text-xs text-slate-400 font-medium">Sources: NPCC, Mind Blue Light Survey, Police Federation, IOPC Data</p>
+             <p className="text-xs sm:text-xs text-slate-400 font-medium">Sources: NPCC, Mind Blue Light Survey, Police Federation, IOPC Data</p>
           </div>
         </div>
       </section>

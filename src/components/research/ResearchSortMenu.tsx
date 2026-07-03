@@ -52,7 +52,7 @@ export default function ResearchSortMenu({ sortBy, onSortChange, className }: Re
         aria-controls={listboxId}
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          "inline-flex items-center justify-center gap-1.5 sm:gap-2 min-h-[36px] sm:min-h-[48px] px-4 sm:px-5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer",
+          "inline-flex items-center justify-center gap-1.5 sm:gap-2 min-h-[36px] sm:min-h-[48px] px-4 sm:px-5 rounded-full text-xs sm:text-xs font-bold uppercase tracking-widest transition-all cursor-pointer",
           open ? hybrid.editorialChipActive : hybrid.editorialChip
         )}
       >
@@ -68,7 +68,7 @@ export default function ResearchSortMenu({ sortBy, onSortChange, className }: Re
           className="absolute right-0 top-[calc(100%+0.5rem)] z-50 min-w-[12.5rem] rounded-2xl border border-slate-200 bg-white p-1.5 shadow-[0_20px_50px_rgba(1,11,25,0.12)]"
           role="presentation"
         >
-          <p className="px-3 pt-2 pb-1 text-[9px] font-bold uppercase tracking-[0.22em] text-slate-400">
+          <p className="px-3 pt-2 pb-1 text-xs font-bold uppercase tracking-[0.22em] text-slate-400">
             Sort by
           </p>
           <ul id={listboxId} role="listbox" aria-label="Sort reports" className="space-y-0.5">
@@ -85,7 +85,7 @@ export default function ResearchSortMenu({ sortBy, onSortChange, className }: Re
                       setOpen(false);
                     }}
                     className={cn(
-                      "flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-left text-[11px] font-bold uppercase tracking-widest transition-colors min-h-[44px]",
+                      "flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-left text-xs font-bold uppercase tracking-widest transition-colors min-h-[44px]",
                       isActive
                         ? "bg-[#1877F2]/10 text-[#1877F2]"
                         : "text-slate-600 hover:bg-slate-50 hover:text-[#010B19]"

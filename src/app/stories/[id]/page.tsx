@@ -30,13 +30,13 @@ export default function StoryDetailPage({ params }: { params: Promise<{ id: stri
         backLink={
           <Link
             href="/stories"
-            className="inline-flex items-center text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-widest py-2 transition-colors"
+            className="inline-flex items-center text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest py-2 transition-colors"
           >
             <ArrowLeft className="w-3 h-3 mr-2" /> Back to Stories
           </Link>
         }
         badges={
-          <span className="inline-flex bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
+          <span className="inline-flex bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
             {story.type}
           </span>
         }

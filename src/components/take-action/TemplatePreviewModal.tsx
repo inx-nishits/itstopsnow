@@ -4,6 +4,8 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { X, Download, RotateCcw, Edit3, FileText, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CustomSelect from "@/components/ui/CustomSelect";
+import { UK_POLICE_FORCES } from "@/lib/data/policeForces";
 import { generatePDF, generateDOCX } from "@/lib/documentGenerator";
 import { downloadBlob } from "@/lib/downloadBlob";
 import { useModalA11y } from "@/hooks/useModalA11y";
@@ -130,7 +132,7 @@ export default function TemplatePreviewModal({
                   <button
                     type="button"
                     onClick={() => setMode("preview")}
-                    className={`min-h-[40px] rounded-md px-3 text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                    className={`min-h-[40px] rounded-md px-3 text-xs font-bold uppercase tracking-widest transition-colors ${
                       mode === "preview" ? "bg-[#1877F2] text-white" : "text-slate-400 hover:text-white"
                     }`}
                   >
@@ -140,7 +142,7 @@ export default function TemplatePreviewModal({
                   <button
                     type="button"
                     onClick={() => setMode("edit")}
-                    className={`min-h-[40px] rounded-md px-3 text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                    className={`min-h-[40px] rounded-md px-3 text-xs font-bold uppercase tracking-widest transition-colors ${
                       mode === "edit" ? "bg-[#1877F2] text-white" : "text-slate-400 hover:text-white"
                     }`}
                   >
@@ -153,7 +155,7 @@ export default function TemplatePreviewModal({
                     type="button"
                     onClick={onReset}
                     variant="outline"
-                    className="min-h-[40px] border-white/20 bg-transparent px-3 text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/10"
+                    className="min-h-[40px] border-white/20 bg-transparent px-3 text-xs font-bold uppercase tracking-widest text-white hover:bg-white/10"
                   >
                     <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
                     Reset
@@ -164,7 +166,7 @@ export default function TemplatePreviewModal({
                   onClick={() => handleDownload("pdf")}
                   disabled={isDownloading !== null}
                   variant="outline"
-                  className="min-h-[40px] border-[#1877F2]/30 bg-transparent px-3 text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:bg-[#1877F2] hover:text-white"
+                  className="min-h-[40px] border-[#1877F2]/30 bg-transparent px-3 text-xs font-bold uppercase tracking-widest text-[#1877F2] hover:bg-[#1877F2] hover:text-white"
                 >
                   {isDownloading === "pdf" ? (
                     <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
@@ -178,7 +180,7 @@ export default function TemplatePreviewModal({
                   onClick={() => handleDownload("docx")}
                   disabled={isDownloading !== null}
                   variant="outline"
-                  className="min-h-[40px] border-[#1877F2]/30 bg-transparent px-3 text-[10px] font-bold uppercase tracking-widest text-[#1877F2] hover:bg-[#1877F2] hover:text-white"
+                  className="min-h-[40px] border-[#1877F2]/30 bg-transparent px-3 text-xs font-bold uppercase tracking-widest text-[#1877F2] hover:bg-[#1877F2] hover:text-white"
                 >
                   {isDownloading === "docx" ? (
                     <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
@@ -236,7 +238,7 @@ export default function TemplatePreviewModal({
                     <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Letter Personalisation</h4>
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Name</label>
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Your Name</label>
                         <input 
                           type="text" 
                           placeholder="e.g. Jane Doe" 
@@ -246,7 +248,7 @@ export default function TemplatePreviewModal({
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recipient Name</label>
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Recipient Name</label>
                         <input 
                           type="text" 
                           placeholder="e.g. John Smith MP" 
@@ -256,7 +258,7 @@ export default function TemplatePreviewModal({
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Postcode</label>
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Your Postcode</label>
                         <input 
                           type="text" 
                           placeholder="e.g. SW1A 1AA" 
@@ -266,25 +268,22 @@ export default function TemplatePreviewModal({
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Police Force</label>
-                        <select 
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Police Force</label>
+                        <CustomSelect
                           value={personalisation.policeForce}
-                          onChange={(e) => setPersonalisation(p => ({ ...p, policeForce: e.target.value }))}
-                          className="w-full bg-[#051024] border border-white/10 rounded-lg px-3 py-2 text-white text-sm cursor-pointer focus:outline-none focus:border-[#1877F2] [&>option]:bg-[#051024]"
-                        >
-                          <option value="">Select Force</option>
-                          <option value="Metropolitan Police">Metropolitan Police</option>
-                          <option value="Greater Manchester Police">Greater Manchester Police</option>
-                          <option value="West Midlands Police">West Midlands Police</option>
-                          <option value="Merseyside Police">Merseyside Police</option>
-                          <option value="Police Scotland">Police Scotland</option>
-                          <option value="Police Service of Northern Ireland">Police Service of Northern Ireland</option>
-                          <option value="South Wales Police">South Wales Police</option>
-                          <option value="Thames Valley Police">Thames Valley Police</option>
-                          <option value="West Yorkshire Police">West Yorkshire Police</option>
-                        </select>
+                          onChange={(policeForce) =>
+                            setPersonalisation((current) => ({ ...current, policeForce }))
+                          }
+                          placeholder="Select Force"
+                          variant="dark"
+                          options={UK_POLICE_FORCES.map((force) => ({
+                            value: force,
+                            label: force,
+                          }))}
+                          ariaLabel="Police force"
+                        />
                       </div>
-                      <p className="text-[10px] text-slate-500 mt-2 leading-relaxed">
+                      <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                         These details will be injected into your generated PDF and Word documents.
                       </p>
                     </div>
