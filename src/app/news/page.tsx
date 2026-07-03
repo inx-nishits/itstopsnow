@@ -222,7 +222,7 @@ export default function NewsPage() {
               {/* Sort & Search Container */}
               <div className="flex flex-row gap-2 sm:gap-4 w-full md:w-auto shrink-0 relative z-20">
                 {/* Search Functionality */}
-                <div className="relative flex-1 md:w-64 xl:w-72 shrink-0">
+                <div className="relative flex-1 md:w-96 xl:w-[30rem] shrink-0">
                   <Search className="w-4 h-4 absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input 
                     type="text" 

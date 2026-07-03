@@ -50,7 +50,7 @@ export default function WallMemorialHero({
           transition={{ duration: 0.7 }}
           className="max-w-2xl"
         >
-          <div className="pr-[25%] sm:pr-0">
+          <div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-1">
               Wall of Remembrance
             </h1>
@@ -64,27 +64,29 @@ export default function WallMemorialHero({
             </p>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-            <div className="shrink-0 -mt-2">
-              <CandleOverlay isLit={true} onLight={() => {}} disabled={true} />
-            </div>
-            <div>
-              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-1.5 sm:mb-0.5">
-                <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight leading-none">
+          <div className="mb-6 sm:mb-8">
+            {/* Candle stat row — icon + number + label */}
+            <div className="flex items-center gap-3 sm:gap-4 mb-3">
+              <div className="shrink-0">
+                <CandleOverlay isLit={true} onLight={() => {}} disabled={true} />
+              </div>
+              <div>
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight leading-none block">
                   {totalCandles.toLocaleString()}
                 </span>
-                <span className="text-xs font-bold tracking-wider text-slate-400 leading-tight block w-full sm:w-auto">
+                <span className="text-xs font-bold tracking-wider text-slate-400 leading-tight block mt-0.5">
                   Candles lit in remembrance
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={onLightCandleClick}
-                className="text-lg font-semibold text-[#1877F2] hover:text-blue-400 flex items-center gap-1.5 group transition-colors mt-2 sm:mt-0"
-              >
-                Light a candle <span className="group-hover:translate-x-1 transition-transform">-&gt;</span>
-              </button>
             </div>
+            {/* CTA — sits below on its own line, never competes for space */}
+            <button
+              type="button"
+              onClick={onLightCandleClick}
+              className="text-base sm:text-lg font-semibold text-[#1877F2] hover:text-blue-400 flex items-center gap-1.5 group transition-colors"
+            >
+              Light a candle <span className="group-hover:translate-x-1 transition-transform">&#8594;</span>
+            </button>
           </div>
 
           <div className="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2 mt-2">
