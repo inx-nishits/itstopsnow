@@ -42,12 +42,12 @@ export default function MemorialWallTile({
       className={`group relative flex flex-row w-full overflow-hidden bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-200 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1877F2] hover:-translate-y-1 ${className}`}
       aria-label={`Remember ${name}`}
     >
-      <div className="relative w-28 sm:w-32 shrink-0 bg-slate-100 overflow-hidden">
+      <div className="relative w-32 sm:w-36 shrink-0 bg-slate-100 overflow-hidden">
         <Image
           src={imageUrl}
           alt=""
           fill
-          sizes="(max-width: 640px) 112px, 128px"
+          sizes="(max-width: 640px) 128px, 144px"
           className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           style={{ filter: `grayscale(${displayGray}%)` }}
         />
@@ -83,20 +83,20 @@ export default function MemorialWallTile({
           </p>
         )}
         
-        <div className="mt-auto pt-1.5 flex items-end justify-between gap-1">
+        <div className="mt-auto pt-2 flex flex-col xl:flex-row xl:items-end justify-between gap-2 xl:gap-1">
           <div className="flex items-center gap-1.5 shrink-0">
-            <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" aria-hidden />
+            <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 shrink-0" aria-hidden />
             <div>
-              <span className="text-[12px] sm:text-[13px] font-bold text-slate-800 tabular-nums leading-none block">
+              <span className="text-[12px] sm:text-[14px] font-bold text-slate-800 tabular-nums leading-none block">
                 {candleCount.toLocaleString()}
               </span>
-              <span className="text-xs sm:text-xs font-bold text-slate-400 uppercase tracking-widest leading-none block mt-0.5">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none block mt-0.5">
                 Candles lit
               </span>
             </div>
           </div>
 
-          <div className="px-2 py-1.5 sm:px-2.5 rounded bg-[#1877F2] text-white shadow-sm group-hover:bg-blue-600 transition-all text-xs font-bold uppercase tracking-wider whitespace-nowrap shrink-0">
+          <div className="w-full xl:w-auto text-center px-2 py-1.5 sm:px-2.5 rounded bg-[#1877F2] text-white shadow-sm group-hover:bg-blue-600 transition-all text-xs font-bold uppercase tracking-wider shrink-0">
             View Tribute
           </div>
         </div>

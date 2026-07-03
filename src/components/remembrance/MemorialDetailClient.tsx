@@ -220,7 +220,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                 <h2 className="text-sm font-bold text-[#010B19] uppercase tracking-widest mb-6 pb-2 border-b-2 border-[#1877F2] inline-block">
                   Their Story
                 </h2>
-                <div className="text-[13px] leading-[1.8] whitespace-pre-line text-slate-600 mb-6">
+                <div className="text-[14px] leading-[1.8] whitespace-pre-line text-slate-600 mb-6">
                   {memorial.biography}
                 </div>
                 {memorial.familyQuote && (
@@ -338,7 +338,7 @@ export default function MemorialDetailClient({ memorial }: MemorialDetailClientP
                       <span className="absolute left-[-6px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#1877F2] ring-[3px] ring-white" aria-hidden />
                       <p className="text-xs font-bold uppercase tracking-wider text-[#1877F2] mb-0.5">{event.date}</p>
                       <h3 className="text-sm font-bold text-[#010B19] mb-1">{event.title}</h3>
-                      <p className="text-[13px] text-slate-500 leading-relaxed">{event.description}</p>
+                      <p className="text-[14px] text-slate-500 leading-relaxed">{event.description}</p>
                     </li>
                   ))}
                 </ol>

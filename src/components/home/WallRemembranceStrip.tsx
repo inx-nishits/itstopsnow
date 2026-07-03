@@ -36,18 +36,18 @@ export default function WallRemembranceStrip({ officers }: WallRemembranceStripP
                 />
               </div>
               <div className="flex flex-col justify-center flex-1 min-w-0">
-                <span className="text-base sm:text-2xl font-black text-white tracking-tight leading-none">
+                <div className="text-xl sm:text-2xl font-black text-white tracking-tight leading-none">
                   {totalCandles.toLocaleString()}
-                </span>
-                <span className="text-[7px] sm:text-xs lg:text-sm font-bold text-slate-400 tracking-[0.05em] sm:tracking-[0.08em] uppercase mt-0.5 sm:mt-1 leading-tight sm:leading-normal max-w-[120px] sm:max-w-none whitespace-normal">
-                  CANDLES LIT IN REMEMBRANCE
-                </span>
+                </div>
+                <div className="text-xs lg:text-sm font-bold text-slate-400 tracking-wider uppercase mt-1 leading-tight block w-full">
+                  Candles lit in remembrance
+                </div>
                 <Link
                   href="/wall-of-remembrance"
-                  className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-[#1877F2] hover:text-blue-400 transition-colors mt-0.5 sm:mt-1.5 cursor-pointer w-fit"
+                  className="inline-flex items-center gap-1.5 text-[16px] sm:text-sm font-bold text-[#1877F2] hover:text-blue-400 transition-colors mt-2 cursor-pointer w-fit"
                 >
                   <span>Light a candle</span>
-                  <ArrowRight className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 shrink-0" />
+                  <ArrowRight className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0" />
                 </Link>
               </div>
             </div>

@@ -69,18 +69,18 @@ export default function WallMemorialHero({
               <CandleOverlay isLit={true} onLight={() => {}} disabled={true} />
             </div>
             <div>
-              <div className="flex items-baseline gap-2 sm:gap-3 mb-0.5">
-                <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight">
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-1.5 sm:mb-0.5">
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums tracking-tight leading-none">
                   {totalCandles.toLocaleString()}
                 </span>
-                <span className="text-xs sm:text-xs font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 leading-tight block w-full sm:w-auto">
                   Candles lit in remembrance
                 </span>
               </div>
               <button
                 type="button"
                 onClick={onLightCandleClick}
-                className="text-xs sm:text-sm font-semibold text-[#1877F2] hover:text-blue-400 flex items-center gap-1.5 group transition-colors"
+                className="text-lg font-semibold text-[#1877F2] hover:text-blue-400 flex items-center gap-1.5 group transition-colors mt-2 sm:mt-0"
               >
                 Light a candle <span className="group-hover:translate-x-1 transition-transform">-&gt;</span>
               </button>

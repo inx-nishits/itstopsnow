@@ -44,7 +44,7 @@ function MemorialTile({ officer }: { officer: MemorialSummary }) {
         </span>
       </div>
       <div className="absolute inset-x-0 bottom-0 p-3 pt-8">
-        <h2 className="text-[13px] font-bold text-stone-50 leading-tight line-clamp-2 mb-0.5">
+        <h2 className="text-[14px] font-bold text-stone-50 leading-tight line-clamp-2 mb-0.5">
           {officer.name}
         </h2>
         <p className="text-xs text-stone-400 line-clamp-1">{officer.rank}</p>
@@ -89,11 +89,16 @@ function MemorialCard({ officer }: { officer: MemorialSummary }) {
           <span className="text-xs font-medium text-amber-500/85 group-hover:text-amber-400 transition-colors">
             View Tribute →
           </span>
-          <div className="flex items-center gap-1.5 text-amber-500/90 shrink-0">
-            <Flame className="w-3.5 h-3.5" aria-hidden />
-            <span className="text-xs font-semibold tabular-nums">
-              {officer.candleCount.toLocaleString()}
-            </span>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 shrink-0" aria-hidden />
+            <div>
+              <span className="text-[12px] sm:text-[14px] font-bold text-slate-800 tabular-nums leading-none block">
+                {officer.candleCount.toLocaleString()}
+              </span>
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none block mt-0.5">
+                Candles lit
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -325,7 +325,7 @@ function SupportPageContent() {
           <div className="mb-8">
             <button
               onClick={() => handleTabClick("All")}
-              className="group inline-flex items-center gap-1.5 text-[13px] font-bold text-slate-500 hover:text-[#1877F2] transition-colors duration-300"
+              className="group inline-flex items-center gap-1.5 text-[14px] font-bold text-slate-500 hover:text-[#1877F2] transition-colors duration-300"
             >
               <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
               <span>Back to Recovery and Support</span>

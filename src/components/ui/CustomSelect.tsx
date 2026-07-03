@@ -72,7 +72,7 @@ export default function CustomSelect<T extends string | number = string>({
         aria-haspopup="listbox"
         onClick={() => !disabled && setOpen((current) => !current)}
         className={cn(
-          "w-full rounded-md border px-3 py-3 text-left text-[13px] md:text-sm font-medium transition-colors flex items-center justify-between gap-2 focus:outline-none focus:ring-1 focus:ring-[#1877F2]/30",
+          "w-full rounded-md border px-3 py-3 text-left text-[14px] md:text-sm font-medium transition-colors flex items-center justify-between gap-2 focus:outline-none focus:ring-1 focus:ring-[#1877F2]/30",
           disabled && "opacity-50 cursor-not-allowed",
           triggerClasses
         )}
@@ -107,7 +107,7 @@ export default function CustomSelect<T extends string | number = string>({
                       setOpen(false);
                     }}
                     className={cn(
-                      "w-full text-left px-4 py-2.5 text-[13px] md:text-sm font-medium transition-colors flex items-center justify-between gap-2",
+                      "w-full text-left px-4 py-2.5 text-[14px] md:text-sm font-medium transition-colors flex items-center justify-between gap-2",
                       isSelected ? activeOptionClasses : idleOptionClasses
                     )}
                   >

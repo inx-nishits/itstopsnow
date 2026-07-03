@@ -73,7 +73,7 @@ function HeroContent({
   const M = animate ? motion.div : "div";
 
   return (
-    <div className="relative z-10 w-full min-h-[100dvh] flex flex-col justify-end pt-32 pb-24 sm:pt-32 sm:pb-28 lg:pt-24 lg:pb-16 xl:pt-28 xl:pb-20">
+    <div className="relative z-10 w-full min-h-[100dvh] flex flex-col justify-end pt-20 pb-28 sm:pt-32 sm:pb-28 lg:pt-24 lg:pb-16 xl:pt-28 xl:pb-20">
       <div className="w-full px-4 sm:px-6 lg:px-12 mx-auto max-w-[1600px]">
         <div className="w-full max-w-[22rem] sm:max-w-[28rem] lg:max-w-[42rem] xl:max-w-[48rem]">
           <M
@@ -110,7 +110,7 @@ function HeroContent({
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-12 lg:mb-4 w-full">
               <button 
                 onClick={onGetInvolvedClick} 
-                className="flex items-center justify-center shrink-0 gap-3 w-[220px] h-12 rounded-md bg-[#1877F2] text-white text-[12px] font-bold uppercase tracking-widest hover:bg-[#1565d8] transition-colors"
+                className="flex items-center justify-center shrink-0 gap-3 w-fit px-6 sm:px-8 h-12 rounded-md bg-[#1877F2] text-white text-[12px] font-bold uppercase tracking-widest hover:bg-[#1565d8] transition-colors whitespace-nowrap"
               >
                 <span>JOIN THE MOVEMENT</span>
                 <ArrowRight className="w-4 h-4" />
@@ -118,7 +118,7 @@ function HeroContent({
               
               <Link 
                 href="/stories" 
-                className="group flex items-center justify-center shrink-0 gap-3 w-[220px] h-12 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 text-white text-[12px] font-bold uppercase tracking-widest transition-all"
+                className="group flex items-center justify-center shrink-0 gap-3 w-fit px-6 sm:px-8 h-12 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 text-white text-[12px] font-bold uppercase tracking-widest transition-all whitespace-nowrap"
               >
                 <span>Read the Stories</span>
                 <ArrowUpRight className="w-4 h-4 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />

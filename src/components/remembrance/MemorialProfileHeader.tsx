@@ -253,7 +253,7 @@ export default function MemorialProfileHeader({
               <span className="absolute left-0 top-[-8px] text-[#24344d] text-5xl lg:text-6xl font-serif leading-none select-none" aria-hidden>
                 “
               </span>
-              <blockquote className="text-[13px] sm:text-[15px] lg:text-lg italic text-slate-300 leading-relaxed max-w-2xl relative z-10">
+              <blockquote className="text-[14px] sm:text-[15px] lg:text-lg italic text-slate-300 leading-relaxed max-w-2xl relative z-10">
                 He dedicated his life to helping others. He was the first person people called in a crisis, yet struggled silently with his own pain.
                 <footer className="mt-3 text-xs sm:text-xs font-bold text-slate-500 not-italic uppercase tracking-widest">— His Family</footer>
               </blockquote>

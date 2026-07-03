@@ -278,15 +278,5 @@
     line-height: 1.5 !important;
   }
 
-  /* Force CTAs, Buttons, and Links to 14px */
-  button, 
-  a, 
-  [role="button"], 
-  .btn, 
-  .button,
-  button[class*="text-"],
-  a[class*="text-"],
-  [role="button"][class*="text-"] {
-    font-size: 14px !important;
-  }
+
 }

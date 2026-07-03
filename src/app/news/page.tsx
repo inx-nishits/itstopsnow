@@ -329,7 +329,7 @@ export default function NewsPage() {
               <div className="bg-[#020611] rounded-xl p-6 text-white border border-slate-800 shadow-xl relative overflow-hidden sticky top-24">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-[#1877F2]/10 rounded-bl-full pointer-events-none" />
                 
-                <h3 className="font-black text-[13px] uppercase tracking-widest mb-4">NEWSLETTER</h3>
+                <h3 className="font-black text-[14px] uppercase tracking-widest mb-4">NEWSLETTER</h3>
                 
                 <div className="flex gap-4 mb-6 relative z-10">
                   <Mail className="w-8 h-8 text-slate-400 shrink-0 stroke-[1.5]" />

@@ -337,7 +337,7 @@ function PersonalizeContent() {
                     onChange={(e) => setName(e.target.value)}
                     onBlur={() => setName(name.trim())}
                     placeholder="John Smith"
-                    className={`w-full bg-white border ${!name && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none`}
+                    className={`w-full bg-white border ${!name && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[14px] focus:outline-none`}
                   />
                   {!name && sendError && <p className="text-xs text-red-500 mt-1">Name is required.</p>}
                 </div>
@@ -349,7 +349,7 @@ function PersonalizeContent() {
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={() => setEmail(email.trim())}
                     placeholder="john.smith@email.com"
-                    className={`w-full bg-white border ${(!email || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[13px] focus:outline-none`}
+                    className={`w-full bg-white border ${(!email || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) && sendError ? 'border-red-500 focus:border-red-500' : 'border-slate-300 focus:border-[#1877F2]'} rounded-md px-3 py-2 text-[14px] focus:outline-none`}
                   />
                   {!email && sendError && <p className="text-xs text-red-500 mt-1">Email is required.</p>}
                   {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && sendError && <p className="text-xs text-red-500 mt-1">Please enter a valid email address.</p>}
@@ -362,7 +362,7 @@ function PersonalizeContent() {
                         <input 
                           type="text"
                           placeholder="Enter postcode"
-                          className="w-full bg-white border border-slate-300 focus:border-[#1877F2] rounded-md px-3 h-10 text-[13px] focus:outline-none"
+                          className="w-full bg-white border border-slate-300 focus:border-[#1877F2] rounded-md px-3 h-10 text-[14px] focus:outline-none"
                           onKeyDown={async (e) => {
                             if (e.key === 'Enter') {
                               e.preventDefault();
@@ -402,7 +402,7 @@ function PersonalizeContent() {
                       <textarea 
                         value={address}
                         readOnly
-                        className="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none min-h-[80px] text-slate-700"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-[14px] focus:outline-none min-h-[80px] text-slate-700"
                       />
                       <button 
                         onClick={() => { setAddress(""); setAddressResults([]); }}

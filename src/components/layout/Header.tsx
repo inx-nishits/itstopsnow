@@ -67,7 +67,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative whitespace-nowrap text-[13px] 2xl:text-base font-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${isActive
+                  className={`relative whitespace-nowrap text-[14px] 2xl:text-base font-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${isActive
                       ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
                       : "text-slate-300 hover:text-white"
                     }`}
@@ -139,10 +139,12 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-lg sm:text-xl font-medium tracking-wide py-1.5 cursor-pointer ${pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
+                  style={{ fontSize: '18px' }}
+                  className={`block font-medium tracking-wide py-1.5 sm:py-2 cursor-pointer transition-colors ${
+                    pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
                       ? "text-white"
                       : "text-slate-400 hover:text-white"
-                    }`}
+                  }`}
                 >
                   {link.label}
                 </Link>

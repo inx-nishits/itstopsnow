@@ -77,53 +77,45 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
       <EditorialSection id="wall-grid-section" variant="muted" noPadding className="pb-10 sm:pb-14 lg:pb-20">
         <div className={`${PAGE_CONTENT_CONTAINER} pt-8 sm:pt-10 lg:pt-14`}>
           {/* Mobile-only Stats Block (Moved from Hero) */}
-          <div className="grid grid-cols-2 gap-4 mb-8 sm:hidden">
-            <div className="flex items-center gap-2.5">
-              <Users className="w-6 h-6 text-[#1877F2]" />
-              <div className="flex flex-col">
-                <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
-                  {wallStats.officersRemembered.toLocaleString()}
-                </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
-                  Officers
-                </span>
-              </div>
+          <div className="grid grid-cols-2 gap-3 mb-8 sm:hidden">
+            <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
+              <Users className="w-6 h-6 text-[#1877F2] mb-2" />
+              <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
+                {wallStats.officersRemembered.toLocaleString()}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                Officers
+              </span>
             </div>
 
-            <div className="flex items-center gap-2.5">
-              <CalendarDays className="w-6 h-6 text-[#1877F2]" />
-              <div className="flex flex-col">
-                <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
-                  {wallStats.monthlyRemembranceAvg?.toLocaleString() || 124}
-                </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
-                  Monthly Avg
-                </span>
-              </div>
+            <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
+              <CalendarDays className="w-6 h-6 text-[#1877F2] mb-2" />
+              <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
+                {wallStats.monthlyRemembranceAvg?.toLocaleString() || 124}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                Monthly Avg
+              </span>
             </div>
 
-            <div className="flex items-center gap-2.5">
-              <Shield className="w-6 h-6 text-[#1877F2]" />
-              <div className="flex flex-col">
-                <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
-                  {wallStats.forcesRepresented?.toLocaleString() || 12}
-                </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
-                  Forces
-                </span>
-              </div>
+            <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
+              <Shield className="w-6 h-6 text-[#1877F2] mb-2" />
+              <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
+                {wallStats.forcesRepresented?.toLocaleString() || 12}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                Forces
+              </span>
             </div>
 
-            <div className="flex items-center gap-2.5">
-              <Heart className="w-6 h-6 text-[#1877F2]" />
-              <div className="flex flex-col">
-                <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-0.5">
-                  {wallStats.notForgottenPercent || 92}%
-                </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-tight">
-                  Not Forgotten
-                </span>
-              </div>
+            <div className="flex flex-col items-center text-center p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-sm">
+              <Heart className="w-6 h-6 text-[#1877F2] mb-2" />
+              <span className="text-xl font-black text-[#010B19] tabular-nums leading-none mb-1">
+                {wallStats.notForgottenPercent || 92}%
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight">
+                Not Forgotten
+              </span>
             </div>
           </div>
 
@@ -222,15 +214,15 @@ export default function RemembranceWallClient({ memorials, wallStats }: Remembra
               <Flame className="w-6 h-6 text-amber-500" aria-hidden />
             </div>
             <div className="flex-1">
-              <h3 className="text-[13px] font-bold text-[#010B19] mb-2 leading-snug">
+              <h3 className="text-[14px] font-bold text-[#010B19] mb-2 leading-snug">
                 What does lighting a candle do?
               </h3>
-              <p className="text-slate-600 text-[13px] leading-relaxed mb-3">
+              <p className="text-slate-600 text-[14px] leading-relaxed mb-3">
                 When you light a candle on a profile, the portrait briefly returns to full colour
                 — a personal moment of remembrance. As more candles are lit across the
                 community, colour is restored for everyone who visits.
               </p>
-              <Link href="#" className="text-[#1877F2] text-[13px] inline-flex font-bold items-center gap-1 hover:underline transition-all">
+              <Link href="#" className="text-[#1877F2] text-[14px] inline-flex font-bold items-center gap-1 hover:underline transition-all">
                 Learn more <span>&rarr;</span>
               </Link>
             </div>
