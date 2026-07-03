@@ -44,7 +44,7 @@ export const LATEST_NEWS = [
     readTime: "6 min read", 
     title: "Why prolonged investigations cause deeper psychological harm", 
     excerpt: "Psychologist Dr. Emma Williams explains the impact of uncertainty and lack of support.",
-    image: "/images/wall_memorial_bg.png",
+    image: "/images/psychological_harm_article.png",
     author: "Dr. Jenkins"
   },
   { 
