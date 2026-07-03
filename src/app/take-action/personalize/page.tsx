@@ -1,8 +1,9 @@
 "use client";
 
 import { Suspense, useState, useEffect } from "react";
+import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, ArrowRight, Loader2, FileText, CheckCircle, RotateCcw, Shield, Check, Info, Users, Clock, Flame } from "lucide-react";
+import { Search, Mail, User, MapPin, Building2, Send, Save, ArrowLeft, ArrowRight, Loader2, FileText, CheckCircle, RotateCcw, Shield, Check, Info, Users, Clock, Flame, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { simulateSubmit } from "@/lib/mock/utils";
@@ -168,24 +169,52 @@ function PersonalizeContent() {
                   <div className="flex items-center gap-2 text-emerald-600 text-xs font-bold bg-emerald-50 px-3 py-2 rounded-md mb-4 border border-emerald-100">
                     <Check className="w-4 h-4" /> Your MP has been found
                   </div>
-                  <div className="flex items-start gap-4 mb-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-200 shrink-0">
-                      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="MP" className="w-full h-full object-cover" />
+                  <div className="mb-4 flex items-start gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4">
+                    <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-slate-200">
+                      <img
+                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
                     </div>
-                    <div>
-                      <h3 className="font-bold text-sm text-slate-900">{mpFound.name}</h3>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-sm font-bold text-slate-900">{mpFound.name}</h3>
                       <p className="text-xs text-slate-500">{mpFound.constituency}</p>
-                      <p className="text-xs text-slate-500 mb-2">{mpFound.party}</p>
-                      <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-1">
-                        <Mail className="w-3 h-3" /> {mpFound.email}
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-1">
-                        <span className="w-3 text-center">☎</span> 020 7219 6491
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-3">
-                        <MapPin className="w-3 h-3" /> House of Commons, London SW1A 0AA
-                      </div>
-                      <a href="#" className="text-[#1877F2] text-xs font-bold uppercase hover:underline">View on parliament.uk</a>
+                      <p className="mb-4 text-xs text-slate-500">{mpFound.party}</p>
+
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3">
+                          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white">
+                            <Mail className="h-3.5 w-3.5 text-slate-500" />
+                          </span>
+                          <span className="min-w-0 flex-1 break-words text-xs leading-relaxed text-slate-600">
+                            {mpFound.email}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white">
+                            <Phone className="h-3.5 w-3.5 text-slate-500" />
+                          </span>
+                          <span className="min-w-0 flex-1 text-xs leading-relaxed text-slate-600">
+                            020 7219 6491
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white">
+                            <MapPin className="h-3.5 w-3.5 text-slate-500" />
+                          </span>
+                          <span className="min-w-0 flex-1 text-xs leading-relaxed text-slate-600">
+                            House of Commons, London SW1A 0AA
+                          </span>
+                        </li>
+                      </ul>
+
+                      <a
+                        href="#"
+                        className="mt-4 inline-flex text-xs font-bold uppercase tracking-wider text-[#1877F2] hover:underline"
+                      >
+                        View on parliament.uk
+                      </a>
                     </div>
                   </div>
                 </motion.div>
@@ -219,10 +248,14 @@ function PersonalizeContent() {
                 )}
               </div>
               
-              <div className="mt-5 pt-4 border-t border-slate-100">
-                <button className="text-[#1877F2] text-xs font-bold hover:underline flex items-center gap-1 uppercase tracking-widest">
-                  View all campaigns <ArrowRight className="w-3 h-3" />
-                </button>
+              <div className="mt-5 border-t border-slate-100 pt-4">
+                <Link
+                  href="/take-action/templates"
+                  className="inline-flex items-center gap-1.5 py-1 text-xs font-bold uppercase tracking-widest text-[#1877F2] transition-colors hover:text-blue-600 hover:underline"
+                >
+                  View all campaigns
+                  <ArrowRight className="h-3 w-3 shrink-0" />
+                </Link>
               </div>
             </div>
           </div>

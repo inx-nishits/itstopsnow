@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, Building2, Search, FileText, Mail, User, Phone, MapPin, ArrowRight, ArrowLeft } from "lucide-react";
+import { X, Check, Search, FileText, Mail, User, Phone, MapPin, ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { UK_POLICE_FORCES } from "@/lib/data/policeForces";
@@ -270,18 +270,39 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
                           <div className="p-8 text-center text-slate-500 text-sm">No police forces found matching your search.</div>
                         ) : (
                           <div className="divide-y divide-slate-100">
-                            {filteredForces.map(force => (
-                              <label key={force} className="flex items-center gap-3 p-4 hover:bg-slate-50 cursor-pointer transition-colors">
-                                <div className={cn(
-                                  "w-5 h-5 rounded border flex items-center justify-center shrink-0 transition-colors",
-                                  selectedForces.includes(force) ? "bg-[#1877F2] border-[#1877F2]" : "bg-white border-slate-300"
-                                )}>
-                                  {selectedForces.includes(force) && <Check className="w-3.5 h-3.5 text-white" />}
-                                </div>
-                                <Building2 className="w-4 h-4 text-slate-400 shrink-0" />
-                                <span className="text-sm font-medium text-slate-700">{force}</span>
-                              </label>
-                            ))}
+                            {filteredForces.map((force) => {
+                              const isSelected = selectedForces.includes(force);
+
+                              return (
+                                <label
+                                  key={force}
+                                  className="flex cursor-pointer items-start gap-3 px-4 py-3.5 transition-colors hover:bg-slate-50"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={isSelected}
+                                    onChange={() => toggleForce(force)}
+                                    className="peer sr-only"
+                                  />
+                                  <span
+                                    className={cn(
+                                      "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors",
+                                      isSelected
+                                        ? "border-[#1877F2] bg-[#1877F2]"
+                                        : "border-slate-300 bg-white"
+                                    )}
+                                    aria-hidden
+                                  >
+                                    {isSelected ? (
+                                      <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} />
+                                    ) : null}
+                                  </span>
+                                  <span className="min-w-0 flex-1 text-sm font-medium leading-snug text-slate-700">
+                                    {force}
+                                  </span>
+                                </label>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -333,37 +354,57 @@ export default function FOIToolWizard({ isOpen, onClose }: FOIToolWizardProps) {
 
           {/* Footer Actions */}
           {!isSuccess && (
-            <div className="flex items-center justify-between border-t border-slate-100 bg-white p-4 sm:p-6">
-              {step > 1 ? (
-                <button
-                  type="button"
-                  onClick={() => setStep((s) => s - 1)}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 text-xs font-bold uppercase tracking-widest text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1877F2]/30"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  Back
-                </button>
-              ) : (
-                <div aria-hidden />
-              )}
-              
-              {step < 4 ? (
-                <Button 
-                  onClick={() => setStep(s => s + 1)} 
-                  disabled={(step === 1 && !isStep1Valid) || (step === 2 && !isStep2Valid) || (step === 3 && !isStep3Valid)}
-                  className="bg-[#1877F2] hover:bg-blue-600 text-white rounded-full text-xs font-bold uppercase tracking-widest px-8 h-12 transition-all"
-                >
-                  Continue <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              ) : (
-                <Button 
-                  onClick={handleSend}
-                  disabled={isSubmitting}
-                  className="bg-green-600 hover:bg-green-700 text-white rounded-full text-xs font-bold uppercase tracking-widest px-8 h-12 transition-all"
-                >
-                  {isSubmitting ? "Sending..." : "Send FOI Requests"} <Mail className="w-4 h-4 ml-2" />
-                </Button>
-              )}
+            <div className="shrink-0 border-t border-slate-100 bg-white px-4 py-4 sm:px-6 sm:py-5">
+              <div
+                className={cn(
+                  "flex gap-3",
+                  step > 1 ? "flex-col sm:flex-row sm:items-stretch" : "justify-end"
+                )}
+              >
+                {step > 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => setStep((s) => s - 1)}
+                    className="inline-flex min-h-12 w-full min-w-0 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold uppercase tracking-wider text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1877F2]/30 sm:w-auto sm:min-w-[8.5rem] sm:flex-1 sm:rounded-full sm:px-6"
+                  >
+                    <ArrowLeft className="h-4 w-4 shrink-0" />
+                    Back
+                  </button>
+                ) : null}
+
+                {step < 4 ? (
+                  <Button
+                    onClick={() => setStep((s) => s + 1)}
+                    disabled={
+                      (step === 1 && !isStep1Valid) ||
+                      (step === 2 && !isStep2Valid) ||
+                      (step === 3 && !isStep3Valid)
+                    }
+                    className={cn(
+                      "min-h-12 min-w-0 shrink rounded-xl bg-[#1877F2] px-4 text-xs font-bold uppercase tracking-wider whitespace-normal text-white shadow-sm transition-all hover:bg-blue-600 disabled:opacity-50 sm:min-w-[9.5rem] sm:whitespace-nowrap sm:rounded-full sm:px-8",
+                      step > 1 ? "w-full sm:flex-1" : "w-full sm:w-auto"
+                    )}
+                  >
+                    Continue <ArrowRight className="ml-2 h-4 w-4 shrink-0" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleSend}
+                    disabled={isSubmitting}
+                    className="min-h-12 w-full min-w-0 shrink rounded-xl bg-green-600 px-3 text-[11px] font-bold uppercase leading-tight tracking-wide whitespace-normal text-white shadow-sm transition-all hover:bg-green-700 disabled:opacity-50 sm:w-auto sm:min-w-[11rem] sm:px-8 sm:text-xs sm:tracking-wider sm:whitespace-nowrap sm:rounded-full sm:flex-1"
+                  >
+                    {isSubmitting ? (
+                      "Sending..."
+                    ) : (
+                      <>
+                        <span className="sm:hidden">Send requests</span>
+                        <span className="hidden sm:inline">Send FOI Requests</span>
+                        <Mail className="ml-1.5 h-4 w-4 shrink-0 sm:ml-2" />
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
             </div>
           )}
         </motion.div>
