@@ -145,29 +145,29 @@ export default function AboutPage() {
 
           {/* Conditional layout (Carousel vs Grid) */}
           {viewMode === "carousel" ? (
-            <div className="relative w-full max-w-[1600px] mx-auto mt-8 md:mt-12 group">
+            <div className="relative w-screen left-1/2 -translate-x-1/2 mt-8 md:mt-12 group">
               {/* Scroll Buttons */}
               <button 
                 onClick={scrollLeft}
-                className="absolute left-2 md:-left-12 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 bg-[#050A14]/90 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
+                className="absolute left-4 sm:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 bg-[#050A14]/90 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
                 aria-label="Scroll left"
               >
-                <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
               </button>
               <button 
                 onClick={scrollRight}
-                className="absolute right-2 md:-right-12 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 bg-[#050A14]/90 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
+                className="absolute right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 bg-[#050A14]/90 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-[#1877F2] transition-colors shadow-xl"
                 aria-label="Scroll right"
               >
-                <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
+                <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
               </button>
 
               <div 
                 ref={scrollRef}
-                className="flex overflow-x-auto gap-4 sm:gap-6 snap-x snap-mandatory scrollbar-hide px-4 sm:px-8 pb-4"
+                className="flex overflow-x-auto gap-3 sm:gap-6 snap-x snap-mandatory scrollbar-hide px-0 sm:px-4 py-8"
               >
                 {FOUNDERS.map((member, i) => (
-                  <div key={`${member.name}-${i}`} className="snap-center shrink-0 w-[85vw] max-w-[340px] md:max-w-[370px]">
+                  <div key={`${member.name}-${i}`} className="snap-center shrink-0 w-[60vw] sm:w-[75vw] max-w-[280px] sm:max-w-[320px] md:max-w-[340px]">
                     <FounderCard member={member} onOpenBio={() => setSelectedMember(member)} />
                   </div>
                 ))}

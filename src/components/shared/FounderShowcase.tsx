@@ -98,13 +98,13 @@ export function FounderCard({ member, onOpenBio }: { member: Founder, onOpenBio:
             </button>
 
             {/* Fixed height for identical image sizes across all breakpoints */}
-            <div className="relative w-full h-52 min-h-52 max-h-52 sm:h-80 sm:min-h-80 sm:max-h-80 md:h-96 md:min-h-96 md:max-h-96 shrink-0">
+            <div className="relative w-full h-72 min-h-72 max-h-72 sm:h-80 sm:min-h-80 sm:max-h-80 md:h-96 md:min-h-96 md:max-h-96 shrink-0">
               <img
                 src={member.img}
                 alt={member.name}
                 className="w-full h-full object-cover object-top grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] via-[#050A14]/20 to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-[#050A14] to-transparent pointer-events-none" />
             </div>
 
             {/* Content expands naturally, no cropping */}
