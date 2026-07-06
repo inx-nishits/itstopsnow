@@ -92,14 +92,14 @@ function HeroContent({
 
             <h1 
               className={cn("flex flex-col uppercase mb-5 sm:mb-6 lg:mb-6 tracking-normal", anton.className)}
-              style={{ lineHeight: 0.95 }}
+              style={{ lineHeight: 1.05 }}
             >
-              <span className="text-white text-[5.5rem] sm:text-[6.5rem] lg:text-[5rem] xl:text-[6rem]">BEHIND</span>
-              <span className="text-white text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">EVERY BADGE</span>
-              <span className="text-[#1877F2] text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">IS A LIFE</span>
+              <span className="text-white text-[64px] sm:text-[6.5rem] lg:text-[5rem] xl:text-[6rem]">BEHIND</span>
+              <span className="text-white text-[44px] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">EVERY BADGE</span>
+              <span className="text-[#1877F2] text-[44px] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">IS A LIFE</span>
               <div className="flex flex-col lg:flex-row lg:gap-3 xl:gap-4">
-                <span className="text-white text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">WORTH</span>
-                <span className="text-white text-[3.5rem] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">FIGHTING FOR<span className="text-[#1877F2]">.</span></span>
+                <span className="text-white text-[44px] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">WORTH</span>
+                <span className="text-white text-[44px] sm:text-[4.5rem] lg:text-[3.5rem] xl:text-[4.5rem]">FIGHTING FOR<span className="text-[#1877F2]">.</span></span>
               </div>
             </h1>
 
