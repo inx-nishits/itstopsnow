@@ -3,7 +3,6 @@ import { Resend } from 'resend';
 import { z } from 'zod';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
-import { createClient } from 'next-sanity';
 import crypto from 'crypto';
 
 // Initialize Resend
@@ -22,15 +21,6 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
     limiter: Ratelimit.slidingWindow(5, '1 h'),
   });
 }
-
-// Initialize Sanity Client for saving Letter History
-const sanityClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your-project-id',
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  useCdn: false,
-  token: process.env.SANITY_API_TOKEN,
-  apiVersion: '2023-05-03',
-});
 
 // Zod Validation Schema
 const EmailSchema = z.object({
@@ -83,26 +73,6 @@ export async function POST(request: Request) {
       }
     } else {
       console.log('Resend API Key is missing or default. Simulating successful send to:', targetEmail);
-    }
-
-    // Save to Sanity Letter History
-    try {
-      // Hash the sender details for privacy while allowing unique participant counts
-      const senderHash = crypto.createHash('sha256').update(validatedData.senderEmail).digest('hex');
-
-      await sanityClient.create({
-        _type: 'letterHistory',
-        mpName: validatedData.mpName,
-        constituency: validatedData.constituency,
-        senderHash: senderHash,
-        status: 'delivered',
-        sentAt: new Date().toISOString(),
-        ...(validatedData.campaignId && { campaignId: { _type: 'reference', _ref: validatedData.campaignId } }),
-        ...(validatedData.templateId && { templateId: { _type: 'reference', _ref: validatedData.templateId } }),
-      });
-    } catch (sanityError) {
-      // We don't fail the request if analytics logging fails
-      console.error('Failed to log to Sanity:', sanityError);
     }
 
     return NextResponse.json({ success: true, id: emailId });
