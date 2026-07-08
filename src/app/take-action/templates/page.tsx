@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, FileText, Download, Clock, SearchX, Shield, AlertTriangle, Heart, Eye, Copy, Building2, ChevronDown } from "lucide-react";
+import { Search, FileText, Download, Clock, SearchX, Shield, AlertTriangle, Heart, Eye, Building2, ChevronDown, Flame } from "lucide-react";
 import { EditorialSection, CampaignSection } from "@/components/layout/PageSection";
 import { PageHero, PAGE_CONTENT_CONTAINER } from "@/components/layout/PageHero";
 import TemplatePreviewModal, { type LetterTemplate } from "@/components/take-action/TemplatePreviewModal";
@@ -44,6 +44,8 @@ const TEMPLATES = [
     recipient: "Member of Parliament (MP)", 
     tone: "Formal", 
     readTime: "3 Min Read",
+    campaign: "12-Month Time Limit",
+    popularity: 1284,
     content: "Dear [MP Name],\n\nI am writing to you today to urgently request your support for implementing a strict 12-month time limit on Independent Office for Police Conduct (IOPC) investigations.\n\nCurrently, police officers are subjected to investigations that can drag on for years without resolution. This causes severe, often irreversible damage to their mental health, their careers, and their families. It is fundamentally unjust to keep public servants in a state of suspended animation when no evidence of wrongdoing has been found after a year of scrutiny.\n\nI urge you to back legislative changes that mandate a conclusion to these investigations within 12 months. Our officers deserve timely justice and the ability to continue serving the public without the shadow of endless proceedings.\n\nSincerely,\n[Your Name]\n[Your Postcode]"
   },
   { 
@@ -52,6 +54,8 @@ const TEMPLATES = [
     recipient: "Chief Constable", 
     tone: "Evidence-led", 
     readTime: "4 Min Read",
+    campaign: "Mandatory Trauma Support",
+    popularity: 862,
     content: "Dear Chief Constable,\n\nI am raising an urgent issue regarding the lack of mandatory, independent trauma support for officers following critical incidents.\n\nThe current provision is inadequate, leaving officers vulnerable to PTSD and other severe psychological impacts. Evidence shows that immediate intervention significantly reduces long-term harm. We must implement guaranteed independent psychological care within 48 hours for all officers involved in fatal or serious incidents.\n\nI look forward to your commitment to improving our welfare provisions.\n\nYours faithfully,\n[Your Name]"
   },
   { 
@@ -60,6 +64,8 @@ const TEMPLATES = [
     recipient: "Police and Crime Commissioner (PCC)", 
     tone: "Personal", 
     readTime: "2 Min Read",
+    campaign: "Mandatory Trauma Support",
+    popularity: 1547,
     content: "Dear Police and Crime Commissioner,\n\nI am the family member of a serving police officer. I am writing to express my deep concern over the toll that the current system of protracted investigations and lack of support takes on our families.\n\nWe watch our loved ones suffer under the immense pressure of a system that often treats them with presumption of guilt. The uncertainty and stress do not stop at the station door; they permeate our homes and lives.\n\nPlease take immediate action to reform the investigation process and provide better welfare support for our officers.\n\nYours sincerely,\n[Your Name]"
   },
   { 
@@ -68,6 +74,8 @@ const TEMPLATES = [
     recipient: "Member of Parliament (MP)", 
     tone: "Formal", 
     readTime: "3 Min Read",
+    campaign: "Anonymity Until Conviction",
+    popularity: 693,
     content: "Dear [MP Name],\n\nI am writing to urge you to support legislation that protects the anonymity of police officers facing preliminary investigations until a conviction is secured.\n\nThe current practice often leads to a 'trial by media,' destroying an officer's reputation and livelihood before they have had a fair hearing. This presumption of guilt is contrary to our justice system's foundational principles.\n\nWe need a system that balances accountability with fairness. Please advocate for the protection of officer identities during the investigative process.\n\nSincerely,\n[Your Name]\n[Your Postcode]"
   },
 ];
@@ -123,6 +131,7 @@ export default function TemplatesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [recipientFilter, setRecipientFilter] = useState("All");
   const [toneFilter, setToneFilter] = useState("All");
+  const [campaignFilter, setCampaignFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Recently Added");
   const [currentPage, setCurrentPage] = useState(1);
   const [previewTemplate, setPreviewTemplate] = useState<LetterTemplate | null>(null);
@@ -132,18 +141,27 @@ export default function TemplatesPage() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, recipientFilter, toneFilter, sortBy]);
+  }, [searchQuery, recipientFilter, toneFilter, campaignFilter, sortBy]);
 
   const [recipientDropdownOpen, setRecipientDropdownOpen] = useState(false);
   const [toneDropdownOpen, setToneDropdownOpen] = useState(false);
+  const [campaignDropdownOpen, setCampaignDropdownOpen] = useState(false);
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
 
-  // Filter logic
+  // Filter logic — search matches title, recipient, tone, campaign and letter keywords
   const filteredTemplates = TEMPLATES.filter(template => {
-    const matchesSearch = template.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const q = searchQuery.trim().toLowerCase();
+    const matchesSearch =
+      !q ||
+      template.title.toLowerCase().includes(q) ||
+      template.recipient.toLowerCase().includes(q) ||
+      template.tone.toLowerCase().includes(q) ||
+      template.campaign.toLowerCase().includes(q) ||
+      template.content.toLowerCase().includes(q);
     const matchesRecipient = recipientFilter === "All" || template.recipient.includes(recipientFilter);
     const matchesTone = toneFilter === "All" || template.tone === toneFilter;
-    return matchesSearch && matchesRecipient && matchesTone;
+    const matchesCampaign = campaignFilter === "All" || template.campaign === campaignFilter;
+    return matchesSearch && matchesRecipient && matchesTone && matchesCampaign;
   });
 
   const sortedTemplates = [...filteredTemplates].sort((a, b) => {
@@ -153,6 +171,9 @@ export default function TemplatesPage() {
     if (sortBy === "Z-A") {
       return b.title.localeCompare(a.title);
     }
+    if (sortBy === "Most Popular") {
+      return b.popularity - a.popularity;
+    }
     // Recently Added (Default, by ID)
     return b.id - a.id;
   });
@@ -161,12 +182,8 @@ export default function TemplatesPage() {
   const paginatedTemplates = sortedTemplates.slice(0, currentPage * itemsPerPage);
 
   const handleCampaignClick = (campaignTitle: string) => {
-    let keyword = "";
-    if (campaignTitle.includes("12-Month")) keyword = "12-Month";
-    if (campaignTitle.includes("Trauma")) keyword = "Trauma";
-    if (campaignTitle.includes("Anonymity")) keyword = "Anonymity";
-    
-    setSearchQuery(keyword);
+    setSearchQuery("");
+    setCampaignFilter(campaignTitle);
     setRecipientFilter("All");
     setToneFilter("All");
     setSortBy("Recently Added");
@@ -269,10 +286,40 @@ export default function TemplatesPage() {
 
               {/* Filters Group */}
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-center">
+                {/* Campaign Dropdown */}
+                <div className="relative flex-1 sm:flex-initial">
+                  <button 
+                    onClick={() => { setCampaignDropdownOpen(!campaignDropdownOpen); setRecipientDropdownOpen(false); setToneDropdownOpen(false); setSortDropdownOpen(false); }}
+                    className="w-full sm:w-[200px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
+                  >
+                    <span className="flex min-w-0 items-center gap-1.5">
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0">Campaign:</span>
+                      <span className="text-slate-800 font-bold truncate">{campaignFilter === "All" ? "All" : campaignFilter}</span>
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${campaignDropdownOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {campaignDropdownOpen && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setCampaignDropdownOpen(false)} />
+                      <div className="absolute top-[calc(100%+8px)] left-0 w-full sm:w-64 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left">
+                        {["All", ...CAMPAIGNS.map(c => c.title)].map(val => (
+                          <button
+                            key={val}
+                            onClick={() => { setCampaignFilter(val); setCampaignDropdownOpen(false); }}
+                            className={`w-full text-left px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 transition-colors ${campaignFilter === val ? "text-[#1877F2] bg-blue-50/50" : "text-slate-600"}`}
+                          >
+                            {val === "All" ? "All Campaigns" : val}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
                 {/* For: Recipient Dropdown */}
                 <div className="relative flex-1 sm:flex-initial">
                   <button 
-                    onClick={() => { setRecipientDropdownOpen(!recipientDropdownOpen); setToneDropdownOpen(false); setSortDropdownOpen(false); }}
+                    onClick={() => { setRecipientDropdownOpen(!recipientDropdownOpen); setCampaignDropdownOpen(false); setToneDropdownOpen(false); setSortDropdownOpen(false); }}
                     className="w-full sm:w-[160px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
                     <span className="flex items-center gap-1.5">
@@ -302,7 +349,7 @@ export default function TemplatesPage() {
                 {/* Voice: Tone Dropdown */}
                 <div className="relative flex-1 sm:flex-initial">
                   <button 
-                    onClick={() => { setToneDropdownOpen(!toneDropdownOpen); setRecipientDropdownOpen(false); setSortDropdownOpen(false); }}
+                    onClick={() => { setToneDropdownOpen(!toneDropdownOpen); setCampaignDropdownOpen(false); setRecipientDropdownOpen(false); setSortDropdownOpen(false); }}
                     className="w-full sm:w-[150px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
                     <span className="flex items-center gap-1.5">
@@ -332,12 +379,12 @@ export default function TemplatesPage() {
                 {/* Sort Dropdown */}
                 <div className="relative flex-1 sm:flex-initial">
                   <button 
-                    onClick={() => { setSortDropdownOpen(!sortDropdownOpen); setToneDropdownOpen(false); setRecipientDropdownOpen(false); }}
+                    onClick={() => { setSortDropdownOpen(!sortDropdownOpen); setCampaignDropdownOpen(false); setToneDropdownOpen(false); setRecipientDropdownOpen(false); }}
                     className="w-full sm:w-[130px] h-[50px] bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2 shadow-sm"
                   >
                     <span className="flex items-center gap-1.5">
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Sort:</span>
-                      <span className="text-slate-800 font-bold">{sortBy === "Recently Added" ? "Recent" : sortBy}</span>
+                      <span className="text-slate-800 font-bold">{sortBy === "Recently Added" ? "Recent" : sortBy === "Most Popular" ? "Popular" : sortBy}</span>
                     </span>
                     <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${sortDropdownOpen ? "rotate-180" : ""}`} />
                   </button>
@@ -345,7 +392,7 @@ export default function TemplatesPage() {
                     <>
                       <div className="fixed inset-0 z-40" onClick={() => setSortDropdownOpen(false)} />
                       <div className="absolute top-[calc(100%+8px)] left-0 w-full sm:w-40 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 origin-top-left">
-                        {["A-Z", "Z-A", "Recently Added"].map(val => (
+                        {["A-Z", "Z-A", "Recently Added", "Most Popular"].map(val => (
                           <button
                             key={val}
                             onClick={() => { setSortBy(val as any); setSortDropdownOpen(false); }}
@@ -397,7 +444,12 @@ export default function TemplatesPage() {
                             </div>
                             <div className="min-w-0">
                               <div className="text-sm font-bold text-slate-900 leading-none group-hover:text-[#1877F2] transition-colors">{template.title}</div>
-                              <span className="text-xs text-slate-400 font-medium">ID: #{template.id}</span>
+                              <span className="inline-flex items-center gap-1 text-xs text-slate-400 font-medium">
+                                ID: #{template.id}
+                                <span aria-hidden>·</span>
+                                <Flame className="w-3 h-3 text-orange-400" />
+                                {template.popularity.toLocaleString("en-GB")} uses
+                              </span>
                             </div>
                           </div>
                         </td>
@@ -447,13 +499,6 @@ export default function TemplatesPage() {
                             >
                               <FileText className="w-4 h-4" />
                             </button>
-                            <button
-                              onClick={() => { navigator.clipboard.writeText(template.content); alert("Template copied to clipboard!"); }}
-                              className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-green-50 hover:text-green-500 border border-slate-200/60 text-slate-500 flex items-center justify-center transition-all duration-200 active:scale-95"
-                              title="Copy to Clipboard"
-                            >
-                              <Copy className="w-4 h-4" />
-                            </button>
                           </div>
                         </td>
                       </tr>
@@ -491,7 +536,7 @@ export default function TemplatesPage() {
                       </div>
                     </div>
 
-                    <p className="mb-4 h-10 overflow-hidden text-sm leading-5 text-slate-500">
+                    <p className="mb-4 text-sm leading-relaxed text-slate-500">
                       Ask your {template.recipient} to support better data collection, prevention and officer mental health support.
                     </p>
 
@@ -532,7 +577,7 @@ export default function TemplatesPage() {
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => void handleDownloadTemplate(template, "pdf")}
@@ -548,17 +593,6 @@ export default function TemplatesPage() {
                         title="Download Word (DOCX)"
                       >
                         <FileText className="h-4 w-4" strokeWidth={2} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          navigator.clipboard.writeText(template.content);
-                          alert("Template copied to clipboard!");
-                        }}
-                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-500 transition-all active:scale-[0.98] hover:border-green-200 hover:bg-green-50 hover:text-green-500"
-                        title="Copy to Clipboard"
-                      >
-                        <Copy className="h-4 w-4" strokeWidth={2} />
                       </button>
                     </div>
                   </div>

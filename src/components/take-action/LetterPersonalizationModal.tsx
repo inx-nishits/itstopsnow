@@ -36,6 +36,27 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.paddingRight = previousBodyPaddingRight;
+    };
+  }, [isOpen]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!template) return;
@@ -56,7 +77,7 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-end">
+      <div className="fixed inset-0 z-[100] flex items-center justify-end overflow-hidden overscroll-none">
         <motion.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
@@ -70,7 +91,7 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="relative bg-white h-full w-full max-w-md shadow-2xl flex flex-col"
+          className="relative flex h-full w-full max-w-md flex-col overflow-hidden bg-white shadow-2xl"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50">
@@ -87,7 +108,7 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
           </div>
 
           {/* Form Body */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="min-h-0 flex-1 overflow-y-auto p-6">
             <form id="personalization-form" onSubmit={handleSubmit} className="space-y-6">
               
               <div>
@@ -99,8 +120,8 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
                   required
                   value={formData.name} 
                   onChange={e => setFormData({...formData, name: e.target.value})} 
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" 
-                  placeholder="John Smith" 
+                  className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1877F2] focus:outline-none focus:ring-1 focus:ring-[#1877F2]" 
+                  placeholder="Enter your full name" 
                 />
               </div>
 
@@ -113,8 +134,8 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
                   required
                   value={formData.postcode} 
                   onChange={e => setFormData({...formData, postcode: e.target.value})} 
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2]" 
-                  placeholder="DL1 1AA" 
+                  className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1877F2] focus:outline-none focus:ring-1 focus:ring-[#1877F2]" 
+                  placeholder="Enter postcode, e.g. DL1 1AA" 
                 />
               </div>
 
@@ -141,8 +162,8 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
                 <textarea 
                   value={formData.additionalDetails} 
                   onChange={e => setFormData({...formData, additionalDetails: e.target.value})} 
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#1877F2] focus:ring-1 focus:ring-[#1877F2] min-h-[120px]" 
-                  placeholder="Add any personal notes, connection to the incident, or specific details you want included..." 
+                  className="min-h-[120px] w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1877F2] focus:outline-none focus:ring-1 focus:ring-[#1877F2]" 
+                  placeholder="Add any personal notes or specific details you want included..." 
                 />
               </div>
 
@@ -150,7 +171,7 @@ export default function LetterPersonalizationModal({ isOpen, onClose, template }
           </div>
 
           {/* Footer Action */}
-          <div className="p-6 bg-white border-t border-slate-100">
+          <div className="shrink-0 border-t border-slate-100 bg-white p-6">
             <Button 
               type="submit"
               form="personalization-form"
