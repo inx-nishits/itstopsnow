@@ -48,14 +48,18 @@ export default function Header() {
           }`}
         style={{ top: isScrolled ? '0px' : 'var(--alert-height, 0px)' }}
       >
-        <div className="w-full px-4 sm:px-6 lg:px-12 mx-auto flex items-center justify-between h-16 md:h-24 transition-all duration-300">
+        <div
+          className={`w-full px-4 sm:px-6 lg:px-12 mx-auto flex items-center justify-between transition-all duration-300 ${
+            isScrolled ? "py-2 md:py-3" : "py-3 md:py-5"
+          }`}
+        >
 
           {/* LOGO */}
           <Link href="/" className="flex items-center shrink-0">
             <img
               src="/ISN-Logo.svg"
               alt="It Stops Now Logo"
-              className={`w-auto transition-all duration-300 ${isScrolled ? "h-8 md:h-10" : "h-10 md:h-12"}`}
+              className="h-10 md:h-12 w-auto"
             />
           </Link>
 
