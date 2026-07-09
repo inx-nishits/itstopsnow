@@ -1,15 +1,71 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { Shield, ChevronLeft, ChevronRight, Grid, LayoutGrid } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import AboutMovementSection from "@/components/about/AboutMovementSection";
-import { FOUNDERS, FounderCard, BioModal } from "@/components/shared/FounderShowcase";
+import { FOUNDERS, FounderCard, BioModal, type Founder } from "@/components/shared/FounderShowcase";
+
+const viewToggleClassName =
+  "flex items-center gap-2 border border-white/10 hover:border-[#1877F2] bg-white/5 hover:bg-[#1877F2]/10 text-white rounded-xl px-5 py-3 text-xs font-bold transition-all cursor-pointer shadow-xl backdrop-blur-sm";
 
 export default function AboutPage() {
   const [viewMode, setViewMode] = useState<"carousel" | "grid">("carousel");
-  const [selectedMember, setSelectedMember] = useState<any | null>(null);
+  const [selectedMember, setSelectedMember] = useState<Founder | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [sectionInView, setSectionInView] = useState(false);
+  const [nextSectionVisible, setNextSectionVisible] = useState(false);
+  const [topToggleVisible, setTopToggleVisible] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const foundersBlockRef = useRef<HTMLElement>(null);
+  const membersSectionRef = useRef<HTMLDivElement>(null);
+  const topToggleRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const section = membersSectionRef.current;
+    if (!section) return;
+
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => setSectionInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px 0px -25% 0px" }
+    );
+    sectionObserver.observe(section);
+
+    return () => sectionObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const root = foundersBlockRef.current;
+    const next = root?.nextElementSibling;
+    if (!next) return;
+
+    const nextObserver = new IntersectionObserver(
+      ([entry]) => setNextSectionVisible(entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px" }
+    );
+    nextObserver.observe(next);
+
+    return () => nextObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const toggle = topToggleRef.current;
+    if (!toggle) return;
+
+    const toggleObserver = new IntersectionObserver(
+      ([entry]) => setTopToggleVisible(entry.isIntersecting),
+      { threshold: 0, rootMargin: "-72px 0px 0px 0px" }
+    );
+    toggleObserver.observe(toggle);
+
+    return () => toggleObserver.disconnect();
+  }, [viewMode]);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -22,6 +78,18 @@ export default function AboutPage() {
       scrollRef.current.scrollBy({ left: 370, behavior: "smooth" });
     }
   };
+
+  const switchToCarousel = () => {
+    setViewMode("carousel");
+    membersSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const showFloatingCta =
+    viewMode === "grid" &&
+    sectionInView &&
+    !nextSectionVisible &&
+    !topToggleVisible &&
+    !selectedMember;
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
@@ -53,7 +121,10 @@ export default function AboutPage() {
 
 
       {/* WHY SUPPORTING + FOUNDING MEMBERS — single dark section */}
-      <section className="relative overflow-hidden bg-[#030712] border-t border-white/5">
+      <section
+        ref={foundersBlockRef}
+        className="relative overflow-hidden bg-[#030712] border-t border-white/5"
+      >
         <div className="w-full px-4 sm:px-6 lg:px-16 mx-auto relative z-10 max-w-[1600px]">
 
           {/* Why supporting */}
@@ -113,7 +184,7 @@ export default function AboutPage() {
           </div>
 
           {/* Founding members — flows directly below */}
-          <div className="pb-10 sm:pb-20 lg:pb-24 pt-6 sm:pt-8 lg:pt-10">
+          <div ref={membersSectionRef} className="pb-5 sm:pb-20 lg:pb-24 pt-6 sm:pt-8 lg:pt-10 scroll-mt-24">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-6 md:mb-10 md:border-b md:border-white/5 md:pb-6">
             <div className="text-left">
               <span className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-2 block">Founding Members</span>
@@ -125,14 +196,18 @@ export default function AboutPage() {
               </p>
             </div>
             
-            <div className="flex shrink-0">
+            <div className="flex shrink-0 self-start md:self-auto">
               <button
-                onClick={() => setViewMode(viewMode === "carousel" ? "grid" : "carousel")}
-                className="flex items-center gap-2 border border-white/10 hover:border-[#1877F2] bg-white/5 hover:bg-[#1877F2]/10 text-white rounded-xl px-5 py-3 text-xs font-bold uppercase tracking-widest transition-all cursor-pointer"
+                ref={topToggleRef}
+                type="button"
+                onClick={() =>
+                  viewMode === "carousel" ? setViewMode("grid") : switchToCarousel()
+                }
+                className={viewToggleClassName}
               >
                 {viewMode === "carousel" ? (
                   <>
-                    <Grid className="w-4 h-4 text-[#1877F2]" /> View All Grid
+                    <Grid className="w-4 h-4 text-[#1877F2]" /> View All Members
                   </>
                 ) : (
                   <>
@@ -164,7 +239,7 @@ export default function AboutPage() {
 
               <div 
                 ref={scrollRef}
-                className="flex overflow-x-auto gap-3 sm:gap-6 snap-x snap-mandatory scrollbar-hide px-0 sm:px-4 py-8"
+                className="flex overflow-x-auto gap-3 sm:gap-6 snap-x snap-mandatory scrollbar-hide px-0 sm:px-4 py-4 sm:py-8"
               >
                 {FOUNDERS.map((member, i) => (
                   <div key={`${member.name}-${i}`} className="snap-center shrink-0 w-[60vw] sm:w-[75vw] max-w-[280px] sm:max-w-[320px] md:max-w-[340px]">
@@ -186,6 +261,30 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {showFloatingCta && (
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                transition={{ duration: 0.2 }}
+                className="fixed bottom-5 right-4 sm:right-6 lg:right-8 z-[60] pointer-events-none"
+              >
+                <button
+                  type="button"
+                  onClick={switchToCarousel}
+                  className="pointer-events-auto flex items-center gap-1.5 rounded-lg border border-[#1877F2]/60 bg-[#030712] px-3.5 py-2 text-[10px] font-bold text-white shadow-[0_8px_24px_rgba(0,0,0,0.55)] hover:border-[#1877F2] hover:bg-[#0a1220] transition-all cursor-pointer"
+                >
+                  <LayoutGrid className="w-3 h-3 text-[#1877F2]" /> Show Carousel
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
 
       {/* TIMELINE SECTION */}
       <section className="pt-12 sm:pt-20 lg:pt-28 pb-4 sm:pb-6 lg:pb-8 bg-[#020811] relative border-t border-white/5">

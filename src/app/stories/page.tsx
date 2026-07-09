@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check, ChevronDown, Sparkles, Shield, Quote, ArrowDownUp } from "lucide-react";
+import { Search, MessageSquare, ChevronRight, Eye, PenTool, Share2, Calendar, User, Tag, ArrowRight, ArrowLeft, Clock, X, Upload, Check, ChevronDown, Sparkles, Shield, Quote, ArrowDownUp, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EditorialSection, CampaignSection, EditorialStickyBar } from "@/components/layout/PageSection";
@@ -249,7 +249,7 @@ function StoriesPageContent() {
                   {f === "Serving Officer" && <User className="w-4 h-4" />}
                   {f === "Family Member" && <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
                   {f === "Former Officer" && <User className="w-4 h-4" />}
-                  {f === "Recovery" && <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75" /></svg>}
+                  {f === "Recovery" && <HeartHandshake className="w-4 h-4" />}
                   {f === "All" ? "All Stories" : `${f} Stories`}
                 </button>
               ))}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Flame } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import SectionReveal from "@/components/home/SectionReveal";
 import { MEMORIALS_FALLBACK } from "@/lib/memorial/fallback";
 import type { RollHonourPreview } from "@/lib/homepage/types";
@@ -11,55 +11,199 @@ interface WallRemembranceStripProps {
   officers: RollHonourPreview[];
 }
 
+/** Clean outline candle icon */
+function CandleIcon({ className = "", strokeWidth = 1.75 }: { className?: string; strokeWidth?: number }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+      className={className}
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 3c1.5 2 2 3.5 0 5.5C10 6.5 10.5 5 12 3Z" />
+      <path d="M12 8.5v2" />
+      <path d="M9.5 10.5h5v9a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-9Z" />
+      <path d="M7.5 21.5h9" />
+    </svg>
+  );
+}
+
 export default function WallRemembranceStrip({ officers }: WallRemembranceStripProps) {
-  // Sum fallback candle counts for dynamic total (equals exactly 23,272)
   const totalCandles = MEMORIALS_FALLBACK.reduce((sum, m) => sum + m.candleCount, 0);
   const thousandCount = Math.floor(totalCandles / 1000);
 
   return (
-    <section className="relative w-full bg-gradient-to-r from-[#080F1E] to-[#040813] border-y border-white/5 overflow-hidden py-3.5 sm:py-5">
-      {/* Subtle glow highlight */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-[#1877F2]/[0.05] rounded-full blur-[60px] pointer-events-none" />
+    <section className="relative w-full overflow-hidden border-y border-white/[0.06] bg-[#010B19] py-5 sm:py-8 lg:py-10">
+      {/* BG — candle field on right (reference: soft lights behind content) */}
+      <div className="pointer-events-none absolute inset-0 bg-[#010B19]" aria-hidden>
+        {/*
+          Premium BG: soft top-right candle bokeh, clean navy left for content + glass candle.
+        */}
+        <div className="absolute -top-[12%] inset-x-0 bottom-0 sm:hidden">
+          <Image
+            src="/images/candle-bokeh-premium.png"
+            alt=""
+            fill
+            className="object-cover object-[92%_0%] brightness-110 contrast-105"
+            sizes="100vw"
+            priority
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(105deg, #010B19 0%, #010B19 22%, rgba(1,11,25,0.8) 40%, rgba(1,11,25,0.3) 60%, transparent 80%)",
+            }}
+          />
+          <div
+            className="absolute bottom-[-10%] left-[-8%] h-[70%] w-[55%]"
+            style={{
+              background:
+                "radial-gradient(ellipse at 40% 70%, rgba(245,158,11,0.1) 0%, rgba(24,119,242,0.04) 35%, transparent 70%)",
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(1,11,25,0.1) 0%, transparent 28%, transparent 72%, rgba(1,11,25,0.35) 100%)",
+            }}
+          />
+        </div>
 
-      <div className="w-full max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-16 relative z-10">
+        {/* Desktop: sharp clear candle BG (not soft bokeh) — quieter opacity */}
+        <div className="absolute inset-0 hidden sm:block">
+          <Image
+            src="/images/candle-bg-desktop-sharp.png"
+            alt=""
+            fill
+            className="object-cover object-right opacity-45 brightness-100 contrast-100"
+            sizes="100vw"
+            quality={95}
+            priority
+          />
+          {/* Stronger left navy — reduce BG visibility so content stays clear */}
+          <div
+            className="absolute inset-y-0 left-0 w-[52%] lg:w-[48%]"
+            style={{
+              background:
+                "linear-gradient(90deg, #010B19 0%, #010B19 35%, rgba(1,11,25,0.85) 58%, rgba(1,11,25,0.35) 82%, transparent 100%)",
+            }}
+          />
+          {/* Light bottom fade for CTAs only */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-[30%]"
+            style={{
+              background:
+                "linear-gradient(180deg, transparent 0%, rgba(1,11,25,0.25) 60%, rgba(1,11,25,0.55) 100%)",
+            }}
+          />
+          {/* Extra desktop veil so candle field stays soft, not loud */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "rgba(1, 11, 25, 0.28)",
+            }}
+          />
+        </div>
+
+        {/* Blue–purple grading overlay (matches reference mood) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(105deg, #010B19 0%, #010B19 28%, rgba(12,18,48,0.55) 48%, rgba(45,30,90,0.45) 68%, rgba(70,40,130,0.4) 85%, rgba(55,35,110,0.35) 100%)",
+          }}
+        />
+        {/* Soft purple wash on right candle field */}
+        <div
+          className="absolute inset-y-0 right-0 w-[65%]"
+          style={{
+            background:
+              "radial-gradient(ellipse 90% 80% at 85% 40%, rgba(88, 50, 160, 0.45) 0%, rgba(40, 30, 100, 0.28) 40%, transparent 75%)",
+          }}
+        />
+        {/* Top-to-bottom dark grade for readability */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(8,10,30,0.2) 0%, rgba(8,10,30,0.15) 35%, rgba(5,8,22,0.45) 70%, rgba(1,11,25,0.85) 100%)",
+          }}
+        />
+        {/* Soft vignette */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 70% at 45% 40%, transparent 0%, transparent 50%, rgba(1,8,22,0.4) 100%)",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-3 sm:px-6 lg:px-16">
         <SectionReveal delay={0.05}>
-          {/* Mobile: stacked layout — stats on top, avatars + button below */}
-          <div className="flex flex-col gap-3 sm:hidden w-full">
-            {/* Row 1: Candle + Stats */}
-            <div className="flex items-stretch gap-3 w-full">
-              <div className="relative w-[4.25rem] min-h-[4.25rem] shrink-0 self-stretch rounded-xl overflow-hidden border border-white/10 bg-[#02050b] shadow-inner">
+          {/* Horizontal layout — candle height matches content; no crop on mobile */}
+          <div className="flex items-stretch gap-2.5 sm:items-center sm:gap-8 lg:gap-12">
+            {/* Glass candle — feathered into section BG on mobile */}
+            <div className="relative flex w-[32%] max-w-[120px] shrink-0 items-end self-stretch pt-3 sm:w-[180px] sm:max-w-none sm:items-center sm:pt-0 lg:w-[260px] xl:w-[300px]">
+              {/* Warm floor glow — ties candle into section atmosphere */}
+              <div
+                className="pointer-events-none absolute -inset-x-3 bottom-0 h-10 rounded-full bg-amber-400/30 blur-2xl sm:inset-x-6 sm:h-8 sm:bg-amber-400/25 sm:blur-2xl"
+                aria-hidden
+              />
+              <div
+                className="pointer-events-none absolute inset-0 sm:hidden"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 70% 60% at 50% 55%, rgba(245,158,11,0.12) 0%, transparent 70%)",
+                }}
+                aria-hidden
+              />
+              <div
+                className="relative h-full min-h-[140px] w-full translate-y-1 sm:min-h-0 sm:aspect-[3/4] sm:h-auto sm:translate-y-0"
+                style={{
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse 68% 70% at 50% 48%, #000 38%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.4) 72%, transparent 90%)",
+                  maskImage:
+                    "radial-gradient(ellipse 68% 70% at 50% 48%, #000 38%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.4) 72%, transparent 90%)",
+                }}
+              >
                 <Image
-                  src="/images/candle_glow.png"
-                  alt="Lit candle"
+                  src="/images/isn-glass-candle.png"
+                  alt="ISN remembrance candle"
                   fill
-                  className="object-cover scale-105"
+                  priority
+                  className="object-contain object-bottom mix-blend-lighten brightness-105 contrast-105 sm:brightness-100 sm:contrast-100"
+                  sizes="(max-width: 640px) 120px, (max-width: 1024px) 180px, 300px"
                 />
-              </div>
-              <div className="flex flex-col justify-center flex-1 min-w-0">
-                <div className="text-xl font-black text-white tracking-tight leading-none">
-                  {totalCandles.toLocaleString()}
-                </div>
-                <div className="text-xs font-bold text-slate-400 tracking-wider mt-0.5 leading-tight">
-                  Candles lit in remembrance
-                </div>
-                <Link
-                  href="/wall-of-remembrance"
-                  className="inline-flex items-center gap-1 text-sm font-bold text-[#1877F2] hover:text-blue-400 transition-colors mt-1 w-fit"
-                >
-                  <span>Light a candle</span>
-                  <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-                </Link>
               </div>
             </div>
 
-            {/* Row 2: Avatars + Button */}
-            <div className="flex items-center justify-between w-full">
+            {/* Content — right of candle */}
+            <div className="flex min-w-0 flex-1 flex-col justify-center text-left">
+              <div className="mb-1.5 sm:mb-4 lg:mb-5">
+                <span className="text-[1.65rem] font-black leading-none tracking-tight text-white tabular-nums xs:text-3xl sm:text-4xl lg:text-[3.5rem]">
+                  {totalCandles.toLocaleString()}
+                </span>
+              </div>
+
+              <p className="mb-2.5 text-[11px] font-medium leading-[1.35] text-white/90 sm:mb-5 sm:max-w-xl sm:text-base sm:leading-relaxed lg:mb-6 lg:text-lg">
+                Honouring those we&apos;ve lost.
+                <br />
+                Standing with those who remain.
+              </p>
+
               {officers.length > 0 && (
-                <div className="flex -space-x-3 items-center">
+                <div className="mb-3 flex items-center -space-x-2.5 sm:mb-6 sm:-space-x-3 lg:mb-7">
                   {officers.slice(0, 3).map((off) => (
                     <div
                       key={off.id}
-                      className="relative w-11 h-11 rounded-full border-2 border-[#080F1E] overflow-hidden bg-[#030712] shadow-md shrink-0"
+                      className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-[#010B19] bg-[#030712] shadow-md sm:h-10 sm:w-10 lg:h-11 lg:w-11"
                     >
                       <Image
                         src={off.imageUrl}
@@ -70,82 +214,32 @@ export default function WallRemembranceStrip({ officers }: WallRemembranceStripP
                     </div>
                   ))}
                   <div
-                    style={{ width: 44, height: 44, minWidth: 44 }}
-                    className="relative z-10 flex items-center justify-center rounded-full border-2 border-[#080F1E] bg-[#1877F2] text-white font-black text-[8px] shadow-md shrink-0 whitespace-nowrap leading-none"
+                    className="relative z-10 grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full border-2 border-[#010B19] bg-[#1877F2] shadow-md sm:h-10 sm:w-10 lg:h-11 lg:w-11"
+                    aria-label={`Plus ${thousandCount} thousand`}
                   >
-                    +{thousandCount}K
+                    <span className="text-[8px] font-bold leading-none tracking-tight text-white tabular-nums sm:text-[10px] lg:text-xs">
+                      +{thousandCount}K
+                    </span>
                   </div>
                 </div>
               )}
-              <Link href="/wall-of-remembrance" className="shrink-0">
-                <button className="group bg-transparent hover:bg-white hover:text-[#010B19] text-white border border-white/20 text-xs font-black tracking-widest uppercase px-4 py-2 rounded-full transition-all duration-300 shadow-md min-h-[36px] flex items-center gap-1.5">
-                  TRIBUTE
-                  <ArrowRight className="w-3.5 h-3.5 shrink-0 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-              </Link>
-            </div>
-          </div>
 
-          {/* Desktop: original side-by-side layout */}
-          <div className="hidden sm:flex flex-row items-center justify-between gap-6 w-full">
-            {/* Left Side: Candle & Stats */}
-            <div className="flex items-stretch gap-4 flex-1 min-w-0">
-              <div className="relative w-[4.75rem] min-h-[4.75rem] shrink-0 self-stretch rounded-xl overflow-hidden border border-white/10 bg-[#02050b] shadow-inner sm:w-20 sm:min-h-20">
-                <Image
-                  src="/images/candle_glow.png"
-                  alt="Lit candle"
-                  fill
-                  className="object-cover scale-105"
-                />
-              </div>
-              <div className="flex flex-col justify-center flex-1 min-w-0">
-                <div className="text-2xl font-black text-white tracking-tight leading-none">
-                  {totalCandles.toLocaleString()}
-                </div>
-                <div className="text-xs lg:text-sm font-bold text-slate-400 tracking-wider mt-1 leading-tight">
-                  Candles lit in remembrance
-                </div>
+              <div className="flex flex-row items-center gap-2 sm:gap-4">
                 <Link
                   href="/wall-of-remembrance"
-                  className="inline-flex items-center gap-1.5 text-sm font-bold text-[#1877F2] hover:text-blue-400 transition-colors mt-2 w-fit"
+                  className="inline-flex min-h-[38px] shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#1877F2] px-3 py-2 text-[10px] font-bold tracking-wide text-white shadow-[0_8px_24px_rgba(24,119,242,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-[#010B19] hover:shadow-[0_10px_28px_rgba(255,255,255,0.35)] sm:min-h-[56px] sm:gap-3 sm:px-9 sm:py-4 sm:text-sm lg:min-h-[60px] lg:px-11 lg:text-base"
                 >
-                  <span>Light a candle</span>
-                  <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                  <CandleIcon className="h-4 w-4 sm:h-6 sm:w-6 lg:h-7 lg:w-7" strokeWidth={2} />
+                  Light a Candle
+                </Link>
+                <Link
+                  href="/wall-of-remembrance"
+                  className="inline-flex min-h-[38px] shrink-0 items-center justify-center gap-1 rounded-full border border-white/30 bg-transparent px-3 py-2 text-[10px] font-bold tracking-wide text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white hover:text-[#010B19] sm:min-h-[56px] sm:gap-2.5 sm:px-8 sm:py-4 sm:text-sm lg:min-h-[60px] lg:px-10 lg:text-base"
+                >
+                  Tribute
+                  <ArrowRight className="h-4 w-4 shrink-0 sm:h-6 sm:w-6 lg:h-7 lg:w-7" strokeWidth={2} />
                 </Link>
               </div>
-            </div>
-
-            {/* Right Side: Avatars + Button */}
-            <div className="flex items-center gap-6 shrink-0">
-              {officers.length > 0 && (
-                <div className="flex -space-x-3 items-center shrink-0">
-                  {officers.slice(0, 3).map((off) => (
-                    <div
-                      key={off.id}
-                      className="relative w-10 h-10 rounded-full border border-[#080F1E] overflow-hidden bg-[#030712] shadow-md shrink-0"
-                    >
-                      <Image
-                        src={off.imageUrl}
-                        alt={off.name}
-                        fill
-                        className="object-cover grayscale"
-                      />
-                    </div>
-                  ))}
-                  <div
-                    style={{ width: 40, height: 40, minWidth: 40 }}
-                    className="relative z-10 flex items-center justify-center rounded-full border border-[#080F1E] bg-[#1877F2] text-white font-black text-[9px] shadow-md shrink-0 whitespace-nowrap leading-none"
-                  >
-                    +{thousandCount}K
-                  </div>
-                </div>
-              )}
-              <Link href="/wall-of-remembrance" className="shrink-0">
-                <button className="group bg-transparent hover:bg-white hover:text-[#010B19] text-white border border-white/10 hover:border-white text-xs lg:text-sm font-black tracking-widest uppercase px-6 py-3.5 rounded-full transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer min-h-[44px] flex items-center gap-2">
-                  LEAVE A TRIBUTE
-                  <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-              </Link>
             </div>
           </div>
         </SectionReveal>

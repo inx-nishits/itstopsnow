@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, BookOpen, RotateCw, X, Users, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, BookOpen, RotateCw, X, Users, Quote, Grid, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionReveal from "@/components/home/SectionReveal";
 
@@ -14,10 +15,19 @@ export type Founder = {
   img: string;
 };
 
+/** Card front display limits until CMS enforces them */
+const ROLE_MAX_CHARS = 36;
+
+function truncateText(value: string, maxChars: number) {
+  const trimmed = value.trim();
+  if (trimmed.length <= maxChars) return trimmed;
+  return `${trimmed.slice(0, Math.max(0, maxChars - 1)).trimEnd()}…`;
+}
+
 const PAUL_COOPER: Founder = {
   name: "Paul Cooper",
   role: "Founder | Former Police Officer | Creator of Pocket Sergeant",
-  quote: "I created It Stops Now because no officer or family should ever face trauma or loss alone.",
+  quote: "No officer or family should ever face trauma or loss alone.",
   bio: "After more than a decade of frontline policing, I saw the impact that vicarious trauma and mental health challenges were having on officers and their families. I created It Stops Now to break the stigma, start conversations, and provide practical support for those who serve.\n\nThis movement is personal. It's built on lived experience, fueled by purpose, and driven by a belief that no one in blue should ever suffer in silence.",
   img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1200",
 };
@@ -34,35 +44,35 @@ export const FOUNDERS: Founder[] = [
   {
     name: "Sarah Jenkins",
     role: "Co-Founder & Operations Director",
-    quote: "My mission is to create real change by ensuring no officer or family feels alone.",
+    quote: "Creating real change so no officer or family feels alone.",
     bio: "Sarah is a leading human rights and defense attorney who specializes in representing public servants. She leads the legal advocacy arm, fighting for fair representation and pushing for legislative changes.",
     img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=1200",
   },
   {
     name: "Michael Davis",
     role: "Co-Founder & Wellbeing Lead",
-    quote: "Every conversation matters. I'm here to ensure our wellbeing comes first.",
+    quote: "Every conversation matters. Wellbeing comes first.",
     bio: "As a former police psychologist, Michael has treated hundreds of officers suffering from severe PTSD. He directs our support networks, providing confidential counseling and urgent crisis intervention.",
     img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1200",
   },
   {
     name: "Emma Lee",
     role: "Co-Founder & Community Lead",
-    quote: "Stronger together. Building a community where support, understanding and hope thrive.",
+    quote: "Stronger together—support, understanding and hope.",
     bio: "Emma brings over a decade of community organizing experience. She builds the peer-support networks and regional hubs that ensure every officer has a safe space to turn to.",
     img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=1200",
   },
   {
     name: "James Thorne",
     role: "Co-Founder & Policy Advisor",
-    quote: "Systemic reform requires challenging the status quo from the inside out.",
+    quote: "Reform means challenging the status quo from within.",
     bio: "A former policy advisor with extensive experience in governmental reform, James works to push legislative changes that protect officers from unfair systemic pressures.",
     img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1200",
   },
   ...Array.from({ length: 16 }).map((_, i) => ({
     name: `Founding Member ${i + 5}`,
     role: "Founding Member",
-    quote: "Dedicated to transforming the culture of policing for future generations.",
+    quote: "Transforming policing culture for future generations.",
     bio: "An experienced professional bringing crucial expertise to the It Stops Now movement. Their dedication ensures we have the resources and structure needed to create systemic change. They work tirelessly to ensure the mission reaches every corner of the community.",
     img: MOCK_IMAGES[i % MOCK_IMAGES.length]
   }))
@@ -113,14 +123,17 @@ export function FounderCard({ member, onOpenBio }: { member: Founder, onOpenBio:
                 <h4 className="text-sm md:text-xl font-black text-white uppercase tracking-tighter mb-0.5 leading-tight truncate">
                   {member.name}
                 </h4>
-                <div className="mb-2">
-                  <span className="text-[#1877F2] font-bold text-xs md:text-sm tracking-wide leading-tight line-clamp-1">
-                    {member.role}
+                <div className="mb-2 min-w-0">
+                  <span
+                    className="block text-[#1877F2] font-bold text-xs md:text-sm tracking-wide leading-tight line-clamp-1"
+                    title={member.role}
+                  >
+                    {truncateText(member.role, ROLE_MAX_CHARS)}
                   </span>
                 </div>
                 
-                <div className="relative text-left">
-                  <p className="text-slate-300 text-xs md:text-sm italic font-medium pl-0 line-clamp-2 md:line-clamp-3 leading-relaxed">
+                <div className="relative min-w-0 text-left">
+                  <p className="text-slate-300 text-xs md:text-sm italic font-medium pl-0 line-clamp-3 leading-relaxed">
                     &ldquo;{member.quote}&rdquo;
                   </p>
                 </div>
@@ -143,37 +156,39 @@ export function FounderCard({ member, onOpenBio }: { member: Founder, onOpenBio:
           className="absolute inset-0 [backface-visibility:hidden] rounded-2xl p-[1px] bg-gradient-to-br from-[#1877F2] to-cyan-500 shadow-[0_0_25px_rgba(24,119,242,0.3)] cursor-pointer"
           style={{ transform: "rotateY(180deg) translateZ(1px)" }}
         >
-          <div className="w-full h-full flex flex-col bg-[#050A14] rounded-2xl p-5 relative overflow-hidden text-left">
-            <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-[#1877F2]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative flex h-full w-full flex-col overflow-hidden rounded-2xl bg-[#050A14] p-4 sm:p-5 text-left">
+            <div className="pointer-events-none absolute -bottom-20 -right-20 h-48 w-48 rounded-full bg-[#1877F2]/10 blur-3xl" />
 
-            <button 
+            <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFlipped(false);
               }}
-              className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all"
+              className="absolute top-3 right-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-400 transition-all hover:bg-white/10 hover:text-white"
+              aria-label="Close flip"
             >
-              <X className="w-4 h-4" />
+              <X className="h-4 w-4" />
             </button>
 
-            <div className="w-8 h-8 rounded-lg bg-[#1877F2]/10 flex items-center justify-center text-[#1877F2] mb-4">
-              <Users className="w-4 h-4" />
+            <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-[#1877F2]/10 text-[#1877F2]">
+              <Users className="h-4 w-4" />
             </div>
 
-            <h4 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter mb-0.5">
+            <h4 className="mb-0.5 pr-8 text-base font-black uppercase tracking-tighter text-white sm:text-lg md:text-xl">
               {member.name}
             </h4>
-            <div className="mb-2">
-              <span className="text-[#1877F2] font-bold text-xs md:text-sm tracking-wider">
+            <div className="mb-3 min-w-0 pr-2">
+              <span className="block text-xs font-bold tracking-wide text-[#1877F2] md:text-sm">
                 {member.role}
               </span>
             </div>
-            
-            {/* Blue divider line */}
-            <div className="w-8 h-[2px] bg-[#1877F2] mb-4" />
-            
-            <div className="flex-grow overflow-y-auto pr-1 text-slate-300 text-xs md:text-sm leading-relaxed font-medium mb-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-              <p>{member.bio}</p>
+
+            <div className="mb-3 h-[2px] w-8 shrink-0 bg-[#1877F2]" />
+
+            {/* Full bio — no ellipsis; scrolls if needed */}
+            <div className="mb-4 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 font-medium leading-relaxed text-slate-300 [scrollbar-width:thin]">
+              <p className="whitespace-pre-line text-[14px] leading-[1.55]">{member.bio}</p>
             </div>
 
             <div className="mt-auto shrink-0">
@@ -183,7 +198,7 @@ export function FounderCard({ member, onOpenBio }: { member: Founder, onOpenBio:
                   e.stopPropagation();
                   onOpenBio();
                 }}
-                className="w-full border border-[#1877F2] text-white bg-transparent hover:bg-[#1877F2]/10 font-bold py-4 rounded-xl text-xs lg:text-sm tracking-widest uppercase transition-all shadow-lg flex items-center justify-center gap-1.5"
+                className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#1877F2] bg-transparent py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg transition-all hover:bg-[#1877F2]/10 lg:text-sm"
               >
                 VIEW FULL BIO
               </Button>
@@ -326,7 +341,7 @@ function FoundersCarousel({ onOpenBio }: { onOpenBio: (member: Founder) => void 
 
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto gap-3 sm:gap-6 snap-x snap-mandatory scrollbar-hide px-0 sm:px-4 py-8"
+        className="flex overflow-x-auto gap-3 sm:gap-6 snap-x snap-mandatory scrollbar-hide px-0 sm:px-4 py-4 sm:py-8"
       >
         {Array(5).fill(FOUNDERS).flat().map((member, idx) => (
           <div key={`${member.name}-${idx}`} className="snap-center shrink-0 w-[60vw] sm:w-[75vw] max-w-[280px] sm:max-w-[320px] md:max-w-[340px]">
@@ -338,11 +353,82 @@ function FoundersCarousel({ onOpenBio }: { onOpenBio: (member: Founder) => void 
   );
 }
 
+const viewToggleClassName =
+  "flex items-center gap-2 border border-white/10 hover:border-[#1877F2] bg-white/5 hover:bg-[#1877F2]/10 text-white rounded-xl px-5 py-3 text-xs font-bold transition-all cursor-pointer shadow-xl backdrop-blur-sm";
+
 export default function FounderShowcase() {
   const [selectedMember, setSelectedMember] = useState<Founder | null>(null);
+  const [viewMode, setViewMode] = useState<"carousel" | "grid">("carousel");
+  const [mounted, setMounted] = useState(false);
+  const [sectionInView, setSectionInView] = useState(false);
+  const [nextSectionVisible, setNextSectionVisible] = useState(false);
+  const [topToggleVisible, setTopToggleVisible] = useState(true);
+  const rootSectionRef = useRef<HTMLElement>(null);
+  const membersSectionRef = useRef<HTMLDivElement>(null);
+  const topToggleRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const section = membersSectionRef.current;
+    if (!section) return;
+
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => setSectionInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px 0px -25% 0px" }
+    );
+    sectionObserver.observe(section);
+
+    return () => sectionObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const root = rootSectionRef.current;
+    const next = root?.nextElementSibling;
+    if (!next) return;
+
+    // Hide floating CTA as soon as any part of the next section enters the viewport
+    const nextObserver = new IntersectionObserver(
+      ([entry]) => setNextSectionVisible(entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px" }
+    );
+    nextObserver.observe(next);
+
+    return () => nextObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const toggle = topToggleRef.current;
+    if (!toggle) return;
+
+    const toggleObserver = new IntersectionObserver(
+      ([entry]) => setTopToggleVisible(entry.isIntersecting),
+      { threshold: 0, rootMargin: "-72px 0px 0px 0px" }
+    );
+    toggleObserver.observe(toggle);
+
+    return () => toggleObserver.disconnect();
+  }, [viewMode]);
+
+  const switchToCarousel = () => {
+    setViewMode("carousel");
+    membersSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const showFloatingCta =
+    viewMode === "grid" &&
+    sectionInView &&
+    !nextSectionVisible &&
+    !topToggleVisible &&
+    !selectedMember;
 
   return (
-    <section className="bg-[#030712] text-white py-10 sm:py-20 lg:py-24 relative overflow-hidden">
+    <section
+      ref={rootSectionRef}
+      className="bg-[#030712] text-white pt-10 pb-5 sm:py-20 lg:py-24 relative overflow-hidden"
+    >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
       <SectionReveal className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-5xl relative z-10 mb-8 lg:mb-12">
@@ -402,22 +488,79 @@ export default function FounderShowcase() {
       </SectionReveal>
 
       <SectionReveal className="w-full px-4 sm:px-6 lg:px-16 mx-auto max-w-[1600px] relative z-10 pt-6 sm:pt-10 border-t border-white/5">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
-            <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#1877F2]" />
-            <h2 className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">OUR FOUNDING MEMBERS</h2>
-            <div className="w-8 h-px bg-gradient-to-l from-transparent to-[#1877F2]" />
-          </div>
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white text-balance mb-4 sm:mb-6">
-            The people behind the mission
-          </h3>
-          <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-medium max-w-2xl mx-auto">
-            A dedicated team with lived experience and a shared passion for change.
-          </p>
-        </div>
+        <div ref={membersSectionRef} className="scroll-mt-24">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-6 md:mb-10 md:border-b md:border-white/5 md:pb-6">
+            <div className="text-left">
+              <span className="text-[#1877F2] font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-2 block">
+                Our Founding Members
+              </span>
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white text-balance leading-none">
+                The people behind the mission
+              </h3>
+              <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-medium mt-3 max-w-2xl">
+                A dedicated team with lived experience and a shared passion for change.
+              </p>
+            </div>
 
-        <FoundersCarousel onOpenBio={(member) => setSelectedMember(member)} />
+            <div className="flex shrink-0 self-start md:self-auto">
+              <button
+                ref={topToggleRef}
+                type="button"
+                onClick={() =>
+                  viewMode === "carousel" ? setViewMode("grid") : switchToCarousel()
+                }
+                className={viewToggleClassName}
+              >
+                {viewMode === "carousel" ? (
+                  <>
+                    <Grid className="w-4 h-4 text-[#1877F2]" /> View All Members
+                  </>
+                ) : (
+                  <>
+                    <LayoutGrid className="w-4 h-4 text-[#1877F2]" /> Show Carousel
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {viewMode === "carousel" ? (
+            <FoundersCarousel onOpenBio={(member) => setSelectedMember(member)} />
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 max-w-[1600px] mx-auto mt-2 px-2 sm:px-0">
+              {FOUNDERS.map((member, i) => (
+                <div key={`${member.name}-${i}`} className="w-full">
+                  <FounderCard member={member} onOpenBio={() => setSelectedMember(member)} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </SectionReveal>
+
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {showFloatingCta && (
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                transition={{ duration: 0.2 }}
+                className="fixed bottom-5 right-4 sm:right-6 lg:right-8 z-[60] pointer-events-none"
+              >
+                <button
+                  type="button"
+                  onClick={switchToCarousel}
+                  className="pointer-events-auto flex items-center gap-1.5 rounded-lg border border-[#1877F2]/60 bg-[#030712] px-3.5 py-2 text-[10px] font-bold text-white shadow-[0_8px_24px_rgba(0,0,0,0.55)] hover:border-[#1877F2] hover:bg-[#0a1220] transition-all cursor-pointer"
+                >
+                  <LayoutGrid className="w-3 h-3 text-[#1877F2]" /> Show Carousel
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
 
       <BioModal member={selectedMember} onClose={() => setSelectedMember(null)} />
     </section>

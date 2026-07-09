@@ -57,7 +57,7 @@ export default function ReadStoriesSection() {
   };
 
   return (
-    <section className="relative bg-[#030712] text-white py-10 sm:py-20 lg:py-24 overflow-hidden border-t border-white/5">
+    <section className="relative bg-[#030712] text-white py-10 sm:py-20 lg:py-24 overflow-hidden border-t border-white/5 border-b border-b-white/10">
       {/* Background Image and Gradients (Top portion only) */}
       <div className="absolute top-0 left-0 right-0 h-[420px] sm:h-[500px] lg:h-[560px] z-0 overflow-hidden pointer-events-none">
         <Image

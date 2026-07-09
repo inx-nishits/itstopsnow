@@ -114,7 +114,7 @@ export default function HomePageClient({ data }: HomePageClientProps) {
         <div className="order-3 md:order-4 w-full">
           <ReadStoriesSection />
         </div>
-        <div className="order-4 md:order-5 w-full">
+        <div className="order-4 md:order-5 w-full isolate">
           <WallRemembranceStrip officers={data.rollPreview} />
         </div>
         <div className="order-5 md:order-6 w-full">
